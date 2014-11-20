@@ -13,12 +13,26 @@ public final class R {
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
+    public static final class id {
+        public static final int aboutActivity_messageEditText=0x7f060000;
+        public static final int aboutActivity_messageView=0x7f060001;
+        public static final int aboutActivity_showMessage=0x7f060002;
+        public static final int mainActivity_toSettingsButton=0x7f060003;
+    }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int activity_about=0x7f030000;
+        public static final int activity_main=0x7f030001;
     }
     public static final class string {
+        public static final int aboutActivity_messageEditTextPlaceholder=0x7f040006;
+        /**  About Activity 
+         */
+        public static final int aboutActivity_messageViewText=0x7f040004;
+        public static final int aboutActivity_showMessageButtonText=0x7f040005;
         public static final int app_name=0x7f040000;
         public static final int hello_world=0x7f040001;
+        public static final int mainActivity_toSettingsButton=0x7f040002;
+        public static final int title_activity_about=0x7f040003;
     }
     public static final class style {
         /** 

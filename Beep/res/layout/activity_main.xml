@@ -4,9 +4,14 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <TextView
+    <!-- This is a comment -->
+    <Button
+        android:id="@+id/mainActivity_toSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="69dp"
+        android:text="@string/mainActivity_toSettingsButton" />
 
 </RelativeLayout>

@@ -1,0 +1,38 @@
+package com.beep_boop.gameMap;
+
+public class MapNode
+{
+	///-----Interfaces-----
+	// None
+	
+	///-----Members-----
+	/* Holds the X coordinate of the node in map space */
+	private float mX;
+	/* Holds the Y coordinate of the node in map space */
+	private float mY;
+	/* Holds the level key of the level this node represents */
+	private String mLevelKey;
+
+	///-----Constructors-----
+	public MapNode(float aX, float aY, String aLevelKey)
+	{
+		
+	};
+	
+	///-----Functions-----
+	public float getX()
+	{
+		
+	};
+	public float getY()
+	{
+		
+	};
+	public String getLevelKey()
+	{
+		
+	};
+	
+	///-----Child Classes-----
+	// None
+}

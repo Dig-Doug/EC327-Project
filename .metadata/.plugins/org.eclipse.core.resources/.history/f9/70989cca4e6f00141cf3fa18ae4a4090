@@ -1,0 +1,123 @@
+package com.beep_boop.gameMap;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+
+public class MapView //extends View implements LevelDoneListener
+{
+	///-----Interfaces-----
+	public interface NodeClickListener
+	{
+		public void mapViewUserCanClickNode(MapView aMapView, MapNode aNode);
+		public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode);
+	}
+	public interface NodeStatusDataSource
+	{
+		public boolean mapViewNodeIsDone(MapNode aNode);
+	}
+	
+	///-----Members-----
+	/** Holds the listener who handles node clicks */
+	private NodeClickListener mListener;
+	/** Holds the data source */
+	private NodeStatusDataSource mDataSource;
+
+	/** Holds all the nodes on the map */
+	private ArrayList<MapNode> mNodes;
+	/** Holds the status of all the nodes */
+	private ArrayList<Boolean> mNodeStates;
+	/** Holds the currently selected node */
+	private int mSelectedNode;
+
+	/** Holds the X coordinate of the view origin in map space */
+	private float mOriginX;
+	/** Holds the Y coordinate of the view origin in map space */
+	private float mOriginY;
+
+	/** Holds the min X coordinate the origin can take in map space */
+	private float MIN_ORIGIN_X;
+	/** Holds the min Y coordinate the origin can take in map space */
+	private float MIN_ORIGIN_Y;
+	/** Holds the max X coordinate the origin can take in map space */
+	private float MAX_ORIGIN_X;
+	/** Holds the max Y coordinate the origin can take in map space */
+	private float MAX_ORIGIN_Y;
+
+	/** Holds the amount of the map on the screen width wise */
+	private float mMapOnScreenWidth;
+	/** Holds the amount of the map on the screen height wise */
+	private float mMapOnScreenHeight;
+
+	/** Hold the image to be drawn in the background
+	private Bitmap mBackgroundImage; // This may need to be broken up into multiple images, in which case an array should be used
+
+	/** Holds the OFF node image */
+	private Bitmap mNodeImageOff;
+	/** Holds the ON node image */
+	private Bitmap mNodeImageOn;
+	/** Holds an overlay for the selected node  */
+	private Bitmap mSelectedNodeOverlay;
+	/** Holds the time it takes to transition between the off and on node image for the selected node */
+	private static final float NODE_IMAGE_TRANSITION_TIME;
+	/** Holds the current state of the node */
+	private boolean mSelectedNodeState;
+	/** Holds the time until the next swtich */
+	private float mSelectedNodeTime;
+
+
+	// I’m sure I’m missing some
+	
+	///-----Constructors-----
+	public MapView(Context context, AttributeSet attrs);
+	
+	///-----Functions-----
+	//Implements LevelDoneListener interface
+
+	//sets the listener
+	public void setListener(NodeClickedListener aListener);
+	//sets the data source
+	public void setDataSource(NodeStatusDataSource aDataSource);
+
+	//adds a node
+	public void addNode(MapNode aNode);
+	//adds multiple nodes
+	public void addNodes(ArrayList aNodeArray);
+	//gets the state of a node from the DataSource
+	private boolean getStateForNode(MapNode aNode);
+
+	//sets the selected node
+	public void setSelectedNode(int aIndex);
+
+	//calculates the max and min origin bounds
+	private void calculateOriginBounds();
+	//ensures the view’s origin is within the bounds
+	private void boundOrigin();
+	//sets the origin of the view
+	public void setOrigin(float aX, float aY);
+	//centers the view on the node
+	private void centerOnNode(int aIndex);
+
+	//overriden view method
+	protected void onDraw(Canvas canvas);
+	//draws the background of the map
+	private void drawBackground(Canvas canvas)
+	//draws all the nodes that are within the bounds of the screen
+	private void drawNodesWithinView(Canvas canvas);
+
+	//handles scrolling
+	private void scroll(float aX, float aY);
+	//tells the mapview to update all of the node’s states and redraw
+	public void invalidate();
+
+	// You’ll need to override all Android View methods
+
+	// I’m sure I’m missing some
+	
+	///-----Child Classes-----
+	// None
+
+}
