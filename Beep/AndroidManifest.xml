@@ -26,6 +26,10 @@
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" >
         </activity>
+        <activity
+            android:name="com.beep_boop.Beep.launch.LaunchActivity"
+            android:label="@string/title_activity_launch" >
+        </activity>
     </application>
 
 </manifest>

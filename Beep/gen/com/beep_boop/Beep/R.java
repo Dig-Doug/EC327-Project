@@ -21,7 +21,8 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
-        public static final int activity_main=0x7f030001;
+        public static final int activity_launch=0x7f030001;
+        public static final int activity_main=0x7f030002;
     }
     public static final class string {
         public static final int aboutActivity_messageEditTextPlaceholder=0x7f040006;
@@ -33,6 +34,7 @@ public final class R {
         public static final int hello_world=0x7f040001;
         public static final int mainActivity_toSettingsButton=0x7f040002;
         public static final int title_activity_about=0x7f040003;
+        public static final int title_activity_launch=0x7f040007;
     }
     public static final class style {
         /** 
