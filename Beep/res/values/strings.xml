@@ -4,13 +4,17 @@
     <string name="app_name">Beep</string>
     <string name="hello_world">Hello world!</string>
     <string name="mainActivity_toSettingsButton">Settings</string>
+    <string name="mainActivity_toLaunchButton">Launch</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name= "content_description_place_holder">content_description</string>
-
+	
+    
     <!-- About Activity -->
     <string name="aboutActivity_messageViewText">Enter a message!</string>
     <string name="aboutActivity_showMessageButtonText">Display Message</string>
     <string name="aboutActivity_messageEditTextPlaceholder">Type a message here</string>
     <string name="title_activity_launch">LaunchActivity</string>
 
+    
+    
 </resources>

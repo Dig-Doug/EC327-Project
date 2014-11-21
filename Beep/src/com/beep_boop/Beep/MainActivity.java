@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.beep_boop.Beep.launch.LaunchActivity;
+
 public class MainActivity extends Activity
 {
 	/** Tag used in Log messages */
@@ -33,5 +35,19 @@ public class MainActivity extends Activity
 				startActivity(toSettings);
 			}
 		});
+		
+		Button toLaunchButton = (Button) findViewById(R.id.mainActivity_toLaunchButton);
+		toLaunchButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Log.d(MainActivity.TAG, "To launch button clicked");
+				
+				Intent toLaunch = new Intent(THIS, LaunchActivity.class);
+				startActivity(toLaunch);
+			}
+		});
+		
 	}
 }

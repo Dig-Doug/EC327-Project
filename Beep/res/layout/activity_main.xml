@@ -14,4 +14,14 @@
         android:layout_marginTop="69dp"
         android:text="@string/mainActivity_toSettingsButton" />
 
+    <Button
+        android:id="@+id/mainActivity_toLaunchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mainActivity_toSettingsButton"
+        android:layout_alignRight="@+id/mainActivity_toSettingsButton"
+        android:layout_below="@+id/mainActivity_toSettingsButton"
+        android:layout_marginTop="38dp"
+        android:text="@string/mainActivity_toLaunchButton" />
+
 </RelativeLayout>
