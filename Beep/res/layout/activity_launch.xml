@@ -4,9 +4,23 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <TextView
+    <ImageView
+        android:id="@+id/launchActivity_textImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="81dp"
+        android:src="@drawable/ic_launcher" 
+        android:contentDescription="@string/content_description_place_holder"/>
+
+    <ImageView
+        android:id="@+id/launchActivity_logoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/launchActivity_textImageView"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_launcher"
+        android:contentDescription="@string/content_description_place_holder"/>
+
 
 </RelativeLayout>
