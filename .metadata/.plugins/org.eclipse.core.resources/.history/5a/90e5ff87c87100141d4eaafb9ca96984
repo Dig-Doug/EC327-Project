@@ -32,7 +32,6 @@ public class MapNode
 	{
 		
 	}
-	
 	/** Returns the Y coord of the node in map space
 	* @return float - Y coord
 	*/
@@ -40,7 +39,6 @@ public class MapNode
 	{
 		
 	}
-	
 	/** Returns the level key of the node
 	* @return String - level key
 	*/
