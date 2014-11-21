@@ -1,17 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/launchActivity_backgroundColor"
-    tools:context="${relativePackage}.${activityClass}" >
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/launchActivity_textImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="26dp"
+        android:layout_weight="1"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/launch_screen_text_logo" />
 
@@ -19,10 +18,10 @@
         android:id="@+id/launchActivity_logoImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="134dp"
+        android:layout_weight="1"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/launch_screen_logo" />
 
-</RelativeLayout>
+</LinearLayout>
