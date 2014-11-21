@@ -21,7 +21,9 @@ public class MapNode
 	*/
 	public MapNode(float aX, float aY, String aLevelKey)
 	{
-		
+		mX = aX;
+		mY = aY;
+		mLevelKey = aLevelKey;
 	}
 	
 	///-----Functions-----
@@ -30,7 +32,7 @@ public class MapNode
 	*/
 	public float getX()
 	{
-		
+		return mX;
 	}
 	
 	/** Returns the Y coord of the node in map space
@@ -38,7 +40,7 @@ public class MapNode
 	*/
 	public float getY()
 	{
-		
+		return mY;
 	}
 	
 	/** Returns the level key of the node
@@ -46,6 +48,6 @@ public class MapNode
 	*/
 	public String getLevelKey()
 	{
-		
+		return mLevelKey; 
 	}
 }
