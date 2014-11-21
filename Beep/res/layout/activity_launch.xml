@@ -9,19 +9,20 @@
         android:id="@+id/launchActivity_textImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp"
-        android:src="@drawable/ic_launcher" 
-        android:contentDescription="@string/content_description_place_holder"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="26dp"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/launch_screen_text_logo" />
 
     <ImageView
         android:id="@+id/launchActivity_logoImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/launchActivity_textImageView"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_launcher"
-        android:contentDescription="@string/content_description_place_holder"/>
-
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="134dp"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/launch_screen_logo" />
 
 </RelativeLayout>
