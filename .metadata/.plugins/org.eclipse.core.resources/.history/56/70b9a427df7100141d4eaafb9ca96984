@@ -408,9 +408,9 @@ public class MapView
 	private PointF convertToMapSpace(float aX, float aY)
 	{
 		//@TODO - scale
-		float scaledX = aX + this.mOrigin.x;
-		float scaledY = aX + this.mOrigin.y;
-		return new PointF(scaledX, scaledY);
+		float scaledX = aX;
+		float scaledY = aY;
+		return new PointF(aX + this.mOrigin.x, aX + this.mOrigin.y);
 	}
 	
 	private PointF convertToScreenSpace(float aX, float aY)

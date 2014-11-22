@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -72,15 +71,11 @@ public class MapView
 	/** Holds an overlay for the selected node  */
 	private Bitmap mSelectedNodeOverlay;
 	/** Holds the time it takes to transition between the off and on node image for the selected node */
-	//private static final float NODE_IMAGE_TRANSITION_TIME;
+	private static final float NODE_IMAGE_TRANSITION_TIME;
 	/** Holds the current state of the node */
 	private boolean mSelectedNodeState;
-	/** Holds the time until the next switch */
+	/** Holds the time until the next swtich */
 	private float mSelectedNodeTime;
-	
-	
-	private int mNodeSizeX, mNodeSizeY;
-	private Paint mNodePaint;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -227,10 +222,7 @@ public class MapView
 	//overridden view method
 	protected void onDraw(Canvas canvas)
 	{
-		//draw background
-		this.drawBackground(canvas);
-		//draw all the nodes on top
-		this.drawNodesWithinView(canvas);
+		//@TODO
 	}
 
 	//draws the background of the map
@@ -243,35 +235,6 @@ public class MapView
 	private void drawNodesWithinView(Canvas canvas)
 	{
 		//@TODO
-		
-		//enumerate through all map nodes
-		for (int i = 0; i < this.mNodes.size(); i++)
-		{
-			MapNode node = this.mNodes.get(i);
-			//check if it's on screen in the X direction
-			if (Math.abs(node.getX() - this.mOrigin.x) < MapView.MAP_ON_SCREEN_WIDTH)
-			{
-				//check if it's on screen in the Y direction
-				if (Math.abs(node.getY() - this.mOrigin.y) < MapView.MAP_ON_SCREEN_HEIGHT)
-				{
-					//draw it
-					PointF screenDrawCenter = this.convertToScreenSpace(node.getX(), node.getY());
-					
-					if (i == this.mSelectedNode)
-					{
-						//@TODO - animate the nodes
-					}
-					else
-					{
-						//get which bitmap to use for this node
-						//boolean state = this.mNodeStates.get(i).booleanValue();
-						//Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
-						//canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeSizeX, screenDrawCenter.y - this.mNodeSizeY, this.mNodePaint);
-						canvas.drawCircle(screenDrawCenter.x, screenDrawCenter.y, 1.0f, this.mNodePaint);
-					}
-				}
-			}
-		}
 	}
 
 	//tells the map view to update all of the nodeÕs states and redraw
@@ -407,17 +370,7 @@ public class MapView
 	//converts a point in touch space to map space
 	private PointF convertToMapSpace(float aX, float aY)
 	{
-		//@TODO - scale
-		float scaledX = aX + this.mOrigin.x;
-		float scaledY = aX + this.mOrigin.y;
-		return new PointF(scaledX, scaledY);
-	}
-	
-	private PointF convertToScreenSpace(float aX, float aY)
-	{
-		float scaledX = aX - this.mOrigin.x;
-		float scaledY = aY - this.mOrigin.y;
-		return new PointF(scaledX, scaledY);
+		//@TODO
 	}
 
 	//find a node near the location. If there isnÕt a node, returns null

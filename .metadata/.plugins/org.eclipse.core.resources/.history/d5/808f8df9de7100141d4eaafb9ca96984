@@ -72,7 +72,7 @@ public class MapView
 	/** Holds an overlay for the selected node  */
 	private Bitmap mSelectedNodeOverlay;
 	/** Holds the time it takes to transition between the off and on node image for the selected node */
-	//private static final float NODE_IMAGE_TRANSITION_TIME;
+	private static final float NODE_IMAGE_TRANSITION_TIME;
 	/** Holds the current state of the node */
 	private boolean mSelectedNodeState;
 	/** Holds the time until the next switch */
@@ -264,10 +264,10 @@ public class MapView
 					else
 					{
 						//get which bitmap to use for this node
-						//boolean state = this.mNodeStates.get(i).booleanValue();
+						boolean state = this.mNodeStates.get(i).booleanValue();
 						//Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
 						//canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeSizeX, screenDrawCenter.y - this.mNodeSizeY, this.mNodePaint);
-						canvas.drawCircle(screenDrawCenter.x, screenDrawCenter.y, 1.0f, this.mNodePaint);
+						canvas.drawCircle(node.getX(), node.getY(), 1.0f, this.mNodePaint);
 					}
 				}
 			}
@@ -407,17 +407,12 @@ public class MapView
 	//converts a point in touch space to map space
 	private PointF convertToMapSpace(float aX, float aY)
 	{
-		//@TODO - scale
-		float scaledX = aX + this.mOrigin.x;
-		float scaledY = aX + this.mOrigin.y;
-		return new PointF(scaledX, scaledY);
+		//@TODO
 	}
 	
 	private PointF convertToScreenSpace(float aX, float aY)
 	{
-		float scaledX = aX - this.mOrigin.x;
-		float scaledY = aY - this.mOrigin.y;
-		return new PointF(scaledX, scaledY);
+		//@TODO
 	}
 
 	//find a node near the location. If there isn’t a node, returns null
