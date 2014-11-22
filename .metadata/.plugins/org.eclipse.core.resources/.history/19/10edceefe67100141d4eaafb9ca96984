@@ -4,7 +4,6 @@
     android:orientation="vertical" >
     
     <com.beep_boop.Beep.levelSelect.MapView
-        android:id="@+id/mapActivity_mapView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center" />

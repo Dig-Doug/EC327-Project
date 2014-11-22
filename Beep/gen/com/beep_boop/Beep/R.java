@@ -31,6 +31,7 @@ public final class R {
         public static final int mainActivity_toLaunchButton=0x7f090006;
         public static final int mainActivity_toMapButton=0x7f090007;
         public static final int mainActivity_toSettingsButton=0x7f090005;
+        public static final int mapActivity_mapView=0x7f090008;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
