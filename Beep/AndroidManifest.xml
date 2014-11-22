@@ -31,8 +31,12 @@
             android:label="@string/title_activity_launch" >
         </activity>
         <activity
-            android:name="com.beep_boop.Beep.levelSelect.MapActivity"
+            android:name=".levelSelect.MapActivity"
             android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name=".StartLevelActivity"
+            android:label="@string/title_activity_start_level" >
         </activity>
     </application>
 

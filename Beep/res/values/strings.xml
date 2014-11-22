@@ -7,15 +7,14 @@
     <string name="mainActivity_toLaunchButton">Launch</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="content_description_place_holder">content_description</string>
-	<string name="mainActivity_toMap">Map</string>
-    
+    <string name="mainActivity_toMap">Map</string>
+
     <!-- About Activity -->
     <string name="aboutActivity_messageViewText">Enter a message!</string>
     <string name="aboutActivity_showMessageButtonText">Display Message</string>
     <string name="aboutActivity_messageEditTextPlaceholder">Type a message here</string>
     <string name="title_activity_launch">LaunchActivity</string>
     <string name="title_activity_map">MapActivity</string>
-
-    
+    <string name="title_activity_start_level">StartLevelActivity</string>
 
 </resources>

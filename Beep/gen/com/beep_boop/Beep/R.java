@@ -38,6 +38,7 @@ public final class R {
         public static final int activity_launch=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_map=0x7f030003;
+        public static final int activity_start_level=0x7f030004;
     }
     public static final class raw {
         public static final int nodes_test_file=0x7f050000;
@@ -57,6 +58,7 @@ public final class R {
         public static final int title_activity_about=0x7f070004;
         public static final int title_activity_launch=0x7f07000a;
         public static final int title_activity_map=0x7f07000b;
+        public static final int title_activity_start_level=0x7f07000c;
     }
     public static final class style {
         /** 
