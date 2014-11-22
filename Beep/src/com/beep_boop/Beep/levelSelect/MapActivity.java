@@ -13,17 +13,20 @@ import com.beep_boop.Beep.R;
 public class MapActivity extends Activity 
 {
 
+	private MapView mView; 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-
+		mView = (MapView)findViewById(R.id.mapActivity_mapView);
+		
 		ArrayList<MapNode> nodeList = null;
 		InputStream in = null;
 		try 
 		{
-			in = getResources().openRawResource(R.id.aboutActivity_messageEditText);
+			in = getResources().openRawResource(R.raw.nodes_test_file);
 			
 			nodeList = MapNodeLoader.parseFile(in);
 		}
@@ -45,6 +48,7 @@ public class MapActivity extends Activity
 				}
 			}
 		}
+		mView.addNodes(nodeList); 
 	}
 
 
