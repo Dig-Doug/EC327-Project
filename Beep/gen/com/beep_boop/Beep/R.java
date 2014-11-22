@@ -13,28 +13,55 @@ public final class R {
         public static final int anim_fadeout=0x7f040001;
     }
     public static final class attr {
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int backgroundImage=0x7f010002;
+        /**  <attr name="showText" format="boolean" /> 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int nodeOffImage=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int nodeOnImage=0x7f010001;
     }
     public static final class color {
         public static final int launchActivity_backgroundColor=0x7f060000;
     }
     public static final class drawable {
+<<<<<<< HEAD
         public static final int ic_launcher=0x7f020000;
         public static final int launch_screen_logo=0x7f020001;
         public static final int launch_screen_text_logo=0x7f020002;
         public static final int start_screen_apple=0x7f020003;
         public static final int start_screen_viking=0x7f020004;
+=======
+        public static final int background=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int launch_screen_logo=0x7f020002;
+        public static final int launch_screen_text_logo=0x7f020003;
+        public static final int node_off=0x7f020004;
+        public static final int node_on=0x7f020005;
+>>>>>>> FETCH_HEAD
     }
     public static final class id {
         public static final int aboutActivity_messageEditText=0x7f090000;
         public static final int aboutActivity_messageView=0x7f090001;
         public static final int aboutActivity_showMessage=0x7f090002;
+<<<<<<< HEAD
         public static final int button2=0x7f090011;
+=======
+        public static final int backbutton=0x7f090009;
+>>>>>>> FETCH_HEAD
         public static final int launchActivity_logoImageView=0x7f090004;
         public static final int launchActivity_textImageView=0x7f090003;
         public static final int mainActivity_toLaunchButton=0x7f090006;
         public static final int mainActivity_toMapButton=0x7f090007;
         public static final int mainActivity_toSettingsButton=0x7f090005;
         public static final int mapActivity_mapView=0x7f090008;
+<<<<<<< HEAD
         public static final int startLevelActivity_objectOne=0x7f090009;
         public static final int startLevelActivity_objectTwo=0x7f09000c;
         public static final int startLevelBackButton=0x7f09000a;
@@ -43,13 +70,24 @@ public final class R {
         public static final int startLevelImage1=0x7f09000b;
         public static final int startLevelImage2=0x7f09000d;
         public static final int startLevelStartButton=0x7f090010;
+=======
+        public static final int music=0x7f09000c;
+        public static final int musicbar=0x7f09000b;
+        public static final int settings=0x7f09000a;
+        public static final int sound=0x7f09000e;
+        public static final int soundbar=0x7f09000d;
+>>>>>>> FETCH_HEAD
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
         public static final int activity_launch=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_map=0x7f030003;
+<<<<<<< HEAD
         public static final int activity_start_level=0x7f030004;
+=======
+        public static final int activity_settings=0x7f030004;
+>>>>>>> FETCH_HEAD
     }
     public static final class raw {
         public static final int nodes_test_file=0x7f050000;
@@ -61,6 +99,7 @@ public final class R {
         public static final int aboutActivity_messageViewText=0x7f070006;
         public static final int aboutActivity_showMessageButtonText=0x7f070007;
         public static final int app_name=0x7f070000;
+<<<<<<< HEAD
         public static final int content_description_place_holder=0x7f070004;
         public static final int mainActivity_toLaunchButton=0x7f070002;
         public static final int mainActivity_toMap=0x7f070005;
@@ -80,6 +119,23 @@ public final class R {
         public static final int title_activity_launch=0x7f070009;
         public static final int title_activity_map=0x7f07000a;
         public static final int title_activity_start_level=0x7f07000b;
+=======
+        /**  settings activity 
+         */
+        public static final int backbutton=0x7f07000d;
+        public static final int content_description_place_holder=0x7f070005;
+        public static final int hello_world=0x7f070001;
+        public static final int mainActivity_toLaunchButton=0x7f070003;
+        public static final int mainActivity_toMap=0x7f070006;
+        public static final int mainActivity_toSettingsButton=0x7f070002;
+        public static final int music=0x7f07000f;
+        public static final int settings=0x7f07000e;
+        public static final int sound=0x7f070010;
+        public static final int title_activity_about=0x7f070004;
+        public static final int title_activity_launch=0x7f07000a;
+        public static final int title_activity_map=0x7f07000b;
+        public static final int title_activity_settings=0x7f07000c;
+>>>>>>> FETCH_HEAD
     }
     public static final class style {
         /** 
@@ -110,10 +166,54 @@ public final class R {
         public static final int AppTheme=0x7f080001;
     }
     public static final class styleable {
-        /**  <attr name="showText" format="boolean" /> 
+        /** Attributes that can be used with a MapView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #MapView_backgroundImage com.beep_boop.Beep:backgroundImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapView_nodeOffImage com.beep_boop.Beep:nodeOffImage}</code></td><td> <attr name="showText" format="boolean" /> </td></tr>
+           <tr><td><code>{@link #MapView_nodeOnImage com.beep_boop.Beep:nodeOnImage}</code></td><td></td></tr>
+           </table>
+           @see #MapView_backgroundImage
+           @see #MapView_nodeOffImage
+           @see #MapView_nodeOnImage
          */
         public static final int[] MapView = {
-            
+            0x7f010000, 0x7f010001, 0x7f010002
         };
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#backgroundImage}
+          attribute's value can be found in the {@link #MapView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.beep_boop.Beep:backgroundImage
+        */
+        public static final int MapView_backgroundImage = 2;
+        /**
+          <p>
+          @attr description
+           <attr name="showText" format="boolean" /> 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.beep_boop.Beep:nodeOffImage
+        */
+        public static final int MapView_nodeOffImage = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeOnImage}
+          attribute's value can be found in the {@link #MapView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.beep_boop.Beep:nodeOnImage
+        */
+        public static final int MapView_nodeOnImage = 1;
     };
 }

@@ -35,8 +35,13 @@
             android:label="@string/title_activity_map" >
         </activity>
         <activity
+<<<<<<< HEAD
             android:name="com.beep_boop.Beep.startScreen.StartLevelActivity"
             android:label="@string/title_activity_start_level" >
+=======
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+>>>>>>> FETCH_HEAD
         </activity>
     </application>
 

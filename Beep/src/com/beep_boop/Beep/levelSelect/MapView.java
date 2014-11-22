@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -86,7 +89,7 @@ public class MapView extends View
 	private int mNodeSizeX, mNodeSizeY;
 	private Paint mNodePaint;
 	
-	private static final float SCROLL_SCALAR = 0.05f;
+	private static final float SCROLL_SCALAR = 2.0f;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -96,8 +99,17 @@ public class MapView extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
 		try
 		{
-			//mShowText = a.getBoolean(R.styleable.PieChart_showText, false);
-			//mTextPos = a.getInteger(R.styleable.PieChart_labelPosition, 0);
+			Drawable nodeOffImage = a.getDrawable(R.styleable.MapView_nodeOffImage);
+			this.mNodeImageOff = ((BitmapDrawable) nodeOffImage).getBitmap();
+			Drawable nodeOnImage = a.getDrawable(R.styleable.MapView_nodeOnImage);
+			this.mNodeImageOn = ((BitmapDrawable) nodeOnImage).getBitmap();
+			Drawable backgroundImage = a.getDrawable(R.styleable.MapView_backgroundImage);
+			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -109,9 +121,9 @@ public class MapView extends View
 	
 	private void init()
 	{
-		mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mNodePaint.setColor(0xf00ff0);
-		mNodePaint.setAlpha(255);
+		this.mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		this.mNodePaint.setColor(0xf00ff0);
+		this.mNodePaint.setAlpha(255);
 		this.mNodePaint.setTextSize(32.f);
 	}
 
@@ -170,7 +182,7 @@ public class MapView extends View
 	//gets the state of a node from the DataSource
 	private boolean getStateForNode(MapNode aNode)
 	{
-		boolean result = false;
+		boolean result = Math.random() < 0.5;
 		if (this.mDataSource != null)
 			result = this.mDataSource.mapViewIsNodeDone(this, aNode);
 		return result;
@@ -224,7 +236,7 @@ public class MapView extends View
 		maxY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
 
 		//set the new bounds
-		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
+		this.mOriginBounds = new RectF(minX, maxY, maxX, minY);
 	}
 
 	//ensures the viewÕs origin is within the bounds
@@ -285,6 +297,17 @@ public class MapView extends View
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
+		if (this.mBackgroundImage != null)
+		{
+			for (int i = 0; i < getWidth(); i+=this.mBackgroundImage.getWidth())
+			{
+				for (int j = 0; j < getHeight(); j +=this.mBackgroundImage.getHeight())
+				{
+					canvas.drawBitmap(this.mBackgroundImage, i, j, null);
+				}
+			}
+		}
+		
 		//@TODO
 		String text = "x: " + this.mOrigin.x + " y: " + this.mOrigin.y;
 		canvas.drawText(text, 0, text.length() - 1, 0, 50, this.mNodePaint);
@@ -315,10 +338,9 @@ public class MapView extends View
 					else
 					{
 						//get which bitmap to use for this node
-						//boolean state = this.mNodeStates.get(i).booleanValue();
-						//Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
-						//canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeSizeX, screenDrawCenter.y - this.mNodeSizeY, this.mNodePaint);
-						canvas.drawCircle(screenDrawCenter.x, screenDrawCenter.y, 10.0f, this.mNodePaint);
+						boolean state = this.mNodeStates.get(i).booleanValue();
+						Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
+						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeSizeX, screenDrawCenter.y - this.mNodeSizeY, this.mNodePaint);
 					}
 				}
 			}
@@ -382,9 +404,10 @@ public class MapView extends View
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
 			//calculate the delta movement in map space
-			PointF deltaInMapSpace = this.convertToMapSpace(deltaX, deltaY);
+			float scaledX = (deltaX / this.getWidth()) * MapView.MAP_ON_SCREEN_WIDTH;
+			float scaledY = (deltaY / this.getHeight()) * MapView.MAP_ON_SCREEN_HEIGHT;
 			//increment the origin by the delta
-			this.incrementOrigin(deltaInMapSpace.x * MapView.SCROLL_SCALAR, deltaInMapSpace.y * MapView.SCROLL_SCALAR);
+			this.incrementOrigin(scaledX * MapView.SCROLL_SCALAR, scaledY * MapView.SCROLL_SCALAR);
 		}
 		else
 		{
