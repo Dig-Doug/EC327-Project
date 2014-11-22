@@ -55,16 +55,16 @@ public class MapView extends View
 	/** Holds the minimum distance the finger must move to be considered a scroll */
 	private static final float mMinScrollDelta = 5.0f;
 	/** Holds the last registered point of the touch in screen coords */
-	private PointF mLastTouchPoint = new PointF();
+	private PointF mLastTouchPoint;
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 	/** Holds the maximum distance the finger can be from a node to click it*/
 	private static final float mMaxNodeClickDistance = 10.0f;
 
 	/** Holds the amount of the map on the screen width wise */
-	private static final float MAP_ON_SCREEN_WIDTH = 1.0f;
+	private static final float MAP_ON_SCREEN_WIDTH = 500.0f;
 	/** Holds the amount of the map on the screen height wise */
-	private static final float MAP_ON_SCREEN_HEIGHT = 1.0f;
+	private static final float MAP_ON_SCREEN_HEIGHT = 500.0f;
 
 	/** Hold the image to be drawn in the background */
 	private Bitmap mBackgroundImage; // This may need to be broken up into multiple images, in which case an array should be used
@@ -367,8 +367,7 @@ public class MapView extends View
 	//handles all touch moved events
 	private void touchMoved(MotionEvent aEvent)
 	{
-		float deltaX = aEvent.getX() - this.mLastTouchPoint.x;
-		float deltaY = aEvent.getY() - this.mLastTouchPoint.y;
+		float deltaX = aEvent.getX(), deltaY = aEvent.getY();
 
 		//check if we are already scrolling
 		if (this.mScrolling)
@@ -384,7 +383,7 @@ public class MapView extends View
 		else
 		{
 			//check if we've exceeded the minimum scroll distance
-			if (Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) >= Math.pow(MapView.mMinScrollDelta, 2))
+			if (Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) <= Math.pow(MapView.mMinScrollDelta, 2))
 			{
 				//if so, we are scrolling
 				this.mScrolling = true;
@@ -458,15 +457,15 @@ public class MapView extends View
 	private PointF convertToMapSpace(float aX, float aY)
 	{
 		//@TODO - scale
-		float scaledX = (aX / this.getWidth()) * MapView.MAP_ON_SCREEN_WIDTH  + this.mOrigin.x;
-		float scaledY = (aY / this.getHeight()) * MapView.MAP_ON_SCREEN_HEIGHT + this.mOrigin.y;
+		float scaledX = aX + this.mOrigin.x;
+		float scaledY = aX + this.mOrigin.y;
 		return new PointF(scaledX, scaledY);
 	}
 
 	private PointF convertToScreenSpace(float aX, float aY)
 	{
-		float scaledX = (aX - this.mOrigin.x) * this.getWidth() / MapView.MAP_ON_SCREEN_WIDTH;
-		float scaledY = (aY - this.mOrigin.y) * this.getHeight() / MapView.MAP_ON_SCREEN_HEIGHT;
+		float scaledX = aX - this.mOrigin.x;
+		float scaledY = aY - this.mOrigin.y;
 		return new PointF(scaledX, scaledY);
 	}
 
