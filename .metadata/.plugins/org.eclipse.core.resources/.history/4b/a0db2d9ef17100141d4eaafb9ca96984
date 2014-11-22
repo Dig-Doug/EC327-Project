@@ -85,8 +85,6 @@ public class MapView extends View
 
 	private int mNodeSizeX, mNodeSizeY;
 	private Paint mNodePaint;
-	
-	private static final float SCROLL_SCALAR = 0.05f;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -220,8 +218,8 @@ public class MapView extends View
 		//subtract half the screen so that all nodes can be centered on
 		minX -= MapView.MAP_ON_SCREEN_WIDTH/2;
 		minY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
-		maxX -= MapView.MAP_ON_SCREEN_WIDTH/2;
-		maxY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
+		maxX += MapView.MAP_ON_SCREEN_WIDTH/2;
+		maxY += MapView.MAP_ON_SCREEN_HEIGHT/2;
 
 		//set the new bounds
 		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
@@ -384,7 +382,7 @@ public class MapView extends View
 			//calculate the delta movement in map space
 			PointF deltaInMapSpace = this.convertToMapSpace(deltaX, deltaY);
 			//increment the origin by the delta
-			this.incrementOrigin(deltaInMapSpace.x * MapView.SCROLL_SCALAR, deltaInMapSpace.y * MapView.SCROLL_SCALAR);
+			this.incrementOrigin(deltaInMapSpace.x, deltaInMapSpace.y);
 		}
 		else
 		{
