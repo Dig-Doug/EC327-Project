@@ -3,7 +3,6 @@ package com.beep_boop.Beep.levelSelect;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,11 +11,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 
-import com.beep_boop.Beep.R;
-
-public class MapView extends View
+public class MapView
 {
 	///-----Interfaces-----
 	public interface NodeClickListener
@@ -81,34 +77,15 @@ public class MapView extends View
 	private boolean mSelectedNodeState;
 	/** Holds the time until the next switch */
 	private float mSelectedNodeTime;
-
-
+	
+	
 	private int mNodeSizeX, mNodeSizeY;
 	private Paint mNodePaint;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
 	{
-		super(context, attrs);
 
-		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
-		try
-		{
-			//mShowText = a.getBoolean(R.styleable.PieChart_showText, false);
-			//mTextPos = a.getInteger(R.styleable.PieChart_labelPosition, 0);
-		}
-		finally
-		{
-			a.recycle();
-		}
-		
-		this.init();
-	}
-	
-	private void init()
-	{
-		mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mNodePaint.setColor(0xffffff);
 	}
 
 	///-----Functions-----
@@ -190,12 +167,12 @@ public class MapView extends View
 				}
 			}
 		}
-
+		
 		//subtract half the screen so that all nodes can be centered on
-		minX -= MapView.MAP_ON_SCREEN_WIDTH/2;
-		minY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
-		maxX += MapView.MAP_ON_SCREEN_WIDTH/2;
-		maxY += MapView.MAP_ON_SCREEN_HEIGHT/2;
+		minX -= this.MAP_ON_SCREEN_WIDTH/2;
+		minY -= this.MAP_ON_SCREEN_HEIGHT/2;
+		maxX += this.MAP_ON_SCREEN_WIDTH/2;
+		maxY += this.MAP_ON_SCREEN_HEIGHT/2;
 
 		//set the new bounds
 		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
@@ -213,7 +190,7 @@ public class MapView extends View
 		{
 			this.mOrigin.x = this.mOriginBounds.right;
 		}
-
+		
 		//bound in the y direction
 		if (this.mOrigin.y < this.mOriginBounds.bottom)
 		{
@@ -233,7 +210,7 @@ public class MapView extends View
 		//make sure the origin is within bounds
 		this.boundOrigin();
 		//redraw
-		this.requestRedraw();
+		this.invalidate();
 	}
 
 	//centers the view on the node
@@ -266,7 +243,7 @@ public class MapView extends View
 	private void drawNodesWithinView(Canvas canvas)
 	{
 		//@TODO
-
+		
 		//enumerate through all map nodes
 		for (int i = 0; i < this.mNodes.size(); i++)
 		{
@@ -279,7 +256,7 @@ public class MapView extends View
 				{
 					//draw it
 					PointF screenDrawCenter = this.convertToScreenSpace(node.getX(), node.getY());
-
+					
 					if (i == this.mSelectedNode)
 					{
 						//@TODO - animate the nodes
@@ -298,14 +275,12 @@ public class MapView extends View
 	}
 
 	//tells the map view to update all of the nodeÕs states and redraw
-	private void requestRedraw()
+	public void invalidate()
 	{
-		invalidate();
-		requestLayout();
+		//@TODO
 	}
 
 	//gets touch events for view
-	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
 		//result holds if the touch was processed by the view, which is all cases is yes
@@ -332,12 +307,6 @@ public class MapView extends View
 		}
 
 		return result;
-	}
-	
-	@Override
-	public boolean performClick()
-	{
-		return super.performClick();
 	}
 
 	//handles all touch down events
@@ -383,7 +352,7 @@ public class MapView extends View
 		//make sure the origin is within bounds
 		this.boundOrigin();
 		//redraw
-		this.requestRedraw();
+		this.invalidate();
 	}
 
 	//handles all touch up events
@@ -443,7 +412,7 @@ public class MapView extends View
 		float scaledY = aX + this.mOrigin.y;
 		return new PointF(scaledX, scaledY);
 	}
-
+	
 	private PointF convertToScreenSpace(float aX, float aY)
 	{
 		float scaledX = aX - this.mOrigin.x;

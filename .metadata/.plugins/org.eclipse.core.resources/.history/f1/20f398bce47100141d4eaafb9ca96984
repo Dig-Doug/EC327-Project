@@ -192,10 +192,10 @@ public class MapView extends View
 		}
 
 		//subtract half the screen so that all nodes can be centered on
-		minX -= MapView.MAP_ON_SCREEN_WIDTH/2;
-		minY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
-		maxX += MapView.MAP_ON_SCREEN_WIDTH/2;
-		maxY += MapView.MAP_ON_SCREEN_HEIGHT/2;
+		minX -= this.MAP_ON_SCREEN_WIDTH/2;
+		minY -= this.MAP_ON_SCREEN_HEIGHT/2;
+		maxX += this.MAP_ON_SCREEN_WIDTH/2;
+		maxY += this.MAP_ON_SCREEN_HEIGHT/2;
 
 		//set the new bounds
 		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
@@ -335,9 +335,9 @@ public class MapView extends View
 	}
 	
 	@Override
-	public boolean performClick()
+	public boolean performClick(MotionEvent aEvent)
 	{
-		return super.performClick();
+		return false;
 	}
 
 	//handles all touch down events

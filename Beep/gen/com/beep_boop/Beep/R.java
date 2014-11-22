@@ -78,4 +78,11 @@ public final class R {
          */
         public static final int AppTheme=0x7f070001;
     }
+    public static final class styleable {
+        /**  <attr name="showText" format="boolean" /> 
+         */
+        public static final int[] MapView = {
+            
+        };
+    };
 }

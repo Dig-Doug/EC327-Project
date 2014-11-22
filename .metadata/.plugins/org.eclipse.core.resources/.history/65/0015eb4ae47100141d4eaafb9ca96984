@@ -101,14 +101,6 @@ public class MapView extends View
 		{
 			a.recycle();
 		}
-		
-		this.init();
-	}
-	
-	private void init()
-	{
-		mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mNodePaint.setColor(0xffffff);
 	}
 
 	///-----Functions-----
@@ -192,10 +184,10 @@ public class MapView extends View
 		}
 
 		//subtract half the screen so that all nodes can be centered on
-		minX -= MapView.MAP_ON_SCREEN_WIDTH/2;
-		minY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
-		maxX += MapView.MAP_ON_SCREEN_WIDTH/2;
-		maxY += MapView.MAP_ON_SCREEN_HEIGHT/2;
+		minX -= this.MAP_ON_SCREEN_WIDTH/2;
+		minY -= this.MAP_ON_SCREEN_HEIGHT/2;
+		maxX += this.MAP_ON_SCREEN_WIDTH/2;
+		maxY += this.MAP_ON_SCREEN_HEIGHT/2;
 
 		//set the new bounds
 		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
@@ -233,7 +225,7 @@ public class MapView extends View
 		//make sure the origin is within bounds
 		this.boundOrigin();
 		//redraw
-		this.requestRedraw();
+		this.invalidate();
 	}
 
 	//centers the view on the node
@@ -298,14 +290,12 @@ public class MapView extends View
 	}
 
 	//tells the map view to update all of the node’s states and redraw
-	private void requestRedraw()
+	public void invalidate()
 	{
-		invalidate();
-		requestLayout();
+		//@TODO
 	}
 
 	//gets touch events for view
-	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
 		//result holds if the touch was processed by the view, which is all cases is yes
@@ -332,12 +322,6 @@ public class MapView extends View
 		}
 
 		return result;
-	}
-	
-	@Override
-	public boolean performClick()
-	{
-		return super.performClick();
 	}
 
 	//handles all touch down events
@@ -383,7 +367,7 @@ public class MapView extends View
 		//make sure the origin is within bounds
 		this.boundOrigin();
 		//redraw
-		this.requestRedraw();
+		this.invalidate();
 	}
 
 	//handles all touch up events
