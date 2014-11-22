@@ -53,7 +53,7 @@ public class MainActivity extends Activity
 		Button toMapButton = (Button) findViewById(R.id.mainActivity_toMapButton);
 		toMapButton.setOnClickListener(new OnClickListener()
 		{
-			
+			@Override 
 			public void onClick(View v)
 			{
 				Log.d(MainActivity.TAG, "To map button clicked");
