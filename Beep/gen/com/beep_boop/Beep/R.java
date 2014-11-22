@@ -13,14 +13,30 @@ public final class R {
         public static final int anim_fadeout=0x7f040001;
     }
     public static final class attr {
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int backgroundImage=0x7f010002;
+        /**  <attr name="showText" format="boolean" /> 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int nodeOffImage=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int nodeOnImage=0x7f010001;
     }
     public static final class color {
         public static final int launchActivity_backgroundColor=0x7f060000;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int launch_screen_logo=0x7f020001;
-        public static final int launch_screen_text_logo=0x7f020002;
+        public static final int background=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int launch_screen_logo=0x7f020002;
+        public static final int launch_screen_text_logo=0x7f020003;
+        public static final int node_off=0x7f020004;
+        public static final int node_on=0x7f020005;
     }
     public static final class id {
         public static final int aboutActivity_messageEditText=0x7f090000;
@@ -101,10 +117,54 @@ public final class R {
         public static final int AppTheme=0x7f080001;
     }
     public static final class styleable {
-        /**  <attr name="showText" format="boolean" /> 
+        /** Attributes that can be used with a MapView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #MapView_backgroundImage com.beep_boop.Beep:backgroundImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapView_nodeOffImage com.beep_boop.Beep:nodeOffImage}</code></td><td> <attr name="showText" format="boolean" /> </td></tr>
+           <tr><td><code>{@link #MapView_nodeOnImage com.beep_boop.Beep:nodeOnImage}</code></td><td></td></tr>
+           </table>
+           @see #MapView_backgroundImage
+           @see #MapView_nodeOffImage
+           @see #MapView_nodeOnImage
          */
         public static final int[] MapView = {
-            
+            0x7f010000, 0x7f010001, 0x7f010002
         };
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#backgroundImage}
+          attribute's value can be found in the {@link #MapView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.beep_boop.Beep:backgroundImage
+        */
+        public static final int MapView_backgroundImage = 2;
+        /**
+          <p>
+          @attr description
+           <attr name="showText" format="boolean" /> 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.beep_boop.Beep:nodeOffImage
+        */
+        public static final int MapView_nodeOffImage = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeOnImage}
+          attribute's value can be found in the {@link #MapView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.beep_boop.Beep:nodeOnImage
+        */
+        public static final int MapView_nodeOnImage = 1;
     };
 }

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.levelSelect.MapView"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 </qualifiedTypeNameHistroy>

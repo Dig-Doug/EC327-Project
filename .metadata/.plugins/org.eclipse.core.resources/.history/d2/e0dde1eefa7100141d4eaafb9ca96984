@@ -1,0 +1,15 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep">
+    
+    <com.beep_boop.Beep.levelSelect.MapView
+        android:id="@+id/mapActivity_mapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        app:nodeOffImage="@drawable/node_off"
+        app:nodeOnImage="@drawable/node_on" />
+
+</LinearLayout>
