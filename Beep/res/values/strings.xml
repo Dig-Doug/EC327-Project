@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Beep</string>
-    <string name="hello_world">Hello world!</string>
     <string name="mainActivity_toSettingsButton">Settings</string>
     <string name="mainActivity_toLaunchButton">Launch</string>
     <string name="title_activity_about">AboutActivity</string>
@@ -13,8 +12,21 @@
     <string name="aboutActivity_messageViewText">Enter a message!</string>
     <string name="aboutActivity_showMessageButtonText">Display Message</string>
     <string name="aboutActivity_messageEditTextPlaceholder">Type a message here</string>
+    
+    <!-- Map Activity -->
     <string name="title_activity_launch">LaunchActivity</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_start_level">StartLevelActivity</string>
+    
+    <!-- Start Screen Activity -->
+    <string name="startLevelActivityObject1">Apple</string>
+    <string name="startLevelActivityObject2">Viking</string>
+    <string name="startLevelActivityBackButton">back</string>
+    <string name="startLevelActivityClicks"> connections</string>
+    <string name="startLevelActivityClicksNumber">000</string>
+    <string name="startLevelActivityStartButton">Start!</string>
+    <string name="startLevelActivityPowerUpsButton">Power Ups</string>
+    
+    
 
 </resources>

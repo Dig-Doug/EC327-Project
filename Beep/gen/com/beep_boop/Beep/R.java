@@ -21,17 +21,28 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
         public static final int launch_screen_logo=0x7f020001;
         public static final int launch_screen_text_logo=0x7f020002;
+        public static final int start_screen_apple=0x7f020003;
+        public static final int start_screen_viking=0x7f020004;
     }
     public static final class id {
         public static final int aboutActivity_messageEditText=0x7f090000;
         public static final int aboutActivity_messageView=0x7f090001;
         public static final int aboutActivity_showMessage=0x7f090002;
+        public static final int button2=0x7f090011;
         public static final int launchActivity_logoImageView=0x7f090004;
         public static final int launchActivity_textImageView=0x7f090003;
         public static final int mainActivity_toLaunchButton=0x7f090006;
         public static final int mainActivity_toMapButton=0x7f090007;
         public static final int mainActivity_toSettingsButton=0x7f090005;
         public static final int mapActivity_mapView=0x7f090008;
+        public static final int startLevelActivity_objectOne=0x7f090009;
+        public static final int startLevelActivity_objectTwo=0x7f09000c;
+        public static final int startLevelBackButton=0x7f09000a;
+        public static final int startLevelClicks=0x7f09000e;
+        public static final int startLevelClicksNumber=0x7f09000f;
+        public static final int startLevelImage1=0x7f09000b;
+        public static final int startLevelImage2=0x7f09000d;
+        public static final int startLevelStartButton=0x7f090010;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
@@ -44,21 +55,31 @@ public final class R {
         public static final int nodes_test_file=0x7f050000;
     }
     public static final class string {
-        public static final int aboutActivity_messageEditTextPlaceholder=0x7f070009;
+        public static final int aboutActivity_messageEditTextPlaceholder=0x7f070008;
         /**  About Activity 
          */
-        public static final int aboutActivity_messageViewText=0x7f070007;
-        public static final int aboutActivity_showMessageButtonText=0x7f070008;
+        public static final int aboutActivity_messageViewText=0x7f070006;
+        public static final int aboutActivity_showMessageButtonText=0x7f070007;
         public static final int app_name=0x7f070000;
-        public static final int content_description_place_holder=0x7f070005;
-        public static final int hello_world=0x7f070001;
-        public static final int mainActivity_toLaunchButton=0x7f070003;
-        public static final int mainActivity_toMap=0x7f070006;
-        public static final int mainActivity_toSettingsButton=0x7f070002;
-        public static final int title_activity_about=0x7f070004;
-        public static final int title_activity_launch=0x7f07000a;
-        public static final int title_activity_map=0x7f07000b;
-        public static final int title_activity_start_level=0x7f07000c;
+        public static final int content_description_place_holder=0x7f070004;
+        public static final int mainActivity_toLaunchButton=0x7f070002;
+        public static final int mainActivity_toMap=0x7f070005;
+        public static final int mainActivity_toSettingsButton=0x7f070001;
+        public static final int startLevelActivityBackButton=0x7f07000e;
+        public static final int startLevelActivityClicks=0x7f07000f;
+        public static final int startLevelActivityClicksNumber=0x7f070010;
+        /**  Start Screen Activity 
+         */
+        public static final int startLevelActivityObject1=0x7f07000c;
+        public static final int startLevelActivityObject2=0x7f07000d;
+        public static final int startLevelActivityPowerUpsButton=0x7f070012;
+        public static final int startLevelActivityStartButton=0x7f070011;
+        public static final int title_activity_about=0x7f070003;
+        /**  Map Activity 
+         */
+        public static final int title_activity_launch=0x7f070009;
+        public static final int title_activity_map=0x7f07000a;
+        public static final int title_activity_start_level=0x7f07000b;
     }
     public static final class style {
         /** 

@@ -5,8 +5,91 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <TextView
+        android:id="@+id/startLevelActivity_objectOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_above="@+id/startLevelBackButton"
+        android:layout_alignRight="@+id/startLevelImage1"
+        android:layout_marginBottom="126dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/startLevelActivityObject1"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/startLevelActivity_objectTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/startLevelActivity_objectOne"
+        android:layout_alignBottom="@+id/startLevelActivity_objectOne"
+        android:layout_alignLeft="@+id/startLevelImage2"
+        android:layout_marginLeft="15dp"
+        android:text="@string/startLevelActivityObject2"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/startLevelImage2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/startLevelImage1"
+        android:layout_marginRight="44dp"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/start_screen_viking" />
+
+    <ImageView
+        android:id="@+id/startLevelImage1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/startLevelActivity_objectOne"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="28dp"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/start_screen_apple" />
+
+    <TextView
+        android:id="@+id/startLevelClicks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startLevelImage2"
+        android:layout_marginBottom="52dp"
+        android:layout_toRightOf="@+id/startLevelImage1"
+        android:text="@string/startLevelActivityClicks"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/startLevelClicksNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/startLevelClicks"
+        android:layout_alignBottom="@+id/startLevelClicks"
+        android:layout_toLeftOf="@+id/startLevelClicks"
+        android:text="@string/startLevelActivityClicksNumber"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/startLevelBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/startLevelImage1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:text="@string/startLevelActivityBackButton" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/startLevelActivity_objectTwo"
+        android:layout_below="@+id/startLevelActivity_objectOne"
+        android:text="@string/startLevelActivityPowerUpsButton" />
+
+    <Button
+        android:id="@+id/startLevelStartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startLevelActivity_objectTwo"
+        android:layout_marginTop="34dp"
+        android:layout_toLeftOf="@+id/button2"
+        android:text="@string/startLevelActivityStartButton" />
 
 </RelativeLayout>

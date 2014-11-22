@@ -35,7 +35,7 @@
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name=".StartLevelActivity"
+            android:name="com.beep_boop.Beep.startScreen.StartLevelActivity"
             android:label="@string/title_activity_start_level" >
         </activity>
     </application>
