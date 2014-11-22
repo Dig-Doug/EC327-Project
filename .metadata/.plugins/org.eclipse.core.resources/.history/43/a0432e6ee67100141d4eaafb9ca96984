@@ -433,8 +433,7 @@ public class MapView extends View
 					//user can click node
 					Log.v(MapView.TAG, "User clicked node with key: " + nodeNearLocation.getLevelKey());
 					//click the node
-					if (this.mListener != null)
-						this.mListener.mapViewUserDidClickNode(this, nodeNearLocation);
+					this.mListener.mapViewUserDidClickNode(this, nodeNearLocation);
 					//set this node as the selected node
 					this.mSelectedNode = this.mNodes.indexOf(nodeNearLocation);
 					//tell the view to center on that node
