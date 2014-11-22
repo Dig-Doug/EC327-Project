@@ -9,7 +9,7 @@ public class SettingsScreen extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings_screen);
+		setContentView(R.layout.activity_settings);
 	}
 	
 	public void returnfromsettings(View view){
