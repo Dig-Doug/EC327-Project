@@ -9,8 +9,8 @@
                 <locY>0.1</locY>
                 <levelKey>level_hungry_hippos</levelKey>
         </node>
-        <node>
-                <locX>1.5</locX>
+                <node>
+                <locX>0.5</locX>
                 <locY>0.7</locY>
                 <levelKey>level_woot</levelKey>
         </node>

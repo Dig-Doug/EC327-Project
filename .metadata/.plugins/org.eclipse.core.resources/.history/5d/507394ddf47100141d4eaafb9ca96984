@@ -86,7 +86,7 @@ public class MapView extends View
 	private int mNodeSizeX, mNodeSizeY;
 	private Paint mNodePaint;
 	
-	private static final float SCROLL_SCALAR = 2.0f;
+	private static final float SCROLL_SCALAR = 0.0000000005f;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -109,9 +109,9 @@ public class MapView extends View
 	
 	private void init()
 	{
-		this.mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		this.mNodePaint.setColor(0xf00ff0);
-		this.mNodePaint.setAlpha(255);
+		mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mNodePaint.setColor(0xf00ff0);
+		mNodePaint.setAlpha(255);
 		this.mNodePaint.setTextSize(32.f);
 	}
 
@@ -224,7 +224,7 @@ public class MapView extends View
 		maxY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
 
 		//set the new bounds
-		this.mOriginBounds = new RectF(minX, maxY, maxX, minY);
+		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
 	}
 
 	//ensures the view’s origin is within the bounds
@@ -382,10 +382,9 @@ public class MapView extends View
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
 			//calculate the delta movement in map space
-			float scaledX = (deltaX / this.getWidth()) * MapView.MAP_ON_SCREEN_WIDTH;
-			float scaledY = (deltaY / this.getHeight()) * MapView.MAP_ON_SCREEN_HEIGHT;
+			PointF deltaInMapSpace = this.convertToMapSpace(deltaX, deltaY);
 			//increment the origin by the delta
-			this.incrementOrigin(scaledX * MapView.SCROLL_SCALAR, scaledY * MapView.SCROLL_SCALAR);
+			this.incrementOrigin(deltaInMapSpace.x * MapView.SCROLL_SCALAR, deltaInMapSpace.y * MapView.SCROLL_SCALAR);
 		}
 		else
 		{

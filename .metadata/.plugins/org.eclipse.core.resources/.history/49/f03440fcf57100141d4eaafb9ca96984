@@ -86,7 +86,7 @@ public class MapView extends View
 	private int mNodeSizeX, mNodeSizeY;
 	private Paint mNodePaint;
 	
-	private static final float SCROLL_SCALAR = 2.0f;
+	private static final float SCROLL_SCALAR = 0.5f;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -109,9 +109,9 @@ public class MapView extends View
 	
 	private void init()
 	{
-		this.mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		this.mNodePaint.setColor(0xf00ff0);
-		this.mNodePaint.setAlpha(255);
+		mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mNodePaint.setColor(0xf00ff0);
+		mNodePaint.setAlpha(255);
 		this.mNodePaint.setTextSize(32.f);
 	}
 

@@ -109,9 +109,9 @@ public class MapView extends View
 	
 	private void init()
 	{
-		this.mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		this.mNodePaint.setColor(0xf00ff0);
-		this.mNodePaint.setAlpha(255);
+		mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mNodePaint.setColor(0xf00ff0);
+		mNodePaint.setAlpha(255);
 		this.mNodePaint.setTextSize(32.f);
 	}
 
