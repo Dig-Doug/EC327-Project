@@ -20,16 +20,16 @@ public class MapView
 		public boolean mapViewUserCanClickNode(MapView aMapView, MapNode aNode);
 		public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode);
 	}
-
+	
 	public interface NodeStatusDataSource
 	{
 		public boolean mapViewIsNodeDone(MapView aMapView, MapNode aNode);
 	}
-
+	
 	///-----Members-----
 	/** Holds the tag used for logging */
 	private static final String TAG = "MapView";
-
+	
 	/** Holds the listener who handles node clicks */
 	private NodeClickListener mListener = null;
 	/** Holds the data source */
@@ -50,17 +50,21 @@ public class MapView
 
 	/** Holds the minimum distance the finger must move to be considered a scroll */
 	private static final float mMinScrollDelta = 5.0f;
+	/** Holds if we’re currently handling a touch */
+	private boolean mTouched = false;
+	/** Holds the starting point of a touch in screen coords */
+	private Point mTouchStartPoint;
 	/** Holds the last registered point of the touch in screen coords */
-	private PointF mLastTouchPoint;
+	private Point mTouchLastPoint;
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 	/** Holds the maximum distance the finger can be from a node to click it*/
 	private static final float mMaxNodeClickDistance = 10.0f;
 
 	/** Holds the amount of the map on the screen width wise */
-	private static final float MAP_ON_SCREEN_WIDTH = 1.0f;
+	private static final float MAP_ON_SCREEN_WIDTH;
 	/** Holds the amount of the map on the screen height wise */
-	private static final float MAP_ON_SCREEN_HEIGHT = 1.0f;
+	private static final float MAP_ON_SCREEN_HEIGHT;
 
 	/** Hold the image to be drawn in the background */
 	private Bitmap mBackgroundImage; // This may need to be broken up into multiple images, in which case an array should be used
@@ -81,9 +85,9 @@ public class MapView
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
 	{
-
+		
 	}
-
+	
 	///-----Functions-----
 	//Implements LevelDoneListener interface
 
@@ -92,7 +96,7 @@ public class MapView
 	{
 		this.mListener = aListener;
 	}
-
+	
 	//sets the data source
 	public void setDataSource(NodeStatusDataSource aDataSource)
 	{
@@ -107,7 +111,7 @@ public class MapView
 		//recalculate the bounding box
 		this.calculateOriginBounds();
 	}
-
+	
 	//adds multiple nodes
 	public void addNodes(ArrayList<MapNode> aNodeArray)
 	{
@@ -116,7 +120,7 @@ public class MapView
 		//recalculate the bounding box
 		this.calculateOriginBounds();
 	}
-
+	
 	//gets the state of a node from the DataSource
 	private boolean getStateForNode(MapNode aNode)
 	{
@@ -137,67 +141,48 @@ public class MapView
 		float maxX = 0.0f, maxY = 0.0f;
 		if (this.mNodes.size() != 0)
 		{
-			//set initial values for the minds
-			minX = this.mNodes.get(0).getX();
-			minY = this.mNodes.get(0).getY();
-			maxX = this.mNodes.get(0).getX();
-			maxY = this.mNodes.get(0).getY();
-			//find the max & min X & Y values
-			for (MapNode node : this.mNodes)
+		//set initial values for the minds
+		minX = this.mNodes.get(0).getX();
+		minY = this.mNodes.get(0).getY();
+		maxX = this.mNodes.get(0).getX();
+		maxY = this.mNodes.get(0).getY();
+		//find the max & min X & Y values
+		for (MapNode node : this.mNodes)
+		{
+			if (node.getX() < minX)
 			{
-				if (node.getX() < minX)
-				{
-					minX = node.getX();
-				}
-				else if (node.getX() > maxX)
-				{
-					maxX = node.getX();
-				}
-				if (node.getY() < minY)
-				{
-					minY = node.getY();
-				}
-				else if (node.getY() > maxY)
-				{
-					maxY = node.getY();
-				}
+				minX = node.getX();
+			}
+			else if (node.getX() > maxX)
+			{
+				maxX = node.getX();
+			}
+			if (node.getY() < minY)
+			{
+				minY = node.getY();
+			}
+			else if (node.getY() > maxY)
+			{
+				maxY = node.getY();
 			}
 		}
-		
+		}
 		//subtract half the screen so that all nodes can be centered on
 		minX -= this.MAP_ON_SCREEN_WIDTH/2;
 		minY -= this.MAP_ON_SCREEN_HEIGHT/2;
 		maxX += this.MAP_ON_SCREEN_WIDTH/2;
 		maxY += this.MAP_ON_SCREEN_HEIGHT/2;
-
+		
 		//set the new bounds
 		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
 	}
-
+	
 	//ensures the view’s origin is within the bounds
 	private void boundOrigin()
 	{
-		//bound in the x direction
-		if (this.mOrigin.x < this.mOriginBounds.left)
-		{
-			this.mOrigin.x = this.mOriginBounds.left;
-		}
-		else if (this.mOrigin.x > this.mOriginBounds.right)
-		{
-			this.mOrigin.x = this.mOriginBounds.right;
-		}
-		
-		//bound in the y direction
-		if (this.mOrigin.y < this.mOriginBounds.bottom)
-		{
-			this.mOrigin.y = this.mOriginBounds.bottom;
-		}
-		else if (this.mOrigin.y > this.mOriginBounds.top)
-		{
-			this.mOrigin.y = this.mOriginBounds.top;
-		}
+		//@TODO
 	}
-
+	
 	//sets the origin of the view
 	public void setOrigin(PointF aOrigin)
 	{
@@ -208,7 +193,7 @@ public class MapView
 		//redraw
 		this.invalidate();
 	}
-
+	
 	//centers the view on the node
 	private void centerOnNode(int aIndex)
 	{
@@ -225,19 +210,19 @@ public class MapView
 	{
 		//@TODO
 	}
-
+	
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
 		//@TODO
 	}
-
+	
 	//draws all the nodes that are within the bounds of the screen
 	private void drawNodesWithinView(Canvas canvas)
 	{
 		//@TODO
 	}
-
+	
 	//tells the mapview to update all of the node’s states and redraw
 	public void invalidate()
 	{
@@ -269,28 +254,27 @@ public class MapView
 			Log.e(MapView.TAG, "Unknown motion event type: " + event.getAction());
 			result = false;
 		}
-
+		
 		return result;
 	}
-
+	
 	//handles all touch down events
 	private void touchDown(MotionEvent aEvent)
 	{
-		this.mLastTouchPoint.x = aEvent.getX();
-		this.mLastTouchPoint.y = aEvent.getY();
+		
 	}
 
 	//handles all touch moved events
 	private void touchMoved(MotionEvent aEvent)
 	{
 		float deltaX = aEvent.getX(), deltaY = aEvent.getY();
-
+		
 		//check if we are already scrolling
 		if (this.mScrolling)
 		{
 			//increment the last touch point
-			this.mLastTouchPoint.x += deltaX;
-			this.mLastTouchPoint.y += deltaY;
+			this.mTouchLastPoint.x += deltaX;
+			this.mTouchLastPoint.y += deltaY;
 			//calculate the delta movement in map space
 			PointF deltaInMapSpace = this.convertToMapSpace(deltaX, deltaY);
 			//increment the origin by the delta
@@ -306,7 +290,7 @@ public class MapView
 			}
 		}
 	}
-
+	
 	//increments the origin
 	private void incrementOrigin(float aX, float aY)
 	{
@@ -331,7 +315,7 @@ public class MapView
 		{
 			//if we're not, convert the touch point to map space
 			PointF mapSpace = this.convertToMapSpace(aEvent.getX(), aEvent.getY());
-
+			
 			//get the nearest node
 			MapNode nodeNearLocation = this.getNodeNearPoint(mapSpace);
 			if (nodeNearLocation != null)
@@ -354,7 +338,7 @@ public class MapView
 				{
 					//can't click node
 					Log.v(MapView.TAG, "User cannot click node with key: " + nodeNearLocation.getLevelKey());
-
+					
 					//@TODO - play sound?
 				}
 			}
@@ -363,17 +347,17 @@ public class MapView
 				//no node to click, do nothing
 			}
 		}
-
+		
 		//touch ended, reset all variables
 		this.resetTouchVariables();
 	}
-
+	
 	//converts a point in touch space to map space
 	private PointF convertToMapSpace(float aX, float aY)
 	{
 		//@TODO
 	}
-
+	
 	//find a node near the location. If there isn’t a node, returns null
 	private MapNode getNodeNearPoint(PointF aPoint)
 	{
@@ -387,10 +371,10 @@ public class MapView
 				break;
 			}
 		}
-
+		
 		return result;
 	}
-
+	
 	//resets all touch variables
 	private void resetTouchVariables()
 	{

@@ -50,17 +50,21 @@ public class MapView
 
 	/** Holds the minimum distance the finger must move to be considered a scroll */
 	private static final float mMinScrollDelta = 5.0f;
+	/** Holds if we’re currently handling a touch */
+	private boolean mTouched = false;
+	/** Holds the starting point of a touch in screen coords */
+	private Point mTouchStartPoint;
 	/** Holds the last registered point of the touch in screen coords */
-	private PointF mLastTouchPoint;
+	private Point mTouchLastPoint;
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 	/** Holds the maximum distance the finger can be from a node to click it*/
 	private static final float mMaxNodeClickDistance = 10.0f;
 
 	/** Holds the amount of the map on the screen width wise */
-	private static final float MAP_ON_SCREEN_WIDTH = 1.0f;
+	private static final float MAP_ON_SCREEN_WIDTH;
 	/** Holds the amount of the map on the screen height wise */
-	private static final float MAP_ON_SCREEN_HEIGHT = 1.0f;
+	private static final float MAP_ON_SCREEN_HEIGHT;
 
 	/** Hold the image to be drawn in the background */
 	private Bitmap mBackgroundImage; // This may need to be broken up into multiple images, in which case an array should be used
@@ -177,25 +181,7 @@ public class MapView
 	//ensures the view’s origin is within the bounds
 	private void boundOrigin()
 	{
-		//bound in the x direction
-		if (this.mOrigin.x < this.mOriginBounds.left)
-		{
-			this.mOrigin.x = this.mOriginBounds.left;
-		}
-		else if (this.mOrigin.x > this.mOriginBounds.right)
-		{
-			this.mOrigin.x = this.mOriginBounds.right;
-		}
-		
-		//bound in the y direction
-		if (this.mOrigin.y < this.mOriginBounds.bottom)
-		{
-			this.mOrigin.y = this.mOriginBounds.bottom;
-		}
-		else if (this.mOrigin.y > this.mOriginBounds.top)
-		{
-			this.mOrigin.y = this.mOriginBounds.top;
-		}
+		//@TODO
 	}
 
 	//sets the origin of the view
@@ -276,8 +262,7 @@ public class MapView
 	//handles all touch down events
 	private void touchDown(MotionEvent aEvent)
 	{
-		this.mLastTouchPoint.x = aEvent.getX();
-		this.mLastTouchPoint.y = aEvent.getY();
+
 	}
 
 	//handles all touch moved events
@@ -289,8 +274,8 @@ public class MapView
 		if (this.mScrolling)
 		{
 			//increment the last touch point
-			this.mLastTouchPoint.x += deltaX;
-			this.mLastTouchPoint.y += deltaY;
+			this.mTouchLastPoint.x += deltaX;
+			this.mTouchLastPoint.y += deltaY;
 			//calculate the delta movement in map space
 			PointF deltaInMapSpace = this.convertToMapSpace(deltaX, deltaY);
 			//increment the origin by the delta
