@@ -41,13 +41,14 @@ public class MapNodeLoader
 	 */
 	public static ArrayList<MapNode> parseFile(InputStream aIn)
 	{
+		ArrayList<MapNode> results = null;
 		try 
 		{
 			XmlPullParser aParser = Xml.newPullParser();
 			aParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 			aParser.setInput(aIn, null);
 			aParser.nextTag();
-			return parseNodes(aParser);
+			results = parseNodes(aParser);
 		} 
 		catch(XmlPullParserException e)
 		{
@@ -69,7 +70,7 @@ public class MapNodeLoader
 			}
 		}
 		
-		return null;
+		return results;
 	}
 
 	/** Reads all the nodes

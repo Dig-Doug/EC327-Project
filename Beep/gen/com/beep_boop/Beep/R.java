@@ -29,26 +29,30 @@ public final class R {
         public static final int launchActivity_logoImageView=0x7f080004;
         public static final int launchActivity_textImageView=0x7f080003;
         public static final int mainActivity_toLaunchButton=0x7f080006;
+        public static final int mainActivity_toMapButton=0x7f080007;
         public static final int mainActivity_toSettingsButton=0x7f080005;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
         public static final int activity_launch=0x7f030001;
         public static final int activity_main=0x7f030002;
+        public static final int activity_map=0x7f030003;
     }
     public static final class string {
-        public static final int aboutActivity_messageEditTextPlaceholder=0x7f060008;
+        public static final int aboutActivity_messageEditTextPlaceholder=0x7f060009;
         /**  About Activity 
          */
-        public static final int aboutActivity_messageViewText=0x7f060006;
-        public static final int aboutActivity_showMessageButtonText=0x7f060007;
+        public static final int aboutActivity_messageViewText=0x7f060007;
+        public static final int aboutActivity_showMessageButtonText=0x7f060008;
         public static final int app_name=0x7f060000;
         public static final int content_description_place_holder=0x7f060005;
         public static final int hello_world=0x7f060001;
         public static final int mainActivity_toLaunchButton=0x7f060003;
+        public static final int mainActivity_toMap=0x7f060006;
         public static final int mainActivity_toSettingsButton=0x7f060002;
         public static final int title_activity_about=0x7f060004;
-        public static final int title_activity_launch=0x7f060009;
+        public static final int title_activity_launch=0x7f06000a;
+        public static final int title_activity_map=0x7f06000b;
     }
     public static final class style {
         /** 

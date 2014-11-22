@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.beep_boop.Beep.launch.LaunchActivity;
+import com.beep_boop.Beep.levelSelect.MapActivity;
 
 public class MainActivity extends Activity
 {
@@ -47,6 +48,21 @@ public class MainActivity extends Activity
 				Intent toLaunch = new Intent(THIS, LaunchActivity.class);
 				startActivity(toLaunch);
 			}
+		});
+		
+		Button toMapButton = (Button) findViewById(R.id.mainActivity_toMapButton);
+		toMapButton.setOnClickListener(new OnClickListener()
+		{
+			
+			public void onClick(View v)
+			{
+				Log.d(MainActivity.TAG, "To map button clicked");
+				
+				Intent toMap = new Intent(THIS, MapActivity.class);
+				startActivity(toMap); 
+				
+			}
+				
 		});
 		
 	}
