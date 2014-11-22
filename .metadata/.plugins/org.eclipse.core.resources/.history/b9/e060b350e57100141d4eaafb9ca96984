@@ -133,8 +133,6 @@ public class MapView extends View
 		this.mNodes.add(aNode);
 		//recalculate the bounding box
 		this.calculateOriginBounds();
-		//update all states
-		this.updateStates();
 	}
 
 	//adds multiple nodes
@@ -144,23 +142,6 @@ public class MapView extends View
 		this.mNodes.addAll(aNodeArray);
 		//recalculate the bounding box
 		this.calculateOriginBounds();
-		//update all states
-		this.updateStates();
-	}
-	
-	//gets the states for all nodes
-	private void updateStates()
-	{
-		//remove all old states
-		this.mNodeStates.clear();
-		//enumerate through all nodes
-		for (MapNode node : this.mNodes)
-		{
-			//get state from data source
-			boolean state = this.mDataSource.mapViewIsNodeDone(this, node);
-			//save data
-			this.mNodeStates.add(state);
-		}
 	}
 
 	//gets the state of a node from the DataSource
