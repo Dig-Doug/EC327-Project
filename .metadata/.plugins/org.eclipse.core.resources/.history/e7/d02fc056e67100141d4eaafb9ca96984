@@ -157,7 +157,7 @@ public class MapView extends View
 		for (MapNode node : this.mNodes)
 		{
 			//get state from data source
-			boolean state = this.getStateForNode(node);
+			boolean state = this.mDataSource.mapViewIsNodeDone(this, node);
 			//save data
 			this.mNodeStates.add(state);
 		}
@@ -166,10 +166,7 @@ public class MapView extends View
 	//gets the state of a node from the DataSource
 	private boolean getStateForNode(MapNode aNode)
 	{
-		boolean result = false;
-		if (this.mDataSource != null)
-			result = this.mDataSource.mapViewIsNodeDone(this, aNode);
-		return result;
+		return this.mDataSource.mapViewIsNodeDone(this, aNode);
 	}
 
 	//sets the selected node
