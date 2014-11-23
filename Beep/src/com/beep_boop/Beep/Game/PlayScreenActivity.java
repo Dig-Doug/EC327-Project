@@ -31,7 +31,7 @@ public class PlayScreenActivity extends Activity {
 		InputStream in = null;
 		try 
 		{
-			in = getResources().openRawResource(R.raw.test_file);
+			in = getResources().openRawResource(R.raw.matthew_mcconaughey_zurich);
 			
 			wikiData = PlayScreenParser.parseFile(in);
 		}

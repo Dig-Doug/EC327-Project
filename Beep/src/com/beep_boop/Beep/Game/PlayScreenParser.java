@@ -15,12 +15,12 @@ public class PlayScreenParser {
 	///-----Members-----
 	private static final String TAG = "playScreenParser"; 
 	private static final String NAMESPACE = null;
-	private static final String TAG_WORD = "word";
-	private static final String TAG_WORD_ATRB_TITLE = "title";
-	//private static final String TAG_LINKCOUNT = "linkCount"; 
-	private static final String TAG_LINKS = "links";
-	private static final String TAG_LINK = "link"; 
-	private static final String TAG_LINK_ATRB_COUNT = "count"; 
+	private static final String TAG_WORD = "w";
+	private static final String TAG_WORD_ATRB_TITLE = "t";
+	//private static final String TAG_LINKCOUNT = "lc"; 
+	private static final String TAG_LINKS = "ls";
+	private static final String TAG_LINK = "l"; 
+	private static final String TAG_LINK_ATRB_COUNT = "c"; 
 
 	public static Hashtable<String, Hashtable<String, Integer>> parseFile(InputStream aIn)
 	{
