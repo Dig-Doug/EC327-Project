@@ -120,4 +120,12 @@ public class PlayView extends View
 	{
 		
 	}
+
+	//resets all touch variables
+	private void resetTouchVariables()
+	{
+		//reset variables here as needed
+		this.mScrolling = false;
+		this.mLastTouchPoint = new PointF(-1.0f, -1.0f);
+	}
 }

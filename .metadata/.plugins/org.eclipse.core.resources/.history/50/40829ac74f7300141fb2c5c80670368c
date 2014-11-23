@@ -118,6 +118,25 @@ public class PlayView extends View
 	//handles all touch up events
 	private void touchUp(MotionEvent aEvent)
 	{
-		
+		//check if we are scrolling
+		if (this.mScrolling)
+		{
+			//do nothing
+		}
+		else
+		{
+
+		}
+
+		//touch ended, reset all variables
+		this.resetTouchVariables();
+	}
+
+	//resets all touch variables
+	private void resetTouchVariables()
+	{
+		//reset variables here as needed
+		this.mScrolling = false;
+		this.mLastTouchPoint = new PointF(-1.0f, -1.0f);
 	}
 }

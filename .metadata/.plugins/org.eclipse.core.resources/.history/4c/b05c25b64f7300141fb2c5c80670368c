@@ -20,7 +20,17 @@ public class PlayView extends View
 	///-----Members-----
 	/** Holds the tag used for logging */
 	private static final String TAG = "PlayView";
-
+	/** Holds the view origin in map space */
+	private PointF mOrigin = new PointF(0.0f, 0.0f);
+	/** Holds the minimum distance the finger must move to be considered a scroll */
+	private static final float mMinScrollDelta = 5.0f;
+	/** Holds the last registered point of the touch in screen coords */
+	private PointF mLastTouchPoint = new PointF();
+	/** Holds whether or not we are scrolling */
+	private boolean mScrolling; 
+	/** Hold the image to be drawn in the background */
+	private Bitmap mBackgroundImage; // This may need to be broken up into multiple images, in which case an array should be used
+	
 	private Paint mTextPaint;
 	
 	///-----Constructors-----
@@ -31,7 +41,8 @@ public class PlayView extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
 		try
 		{
-			
+			Drawable backgroundImage = a.getDrawable(R.styleable.MapView_backgroundImage);
+			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
 		}
 		catch (Exception e)
 		{
@@ -53,6 +64,15 @@ public class PlayView extends View
 	}
 
 	///-----Functions-----
+	//sets the origin of the view
+	public void setOrigin(PointF aOrigin)
+	{
+		//set the origin
+		this.mOrigin = aOrigin;
+		//redraw
+		this.requestRedraw();
+	}
+
 	//overridden view method
 	protected void onDraw(Canvas canvas)
 	{
@@ -63,7 +83,20 @@ public class PlayView extends View
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
-		
+		if (this.mBackgroundImage != null)
+		{
+			for (int i = 0; i < getWidth(); i+=this.mBackgroundImage.getWidth())
+			{
+				for (int j = 0; j < getHeight(); j +=this.mBackgroundImage.getHeight())
+				{
+					canvas.drawBitmap(this.mBackgroundImage, i, j, null);
+				}
+			}
+		}
+
+		//@TODO
+		String text = "x: " + this.mOrigin.x + " y: " + this.mOrigin.y;
+		canvas.drawText(text, 0, text.length() - 1, 0, 50, this.mTextPaint);
 	}
 
 	//tells the map view to update all of the node�s states and redraw
@@ -106,7 +139,8 @@ public class PlayView extends View
 	//handles all touch down events
 	private void touchDown(MotionEvent aEvent)
 	{
-		
+		this.mLastTouchPoint.x = aEvent.getX();
+		this.mLastTouchPoint.y = aEvent.getY();
 	}
 
 	//handles all touch moved events
@@ -118,6 +152,25 @@ public class PlayView extends View
 	//handles all touch up events
 	private void touchUp(MotionEvent aEvent)
 	{
-		
+		//check if we are scrolling
+		if (this.mScrolling)
+		{
+			//do nothing
+		}
+		else
+		{
+
+		}
+
+		//touch ended, reset all variables
+		this.resetTouchVariables();
+	}
+
+	//resets all touch variables
+	private void resetTouchVariables()
+	{
+		//reset variables here as needed
+		this.mScrolling = false;
+		this.mLastTouchPoint = new PointF(-1.0f, -1.0f);
 	}
 }
