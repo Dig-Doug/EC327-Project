@@ -41,22 +41,38 @@ public class MapNodeLoader {
 	 *            - The input stream to read from
 	 * @return ArrayList<MapNode> - Array of parsed map nodes
 	 */
-	public static ArrayList<MapNode> parseFile(InputStream aIn) {
+	public static ArrayList<MapNode> parseFile(InputStream aIn) 
+	{
 		ArrayList<MapNode> results = null;
-		try {
+		//Set up the Parser
+		try 
+		{
+			//Create a parser
 			XmlPullParser aParser = Xml.newPullParser();
 			aParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+			//We set the input to our parser as the input file
 			aParser.setInput(aIn, null);
+			//Advance our parser to the next tag
 			aParser.nextTag();
+			//Call the parseNodes function to obtain an arraylist of our nodes
 			results = parseNodes(aParser);
-		} catch (XmlPullParserException e) {
+		} 
+		catch (XmlPullParserException e) 
+		{
 			Log.e(TAG, "The XmlPullParserException was caught.");
-		} catch (IOException i) {
+		} 
+		catch (IOException i) 
+		{
 			Log.e(TAG, "The IOException was caught.");
-		} finally {
-			try {
+		} 
+		finally 
+		{
+			try 
+			{
 				aIn.close();
-			} catch (IOException i) {
+			} 
+			catch (IOException i) 
+			{
 				Log.e(TAG, "The IOException was caught from the aIn.close().");
 			}
 		}
@@ -72,13 +88,15 @@ public class MapNodeLoader {
 	 * @return ArrayList<MapNode> - Array of {@link MapNode}s
 	 */
 
-	private static ArrayList<MapNode> parseNodes(XmlPullParser aParser)
-			throws XmlPullParserException, IOException {
+	private static ArrayList<MapNode> parseNodes(XmlPullParser aParser) throws XmlPullParserException, IOException 
+	{
+		//Parses the content of a "nodes"
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_NODES_ARRAY);
 		ArrayList<MapNode> nodeList = new ArrayList<MapNode>();
-		// Create a new node until we hit the </nodes> end tag
+		//As long as we are not at an end-tag we will keep creating nodes
 		while (aParser.next() != XmlPullParser.END_TAG)
 		{
+			//If we are in blank space, keep advancing the parser until we hit a start tag
 			if (aParser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
@@ -92,10 +110,11 @@ public class MapNodeLoader {
 		return nodeList;
 	}
 
-	private static MapNode parseNode(XmlPullParser aParser)
-			throws XmlPullParserException, IOException {
-
+	private static MapNode parseNode(XmlPullParser aParser) throws XmlPullParserException, IOException 
+	{
+		//Parses the content of a "node"
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_NODE);
+		//Advance parser to the next tag
 		aParser.nextTag();
 		float xVal = readFloat(aParser, TAG_NODE_LOCATION_X);
 		aParser.nextTag();
@@ -108,10 +127,10 @@ public class MapNodeLoader {
 		return new MapNode(xVal, yVal, levelKey);
 	}
 
-	private static float readFloat(XmlPullParser aParser, String aInsideTag)
-			throws XmlPullParserException, IOException
-			{
+	private static float readFloat(XmlPullParser aParser, String aInsideTag) throws XmlPullParserException, IOException
+	{
 		float floatVal = 0.0f;
+		//Parses the contents of a user defined tag
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, aInsideTag);
 		if (aParser.next() == XmlPullParser.TEXT)
 		{
@@ -123,12 +142,13 @@ public class MapNodeLoader {
 		}
 
 		return floatVal;
-			}
+	}
 
 	private static String readString(XmlPullParser aParser, String aInsideTag)
 			throws XmlPullParserException, IOException
-			{
+	{
 		String stringRead = null;
+		//Parses the contents of a user defined tag
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, aInsideTag);
 		if (aParser.next() == XmlPullParser.TEXT)
 		{
@@ -137,6 +157,6 @@ public class MapNodeLoader {
 			aParser.require(XmlPullParser.END_TAG, NAMESPACE, aInsideTag);
 		}
 		return stringRead;
-			}
+	}
 
 }
