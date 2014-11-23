@@ -9,8 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        custom:backgroundImage="@drawable/map_background"
         custom:nodeOffImage="@drawable/node_off"
-        custom:nodeOnImage="@drawable/node_on" />
+        custom:nodeOnImage="@drawable/node_on"
+        custom:backgroundImage="@drawable/background" />
 
 </LinearLayout>

@@ -31,10 +31,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int launchActivity_backgroundColor=0x7f060000;
     }
     public static final class drawable {
-        public static final int background=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int launch_screen_logo=0x7f020002;
-        public static final int launch_screen_text_logo=0x7f020003;
+        public static final int ic_launcher=0x7f020000;
+        public static final int launch_screen_logo=0x7f020001;
+        public static final int launch_screen_text_logo=0x7f020002;
+        public static final int map_background=0x7f020003;
         public static final int node_off=0x7f020004;
         public static final int node_on=0x7f020005;
         public static final int start_screen_apple=0x7f020006;

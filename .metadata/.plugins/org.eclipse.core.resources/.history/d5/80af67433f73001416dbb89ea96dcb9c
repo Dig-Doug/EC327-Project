@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        custom:backgroundImage="@drawable/map_background"
+        custom:backgroundImage="@drawable/node_off"
         custom:nodeOffImage="@drawable/node_off"
         custom:nodeOnImage="@drawable/node_on" />
 
