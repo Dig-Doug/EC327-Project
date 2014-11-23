@@ -23,11 +23,11 @@ public class MapNodeLoader {
 	private static final String TAG_NODES_ARRAY = "nodes";
 	/** Tag for an individual node */
 	private static final String TAG_NODE = "node";
-	/** Tag for an individual node�s location X */
+	/** Tag for an individual nodes location X */
 	private static final String TAG_NODE_LOCATION_X = "locX";
-	/** Tag for an individual node�s location Y */
+	/** Tag for an individual nodes location Y */
 	private static final String TAG_NODE_LOCATION_Y = "locY";
-	/** Tag for an individual node�s level KEY */
+	/** Tag for an individual nodes level KEY*/
 	private static final String TAG_NODE_LEVEL_KEY = "levelKey";
 
 	// /-----Constructors-----

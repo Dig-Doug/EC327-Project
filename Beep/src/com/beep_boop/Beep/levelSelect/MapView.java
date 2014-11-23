@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -55,7 +58,7 @@ public class MapView extends View
 	/** Holds the minimum distance the finger must move to be considered a scroll */
 	private static final float mMinScrollDelta = 5.0f;
 	/** Holds the last registered point of the touch in screen coords */
-	private PointF mLastTouchPoint;
+	private PointF mLastTouchPoint = new PointF();
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 	/** Holds the maximum distance the finger can be from a node to click it*/
@@ -85,6 +88,8 @@ public class MapView extends View
 
 	private int mNodeSizeX, mNodeSizeY;
 	private Paint mNodePaint;
+	
+	private static final float SCROLL_SCALAR = 2.0f;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -94,8 +99,17 @@ public class MapView extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
 		try
 		{
-			//mShowText = a.getBoolean(R.styleable.PieChart_showText, false);
-			//mTextPos = a.getInteger(R.styleable.PieChart_labelPosition, 0);
+			Drawable nodeOffImage = a.getDrawable(R.styleable.MapView_nodeOffImage);
+			this.mNodeImageOff = ((BitmapDrawable) nodeOffImage).getBitmap();
+			Drawable nodeOnImage = a.getDrawable(R.styleable.MapView_nodeOnImage);
+			this.mNodeImageOn = ((BitmapDrawable) nodeOnImage).getBitmap();
+			Drawable backgroundImage = a.getDrawable(R.styleable.MapView_backgroundImage);
+			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -107,8 +121,10 @@ public class MapView extends View
 	
 	private void init()
 	{
-		mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mNodePaint.setColor(0xffffff);
+		this.mNodePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		this.mNodePaint.setColor(0xf00ff0);
+		this.mNodePaint.setAlpha(255);
+		this.mNodePaint.setTextSize(32.f);
 	}
 
 	///-----Functions-----
@@ -166,7 +182,7 @@ public class MapView extends View
 	//gets the state of a node from the DataSource
 	private boolean getStateForNode(MapNode aNode)
 	{
-		boolean result = false;
+		boolean result = Math.random() < 0.5;
 		if (this.mDataSource != null)
 			result = this.mDataSource.mapViewIsNodeDone(this, aNode);
 		return result;
@@ -216,11 +232,11 @@ public class MapView extends View
 		//subtract half the screen so that all nodes can be centered on
 		minX -= MapView.MAP_ON_SCREEN_WIDTH/2;
 		minY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
-		maxX += MapView.MAP_ON_SCREEN_WIDTH/2;
-		maxY += MapView.MAP_ON_SCREEN_HEIGHT/2;
+		maxX -= MapView.MAP_ON_SCREEN_WIDTH/2;
+		maxY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
 
 		//set the new bounds
-		this.mOriginBounds = new RectF(minX, minY, maxX, maxY);
+		this.mOriginBounds = new RectF(minX, maxY, maxX, minY);
 	}
 
 	//ensures the viewÕs origin is within the bounds
@@ -281,7 +297,20 @@ public class MapView extends View
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
+		if (this.mBackgroundImage != null)
+		{
+			for (int i = 0; i < getWidth(); i+=this.mBackgroundImage.getWidth())
+			{
+				for (int j = 0; j < getHeight(); j +=this.mBackgroundImage.getHeight())
+				{
+					canvas.drawBitmap(this.mBackgroundImage, i, j, null);
+				}
+			}
+		}
+		
 		//@TODO
+		String text = "x: " + this.mOrigin.x + " y: " + this.mOrigin.y;
+		canvas.drawText(text, 0, text.length() - 1, 0, 50, this.mNodePaint);
 	}
 
 	//draws all the nodes that are within the bounds of the screen
@@ -309,10 +338,9 @@ public class MapView extends View
 					else
 					{
 						//get which bitmap to use for this node
-						//boolean state = this.mNodeStates.get(i).booleanValue();
-						//Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
-						//canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeSizeX, screenDrawCenter.y - this.mNodeSizeY, this.mNodePaint);
-						canvas.drawCircle(screenDrawCenter.x, screenDrawCenter.y, 1.0f, this.mNodePaint);
+						boolean state = this.mNodeStates.get(i).booleanValue();
+						Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
+						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeSizeX, screenDrawCenter.y - this.mNodeSizeY, this.mNodePaint);
 					}
 				}
 			}
@@ -355,12 +383,6 @@ public class MapView extends View
 
 		return result;
 	}
-	
-	@Override
-	public boolean performClick()
-	{
-		return super.performClick();
-	}
 
 	//handles all touch down events
 	private void touchDown(MotionEvent aEvent)
@@ -372,7 +394,8 @@ public class MapView extends View
 	//handles all touch moved events
 	private void touchMoved(MotionEvent aEvent)
 	{
-		float deltaX = aEvent.getX(), deltaY = aEvent.getY();
+		float deltaX = aEvent.getX() - this.mLastTouchPoint.x;
+		float deltaY = aEvent.getY() - this.mLastTouchPoint.y;
 
 		//check if we are already scrolling
 		if (this.mScrolling)
@@ -381,14 +404,15 @@ public class MapView extends View
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
 			//calculate the delta movement in map space
-			PointF deltaInMapSpace = this.convertToMapSpace(deltaX, deltaY);
+			float scaledX = (deltaX / this.getWidth()) * MapView.MAP_ON_SCREEN_WIDTH;
+			float scaledY = (deltaY / this.getHeight()) * MapView.MAP_ON_SCREEN_HEIGHT;
 			//increment the origin by the delta
-			this.incrementOrigin(deltaInMapSpace.x, deltaInMapSpace.y);
+			this.incrementOrigin(scaledX * MapView.SCROLL_SCALAR, scaledY * MapView.SCROLL_SCALAR);
 		}
 		else
 		{
 			//check if we've exceeded the minimum scroll distance
-			if (Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) <= Math.pow(MapView.mMinScrollDelta, 2))
+			if (Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) >= Math.pow(MapView.mMinScrollDelta, 2))
 			{
 				//if so, we are scrolling
 				this.mScrolling = true;
@@ -462,15 +486,15 @@ public class MapView extends View
 	private PointF convertToMapSpace(float aX, float aY)
 	{
 		//@TODO - scale
-		float scaledX = aX + this.mOrigin.x;
-		float scaledY = aX + this.mOrigin.y;
+		float scaledX = (aX / this.getWidth()) * MapView.MAP_ON_SCREEN_WIDTH  + this.mOrigin.x;
+		float scaledY = (aY / this.getHeight()) * MapView.MAP_ON_SCREEN_HEIGHT + this.mOrigin.y;
 		return new PointF(scaledX, scaledY);
 	}
 
 	private PointF convertToScreenSpace(float aX, float aY)
 	{
-		float scaledX = aX - this.mOrigin.x;
-		float scaledY = aY - this.mOrigin.y;
+		float scaledX = (aX - this.mOrigin.x) * this.getWidth() / MapView.MAP_ON_SCREEN_WIDTH;
+		float scaledY = (aY - this.mOrigin.y) * this.getHeight() / MapView.MAP_ON_SCREEN_HEIGHT;
 		return new PointF(scaledX, scaledY);
 	}
 
