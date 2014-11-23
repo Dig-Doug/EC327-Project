@@ -31,63 +31,48 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int launchActivity_backgroundColor=0x7f060000;
     }
     public static final class drawable {
-<<<<<<< HEAD
-        public static final int ic_launcher=0x7f020000;
-        public static final int launch_screen_logo=0x7f020001;
-        public static final int launch_screen_text_logo=0x7f020002;
-        public static final int start_screen_apple=0x7f020003;
-        public static final int start_screen_viking=0x7f020004;
-=======
         public static final int background=0x7f020000;
         public static final int ic_launcher=0x7f020001;
         public static final int launch_screen_logo=0x7f020002;
         public static final int launch_screen_text_logo=0x7f020003;
         public static final int node_off=0x7f020004;
         public static final int node_on=0x7f020005;
->>>>>>> FETCH_HEAD
+        public static final int start_screen_apple=0x7f020006;
+        public static final int start_screen_viking=0x7f020007;
     }
     public static final class id {
         public static final int aboutActivity_messageEditText=0x7f090000;
         public static final int aboutActivity_messageView=0x7f090001;
         public static final int aboutActivity_showMessage=0x7f090002;
-<<<<<<< HEAD
-        public static final int button2=0x7f090011;
-=======
         public static final int backbutton=0x7f090009;
->>>>>>> FETCH_HEAD
+        public static final int button2=0x7f090016;
         public static final int launchActivity_logoImageView=0x7f090004;
         public static final int launchActivity_textImageView=0x7f090003;
         public static final int mainActivity_toLaunchButton=0x7f090006;
         public static final int mainActivity_toMapButton=0x7f090007;
         public static final int mainActivity_toSettingsButton=0x7f090005;
         public static final int mapActivity_mapView=0x7f090008;
-<<<<<<< HEAD
-        public static final int startLevelActivity_objectOne=0x7f090009;
-        public static final int startLevelActivity_objectTwo=0x7f09000c;
-        public static final int startLevelBackButton=0x7f09000a;
-        public static final int startLevelClicks=0x7f09000e;
-        public static final int startLevelClicksNumber=0x7f09000f;
-        public static final int startLevelImage1=0x7f09000b;
-        public static final int startLevelImage2=0x7f09000d;
-        public static final int startLevelStartButton=0x7f090010;
-=======
         public static final int music=0x7f09000c;
         public static final int musicbar=0x7f09000b;
         public static final int settings=0x7f09000a;
         public static final int sound=0x7f09000e;
         public static final int soundbar=0x7f09000d;
->>>>>>> FETCH_HEAD
+        public static final int startLevelActivity_objectOne=0x7f09000f;
+        public static final int startLevelActivity_objectTwo=0x7f090012;
+        public static final int startLevelBackButton=0x7f090010;
+        public static final int startLevelClicks=0x7f090014;
+        public static final int startLevelClicksNumber=0x7f090015;
+        public static final int startLevelImage1=0x7f090011;
+        public static final int startLevelImage2=0x7f090013;
+        public static final int startLevelStartButton=0x7f090017;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
         public static final int activity_launch=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_map=0x7f030003;
-<<<<<<< HEAD
-        public static final int activity_start_level=0x7f030004;
-=======
         public static final int activity_settings=0x7f030004;
->>>>>>> FETCH_HEAD
+        public static final int activity_start_level=0x7f030005;
     }
     public static final class raw {
         public static final int nodes_test_file=0x7f050000;
@@ -99,11 +84,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int aboutActivity_messageViewText=0x7f070006;
         public static final int aboutActivity_showMessageButtonText=0x7f070007;
         public static final int app_name=0x7f070000;
-<<<<<<< HEAD
+        /**  settings activity 
+         */
+        public static final int backbutton=0x7f070014;
         public static final int content_description_place_holder=0x7f070004;
         public static final int mainActivity_toLaunchButton=0x7f070002;
         public static final int mainActivity_toMap=0x7f070005;
         public static final int mainActivity_toSettingsButton=0x7f070001;
+        public static final int music=0x7f070016;
+        public static final int settings=0x7f070015;
+        public static final int sound=0x7f070017;
         public static final int startLevelActivityBackButton=0x7f07000e;
         public static final int startLevelActivityClicks=0x7f07000f;
         public static final int startLevelActivityClicksNumber=0x7f070010;
@@ -118,24 +108,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int title_activity_launch=0x7f070009;
         public static final int title_activity_map=0x7f07000a;
+        public static final int title_activity_settings=0x7f070013;
         public static final int title_activity_start_level=0x7f07000b;
-=======
-        /**  settings activity 
-         */
-        public static final int backbutton=0x7f07000d;
-        public static final int content_description_place_holder=0x7f070005;
-        public static final int hello_world=0x7f070001;
-        public static final int mainActivity_toLaunchButton=0x7f070003;
-        public static final int mainActivity_toMap=0x7f070006;
-        public static final int mainActivity_toSettingsButton=0x7f070002;
-        public static final int music=0x7f07000f;
-        public static final int settings=0x7f07000e;
-        public static final int sound=0x7f070010;
-        public static final int title_activity_about=0x7f070004;
-        public static final int title_activity_launch=0x7f07000a;
-        public static final int title_activity_map=0x7f07000b;
-        public static final int title_activity_settings=0x7f07000c;
->>>>>>> FETCH_HEAD
     }
     public static final class style {
         /** 
