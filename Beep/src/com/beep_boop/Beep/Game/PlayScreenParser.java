@@ -15,12 +15,12 @@ public class PlayScreenParser {
 	///-----Members-----
 	private static final String TAG = "playScreenParser"; 
 	private static final String NAMESPACE = null;
-	private static final String TAG_WORD = "word";
-	private static final String TAG_WORD_ATRB_TITLE = "title";
-	//private static final String TAG_LINKCOUNT = "linkCount"; 
-	private static final String TAG_LINKS = "links";
-	private static final String TAG_LINK = "link"; 
-	private static final String TAG_LINK_ATRB_COUNT = "count"; 
+	private static final String TAG_WORD = "w";
+	private static final String TAG_WORD_ATRB_TITLE = "t";
+	//private static final String TAG_LINKCOUNT = "lc"; 
+	private static final String TAG_LINKS = "ls";
+	private static final String TAG_LINK = "l"; 
+	private static final String TAG_LINK_ATRB_COUNT = "c"; 
 
 	public static Hashtable<String, Hashtable<String, Integer>> parseFile(InputStream aIn)
 	{
@@ -75,7 +75,22 @@ public class PlayScreenParser {
 			if (name.equals(TAG_WORD)) 
 			{
 				String pageName = aParser.getAttributeValue(null, TAG_WORD_ATRB_TITLE);
-				Hashtable<String, Integer> links = readLinks(aParser);
+				Hashtable<String, Integer> links = null;
+				while (true) 
+				{
+					aParser.next();
+					if (aParser.getEventType() != XmlPullParser.START_TAG) 
+					{
+						continue;
+					}
+					
+					String nameOfTag = aParser.getName();
+					if (nameOfTag.equals(TAG_LINKS)) 
+					{
+						links = readLinks(aParser);
+						break;
+					}
+				}
 				
 				wikiData.put(pageName, links);
 			}
@@ -95,7 +110,9 @@ public class PlayScreenParser {
 		Hashtable<String, Integer> linkData = new Hashtable<String, Integer>();
 		
 		//make sure we have a <links> tag
+		//this require threw an error
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_LINKS);
+		aParser.nextTag();
 		
 		//This while loop will run until we hit a </links> end tag
 		while(aParser.getEventType() != XmlPullParser.END_TAG)
@@ -114,6 +131,8 @@ public class PlayScreenParser {
 				{
 					link = aParser.getText();
 				}
+				aParser.nextTag();
+				aParser.nextTag();
 
 				//save it in hash table
 				linkData.put(link, count);

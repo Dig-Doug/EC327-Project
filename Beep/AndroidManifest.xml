@@ -35,12 +35,16 @@
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name="com.beep_boop.Beep.startScreen.StartLevelActivity"
+            android:name=".startScreen.StartLevelActivity"
             android:label="@string/title_activity_start_level" >
-		</activity>
-		<activity
+        </activity>
+        <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="com.beep_boop.Beep.Game.PlayScreenActivity"
+            android:label="@string/title_activity_play_screen" >
         </activity>
     </application>
 

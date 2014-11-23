@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.beep_boop.Beep.Game.PlayScreenActivity;
 import com.beep_boop.Beep.launch.LaunchActivity;
 import com.beep_boop.Beep.levelSelect.MapActivity;
 
@@ -64,6 +65,22 @@ public class MainActivity extends Activity
 			}
 				
 		});
+		
+		Button toPlayScreenButton = (Button) findViewById(R.id.mainActivity_toPlayButton);
+		toPlayScreenButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Log.d(MainActivity.TAG, "To play screen button clicked");
+				
+				Intent toPlayscreen = new Intent(THIS,PlayScreenActivity.class);
+				startActivity(toPlayscreen); 
+				
+			}
+		});
+		
+		
 		
 	}
 }
