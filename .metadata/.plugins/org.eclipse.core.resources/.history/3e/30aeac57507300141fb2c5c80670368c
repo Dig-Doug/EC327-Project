@@ -20,30 +20,20 @@ public class PlayView extends View
 	/** Holds the tag used for logging */
 	private static final String TAG = "PlayView";
 	
-	private PointF[] mDrawPoints;
-	private float[] mDrawThetas;
-	private int mStartWordIndex;
-	private int mNumberOfWordsToDraw;
-	private ArrayList<String> mWords;
-	
-	private PointF[] mStartPoints;
-	private float[] mStartThetas;
+	private PointF[] mSetPoints;
+	private PointF[] mInterpolatedPoints;
 	private float mAnimationPercent;
+	private int mStartWordIndex;
+	private ArrayList<String> mWords;
+
 	private Paint mTextPaint;
-	
-	/** Holds the minimum distance the finger must move to be considered a scroll */
-	private static final float mMinScrollDelta = 5.0f;
-	/** Holds the last registered point of the touch in screen coords */
-	private PointF mLastTouchPoint = new PointF();
-	/** Holds whether or not we are scrolling */
-	private boolean mScrolling; 
 	
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 
-		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
 		try
 		{
 			
@@ -80,36 +70,13 @@ public class PlayView extends View
 	{
 		
 	}
-	
-	
-	private void setStarts(ArrayList<PointF> aPoints, ArrayList<Float> aThetas)
+
+	//tells the map view to update all of the node�s states and redraw
+	private void requestRedraw()
 	{
-		this.mStartPoints = new PointF[aPoints.size()];
-		this.mStartThetas = new float[aThetas.size()];
-		
-		for (int i = 0; i < aPoints.size(); i++)
-		{
-			this.mStartPoints[i] = aPoints.get(i);
-			this.mStartThetas[i] = aThetas.get(i);
-		}
+		invalidate();
+		requestLayout();
 	}
-	
-	private void calculateDrawPointsAndThetas()
-	{
-		for (int i = 0; i < this.mStartPoints.length - 1; i++)
-		{
-			PointF currentPoint = this.mStartPoints[i];
-			PointF nextPoint = this.mStartPoints[i + 1];
-			
-			float deltaX = (nextPoint.x - currentPoint.x) * this.mAnimationPercent;
-			float deltaY = (nextPoint.y - currentPoint.y) * this.mAnimationPercent;
-			float deltaTheta = (this.mStartThetas[i + 1] - this.mStartThetas[i]) * this.mAnimationPercent;
-			
-			this.mDrawPoints[i] = new PointF(currentPoint.x + deltaX, currentPoint.y + deltaY);
-			this.mDrawThetas[i] = this.mDrawThetas[i] + deltaTheta;
-		}
-	}
-	
 
 	//gets touch events for view
 	@Override

@@ -189,5 +189,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name com.beep_boop.Beep:nodeOnImage
         */
         public static final int MapView_nodeOnImage = 1;
+        /** Attributes that can be used with a PlayView.
+         */
+        public static final int[] PlayView = {
+            
+        };
     };
 }

@@ -6,6 +6,4 @@
        <attr name="nodeOnImage" format="reference" />
        <attr name="backgroundImage" format="reference" />
    </declare-styleable>
-      <declare-styleable name="PlayView">
-   </declare-styleable>
 </resources>
