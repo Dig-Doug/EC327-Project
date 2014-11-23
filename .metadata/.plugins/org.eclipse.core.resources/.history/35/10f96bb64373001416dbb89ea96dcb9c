@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -238,7 +239,7 @@ public class MapView extends View
 		this.mOriginBounds = new RectF(minX, maxY, maxX, minY);
 	}
 
-	//ensures the viewï¿½s origin is within the bounds
+	//ensures the viewÕs origin is within the bounds
 	private void boundOrigin()
 	{
 		//bound in the x direction
@@ -346,7 +347,7 @@ public class MapView extends View
 		}
 	}
 
-	//tells the map view to update all of the nodeï¿½s states and redraw
+	//tells the map view to update all of the nodeÕs states and redraw
 	private void requestRedraw()
 	{
 		invalidate();
@@ -497,7 +498,7 @@ public class MapView extends View
 		return new PointF(scaledX, scaledY);
 	}
 
-	//find a node near the location. If there isnï¿½t a node, returns null
+	//find a node near the location. If there isnÕt a node, returns null
 	private MapNode getNodeNearPoint(PointF aPoint)
 	{
 		MapNode result = null;
