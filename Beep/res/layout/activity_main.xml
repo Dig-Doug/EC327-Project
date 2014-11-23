@@ -33,4 +33,13 @@
         android:layout_marginTop="46dp"
         android:text="@string/mainActivity_toMap" />
 
+    <Button
+        android:id="@+id/mainActivity_toPlayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainActivity_toMapButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/mainActivity_toPlayScreen" />
+    
 </RelativeLayout>
