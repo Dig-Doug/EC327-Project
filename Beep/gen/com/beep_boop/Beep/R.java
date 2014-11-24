@@ -50,8 +50,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int map_background_example=0x7f020004;
         public static final int node_off=0x7f020005;
         public static final int node_on=0x7f020006;
-        public static final int start_screen_apple=0x7f020007;
-        public static final int start_screen_viking=0x7f020008;
+        public static final int node_test=0x7f020007;
+        public static final int start_screen_apple=0x7f020008;
+        public static final int start_screen_viking=0x7f020009;
     }
     public static final class id {
         public static final int aboutActivity_messageEditText=0x7f090000;

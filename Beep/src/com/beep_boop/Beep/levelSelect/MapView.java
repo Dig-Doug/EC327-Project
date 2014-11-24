@@ -228,7 +228,7 @@ public class MapView extends View
 	{
 		float minX = 0.0f, minY = 0.0f;
 		float maxX = 1.0f - this.MAP_ON_SCREEN_WIDTH;
-		float maxY = this.MAP_ON_SCREEN_HEIGHT * this.mScaleY * 0.5f;
+		float maxY = 1.0f - this.MAP_ON_SCREEN_HEIGHT;
 
 		//set the new bounds
 		this.mOriginBounds = new RectF(minX, maxY, maxX, minY);
@@ -353,11 +353,11 @@ public class MapView extends View
 		super.onSizeChanged(w, h, oldw, oldh);
 		
 		this.mScaleX =  w / (float)(this.MAP_ON_SCREEN_WIDTH * this.mBackgroundImage.getWidth());
-		this.mScaleY = this.mScaleX * (h / (float)w);
 		this.MAP_ON_SCREEN_HEIGHT = this.MAP_ON_SCREEN_WIDTH * (h / (float)w);
+		this.mScaleY = h / (float)(this.MAP_ON_SCREEN_HEIGHT * this.mBackgroundImage.getHeight());
 		
-		this.mNodeHalfSizeX = (int)(this.mNodeImageOn.getWidth() * this.mScaleX / 2);
-		this.mNodeHalfSizeY = (int)(this.mNodeImageOn.getHeight() * this.mScaleY / 2);
+		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() / this.mScaleX / 2);
+		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() / this.mScaleY / 2);
 		
 		this.calculateOriginBounds();
 	}
