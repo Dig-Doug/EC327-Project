@@ -34,22 +34,20 @@
         android:text="@string/mainActivity_toMap" />
 
     <Button
-<<<<<<< Updated upstream
         android:id="@+id/mainActivity_toPlayButton"
-=======
-        android:id="@+id/mainActivity_toStartButton"
->>>>>>> Stashed changes
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mainActivity_toMapButton"
         android:layout_centerHorizontal="true"
-<<<<<<< Updated upstream
         android:layout_marginTop="18dp"
         android:text="@string/mainActivity_toPlayScreen" />
     
-=======
-        android:layout_marginTop="41dp"
+       <Button
+        android:id="@+id/mainActivity_toStartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainActivity_toPlayButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
         android:text="@string/mainActivity_toStartButton" />
-
->>>>>>> Stashed changes
 </RelativeLayout>

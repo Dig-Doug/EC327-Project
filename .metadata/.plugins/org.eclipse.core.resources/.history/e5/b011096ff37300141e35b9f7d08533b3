@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <!-- This is a comment -->
+    <Button
+        android:id="@+id/mainActivity_toSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="69dp"
+        android:text="@string/mainActivity_toSettingsButton" />
+
+    <Button
+        android:id="@+id/mainActivity_toLaunchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mainActivity_toSettingsButton"
+        android:layout_alignRight="@+id/mainActivity_toSettingsButton"
+        android:layout_below="@+id/mainActivity_toSettingsButton"
+        android:layout_marginTop="38dp"
+        android:text="@string/mainActivity_toLaunchButton" />
+
+    <Button
+        android:id="@+id/mainActivity_toMapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainActivity_toLaunchButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:text="@string/mainActivity_toMap" />
+
+    <Button
+<<<<<<< Updated upstream
+        android:id="@+id/mainActivity_toPlayButton"
+=======
+        android:id="@+id/mainActivity_toStartButton"
+>>>>>>> Stashed changes
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainActivity_toMapButton"
+        android:layout_centerHorizontal="true"
+<<<<<<< Updated upstream
+        android:layout_marginTop="18dp"
+        android:text="@string/mainActivity_toPlayScreen" />
+    
+=======
+        android:layout_marginTop="41dp"
+        android:text="@string/mainActivity_toStartButton" />
+
+>>>>>>> Stashed changes
+</RelativeLayout>

@@ -72,8 +72,7 @@ public class LevelManager
 			//print error message
 			Log.w(LevelManager.TAG, "No level for key: " + aLevelKey);
 			
-			//set random value for testing
-			result = Math.random() < 0.5;
+			result = false;
 			this.mLevelStates.put(aLevelKey, result);
 		}
 		

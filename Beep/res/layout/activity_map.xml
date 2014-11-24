@@ -9,9 +9,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
+        custom:animationLength="1000"
         custom:backgroundImage="@drawable/map_background_example"
-        custom:mapWidthOnScreen="1.0"
+        custom:mapWidthOnScreen="0.5"
         custom:nodeOffImage="@drawable/node_off"
-        custom:nodeOnImage="@drawable/node_on" />
+        custom:nodeOnImage="@drawable/node_on"
+        custom:nodeSelectedOverlay="@drawable/node_test" />
 
 </LinearLayout>

@@ -67,7 +67,6 @@ public class MainActivity extends Activity
 				
 		});
 		
-<<<<<<< Updated upstream
 		Button toPlayScreenButton = (Button) findViewById(R.id.mainActivity_toPlayButton);
 		toPlayScreenButton.setOnClickListener(new OnClickListener()
 		{
@@ -82,9 +81,6 @@ public class MainActivity extends Activity
 			}
 		});
 		
-		
-		
-=======
 		Button toStartButton = (Button) findViewById(R.id.mainActivity_toStartButton);
 		toStartButton.setOnClickListener(new OnClickListener()
 		{
@@ -100,6 +96,5 @@ public class MainActivity extends Activity
 				
 		});
 		
->>>>>>> Stashed changes
 	}
 }

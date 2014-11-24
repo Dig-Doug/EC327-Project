@@ -3,6 +3,8 @@
    <declare-styleable name="MapView">
        <!-- <attr name="showText" format="boolean" /> -->
        <attr name="mapWidthOnScreen" format="float" />
+       <attr name="nodeClickDistance" format="float" />
+       <attr name="animationLength" format="integer" />
        <attr name="nodeOffImage" format="reference" />
        <attr name="nodeOnImage" format="reference" />
        <attr name="backgroundImage" format="reference" />
