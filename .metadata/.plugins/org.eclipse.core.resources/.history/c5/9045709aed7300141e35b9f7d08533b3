@@ -10,8 +10,8 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         custom:backgroundImage="@drawable/map_background_example"
-        custom:mapWidthOnScreen="1.0"
-        custom:nodeOffImage="@drawable/node_off"
+        custom:mapWidthOnScreen="0.5"
+        custom:nodeOffImage="@drawable/node_test"
         custom:nodeOnImage="@drawable/node_on" />
 
 </LinearLayout>

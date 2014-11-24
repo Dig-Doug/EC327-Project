@@ -92,9 +92,6 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode)
 	{
 		//@TODO - switch to next level
-		
-		//@TEMP - switches state of level
-		LevelManager.setLevelComplete(aNode.getLevelKey(), !LevelManager.getIsLevelComplete(aNode.getLevelKey()));
 	}
 	
 	///-----NodeDataSource methods-----

@@ -365,8 +365,8 @@ public class MapView extends View
 		this.MAP_ON_SCREEN_HEIGHT = this.MAP_ON_SCREEN_WIDTH * (h / (float)w);
 		this.mScaleY = h / (float)(this.MAP_ON_SCREEN_HEIGHT * this.mBackgroundImage.getHeight());
 		
-		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() * this.mScaleX);
-		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() * this.mScaleY);
+		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() * this.mScaleX / 2);
+		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() * this.mScaleY / 2);
 		
 		this.calculateOriginBounds();
 	}

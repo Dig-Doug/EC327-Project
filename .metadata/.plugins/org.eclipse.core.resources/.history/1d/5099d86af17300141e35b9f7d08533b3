@@ -342,7 +342,7 @@ public class MapView extends View
 						//get which bitmap to use for this node
 						boolean state = this.mNodeStates.get(i).booleanValue();
 						Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
-						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeHalfSizeX, screenDrawCenter.y - this.mNodeHalfSizeY, null);
+						canvas.drawBitmap(useToDraw, screenDrawCenter.x, screenDrawCenter.y - this.mNodeHalfSizeY, null);
 					}
 				}
 			}

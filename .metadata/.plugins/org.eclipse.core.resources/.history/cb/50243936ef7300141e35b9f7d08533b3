@@ -2,36 +2,36 @@
         <node>
                 <locX>0.1</locX>
                 <locY>0.1</locY>
-                <levelKey>level_1</levelKey>
+                <levelKey>level_apple_viking</levelKey>
         </node>
         <node>
                 <locX>0.5</locX>
                 <locY>0.1</locY>
-                <levelKey>level_2</levelKey>
+                <levelKey>level_very_hungry</levelKey>
         </node>
         <node>
                 <locX>0.9</locX>
                 <locY>0.1</locY>
-                <levelKey>level_3</levelKey>
+                <levelKey>level_woot</levelKey>
         </node>
         <node>
                 <locX>0.1</locX>
                 <locY>0.5</locY>
-                <levelKey>level_4</levelKey>
+                <levelKey>level_hungry_hippos</levelKey>
         </node>
         <node>
                 <locX>0.1</locX>
                 <locY>0.9</locY>
-                <levelKey>level_5</levelKey>
+                <levelKey>level_'m'ungry</levelKey>
         </node>
                 <node>
                 <locX>0.5</locX>
                 <locY>0.5</locY>
-                <levelKey>level_6</levelKey>
+                <levelKey>level_hungry_hippos</levelKey>
         </node>
         <node>
                 <locX>0.9</locX>
                 <locY>0.9</locY>
-                <levelKey>level_7</levelKey>
+                <levelKey>level_'m'ungry</levelKey>
         </node>
 </nodes>

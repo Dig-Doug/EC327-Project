@@ -342,7 +342,7 @@ public class MapView extends View
 						//get which bitmap to use for this node
 						boolean state = this.mNodeStates.get(i).booleanValue();
 						Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
-						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeHalfSizeX, screenDrawCenter.y - this.mNodeHalfSizeY, null);
+						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeHalfSizeX, screenDrawCenter.y - this.mNodeHalfSizeY, this.mNodePaint);
 					}
 				}
 			}
@@ -365,8 +365,8 @@ public class MapView extends View
 		this.MAP_ON_SCREEN_HEIGHT = this.MAP_ON_SCREEN_WIDTH * (h / (float)w);
 		this.mScaleY = h / (float)(this.MAP_ON_SCREEN_HEIGHT * this.mBackgroundImage.getHeight());
 		
-		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() * this.mScaleX);
-		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() * this.mScaleY);
+		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() * this.mScaleX / 2);
+		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() * this.mScaleY / 2);
 		
 		this.calculateOriginBounds();
 	}
