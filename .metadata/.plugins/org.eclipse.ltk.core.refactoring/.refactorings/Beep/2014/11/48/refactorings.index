@@ -2,3 +2,5 @@
 1416794972507	Rename field 'mView'
 1416797569326	Rename field 'mNodeSizeX'
 1416797574450	Rename field 'mNodeSizeY'
+1416867655032	Rename package 'com.beep_boop.Beep.Game'
+1416867663846	Rename package 'com.beep_boop.Beep.DrawingTest'

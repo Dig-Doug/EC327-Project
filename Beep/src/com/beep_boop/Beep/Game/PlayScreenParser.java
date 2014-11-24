@@ -1,4 +1,4 @@
-package com.beep_boop.Beep.Game;
+package com.beep_boop.Beep.game;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,7 +91,7 @@ public class PlayScreenParser {
 						break;
 					}
 				}
-				
+
 				wikiData.put(pageName, links);
 			}
 			else 

@@ -1,4 +1,4 @@
-package com.beep_boop.Beep.Game;
+package com.beep_boop.Beep.game;
 
 import java.util.ArrayList;
 

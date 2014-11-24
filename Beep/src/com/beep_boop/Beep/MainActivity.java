@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.beep_boop.Beep.Game.PlayScreenActivity;
+import com.beep_boop.Beep.game.PlayScreenActivity;
 import com.beep_boop.Beep.launch.LaunchActivity;
 import com.beep_boop.Beep.levelSelect.MapActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;

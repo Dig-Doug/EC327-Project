@@ -43,7 +43,7 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.beep_boop.Beep.Game.PlayScreenActivity"
+            android:name="com.beep_boop.Beep.game.PlayScreenActivity"
             android:label="@string/title_activity_play_screen" >
         </activity>
         <activity

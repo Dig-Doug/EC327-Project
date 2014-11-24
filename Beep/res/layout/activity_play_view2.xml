@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.beep_boop.Beep.PlayView2"> 
 
-    <com.beep_boop.Beep.Game.PlayView2
+    <com.beep_boop.Beep.game.PlayView2
         android:id="@+id/playActivity_playView2"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

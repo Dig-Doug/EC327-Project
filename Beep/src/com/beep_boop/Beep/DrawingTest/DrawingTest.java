@@ -1,4 +1,4 @@
-package com.beep_boop.Beep.DrawingTest;
+package com.beep_boop.Beep.drawingTest;
 
 import java.util.ArrayList;
 

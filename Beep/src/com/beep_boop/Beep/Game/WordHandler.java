@@ -1,4 +1,4 @@
-package com.beep_boop.Beep.Game;
+package com.beep_boop.Beep.game;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +51,7 @@ public class WordHandler
 	public Set<String> getLinksForWord(String aWord)
 	{
 		Set<String> result = null;
-		if (mWordData.contains(aWord))
+		if (mWordData.containsKey(aWord))
 		{
 			Set<String> keys = this.mWordData.get(aWord).keySet();
 			result = keys;
@@ -67,7 +67,7 @@ public class WordHandler
 	public Collection<Integer> getCountsForWord(String aWord)
 	{
 		Collection<Integer> result = null;
-		if (mWordData.contains(aWord))
+		if (mWordData.containsKey(aWord))
 		{
 			Collection<Integer> values = this.mWordData.get(aWord).values();
 			result = values;
