@@ -64,9 +64,9 @@ public class MapView extends View
 	private static final float mMaxNodeClickDistance = 10.0f;
 
 	/** Holds the amount of the map on the screen width wise */
-	private static final float MAP_ON_SCREEN_WIDTH = 1.0f;
+	private float MAP_ON_SCREEN_WIDTH;
 	/** Holds the amount of the map on the screen height wise */
-	private static final float MAP_ON_SCREEN_HEIGHT = 1.0f;
+	private float MAP_ON_SCREEN_HEIGHT = 1.0f;
 
 	/** Hold the image to be drawn in the background */
 	private Bitmap mBackgroundImage; // This may need to be broken up into multiple images, in which case an array should be used
@@ -85,8 +85,10 @@ public class MapView extends View
 	private float mSelectedNodeTime;
 
 
-	private int mNodeSizeX, mNodeSizeY;
+	private int mNodeHalfSizeX, mNodeHalfSizeY;
 	private Paint mNodePaint;
+	
+	private float mScaleX, mScaleY;
 	
 	private static final float SCROLL_SCALAR = 2.0f;
 
@@ -98,13 +100,16 @@ public class MapView extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
 		try
 		{
+			float mapWidth = a.getFloat(R.styleable.MapView_mapWidthOnScreen, 1.0f);
+			this.MAP_ON_SCREEN_WIDTH = mapWidth;
 			Drawable nodeOffImage = a.getDrawable(R.styleable.MapView_nodeOffImage);
 			this.mNodeImageOff = ((BitmapDrawable) nodeOffImage).getBitmap();
 			Drawable nodeOnImage = a.getDrawable(R.styleable.MapView_nodeOnImage);
 			this.mNodeImageOn = ((BitmapDrawable) nodeOnImage).getBitmap();
 			Drawable backgroundImage = a.getDrawable(R.styleable.MapView_backgroundImage);
 			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
-			
+			Drawable nodeOverlayImage = a.getDrawable(R.styleable.MapView_nodeSelectedOverlay);
+			this.mSelectedNodeOverlay = ((BitmapDrawable) nodeOverlayImage).getBitmap();
 		}
 		catch (Exception e)
 		{
@@ -163,8 +168,26 @@ public class MapView extends View
 		this.updateStates();
 	}
 	
+	//gets the states for a node
+	public void updateStateForNodeWithKey(String aLevelKey, boolean aState)
+	{
+		//look for the node
+		for (int i = 0; i < this.mNodes.size(); i++)
+		{
+			MapNode node = this.mNodes.get(i);
+			//check if it's the right node
+			if (node.getLevelKey().equals(aLevelKey))
+			{
+				//save the state
+				this.mNodeStates.set(i, aState);
+				//break
+				break;
+			}
+		}
+	}
+	
 	//gets the states for all nodes
-	private void updateStates()
+	public void updateStates()
 	{
 		//remove all old states
 		this.mNodeStates.clear();
@@ -181,9 +204,15 @@ public class MapView extends View
 	//gets the state of a node from the DataSource
 	private boolean getStateForNode(MapNode aNode)
 	{
-		boolean result = Math.random() < 0.5;
+		boolean result = false;
 		if (this.mDataSource != null)
+		{
 			result = this.mDataSource.mapViewIsNodeDone(this, aNode);
+		}
+		else
+		{
+			Log.w(MapView.TAG, "Datasource is null");
+		}
 		return result;
 	}
 
@@ -198,41 +227,8 @@ public class MapView extends View
 	private void calculateOriginBounds()
 	{
 		float minX = 0.0f, minY = 0.0f;
-		float maxX = 0.0f, maxY = 0.0f;
-		if (this.mNodes.size() != 0)
-		{
-			//set initial values for the minds
-			minX = this.mNodes.get(0).getX();
-			minY = this.mNodes.get(0).getY();
-			maxX = this.mNodes.get(0).getX();
-			maxY = this.mNodes.get(0).getY();
-			//find the max & min X & Y values
-			for (MapNode node : this.mNodes)
-			{
-				if (node.getX() < minX)
-				{
-					minX = node.getX();
-				}
-				else if (node.getX() > maxX)
-				{
-					maxX = node.getX();
-				}
-				if (node.getY() < minY)
-				{
-					minY = node.getY();
-				}
-				else if (node.getY() > maxY)
-				{
-					maxY = node.getY();
-				}
-			}
-		}
-
-		//subtract half the screen so that all nodes can be centered on
-		minX -= MapView.MAP_ON_SCREEN_WIDTH/2;
-		minY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
-		maxX -= MapView.MAP_ON_SCREEN_WIDTH/2;
-		maxY -= MapView.MAP_ON_SCREEN_HEIGHT/2;
+		float maxX = 1.0f - this.MAP_ON_SCREEN_WIDTH;
+		float maxY = this.MAP_ON_SCREEN_HEIGHT * this.mScaleY * 0.5f;
 
 		//set the new bounds
 		this.mOriginBounds = new RectF(minX, maxY, maxX, minY);
@@ -279,7 +275,7 @@ public class MapView extends View
 		//get the map we want to center on
 		MapNode centerOn = this.mNodes.get(aIndex);
 		//calculate the origin to center on it
-		PointF centered = new PointF(centerOn.getX() - MapView.MAP_ON_SCREEN_WIDTH/2, centerOn.getY() - MapView.MAP_ON_SCREEN_HEIGHT/2);
+		PointF centered = new PointF(centerOn.getX() - this.MAP_ON_SCREEN_WIDTH/2, centerOn.getY() - this.MAP_ON_SCREEN_HEIGHT/2);
 		//set the origin
 		this.setOrigin(centered);
 	}
@@ -287,10 +283,15 @@ public class MapView extends View
 	//overridden view method
 	protected void onDraw(Canvas canvas)
 	{
+		
+		canvas.save();
+		
+		canvas.scale(this.mScaleX, this.mScaleY);
 		//draw background
 		this.drawBackground(canvas);
 		//draw all the nodes on top
 		this.drawNodesWithinView(canvas);
+		canvas.restore();
 	}
 
 	//draws the background of the map
@@ -298,13 +299,8 @@ public class MapView extends View
 	{
 		if (this.mBackgroundImage != null)
 		{
-			for (int i = 0; i < getWidth(); i+=this.mBackgroundImage.getWidth())
-			{
-				for (int j = 0; j < getHeight(); j +=this.mBackgroundImage.getHeight())
-				{
-					canvas.drawBitmap(this.mBackgroundImage, i, j, null);
-				}
-			}
+			PointF screen = this.convertToScreenSpace(0.0f, 0.0f);
+			canvas.drawBitmap(this.mBackgroundImage, screen.x, screen.y, null);
 		}
 		
 		//@TODO
@@ -315,17 +311,15 @@ public class MapView extends View
 	//draws all the nodes that are within the bounds of the screen
 	private void drawNodesWithinView(Canvas canvas)
 	{
-		//@TODO
-
 		//enumerate through all map nodes
 		for (int i = 0; i < this.mNodes.size(); i++)
 		{
 			MapNode node = this.mNodes.get(i);
 			//check if it's on screen in the X direction
-			if (Math.abs(node.getX() - this.mOrigin.x) < MapView.MAP_ON_SCREEN_WIDTH)
+			if (Math.abs(node.getX() - this.mOrigin.x) < this.MAP_ON_SCREEN_WIDTH * 1.5f)
 			{
 				//check if it's on screen in the Y direction
-				if (Math.abs(node.getY() - this.mOrigin.y) < MapView.MAP_ON_SCREEN_HEIGHT)
+				if (Math.abs(node.getY() - this.mOrigin.y) < this.MAP_ON_SCREEN_HEIGHT * 1.5f)
 				{
 					//draw it
 					PointF screenDrawCenter = this.convertToScreenSpace(node.getX(), node.getY());
@@ -339,7 +333,7 @@ public class MapView extends View
 						//get which bitmap to use for this node
 						boolean state = this.mNodeStates.get(i).booleanValue();
 						Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
-						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeSizeX, screenDrawCenter.y - this.mNodeSizeY, this.mNodePaint);
+						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeHalfSizeX, screenDrawCenter.y - this.mNodeHalfSizeY, this.mNodePaint);
 					}
 				}
 			}
@@ -351,6 +345,21 @@ public class MapView extends View
 	{
 		invalidate();
 		requestLayout();
+	}
+	
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh)
+	{
+		super.onSizeChanged(w, h, oldw, oldh);
+		
+		this.mScaleX =  w / (float)(this.MAP_ON_SCREEN_WIDTH * this.mBackgroundImage.getWidth());
+		this.mScaleY = this.mScaleX * (h / (float)w);
+		this.MAP_ON_SCREEN_HEIGHT = this.MAP_ON_SCREEN_WIDTH * (h / (float)w);
+		
+		this.mNodeHalfSizeX = (int)(this.mNodeImageOn.getWidth() * this.mScaleX / 2);
+		this.mNodeHalfSizeY = (int)(this.mNodeImageOn.getHeight() * this.mScaleY / 2);
+		
+		this.calculateOriginBounds();
 	}
 
 	//gets touch events for view
@@ -403,8 +412,8 @@ public class MapView extends View
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
 			//calculate the delta movement in map space
-			float scaledX = (deltaX / this.getWidth()) * MapView.MAP_ON_SCREEN_WIDTH;
-			float scaledY = (deltaY / this.getHeight()) * MapView.MAP_ON_SCREEN_HEIGHT;
+			float scaledX = (deltaX / this.getWidth()) * this.MAP_ON_SCREEN_WIDTH;
+			float scaledY = (deltaY / this.getHeight()) * this.MAP_ON_SCREEN_HEIGHT;
 			//increment the origin by the delta
 			this.incrementOrigin(scaledX * MapView.SCROLL_SCALAR, scaledY * MapView.SCROLL_SCALAR);
 		}
@@ -450,14 +459,29 @@ public class MapView extends View
 			{
 				//there is a node to click
 				//check if we can click the node
-				boolean canClick = this.mListener.mapViewUserCanClickNode(this, nodeNearLocation);
+				boolean canClick = false;
+				if (this.mListener != null)
+				{
+					canClick = this.mListener.mapViewUserCanClickNode(this, nodeNearLocation);
+				}
+				else
+				{
+					Log.w(MapView.TAG, "Listener is null");
+				}
+				
 				if (canClick)
 				{
 					//user can click node
 					Log.v(MapView.TAG, "User clicked node with key: " + nodeNearLocation.getLevelKey());
 					//click the node
 					if (this.mListener != null)
+					{
 						this.mListener.mapViewUserDidClickNode(this, nodeNearLocation);
+					}
+					else
+					{
+						Log.w(MapView.TAG, "Listener is null");
+					}
 					//set this node as the selected node
 					this.mSelectedNode = this.mNodes.indexOf(nodeNearLocation);
 					//tell the view to center on that node
@@ -485,15 +509,15 @@ public class MapView extends View
 	private PointF convertToMapSpace(float aX, float aY)
 	{
 		//@TODO - scale
-		float scaledX = (aX / this.getWidth()) * MapView.MAP_ON_SCREEN_WIDTH  + this.mOrigin.x;
-		float scaledY = (aY / this.getHeight()) * MapView.MAP_ON_SCREEN_HEIGHT + this.mOrigin.y;
+		float scaledX = (aX / this.getWidth()) * this.MAP_ON_SCREEN_WIDTH  + this.mOrigin.x;
+		float scaledY = (aY / this.getHeight()) * this.MAP_ON_SCREEN_HEIGHT + this.mOrigin.y;
 		return new PointF(scaledX, scaledY);
 	}
 
 	private PointF convertToScreenSpace(float aX, float aY)
 	{
-		float scaledX = (aX - this.mOrigin.x) * this.getWidth() / MapView.MAP_ON_SCREEN_WIDTH;
-		float scaledY = (aY - this.mOrigin.y) * this.getHeight() / MapView.MAP_ON_SCREEN_HEIGHT;
+		float scaledX = (aX - this.mOrigin.x) * this.getWidth() / this.MAP_ON_SCREEN_WIDTH / this.mScaleX;
+		float scaledY = (aY - this.mOrigin.y) * this.getHeight() / this.MAP_ON_SCREEN_HEIGHT / this.mScaleY;
 		return new PointF(scaledX, scaledY);
 	}
 

@@ -1,0 +1,97 @@
+package com.beep_boop.Beep.levelSelect;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.beep_boop.Beep.LevelManager;
+import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
+
+public class MapActivity extends Activity implements NodeClickListener
+{
+	/** Holds a reference to the map view */
+	private MapView mView; 
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_map);
+		
+		//subscribe to level state updates
+		LevelManager.addLevelStateListener(this);
+		
+		//get the map view from XML
+		mView = (MapView)findViewById(R.id.mapActivity_mapView);
+		//setup the map view
+		this.setupMapView();
+	}
+	
+	private void setupMapView()
+	{
+		//load the nodes
+		ArrayList<MapNode> nodeList = null;
+		InputStream in = null;
+		try 
+		{
+			in = getResources().openRawResource(R.raw.nodes_test_file);
+			nodeList = MapNodeLoader.parseFile(in);
+		}
+		catch (Exception i)
+		{
+			Log.e("fileinput", "The IOException was caught.");
+		}
+		finally 
+		{
+			if (in != null)
+			{
+				try
+				{
+					in.close();
+				}
+				catch (IOException e)
+				{
+					
+				}
+			}
+		}
+		
+		//add the nodes to the map view
+		this.mView.addNodes(nodeList); 
+		
+		//set the node click listener
+		this.mView.setListener(this);
+	}
+
+	///-----NodeClickListener methods-----
+	public boolean mapViewUserCanClickNode(MapView aMapView, MapNode aNode)
+	{
+		boolean result = true;
+		
+		//@TODO - add game logic
+		
+		return result;
+	}
+	
+	public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode)
+	{
+		//@TODO - switch to next level
+	}
+	
+	///-----NodeDataSource methods-----
+	public boolean mapViewIsNodeDone(MapView aMapView, MapNode aNode)
+	{
+		return LevelManager.getIsLevelComplete(aNode.getLevelKey());
+	}
+	
+	///-----LevelStateListener methods-----
+	public void stateDidChangeForLevel(String aLevel, boolean aState)
+	{
+		this.mView.updateStates();
+	}
+}

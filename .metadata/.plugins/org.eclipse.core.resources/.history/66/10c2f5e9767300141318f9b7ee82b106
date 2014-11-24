@@ -1,0 +1,30 @@
+package com.beep_boop.Beep;
+
+public class LevelManager 
+{
+	///-----Member Variables-----
+	/** Holds the singleton instance of the class */
+	public static LevelManager INSTANCE = new LevelManager();
+	
+	///-----Constructors-----
+	private LevelManager()
+	{
+		
+	}
+	
+	///-----Public Wrapper Methods-----
+	public static boolean getIsLevelComplete(String aLevelKey)
+	{
+		return LevelManager.INSTANCE.getLevelComplete(aLevelKey);
+	}
+	
+	///-----Private Methods-----
+	public boolean getLevelComplete(String aLevelKey)
+	{
+		boolean result = true;
+		
+		//@TODO
+		
+		return result;
+	}
+}

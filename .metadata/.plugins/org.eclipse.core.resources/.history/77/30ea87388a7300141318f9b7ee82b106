@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <declare-styleable name="MapView">
+       <!-- <attr name="showText" format="boolean" /> -->
+       <attr name="nodeOffImage" format="reference" />
+       <attr name="nodeOnImage" format="reference" />
+       <attr name="backgroundImage" format="reference" />
+       <attr name="nodeSelectedOverlay" format="reference" />
+   </declare-styleable>
+      <declare-styleable name="PlayView">
+   </declare-styleable>
+</resources>

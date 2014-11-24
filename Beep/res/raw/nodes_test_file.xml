@@ -1,27 +1,37 @@
 ﻿<nodes>
         <node>
-                <locX>0.5</locX>
-                <locY>0.7</locY>
+                <locX>0.1</locX>
+                <locY>0.1</locY>
                 <levelKey>level_apple_viking</levelKey>
         </node>
         <node>
-                <locX>0.25</locX>
+                <locX>0.5</locX>
                 <locY>0.1</locY>
-                <levelKey>level_hungry_hippos</levelKey>
-        </node>
-        <node>
-                <locX>1.5</locX>
-                <locY>0.7</locY>
-                <levelKey>level_woot</levelKey>
-        </node>
-        <node>
-                <locX>0.2</locX>
-                <locY>1.8</locY>
                 <levelKey>level_very_hungry</levelKey>
         </node>
         <node>
-                <locX>0.6</locX>
-                <locY>1.9</locY>
+                <locX>0.9</locX>
+                <locY>0.1</locY>
+                <levelKey>level_woot</levelKey>
+        </node>
+        <node>
+                <locX>0.1</locX>
+                <locY>0.5</locY>
+                <levelKey>level_hungry_hippos</levelKey>
+        </node>
+        <node>
+                <locX>0.1</locX>
+                <locY>0.9</locY>
+                <levelKey>level_'m'ungry</levelKey>
+        </node>
+                <node>
+                <locX>0.5</locX>
+                <locY>0.5</locY>
+                <levelKey>level_hungry_hippos</levelKey>
+        </node>
+        <node>
+                <locX>0.9</locX>
+                <locY>0.9</locY>
                 <levelKey>level_'m'ungry</levelKey>
         </node>
 </nodes>

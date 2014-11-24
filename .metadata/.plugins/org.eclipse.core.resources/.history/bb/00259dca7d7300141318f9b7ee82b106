@@ -1,0 +1,69 @@
+package com.beep_boop.Beep;
+
+import java.util.Hashtable;
+
+import android.util.Log;
+
+public class LevelManager 
+{
+	///-----Member Variables-----
+	/** Holds the log tag */
+	private static final String TAG = "LevelManager";
+	/** Holds the singleton instance of the class */
+	public static LevelManager INSTANCE = new LevelManager();
+	
+	private Hashtable<String, Boolean> mLevelStates = new Hashtable<String, Boolean>();
+	
+	///-----Constructors-----
+	private LevelManager()
+	{
+		//@TODO - load level states
+	}
+	
+	///-----Public Wrapper Methods-----
+	public static boolean getIsLevelComplete(String aLevelKey)
+	{
+		return LevelManager.INSTANCE.getLevelComplete(aLevelKey);
+	}
+	
+	public static void setLevelComplete(String aLevelKey, boolean aComplete)
+	{
+		LevelManager.INSTANCE.setLevelCompleted(aLevelKey, aComplete);
+	}
+	
+	///-----Private Methods-----
+	private void save()
+	{
+		//@TODO - save level states
+	}
+	
+	private boolean getLevelComplete(String aLevelKey)
+	{
+		boolean result = false;
+		
+		//@TODO
+		if (this.mLevelStates.containsKey(aLevelKey))
+		{
+			result = this.mLevelStates.get(aLevelKey);
+		}
+		else
+		{
+			//print error message
+			Log.w(LevelManager.TAG, "No level for key: " + aLevelKey);
+			
+			//set random value for testing
+			result = Math.random() < 0.5;
+			this.mLevelStates.put(aLevelKey, result);
+		}
+		
+		return result;
+	}
+	
+	private void setLevelCompleted(String aLevelKey, boolean aComplete)
+	{
+		this.mLevelStates.put(aLevelKey, aComplete);
+		
+		this.save();
+	}
+	
+}

@@ -16,16 +16,28 @@ public final class R {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int backgroundImage=0x7f010002;
+        public static final int backgroundImage=0x7f010003;
         /**  <attr name="showText" format="boolean" /> 
-         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
          */
-        public static final int nodeOffImage=0x7f010000;
+        public static final int mapWidthOnScreen=0x7f010000;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int nodeOnImage=0x7f010001;
+        public static final int nodeOffImage=0x7f010001;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int nodeOnImage=0x7f010002;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int nodeSelectedOverlay=0x7f010004;
     }
     public static final class color {
         public static final int launchActivity_backgroundColor=0x7f060000;
@@ -35,10 +47,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int launch_screen_logo=0x7f020001;
         public static final int launch_screen_text_logo=0x7f020002;
         public static final int map_background=0x7f020003;
-        public static final int node_off=0x7f020004;
-        public static final int node_on=0x7f020005;
-        public static final int start_screen_apple=0x7f020006;
-        public static final int start_screen_viking=0x7f020007;
+        public static final int map_background_example=0x7f020004;
+        public static final int node_off=0x7f020005;
+        public static final int node_on=0x7f020006;
+        public static final int start_screen_apple=0x7f020007;
+        public static final int start_screen_viking=0x7f020008;
     }
     public static final class id {
         public static final int aboutActivity_messageEditText=0x7f090000;
@@ -162,15 +175,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #MapView_backgroundImage com.beep_boop.Beep:backgroundImage}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapView_nodeOffImage com.beep_boop.Beep:nodeOffImage}</code></td><td> <attr name="showText" format="boolean" /> </td></tr>
+           <tr><td><code>{@link #MapView_mapWidthOnScreen com.beep_boop.Beep:mapWidthOnScreen}</code></td><td> <attr name="showText" format="boolean" /> </td></tr>
+           <tr><td><code>{@link #MapView_nodeOffImage com.beep_boop.Beep:nodeOffImage}</code></td><td></td></tr>
            <tr><td><code>{@link #MapView_nodeOnImage com.beep_boop.Beep:nodeOnImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapView_nodeSelectedOverlay com.beep_boop.Beep:nodeSelectedOverlay}</code></td><td></td></tr>
            </table>
            @see #MapView_backgroundImage
+           @see #MapView_mapWidthOnScreen
            @see #MapView_nodeOffImage
            @see #MapView_nodeOnImage
+           @see #MapView_nodeSelectedOverlay
          */
         public static final int[] MapView = {
-            0x7f010000, 0x7f010001, 0x7f010002
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004
         };
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#backgroundImage}
@@ -181,19 +199,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.beep_boop.Beep:backgroundImage
         */
-        public static final int MapView_backgroundImage = 2;
+        public static final int MapView_backgroundImage = 3;
         /**
           <p>
           @attr description
            <attr name="showText" format="boolean" /> 
 
 
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.beep_boop.Beep:mapWidthOnScreen
+        */
+        public static final int MapView_mapWidthOnScreen = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeOffImage}
+          attribute's value can be found in the {@link #MapView} array.
+
+
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          <p>This is a private symbol.
           @attr name com.beep_boop.Beep:nodeOffImage
         */
-        public static final int MapView_nodeOffImage = 0;
+        public static final int MapView_nodeOffImage = 1;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeOnImage}
           attribute's value can be found in the {@link #MapView} array.
@@ -203,7 +235,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.beep_boop.Beep:nodeOnImage
         */
-        public static final int MapView_nodeOnImage = 1;
+        public static final int MapView_nodeOnImage = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeSelectedOverlay}
+          attribute's value can be found in the {@link #MapView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.beep_boop.Beep:nodeSelectedOverlay
+        */
+        public static final int MapView_nodeSelectedOverlay = 4;
         /** Attributes that can be used with a PlayView.
          */
         public static final int[] PlayView = {

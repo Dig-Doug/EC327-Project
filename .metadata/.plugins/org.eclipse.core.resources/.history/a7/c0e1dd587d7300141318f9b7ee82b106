@@ -1,0 +1,48 @@
+package com.beep_boop.Beep;
+
+import java.util.Hashtable;
+
+import android.util.Log;
+
+public class LevelManager 
+{
+	///-----Member Variables-----
+	/** Holds the log tag */
+	private static final String TAG = "LevelManager";
+	/** Holds the singleton instance of the class */
+	public static LevelManager INSTANCE = new LevelManager();
+	
+	private Hashtable<String, Boolean> mLevelStates = new Hashtable<String, Boolean>();
+	
+	///-----Constructors-----
+	private LevelManager()
+	{
+		
+	}
+	
+	///-----Public Wrapper Methods-----
+	public static boolean getIsLevelComplete(String aLevelKey)
+	{
+		return LevelManager.INSTANCE.getLevelComplete(aLevelKey);
+	}
+	
+	///-----Private Methods-----
+	public boolean getLevelComplete(String aLevelKey)
+	{
+		boolean result = false;
+		
+		//@TODO
+		if (this.mLevelStates.containsKey(aLevelKey))
+		{
+			result = this.mLevelStates.get(aLevelKey);
+		}
+		else
+		{
+			Log.w(LevelManager.TAG, "No level for key: " + aLevelKey);
+			result = Math.random() < 0.5;
+			this.mLevelStates.put(aLevelKey, result);
+		}
+		
+		return result;
+	}
+}
