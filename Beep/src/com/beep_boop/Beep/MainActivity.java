@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.beep_boop.Beep.Game.PlayScreenActivity;
 import com.beep_boop.Beep.launch.LaunchActivity;
 import com.beep_boop.Beep.levelSelect.MapActivity;
+import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
 public class MainActivity extends Activity
 {
@@ -66,6 +67,7 @@ public class MainActivity extends Activity
 				
 		});
 		
+<<<<<<< Updated upstream
 		Button toPlayScreenButton = (Button) findViewById(R.id.mainActivity_toPlayButton);
 		toPlayScreenButton.setOnClickListener(new OnClickListener()
 		{
@@ -82,5 +84,22 @@ public class MainActivity extends Activity
 		
 		
 		
+=======
+		Button toStartButton = (Button) findViewById(R.id.mainActivity_toStartButton);
+		toStartButton.setOnClickListener(new OnClickListener()
+		{
+			@Override 
+			public void onClick(View v)
+			{
+				Log.d(MainActivity.TAG, "To start button clicked");
+				
+				Intent toStart = new Intent(THIS, StartLevelActivity.class);
+				startActivity(toStart); 
+				
+			}
+				
+		});
+		
+>>>>>>> Stashed changes
 	}
 }

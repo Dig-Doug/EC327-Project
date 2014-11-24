@@ -6,3 +6,5 @@ Beep/bin/Beep.apk
 Beep/bin/classes.dex
 
 Beep/bin/resources.ap_
+
+Beep/bin/classes/com/beep_boop/Beep/levelSelect/MapActivity.class

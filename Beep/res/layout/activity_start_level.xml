@@ -34,7 +34,7 @@
         android:layout_alignTop="@+id/startLevelImage1"
         android:layout_marginRight="44dp"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/start_screen_viking" />
+        android:src="@drawable/ss_viking" />
 
     <ImageView
         android:id="@+id/startLevelImage1"
@@ -44,17 +44,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="28dp"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/start_screen_apple" />
-
-    <TextView
-        android:id="@+id/startLevelClicks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/startLevelImage2"
-        android:layout_marginBottom="52dp"
-        android:layout_toRightOf="@+id/startLevelImage1"
-        android:text="@string/startLevelActivityClicks"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:src="@drawable/ss_apple" />
 
     <TextView
         android:id="@+id/startLevelClicksNumber"
@@ -91,5 +81,15 @@
         android:layout_marginTop="34dp"
         android:layout_toLeftOf="@+id/button2"
         android:text="@string/startLevelActivityStartButton" />
+
+    <TextView
+        android:id="@+id/startLevelClicks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startLevelImage2"
+        android:layout_alignRight="@+id/startLevelActivity_objectTwo"
+        android:layout_marginBottom="24dp"
+        android:text="@string/startLevelActivityClicks"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
