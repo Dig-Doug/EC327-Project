@@ -42,11 +42,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class color {
         public static final int launchActivity_backgroundColor=0x7f060000;
     }
+    public static final class dimen {
+        /**  Default screen margins, per the Android Design guidelines. 
+
+         Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+    
+         */
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
+    }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
         public static final int launch_screen_logo=0x7f020001;
         public static final int launch_screen_text_logo=0x7f020002;
         public static final int map_background=0x7f020003;
+<<<<<<< Updated upstream
         public static final int map_background_example=0x7f020004;
         public static final int node_off=0x7f020005;
         public static final int node_on=0x7f020006;
@@ -91,6 +103,54 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_play_screen=0x7f030004;
         public static final int activity_settings=0x7f030005;
         public static final int activity_start_level=0x7f030006;
+=======
+        public static final int node_off=0x7f020004;
+        public static final int node_on=0x7f020005;
+        public static final int ss_apple=0x7f020006;
+        public static final int ss_viking=0x7f020007;
+    }
+    public static final class id {
+        public static final int aboutActivity_messageEditText=0x7f0b0000;
+        public static final int aboutActivity_messageView=0x7f0b0001;
+        public static final int aboutActivity_showMessage=0x7f0b0002;
+        public static final int action_settings=0x7f0b001a;
+        public static final int backbutton=0x7f0b000b;
+        public static final int button2=0x7f0b0018;
+        public static final int launchActivity_logoImageView=0x7f0b0004;
+        public static final int launchActivity_textImageView=0x7f0b0003;
+        public static final int mainActivity_toLaunchButton=0x7f0b0006;
+        public static final int mainActivity_toMapButton=0x7f0b0007;
+        public static final int mainActivity_toSettingsButton=0x7f0b0005;
+        public static final int mainActivity_toStartButton=0x7f0b0008;
+        public static final int mapActivity_mapView=0x7f0b0009;
+        public static final int music=0x7f0b000e;
+        public static final int musicbar=0x7f0b000d;
+        public static final int playActivity_playView2=0x7f0b000a;
+        public static final int settings=0x7f0b000c;
+        public static final int sound=0x7f0b0010;
+        public static final int soundbar=0x7f0b000f;
+        public static final int startLevelActivity_objectOne=0x7f0b0011;
+        public static final int startLevelActivity_objectTwo=0x7f0b0014;
+        public static final int startLevelBackButton=0x7f0b0012;
+        public static final int startLevelClicks=0x7f0b0017;
+        public static final int startLevelClicksNumber=0x7f0b0016;
+        public static final int startLevelImage1=0x7f0b0013;
+        public static final int startLevelImage2=0x7f0b0015;
+        public static final int startLevelStartButton=0x7f0b0019;
+    }
+    public static final class layout {
+        public static final int activity_about=0x7f030000;
+        public static final int activity_drawing_test=0x7f030001;
+        public static final int activity_launch=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_map=0x7f030004;
+        public static final int activity_play_view2=0x7f030005;
+        public static final int activity_settings=0x7f030006;
+        public static final int activity_start_level=0x7f030007;
+    }
+    public static final class menu {
+        public static final int play_view2=0x7f0a0000;
+>>>>>>> Stashed changes
     }
     public static final class raw {
         public static final int elephant_shrew=0x7f050000;
@@ -99,6 +159,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int test_file=0x7f050003;
     }
     public static final class string {
+<<<<<<< Updated upstream
         public static final int aboutActivity_messageEditTextPlaceholder=0x7f070009;
         /**  About Activity 
          */
@@ -139,6 +200,47 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_activity_settings=0x7f070014;
         public static final int title_activity_start_level=0x7f07000c;
         public static final int wordTitleLabel=0x7f07001d;
+=======
+        public static final int aboutActivity_messageEditTextPlaceholder=0x7f080009;
+        /**  About Activity 
+         */
+        public static final int aboutActivity_messageViewText=0x7f080007;
+        public static final int aboutActivity_showMessageButtonText=0x7f080008;
+        public static final int action_settings=0x7f08001c;
+        public static final int app_name=0x7f080000;
+        /**  settings activity 
+         */
+        public static final int backbutton=0x7f080015;
+        public static final int content_description_place_holder=0x7f080004;
+        public static final int hello_world=0x7f08001a;
+        public static final int mainActivity_toLaunchButton=0x7f080002;
+        public static final int mainActivity_toMap=0x7f080005;
+        public static final int mainActivity_toSettingsButton=0x7f080001;
+        public static final int mainActivity_toStartButton=0x7f080006;
+        public static final int music=0x7f080017;
+        public static final int settings=0x7f080016;
+        public static final int sound=0x7f080018;
+        public static final int startLevelActivityBackButton=0x7f08000f;
+        public static final int startLevelActivityClicks=0x7f080010;
+        public static final int startLevelActivityClicksNumber=0x7f080011;
+        /**  Start Screen Activity 
+         */
+        public static final int startLevelActivityObject1=0x7f08000d;
+        public static final int startLevelActivityObject2=0x7f08000e;
+        public static final int startLevelActivityPowerUpsButton=0x7f080013;
+        public static final int startLevelActivityStartButton=0x7f080012;
+        public static final int title_activity_about=0x7f080003;
+        public static final int title_activity_drawing_test=0x7f080019;
+        /**  Map Activity 
+         */
+        public static final int title_activity_launch=0x7f08000a;
+        public static final int title_activity_map=0x7f08000b;
+        public static final int title_activity_play_view2=0x7f08001b;
+        public static final int title_activity_settings=0x7f080014;
+        /**  HEAD 
+         */
+        public static final int title_activity_start_level=0x7f08000c;
+>>>>>>> Stashed changes
     }
     public static final class style {
         /** 
@@ -162,11 +264,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
+        public static final int AppTheme=0x7f090001;
     }
     public static final class styleable {
         /** Attributes that can be used with a MapView.

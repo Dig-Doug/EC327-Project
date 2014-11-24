@@ -43,8 +43,17 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
+<<<<<<< Updated upstream
             android:name="com.beep_boop.Beep.Game.PlayScreenActivity"
             android:label="@string/title_activity_play_screen" >
+=======
+            android:name=".DrawingTest.DrawingTest"
+            android:label="@string/title_activity_drawing_test" >
+        </activity>
+        <activity
+            android:name=".PlayView2"
+            android:label="@string/title_activity_play_view2" >
+>>>>>>> Stashed changes
         </activity>
     </application>
 
