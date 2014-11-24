@@ -1,0 +1,43 @@
+package com.beep_boop.Beep.Game;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Hashtable;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.beep_boop.Beep.R;
+
+public class WordHandler
+{
+	private WordHandler()
+	{
+		Hashtable<String, Hashtable<String, Integer>> wikiData = null; 
+		InputStream in = null;
+		try 
+		{
+			in = Context.getApplicationContext().getResources().openRawResource(R.raw.matthew_mcconaughey_zurich);
+			
+			wikiData = PlayScreenParser.parseFile(in);
+		}
+		catch (Exception i)
+		{
+			Log.e(PlayScreenActivity.TAG, "The IOException was caught.");
+		}
+		finally 
+		{
+			if (in != null)
+			{
+				try
+				{
+					in.close();
+				}
+				catch (IOException e)
+				{
+					
+				}
+			}
+		}
+	}
+}

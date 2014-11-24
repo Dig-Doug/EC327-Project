@@ -20,20 +20,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int animationLength=0x7f010002;
+        public static final int animationLength=0x7f010003;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int backgroundImage=0x7f010005;
-        /**  <attr name="showText" format="boolean" /> 
-         <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int mapWidthOnScreen=0x7f010000;
+        public static final int backgroundImage=0x7f010000;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -41,19 +32,35 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int nodeClickDistance=0x7f010001;
+        public static final int mapWidthOnScreen=0x7f010001;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int nodeClickDistance=0x7f010002;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int nodeOffImage=0x7f010003;
+        public static final int nodeOffImage=0x7f010004;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int nodeOnImage=0x7f010004;
+        public static final int nodeOnImage=0x7f010005;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int nodeSelectedOverlay=0x7f010006;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int wordsOnPage=0x7f010007;
     }
     public static final class color {
         public static final int launchActivity_backgroundColor=0x7f060000;
@@ -85,9 +92,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int aboutActivity_messageEditText=0x7f0b0000;
         public static final int aboutActivity_messageView=0x7f0b0001;
         public static final int aboutActivity_showMessage=0x7f0b0002;
-        public static final int action_settings=0x7f0b001d;
-        public static final int backbutton=0x7f0b000e;
-        public static final int button2=0x7f0b001b;
+        public static final int action_settings=0x7f0b001c;
+        public static final int backbutton=0x7f0b000d;
+        public static final int button2=0x7f0b001a;
         public static final int launchActivity_logoImageView=0x7f0b0004;
         public static final int launchActivity_textImageView=0x7f0b0003;
         public static final int mainActivity_toLaunchButton=0x7f0b0006;
@@ -96,22 +103,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int mainActivity_toSettingsButton=0x7f0b0005;
         public static final int mainActivity_toStartButton=0x7f0b0009;
         public static final int mapActivity_mapView=0x7f0b000a;
-        public static final int music=0x7f0b0011;
-        public static final int musicbar=0x7f0b0010;
-        public static final int parse_Words_Button=0x7f0b000c;
-        public static final int playActivity_playView2=0x7f0b000d;
-        public static final int settings=0x7f0b000f;
-        public static final int sound=0x7f0b0013;
-        public static final int soundbar=0x7f0b0012;
-        public static final int startLevelActivity_objectOne=0x7f0b0014;
-        public static final int startLevelActivity_objectTwo=0x7f0b0017;
-        public static final int startLevelBackButton=0x7f0b0015;
-        public static final int startLevelClicks=0x7f0b001a;
-        public static final int startLevelClicksNumber=0x7f0b0019;
-        public static final int startLevelImage1=0x7f0b0016;
-        public static final int startLevelImage2=0x7f0b0018;
-        public static final int startLevelStartButton=0x7f0b001c;
-        public static final int title_Place_Holder=0x7f0b000b;
+        public static final int music=0x7f0b0010;
+        public static final int musicbar=0x7f0b000f;
+        public static final int playActivity_playView2=0x7f0b000c;
+        public static final int playScreenActivity_playView=0x7f0b000b;
+        public static final int settings=0x7f0b000e;
+        public static final int sound=0x7f0b0012;
+        public static final int soundbar=0x7f0b0011;
+        public static final int startLevelActivity_objectOne=0x7f0b0013;
+        public static final int startLevelActivity_objectTwo=0x7f0b0016;
+        public static final int startLevelBackButton=0x7f0b0014;
+        public static final int startLevelClicks=0x7f0b0019;
+        public static final int startLevelClicksNumber=0x7f0b0018;
+        public static final int startLevelImage1=0x7f0b0015;
+        public static final int startLevelImage2=0x7f0b0017;
+        public static final int startLevelStartButton=0x7f0b001b;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
@@ -218,7 +224,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #MapView_animationLength com.beep_boop.Beep:animationLength}</code></td><td></td></tr>
            <tr><td><code>{@link #MapView_backgroundImage com.beep_boop.Beep:backgroundImage}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapView_mapWidthOnScreen com.beep_boop.Beep:mapWidthOnScreen}</code></td><td> <attr name="showText" format="boolean" /> </td></tr>
+           <tr><td><code>{@link #MapView_mapWidthOnScreen com.beep_boop.Beep:mapWidthOnScreen}</code></td><td></td></tr>
            <tr><td><code>{@link #MapView_nodeClickDistance com.beep_boop.Beep:nodeClickDistance}</code></td><td></td></tr>
            <tr><td><code>{@link #MapView_nodeOffImage com.beep_boop.Beep:nodeOffImage}</code></td><td></td></tr>
            <tr><td><code>{@link #MapView_nodeOnImage com.beep_boop.Beep:nodeOnImage}</code></td><td></td></tr>
@@ -249,7 +255,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.beep_boop.Beep:animationLength
         */
-        public static final int MapView_animationLength = 2;
+        public static final int MapView_animationLength = 3;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#backgroundImage}
           attribute's value can be found in the {@link #MapView} array.
@@ -259,11 +265,10 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.beep_boop.Beep:backgroundImage
         */
-        public static final int MapView_backgroundImage = 5;
+        public static final int MapView_backgroundImage = 0;
         /**
-          <p>
-          @attr description
-           <attr name="showText" format="boolean" /> 
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#mapWidthOnScreen}
+          attribute's value can be found in the {@link #MapView} array.
 
 
           <p>Must be a floating point value, such as "<code>1.2</code>".
@@ -272,10 +277,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          <p>This is a private symbol.
           @attr name com.beep_boop.Beep:mapWidthOnScreen
         */
-        public static final int MapView_mapWidthOnScreen = 0;
+        public static final int MapView_mapWidthOnScreen = 1;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeClickDistance}
           attribute's value can be found in the {@link #MapView} array.
@@ -289,7 +293,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.beep_boop.Beep:nodeClickDistance
         */
-        public static final int MapView_nodeClickDistance = 1;
+        public static final int MapView_nodeClickDistance = 2;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeOffImage}
           attribute's value can be found in the {@link #MapView} array.
@@ -299,7 +303,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.beep_boop.Beep:nodeOffImage
         */
-        public static final int MapView_nodeOffImage = 3;
+        public static final int MapView_nodeOffImage = 4;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeOnImage}
           attribute's value can be found in the {@link #MapView} array.
@@ -309,7 +313,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.beep_boop.Beep:nodeOnImage
         */
-        public static final int MapView_nodeOnImage = 4;
+        public static final int MapView_nodeOnImage = 5;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#nodeSelectedOverlay}
           attribute's value can be found in the {@link #MapView} array.
@@ -321,9 +325,43 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int MapView_nodeSelectedOverlay = 6;
         /** Attributes that can be used with a PlayView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #PlayView_backgroundImage com.beep_boop.Beep:backgroundImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayView_wordsOnPage com.beep_boop.Beep:wordsOnPage}</code></td><td></td></tr>
+           </table>
+           @see #PlayView_backgroundImage
+           @see #PlayView_wordsOnPage
          */
         public static final int[] PlayView = {
-            
+            0x7f010000, 0x7f010007
         };
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#backgroundImage}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.beep_boop.Beep:backgroundImage
+        */
+        public static final int PlayView_backgroundImage = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#wordsOnPage}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:wordsOnPage
+        */
+        public static final int PlayView_wordsOnPage = 1;
     };
 }

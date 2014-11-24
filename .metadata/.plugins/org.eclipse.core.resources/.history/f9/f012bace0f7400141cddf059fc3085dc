@@ -1,0 +1,31 @@
+package com.beep_boop.Beep.Game;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import com.beep_boop.Beep.R;
+
+public class PlayScreenActivity extends Activity
+{
+	///-----Member Variables-----
+	/** Tag for logging */
+	private static final String TAG = "PlayScreenActivity";
+	/** Holds a reference to the play view */
+	private PlayView mPlayView;
+	private WordHandler mWordHandler;
+	
+	///-----Activity Life Cycle-----
+	@Override
+	protected void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_play_screen);
+		
+		this.mWordHandler = new WorldHandler(this);
+		
+		this.mPlayView = (PlayView) findViewById(R.id.playScreenActivity_playView);	
+		this.mPlayView.setWords(wikiData.get(wikiData.keys().nextElement()).keySet());
+	}
+	
+	///-----
+}
