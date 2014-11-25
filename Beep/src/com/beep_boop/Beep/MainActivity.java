@@ -29,9 +29,6 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		new LoadLevelsTask().execute(this);
-		new LoadWordsTask().execute(this);
-		
 		Button toSettingsButton = (Button) findViewById(R.id.mainActivity_toSettingsButton);
 		toSettingsButton.setOnClickListener(new OnClickListener()
 		{
@@ -103,45 +100,4 @@ public class MainActivity extends Activity
 		});
 		
 	}
-	
-	
-	
-	private class LoadLevelsTask extends AsyncTask<Context, Void, Void>
-	{
-	     protected Void doInBackground(Context... contexts)
-	     {
-	    	 LevelManager.load(contexts[0]);
-	         return null;
-	     }
-
-	     protected void onProgressUpdate(Integer... progress)
-	     {
-	         
-	     }
-
-	     protected void onPostExecute(Long result)
-	     {
-	         
-	     }
-	 }
-	
-	private class LoadWordsTask extends AsyncTask<Context, Void, Void>
-	{
-	     protected Void doInBackground(Context... contexts)
-	     {
-	    	 WordHandler.load(contexts[0]);
-	         return null;
-	     }
-
-	     protected void onProgressUpdate(Integer... progress)
-	     {
-	         
-	     }
-
-	     protected void onPostExecute(Long result)
-	     {
-	         
-	     }
-	 }
-
 }

@@ -54,36 +54,26 @@ public class LevelManager
 	
 	public static boolean getIsLevelComplete(String aLevelKey)
 	{
-		while(!LevelManager.loaded);
-		
 		return LevelManager.INSTANCE.getLevelCompletePrivate(aLevelKey);
 	}
 	
 	public static void setLevelComplete(String aLevelKey, boolean aComplete)
 	{
-		while(!LevelManager.loaded);
-		
 		LevelManager.INSTANCE.setLevelCompletePrivate(aLevelKey, aComplete);
 	}
 	
 	public static void addLevelStateListener(LevelStateListener aListener)
 	{
-		while(!LevelManager.loaded);
-		
 		LevelManager.INSTANCE.addLevelStateListenerPrivate(aListener);
 	}
 	
 	public static void removeLevelStateListener(LevelStateListener aListener)
 	{
-		while(!LevelManager.loaded);
-		
 		LevelManager.INSTANCE.removeLevelStateListenerPrivate(aListener);
 	}
 	
 	public static boolean canPlayLevel(String aLevelKey)
 	{
-		while(!LevelManager.loaded);
-		
 		return LevelManager.INSTANCE.canPlayLevelPrivate(aLevelKey);
 	}
 	

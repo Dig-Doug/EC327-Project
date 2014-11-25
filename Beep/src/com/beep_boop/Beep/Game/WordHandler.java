@@ -43,15 +43,11 @@ public class WordHandler
 	
 	public static Set<String> getLinksForWord(String aWord)
 	{
-		while(!WordHandler.loaded);
-		
 		return WordHandler.INSTANCE.getLinksForWordPrivate(aWord);
 	}
 	
 	public static Collection<Integer> getCountsForWord(String aWord)
 	{
-		while(!WordHandler.loaded);
-		
 		return WordHandler.INSTANCE.getCountsForWordPrivate(aWord);
 	}
 	

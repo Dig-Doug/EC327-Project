@@ -64,6 +64,7 @@ containing a value of this type.
     }
     public static final class color {
         public static final int launchActivity_backgroundColor=0x7f060000;
+        public static final int launchActivity_loadingTextColor=0x7f060001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
