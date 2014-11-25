@@ -22,7 +22,6 @@ public class PlayView extends View
 	///-----Members-----
 	/** Holds the tag used for logging */
 	private static final String TAG = "PlayView";
-	
 	private PointF[] mDrawPoints;
 	private float[] mDrawThetas;
 	private int mStartWordIndex = 0;
@@ -145,7 +144,7 @@ public class PlayView extends View
 		{
 			PointF currentPoint = this.mStartPoints[i];
 			PointF nextPoint = this.mStartPoints[i + 1];
-			
+			//need to make an escape function for when i = max, because no i+1 exists
 			float deltaX = (nextPoint.x - currentPoint.x) * this.mAnimationPercent;
 			float deltaY = (nextPoint.y - currentPoint.y) * this.mAnimationPercent;
 			float deltaTheta = (this.mStartThetas[i + 1] - this.mStartThetas[i]) * this.mAnimationPercent;
