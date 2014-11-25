@@ -215,7 +215,7 @@ public class PlayView extends View
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
 			//increment the origin by the delta
-			this.scroll(-deltaY * PlayView.SCROLL_SCALAR);
+			this.scroll(deltaY * PlayView.SCROLL_SCALAR);
 		}
 		else
 		{

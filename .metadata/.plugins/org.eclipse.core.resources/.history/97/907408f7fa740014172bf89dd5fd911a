@@ -79,7 +79,7 @@ public class PlayView extends View
 		float radius = 0.5f;
 		for (int i = 0; i < this.mNumberOfWordsToDraw + 1; i++,  theta -= delta)
 		{
-			startPoints.add(new PointF(radius * (float)Math.cos(theta), radius * (float)Math.sin(theta) + 0.5f));
+			startPoints.add(new PointF(radius * (float)Math.sin(theta), radius * (float)Math.cos(theta)));
 			startThetas.add(theta);
 		}
 		this.setStarts(startPoints, startThetas);
@@ -102,7 +102,7 @@ public class PlayView extends View
 		this.calculateDrawPointsAndThetas();
 		for (int i = 0; i < mNumberOfWordsToDraw; i++)
 		{
-			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
+			if (mStartWordIndex + i < this.mWords.size())
 			{
 				float x = mDrawPoints[i].x;
 				float y = mDrawPoints[i].y;
@@ -116,7 +116,7 @@ public class PlayView extends View
 				//canvas.rotate(mDrawThetas[i], x + rect.exactCenterX(), y + rect.exactCenterY());
 				canvas.drawText(startWord, x, y, mTextPaint);
 			}
-			else if (mStartWordIndex + i >= this.mWords.size())
+			else
 			{
 				break;
 			}
@@ -215,7 +215,7 @@ public class PlayView extends View
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
 			//increment the origin by the delta
-			this.scroll(-deltaY * PlayView.SCROLL_SCALAR);
+			this.scroll(deltaY * PlayView.SCROLL_SCALAR);
 		}
 		else
 		{
