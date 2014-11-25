@@ -27,9 +27,9 @@ public class LevelRequirementParser
 	// None
 
 	///-----Functions-----
-	public static HashMap<String, ArrayList<String>> parseFile(InputStream aIn) 
+	public static HashMap<String, String[]> parseFile(InputStream aIn) 
 	{
-		HashMap<String, ArrayList<String>> results = null;
+		HashMap<String, String[]> results = null;
 		//Set up the Parser
 		try 
 		{
@@ -66,11 +66,11 @@ public class LevelRequirementParser
 		return results;
 	}
 
-	private static HashMap<String, ArrayList<String>> parseLevels(XmlPullParser aParser) throws XmlPullParserException, IOException 
+	private static HashMap<String, String[]> parseLevels(XmlPullParser aParser) throws XmlPullParserException, IOException 
 	{
 		//Parses the content of a "nodes"
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_LEVELS);
-		HashMap<String, ArrayList<String>> levelData = new HashMap<String, ArrayList<String>>();
+		HashMap<String, String[]> levelData = new HashMap<String, String[]>();
 		//As long as we are not at an end-tag we will keep creating nodes
 		while (aParser.next() != XmlPullParser.END_TAG)
 		{
@@ -86,7 +86,7 @@ public class LevelRequirementParser
 				aParser.nextTag();
 				if (aParser.getName().equals(LevelRequirementParser.TAG_REQUIRED_LEVELS))
 				{
-					ArrayList<String> requiredLevels = parseRequiredLevels(aParser);
+					String[] requiredLevels = parseRequiredLevels(aParser);
 					levelData.put(levelKey, requiredLevels);
 				}
 				else

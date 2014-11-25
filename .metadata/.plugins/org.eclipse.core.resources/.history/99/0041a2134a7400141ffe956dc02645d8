@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.beep_boop.Beep.LevelManager;
 import com.beep_boop.Beep.LevelManager.LevelStateListener;
@@ -83,23 +82,14 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	///-----NodeClickListener methods-----
 	public boolean mapViewUserCanClickNode(MapView aMapView, MapNode aNode)
 	{
-		//get if can play from level manager
-		boolean result = LevelManager.canPlayLevel(aNode.getLevelKey());
-		//check if result is no
-		if (!result)
-		{
-			//display message
-			Toast.makeText(this, getString(R.string.mapActivity_cannotClickNodeToastMessage), Toast.LENGTH_SHORT).show();
-		}
-		//return result
-		return result;
+		return LevelManager.canPlayLevel(aNode.getLevelKey());
 	}
 	
 	public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode)
 	{
 		//@TODO - switch to next level
 		
-		//@TEST - switches state of level
+		//@TEMP - switches state of level
 		LevelManager.setLevelComplete(aNode.getLevelKey(), !LevelManager.getIsLevelComplete(aNode.getLevelKey()));
 	}
 	

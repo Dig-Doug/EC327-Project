@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import android.content.Context;
 import android.util.Log;
 
+import com.beep_boop.Beep.game.WordHandler;
 import com.beep_boop.Beep.levelSelect.LevelRequirementParser;
 
 public class LevelManager 
@@ -29,7 +30,7 @@ public class LevelManager
 	
 	///-----Member Variables-----
 	/** Holds the required previous levels for each level */
-	private HashMap<String, ArrayList<String>> mRequiredLevels = new HashMap<String, ArrayList<String>>();
+	private HashMap<String, String[]> mRequiredLevels = new HashMap<String, String[]>();
 	/** Holds the completion state for each level */
 	private Hashtable<String, Boolean> mLevelStates = new Hashtable<String, Boolean>();
 	/** Holds the level state listeners */

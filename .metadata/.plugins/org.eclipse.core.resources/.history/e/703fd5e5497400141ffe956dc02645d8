@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import android.content.Context;
 import android.util.Log;
 
+import com.beep_boop.Beep.game.WordHandler;
 import com.beep_boop.Beep.levelSelect.LevelRequirementParser;
 
 public class LevelManager 
