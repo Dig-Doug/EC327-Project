@@ -11,4 +11,5 @@
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.LevelManager"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.WordHandler"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 </qualifiedTypeNameHistroy>

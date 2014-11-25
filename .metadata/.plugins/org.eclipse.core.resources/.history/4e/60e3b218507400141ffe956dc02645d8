@@ -14,6 +14,6 @@
         custom:mapWidthOnScreen="0.5"
         custom:nodeOffImage="@drawable/node_off"
         custom:nodeOnImage="@drawable/node_on"
-        custom:nodeSelectedOverlay="@drawable/node_overlay" />
+        custom:nodeSelectedOverlay="@drawable/node_test" />
 
 </LinearLayout>
