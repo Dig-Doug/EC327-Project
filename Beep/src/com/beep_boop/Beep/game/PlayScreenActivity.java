@@ -12,8 +12,6 @@ public class PlayScreenActivity extends Activity
 	private static final String TAG = "PlayScreenActivity";
 	/** Holds a reference to the play view */
 	private PlayView mPlayView;
-	/** Handles storing the words */
-	private WordHandler mWordHandler;
 	
 	///-----Activity Life Cycle-----
 	@Override
@@ -22,10 +20,8 @@ public class PlayScreenActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_screen);
 		
-		this.mWordHandler = new WordHandler(this);
-		
 		this.mPlayView = (PlayView) findViewById(R.id.playScreenActivity_playView);	
-		this.mPlayView.setWords(this.mWordHandler.getLinksForWord("Matthew McConaughey"));
+		this.mPlayView.setWords(WordHandler.getLinksForWord("Matthew McConaughey"));
 	}
 	
 	///-----

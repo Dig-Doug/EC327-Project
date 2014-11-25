@@ -13,13 +13,50 @@ import com.beep_boop.Beep.R;
 
 public class WordHandler
 {
+	///-----Static Variables-----
+	/** Holds if the singleton has been loaded */
+	private static boolean loaded = false;
+	/** Holds the log tag */
+	private static final String TAG = "LevelManager";
+	/** Holds the singleton instance of the class */
+	public static WordHandler INSTANCE;
+	
 	///-----Member Variables-----
-	/** Tag for logging */
-	private static final String TAG = "PlayScreenActivity";
 	/** Holds all the word data */
 	private Hashtable<String, Hashtable<String, Integer>> mWordData;
 	
-	public WordHandler(Context aContext)
+	private WordHandler()
+	{
+		
+	}
+	
+	///-----Public Wrapper Methods-----
+	public static void load(Context aContext)
+	{
+		if (!WordHandler.loaded)
+		{
+			WordHandler.INSTANCE = new WordHandler();
+			WordHandler.INSTANCE.loadPrivate(aContext);
+			WordHandler.loaded = true;
+		}
+	}
+	
+	public static Set<String> getLinksForWord(String aWord)
+	{
+		while(!WordHandler.loaded);
+		
+		return WordHandler.INSTANCE.getLinksForWordPrivate(aWord);
+	}
+	
+	public static Collection<Integer> getCountsForWord(String aWord)
+	{
+		while(!WordHandler.loaded);
+		
+		return WordHandler.INSTANCE.getCountsForWordPrivate(aWord);
+	}
+	
+	///-----Private Methods-----
+	private void loadPrivate(Context aContext)
 	{
 		InputStream in = null;
 		try 
@@ -48,10 +85,10 @@ public class WordHandler
 		}
 	}
 	
-	public Set<String> getLinksForWord(String aWord)
+	private Set<String> getLinksForWordPrivate(String aWord)
 	{
 		Set<String> result = null;
-		if (mWordData.containsKey(aWord))
+		if (this.mWordData.containsKey(aWord))
 		{
 			Set<String> keys = this.mWordData.get(aWord).keySet();
 			result = keys;
@@ -64,10 +101,10 @@ public class WordHandler
 		return result;
 	}
 	
-	public Collection<Integer> getCountsForWord(String aWord)
+	private Collection<Integer> getCountsForWordPrivate(String aWord)
 	{
 		Collection<Integer> result = null;
-		if (mWordData.containsKey(aWord))
+		if (this.mWordData.containsKey(aWord))
 		{
 			Collection<Integer> values = this.mWordData.get(aWord).values();
 			result = values;
