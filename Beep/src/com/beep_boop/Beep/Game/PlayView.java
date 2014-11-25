@@ -6,8 +6,10 @@ import java.util.Set;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,14 +25,14 @@ public class PlayView extends View
 	
 	private PointF[] mDrawPoints;
 	private float[] mDrawThetas;
-	private int mStartWordIndex;
+	private int mStartWordIndex = 0;
 	private int mNumberOfWordsToDraw = 10;
 	private ArrayList<String> mWords = new ArrayList<String>();
 	
 	private PointF[] mStartPoints;
 	private float[] mStartThetas;
 	private float mAnimationPercent;
-	private Paint mTextPaint;
+	private Paint mTextPaint = new Paint();
 	
 	/** Holds the minimum distance the finger must move to be considered a scroll */
 	private static final float mMinScrollDelta = 5.0f;
@@ -39,7 +41,7 @@ public class PlayView extends View
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 	
-	private static final float SCROLL_SCALAR = 2.0f;
+	private static final float SCROLL_SCALAR = 0.00001f;
 	
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
@@ -94,11 +96,25 @@ public class PlayView extends View
 
 	///-----Functions-----
 	//overridden view method
-	protected void onDraw(Canvas canvas)
-	{
-		//draw background
-		this.drawBackground(canvas);
+	@Override
+	public void onDraw(Canvas canvas) {
+		this.calculateDrawPointsAndThetas();
+		for (int i = mStartWordIndex; i < mNumberOfWordsToDraw; i++)
+		{
+			float x = mDrawPoints[i].x;
+			float y = mDrawPoints[i].y;
+
+			mTextPaint.setColor(Color.BLACK);
+			mTextPaint.setTextSize(60);
+			String startWord = mWords.get(i);
+
+			Rect rect = new Rect();
+			mTextPaint.getTextBounds(startWord, 0, startWord.length(), rect);
+			canvas.rotate(mDrawThetas[i], x + rect.exactCenterX(), y + rect.exactCenterY());
+			canvas.drawText(startWord, x, y, mTextPaint);
+		}	
 	}
+
 
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
@@ -112,16 +128,19 @@ public class PlayView extends View
 		this.mNumberOfWordsToDraw = aPoints.size() - 1;
 		this.mStartPoints = new PointF[aPoints.size()];
 		this.mStartThetas = new float[aThetas.size()];
-		
+		this.mDrawThetas = new float[aThetas.size()];
+		this.mDrawPoints = new PointF[aPoints.size()];
 		for (int i = 0; i < aPoints.size(); i++)
 		{
 			this.mStartPoints[i] = aPoints.get(i);
 			this.mStartThetas[i] = aThetas.get(i);
 		}
+		this.calculateDrawPointsAndThetas();
 	}
 	
 	private void calculateDrawPointsAndThetas()
 	{
+		
 		for (int i = 0; i < this.mStartPoints.length - 1; i++)
 		{
 			PointF currentPoint = this.mStartPoints[i];
@@ -132,7 +151,9 @@ public class PlayView extends View
 			float deltaTheta = (this.mStartThetas[i + 1] - this.mStartThetas[i]) * this.mAnimationPercent;
 			
 			this.mDrawPoints[i] = new PointF(currentPoint.x + deltaX, currentPoint.y + deltaY);
-			this.mDrawThetas[i] = this.mDrawThetas[i] + deltaTheta;
+			this.mDrawPoints[i].x *= this.getWidth();
+			this.mDrawPoints[i].y *= this.getHeight();
+			this.mDrawThetas[i] = (this.mDrawThetas[i] + deltaTheta)*180/(float)Math.PI;
 		}
 	}
 	
@@ -208,7 +229,7 @@ public class PlayView extends View
 		//bound the percent
 		if (this.mAnimationPercent > 1.0f)
 		{
-			this.mAnimationPercent -= 1.0f;
+			this.mAnimationPercent = 0;
 			this.mStartWordIndex++;
 			if (this.mStartWordIndex >= this.mWords.size())
 			{
@@ -217,7 +238,7 @@ public class PlayView extends View
 		}
 		else if (this.mAnimationPercent < 0.0f)
 		{
-			this.mAnimationPercent += 1.0f;
+			this.mAnimationPercent = 1;
 			this.mStartWordIndex--;
 			if (this.mStartWordIndex < 0)
 			{
@@ -226,7 +247,13 @@ public class PlayView extends View
 		}
 		
 		//calculate the draw points
-		this.calculateDrawPointsAndThetas();
+		this.requestRedraw();
+	}
+	
+	private void requestRedraw()
+	{
+		invalidate();
+		requestLayout();
 	}
 
 	//handles all touch up events

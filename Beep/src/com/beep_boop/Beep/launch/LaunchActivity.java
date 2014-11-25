@@ -1,6 +1,5 @@
 package com.beep_boop.Beep.launch;
 
-import com.beep_boop.Beep.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,16 +9,12 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-<<<<<<< Updated upstream
 import com.beep_boop.Beep.LevelManager;
 import com.beep_boop.Beep.MainActivity;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.WordHandler;
 
-=======
->>>>>>> Stashed changes
 public class LaunchActivity extends Activity 
 {
 	///-----Member Variables-----

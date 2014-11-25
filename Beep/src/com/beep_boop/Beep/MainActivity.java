@@ -1,9 +1,7 @@
 package com.beep_boop.Beep;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.beep_boop.Beep.game.PlayScreenActivity;
-import com.beep_boop.Beep.game.WordHandler;
 import com.beep_boop.Beep.launch.LaunchActivity;
 import com.beep_boop.Beep.levelSelect.MapActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
@@ -84,11 +81,6 @@ public class MainActivity extends Activity
 			}
 		});
 		
-<<<<<<< Updated upstream
-=======
-		
-		
->>>>>>> Stashed changes
 		Button toStartButton = (Button) findViewById(R.id.mainActivity_toStartButton);
 		toStartButton.setOnClickListener(new OnClickListener()
 		{

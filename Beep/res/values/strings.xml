@@ -47,18 +47,9 @@
     <string name="placeHolder">PlayScreen</string>
     <string name="parseWords">Parse Words.</string>
     <string name="wordTitleLabel"> Word Title Goes here.</string>
-<<<<<<< Updated upstream
-=======
-   
-
-    
->>>>>>> Stashed changes
     <string name="title_activity_drawing_test">DrawingTest</string>
     <string name="title_activity_play_view2">PlayView2</string>
     <string name="action_settings">Settings</string>
-
-<<<<<<< Updated upstream
-</resources>
-=======
-</resources>
->>>>>>> Stashed changes
+    
+    </resources>
+    

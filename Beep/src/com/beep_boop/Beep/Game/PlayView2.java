@@ -15,53 +15,44 @@ import android.view.View;
 public class PlayView2 extends View {
 
 	private PointF[] mDrawPoints;
-	private int mStartWordIndex;
+	private int mStartWordIndex = 0;
 	private ArrayList<String> mWords;
 	private int mNumberofWordsToDraw;
 	private float[] mDrawThetas;
-
+	private Paint paint = new Paint();
+	
+	
 	//Goal: plot points 
 	public PlayView2(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		this.mWords = new ArrayList<String>(); 
+		this.mWords.add("Apple");
+		this.mDrawPoints = new PointF[1];
+		this.mDrawPoints[0] = new PointF(200,200);
+		this.mDrawThetas = new float[1];
+		this.mDrawThetas[0] = 45.0f;
+
+		
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onDraw(Canvas canvas) {
-
-		Paint paint = new Paint();
 		
-		paint.setColor(Color.RED);
-		canvas.drawCircle(40, 50, 25, paint);
-		
-		paint.setAntiAlias(true);
-        paint.setColor(Color.BLUE);
-        canvas.drawCircle(120, 50, 25, paint);
-        
-        
-        paint.setAntiAlias(true);
-        paint.setColor(Color.GREEN);
-        canvas.drawCircle(200, 50, 25, paint);
-        
-        int x = 75;
-        int y = 185;
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(40);
-        String rotatedtext = "Apple";
-        
-        
-        
-        Rect rect = new Rect();
-        paint.getTextBounds(rotatedtext, 0, rotatedtext.length(), rect);
-        canvas.translate(x, y);
-        paint.setStyle(Paint.Style.FILL);
-        
-        canvas.drawText("Apple", 0, 0, paint);
-        paint.setStyle(Paint.Style.STROKE);
-        canvas.drawRect(rect, paint);
-    
-         
-
+		for (int i = mStartWordIndex; i < mNumberofWordsToDraw; i++)
+		{
+			float x = mDrawPoints[0].x;
+			float y = mDrawPoints[0].y;
+			
+	        paint.setColor(Color.BLACK);
+	        paint.setTextSize(40);
+	        String startWord = mWords.get(mStartWordIndex);
+	    
+	        Rect rect = new Rect();
+	        paint.getTextBounds(startWord, 0, startWord.length(), rect);
+	        canvas.rotate(mDrawThetas[0], x + rect.exactCenterX(), y + rect.exactCenterY());
+			canvas.drawText(startWord, x, y, paint);
+		}	
 	}
 	
 	
