@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.beep_boop.Beep.LevelManager;
-import com.beep_boop.Beep.LevelManager.LevelStateListener;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
+import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.levels.LevelManager.LevelStateListener;
 
 public class MapActivity extends Activity implements NodeClickListener, LevelStateListener
 {

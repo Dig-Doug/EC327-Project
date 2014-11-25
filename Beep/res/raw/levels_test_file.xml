@@ -1,23 +1,33 @@
 ﻿<levels>
     <level key="level_1">
+        <from>apple</from>
+   	    <to>viking</to>
     </level>
    	<level key="level_2">
+   	    <from>apple</from>
+   	    <to>viking</to>
             <requires>
                 <req>level_1</req>
             </requires>
     </level>
     <level key="level_3">
+        <from>apple</from>
+   	    <to>viking</to>
             <requires>
                 <req>level_2</req>
             </requires>
     </level>
     <level key="level_4">
+        <from>apple</from>
+   	    <to>viking</to>
             <requires>
                 <req>level_1</req>
                 <req>level_2</req>
             </requires>
     </level>
     <level key="level_5">
+        <from>apple</from>
+   	    <to>viking</to>
             <requires>
                 <req>level_3</req>
                 <req>level_4</req>
