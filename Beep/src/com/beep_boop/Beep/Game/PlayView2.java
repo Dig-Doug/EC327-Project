@@ -3,17 +3,13 @@ package com.beep_boop.Beep.game;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-
-import com.beep_boop.Beep.R;
 
 
 public class PlayView2 extends View {
@@ -24,7 +20,7 @@ public class PlayView2 extends View {
 	private int mNumberofWordsToDraw;
 	private float[] mDrawThetas;
 
-
+	//Goal: plot points 
 	public PlayView2(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
@@ -36,11 +32,36 @@ public class PlayView2 extends View {
 		Paint paint = new Paint();
 		
 		paint.setColor(Color.RED);
-		canvas.drawCircle(20, 50, 25, paint);
+		canvas.drawCircle(40, 50, 25, paint);
 		
 		paint.setAntiAlias(true);
         paint.setColor(Color.BLUE);
-        canvas.drawCircle(100, 50, 25, paint);
+        canvas.drawCircle(120, 50, 25, paint);
+        
+        
+        paint.setAntiAlias(true);
+        paint.setColor(Color.GREEN);
+        canvas.drawCircle(200, 50, 25, paint);
+        
+        int x = 75;
+        int y = 185;
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(40);
+        String rotatedtext = "Apple";
+        
+        
+        
+        Rect rect = new Rect();
+        paint.getTextBounds(rotatedtext, 0, rotatedtext.length(), rect);
+        canvas.translate(x, y);
+        paint.setStyle(Paint.Style.FILL);
+        
+        canvas.drawText("Apple", 0, 0, paint);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(rect, paint);
+    
+         
+
 	}
 	
 	

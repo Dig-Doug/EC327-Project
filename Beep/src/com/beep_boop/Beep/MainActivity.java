@@ -84,6 +84,11 @@ public class MainActivity extends Activity
 			}
 		});
 		
+<<<<<<< Updated upstream
+=======
+		
+		
+>>>>>>> Stashed changes
 		Button toStartButton = (Button) findViewById(R.id.mainActivity_toStartButton);
 		toStartButton.setOnClickListener(new OnClickListener()
 		{
