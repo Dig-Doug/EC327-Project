@@ -23,7 +23,10 @@ public class PlayView extends View
 	///-----Members-----
 	/** Holds the tag used for logging */
 	private static final String TAG = "PlayView";
+<<<<<<< HEAD
+=======
 
+>>>>>>> FETCH_HEAD
 	private PointF[] mDrawPoints;
 	private float[] mDrawThetas;
 	private int mStartWordIndex = 0;
@@ -42,11 +45,14 @@ public class PlayView extends View
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 
-	private static final float SCROLL_SCALAR = 0.01f;
-	private static final float SCROLL_ACCELERATION = 0.05f;
+	private static final float SCROLL_SCALAR = 0.05f;
+	private static final float SCROLL_ACCELERATION = 0.9f;
+	private static final float SCROLL_VELOCITY_MIN = 0.5f;
+	private static final float SCROLL_VELOCITY_SCALAR = 1000f;
 	private float mScrollVelocity = 0.0f;
 	private double mLastTouchTime;
 	private TimeAnimator mScrollAnimator;
+	private float mLastDeltaX, mLastDeltaY;
 
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
@@ -96,8 +102,9 @@ public class PlayView extends View
 			public void onTimeUpdate(TimeAnimator animation, long totalTime, long deltaTime) {
 				// TODO Auto-generated method stub
 				scroll(mScrollVelocity * deltaTime);
-				mScrollVelocity -= SCROLL_ACCELERATION * deltaTime;
-				if (mScrollVelocity <= 0.0f)
+				mScrollVelocity *= 0.5;
+				
+				if (Math.abs(mScrollVelocity) < 0.002)
 				{
 					mScrollVelocity = 0.0f;
 				}
@@ -183,7 +190,11 @@ public class PlayView extends View
 		{
 			PointF currentPoint = this.mStartPoints[i];
 			PointF nextPoint = this.mStartPoints[i + 1];
+<<<<<<< HEAD
+			//need to make an escape function for when i = max, because no i+1 exists
+=======
 
+>>>>>>> FETCH_HEAD
 			float deltaX = (nextPoint.x - currentPoint.x) * this.mAnimationPercent;
 			float deltaY = (nextPoint.y - currentPoint.y) * this.mAnimationPercent;
 			float deltaTheta = (this.mStartThetas[i + 1] - this.mStartThetas[i]) * this.mAnimationPercent;
@@ -233,6 +244,7 @@ public class PlayView extends View
 		this.mLastTouchPoint.y = aEvent.getY();
 		
 		this.mLastTouchTime = System.currentTimeMillis();
+		this.mScrollVelocity = 0.0f;
 	}
 
 	//handles all touch moved events
@@ -248,14 +260,8 @@ public class PlayView extends View
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
 			
-			//calculate the delta time
-			double currentTime = System.currentTimeMillis();
-			double deltaTime = currentTime - this.mLastTouchTime;
-			//set the velocity
-			this.mScrollVelocity = (float)(deltaY / deltaTime) * SCROLL_SCALAR;
-			
 			//increment the origin by the delta
-			//this.scroll(-deltaY * PlayView.SCROLL_SCALAR);
+			this.scroll(-deltaY * PlayView.SCROLL_SCALAR);
 		}
 		else
 		{
@@ -266,6 +272,9 @@ public class PlayView extends View
 				this.mScrolling = true;
 			}
 		}
+		
+		this.mLastDeltaX = deltaX;
+		this.mLastDeltaY = deltaY;
 	}
 
 	private void scroll(float aIncrement)
@@ -309,7 +318,16 @@ public class PlayView extends View
 		//check if we are scrolling
 		if (this.mScrolling)
 		{
-			//do nothing
+			//calculate the delta time
+			double currentTime = System.currentTimeMillis();
+			double deltaTime = currentTime - this.mLastTouchTime;
+			this.mLastTouchTime = currentTime;
+			//set the velocity
+			float velocity = (float)(this.mLastDeltaY / deltaTime) * SCROLL_VELOCITY_SCALAR;;
+			if (Math.abs(velocity) > PlayView.SCROLL_VELOCITY_MIN)
+			{
+				this.mScrollVelocity = -velocity;
+			}
 		}
 		else
 		{

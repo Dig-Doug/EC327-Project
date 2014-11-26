@@ -391,11 +391,11 @@ public class MapView extends View
 		this.MAP_ON_SCREEN_HEIGHT = this.MAP_ON_SCREEN_WIDTH * (h / (float)w);
 		this.mScaleY = h / (float)(this.MAP_ON_SCREEN_HEIGHT * this.mBackgroundImage.getHeight());
 		
-		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() * this.MAP_ON_SCREEN_WIDTH * this.mScaleX);
-		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() * this.MAP_ON_SCREEN_HEIGHT * this.mScaleY);
+		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() * this.MAP_ON_SCREEN_WIDTH * this.mScaleX / 2.0f);
+		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() * this.MAP_ON_SCREEN_HEIGHT * this.mScaleY / 2.0f);
 		
-		this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlay.getWidth() * this.MAP_ON_SCREEN_WIDTH * this.mScaleX);
-		this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlay.getHeight() * this.MAP_ON_SCREEN_HEIGHT * this.mScaleY);
+		this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlay.getWidth() * this.MAP_ON_SCREEN_WIDTH * this.mScaleX / 2.0f);
+		this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlay.getHeight() * this.MAP_ON_SCREEN_HEIGHT * this.mScaleY / 2.0f);
 		
 		this.calculateOriginBounds();
 	}
