@@ -22,26 +22,30 @@ public class PlayView extends View
 	///-----Members-----
 	/** Holds the tag used for logging */
 	private static final String TAG = "PlayView";
+<<<<<<< HEAD
+=======
+
+>>>>>>> FETCH_HEAD
 	private PointF[] mDrawPoints;
 	private float[] mDrawThetas;
 	private int mStartWordIndex = 0;
 	private int mNumberOfWordsToDraw = 10;
 	private ArrayList<String> mWords = new ArrayList<String>();
-	
+
 	private PointF[] mStartPoints;
 	private float[] mStartThetas;
 	private float mAnimationPercent;
 	private Paint mTextPaint = new Paint();
-	
+
 	/** Holds the minimum distance the finger must move to be considered a scroll */
 	private static final float mMinScrollDelta = 5.0f;
 	/** Holds the last registered point of the touch in screen coords */
 	private PointF mLastTouchPoint = new PointF();
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
-	
-	private static final float SCROLL_SCALAR = 0.00001f;
-	
+
+	private static final float SCROLL_SCALAR = 0.01f;
+
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
 	{
@@ -50,7 +54,7 @@ public class PlayView extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
 		try
 		{
-			
+
 		}
 		catch (Exception e)
 		{
@@ -69,7 +73,7 @@ public class PlayView extends View
 		this.mTextPaint = new Paint();
 		this.mTextPaint.setTextSize(20.0f);
 		this.mTextPaint.setColor(0x000000);
-		
+
 		//does a circle pattern
 		ArrayList<PointF> startPoints = new ArrayList<PointF>();
 		ArrayList<Float> startThetas = new ArrayList<Float>();
@@ -78,12 +82,12 @@ public class PlayView extends View
 		float radius = 0.5f;
 		for (int i = 0; i < this.mNumberOfWordsToDraw + 1; i++,  theta -= delta)
 		{
-			startPoints.add(new PointF(radius * (float)Math.sin(theta), radius * (float)Math.cos(theta)));
+			startPoints.add(new PointF(radius * (float)Math.cos(theta), radius * (float)Math.sin(theta) + 0.5f));
 			startThetas.add(theta);
 		}
 		this.setStarts(startPoints, startThetas);
 	}
-	
+
 	public void setWords(Set<String> aWords)
 	{
 		if (aWords != null)
@@ -96,21 +100,29 @@ public class PlayView extends View
 	///-----Functions-----
 	//overridden view method
 	@Override
-	public void onDraw(Canvas canvas) {
+	public void onDraw(Canvas canvas)
+	{
 		this.calculateDrawPointsAndThetas();
-		for (int i = mStartWordIndex; i < mNumberOfWordsToDraw; i++)
+		for (int i = 0; i < mNumberOfWordsToDraw; i++)
 		{
-			float x = mDrawPoints[i].x;
-			float y = mDrawPoints[i].y;
+			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
+			{
+				float x = mDrawPoints[i].x;
+				float y = mDrawPoints[i].y;
 
-			mTextPaint.setColor(Color.BLACK);
-			mTextPaint.setTextSize(60);
-			String startWord = mWords.get(i);
+				mTextPaint.setColor(Color.BLACK);
+				mTextPaint.setTextSize(60);
+				String startWord = mWords.get(mStartWordIndex + i);
 
-			Rect rect = new Rect();
-			mTextPaint.getTextBounds(startWord, 0, startWord.length(), rect);
-			canvas.rotate(mDrawThetas[i], x + rect.exactCenterX(), y + rect.exactCenterY());
-			canvas.drawText(startWord, x, y, mTextPaint);
+				Rect rect = new Rect();
+				mTextPaint.getTextBounds(startWord, 0, startWord.length(), rect);
+				//canvas.rotate(mDrawThetas[i], x + rect.exactCenterX(), y + rect.exactCenterY());
+				canvas.drawText(startWord, x, y, mTextPaint);
+			}
+			else if (mStartWordIndex + i >= this.mWords.size())
+			{
+				break;
+			}
 		}	
 	}
 
@@ -118,10 +130,10 @@ public class PlayView extends View
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
-		
+
 	}
-	
-	
+
+
 	private void setStarts(ArrayList<PointF> aPoints, ArrayList<Float> aThetas)
 	{
 		this.mNumberOfWordsToDraw = aPoints.size() - 1;
@@ -136,26 +148,29 @@ public class PlayView extends View
 		}
 		this.calculateDrawPointsAndThetas();
 	}
-	
+
 	private void calculateDrawPointsAndThetas()
 	{
-		
 		for (int i = 0; i < this.mStartPoints.length - 1; i++)
 		{
 			PointF currentPoint = this.mStartPoints[i];
 			PointF nextPoint = this.mStartPoints[i + 1];
+<<<<<<< HEAD
 			//need to make an escape function for when i = max, because no i+1 exists
+=======
+
+>>>>>>> FETCH_HEAD
 			float deltaX = (nextPoint.x - currentPoint.x) * this.mAnimationPercent;
 			float deltaY = (nextPoint.y - currentPoint.y) * this.mAnimationPercent;
 			float deltaTheta = (this.mStartThetas[i + 1] - this.mStartThetas[i]) * this.mAnimationPercent;
-			
+
 			this.mDrawPoints[i] = new PointF(currentPoint.x + deltaX, currentPoint.y + deltaY);
 			this.mDrawPoints[i].x *= this.getWidth();
 			this.mDrawPoints[i].y *= this.getHeight();
 			this.mDrawThetas[i] = (this.mDrawThetas[i] + deltaTheta)*180/(float)Math.PI;
 		}
 	}
-	
+
 
 	//gets touch events for view
 	@Override
@@ -219,36 +234,36 @@ public class PlayView extends View
 			}
 		}
 	}
-	
+
 	private void scroll(float aIncrement)
 	{
 		//increment the percent
 		this.mAnimationPercent += aIncrement;
-		
+
 		//bound the percent
 		if (this.mAnimationPercent > 1.0f)
 		{
 			this.mAnimationPercent = 0;
+			this.mStartWordIndex--;
+			if (this.mStartWordIndex < -this.mWords.size())
+			{
+				this.mStartWordIndex = -this.mWords.size();
+			}
+		}
+		else if (this.mAnimationPercent < 0.0f)
+		{
+			this.mAnimationPercent = 1;
 			this.mStartWordIndex++;
 			if (this.mStartWordIndex >= this.mWords.size())
 			{
 				this.mStartWordIndex = this.mWords.size();
 			}
 		}
-		else if (this.mAnimationPercent < 0.0f)
-		{
-			this.mAnimationPercent = 1;
-			this.mStartWordIndex--;
-			if (this.mStartWordIndex < 0)
-			{
-				this.mStartWordIndex = 0;
-			}
-		}
-		
+
 		//calculate the draw points
 		this.requestRedraw();
 	}
-	
+
 	private void requestRedraw()
 	{
 		invalidate();
@@ -271,7 +286,7 @@ public class PlayView extends View
 		//touch ended, reset all variables
 		this.resetTouchVariables();
 	}
-	
+
 	//resets all touch variables
 	private void resetTouchVariables()
 	{

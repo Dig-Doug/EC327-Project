@@ -10,10 +10,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.beep_boop.Beep.LevelManager;
 import com.beep_boop.Beep.MainActivity;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.WordHandler;
+import com.beep_boop.Beep.levels.LevelManager;
 
 public class LaunchActivity extends Activity 
 {
