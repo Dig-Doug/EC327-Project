@@ -3,6 +3,7 @@ package com.beep_boop.Beep.game;
 import java.util.ArrayList;
 import java.util.Set;
 
+import android.animation.TimeAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -41,7 +42,14 @@ public class PlayView extends View
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 
-	private static final float SCROLL_SCALAR = 0.01f;
+	private static final float SCROLL_SCALAR = 0.05f;
+	private static final float SCROLL_ACCELERATION = 0.9f;
+	private static final float SCROLL_VELOCITY_MIN = 0.5f;
+	private static final float SCROLL_VELOCITY_SCALAR = 1000f;
+	private float mScrollVelocity = 0.0f;
+	private double mLastTouchTime;
+	private TimeAnimator mScrollAnimator;
+	private float mLastDeltaX, mLastDeltaY;
 
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
@@ -83,6 +91,33 @@ public class PlayView extends View
 			startThetas.add(theta);
 		}
 		this.setStarts(startPoints, startThetas);
+		
+		this.mScrollAnimator = new TimeAnimator();
+		this.mScrollAnimator.setTimeListener(new TimeAnimator.TimeListener()
+		{
+			@Override
+			public void onTimeUpdate(TimeAnimator animation, long totalTime, long deltaTime) {
+				// TODO Auto-generated method stub
+				scroll(mScrollVelocity * deltaTime);
+				mScrollVelocity *= 0.5;
+				
+				if (Math.abs(mScrollVelocity) < 0.002)
+				{
+					mScrollVelocity = 0.0f;
+				}
+			}
+		});
+		this.mScrollAnimator.start();
+	}
+	
+	@Override
+	public void onDetachedFromWindow()
+	{
+		super.onDetachedFromWindow();
+		
+		//clean up the animator
+		this.mScrollAnimator.cancel();
+		this.mScrollAnimator = null;
 	}
 
 	public void setWords(Set<String> aWords)
@@ -113,7 +148,7 @@ public class PlayView extends View
 
 				Rect rect = new Rect();
 				mTextPaint.getTextBounds(startWord, 0, startWord.length(), rect);
-				//canvas.rotate(mDrawThetas[i], x + rect.exactCenterX(), y + rect.exactCenterY());
+				//canvas.rotate(mDrawThetas[i], x + rect.exactCenterX(), y + rect.exactCenterY()); //this line was the culprit
 				canvas.drawText(startWord, x, y, mTextPaint);
 			}
 			else if (mStartWordIndex + i >= this.mWords.size())
@@ -200,6 +235,9 @@ public class PlayView extends View
 	{
 		this.mLastTouchPoint.x = aEvent.getX();
 		this.mLastTouchPoint.y = aEvent.getY();
+		
+		this.mLastTouchTime = System.currentTimeMillis();
+		this.mScrollVelocity = 0.0f;
 	}
 
 	//handles all touch moved events
@@ -214,6 +252,7 @@ public class PlayView extends View
 			//increment the last touch point
 			this.mLastTouchPoint.x += deltaX;
 			this.mLastTouchPoint.y += deltaY;
+			
 			//increment the origin by the delta
 			this.scroll(-deltaY * PlayView.SCROLL_SCALAR);
 		}
@@ -226,6 +265,9 @@ public class PlayView extends View
 				this.mScrolling = true;
 			}
 		}
+		
+		this.mLastDeltaX = deltaX;
+		this.mLastDeltaY = deltaY;
 	}
 
 	private void scroll(float aIncrement)
@@ -269,7 +311,16 @@ public class PlayView extends View
 		//check if we are scrolling
 		if (this.mScrolling)
 		{
-			//do nothing
+			//calculate the delta time
+			double currentTime = System.currentTimeMillis();
+			double deltaTime = currentTime - this.mLastTouchTime;
+			this.mLastTouchTime = currentTime;
+			//set the velocity
+			float velocity = (float)(this.mLastDeltaY / deltaTime) * SCROLL_VELOCITY_SCALAR;;
+			if (Math.abs(velocity) > PlayView.SCROLL_VELOCITY_MIN)
+			{
+				this.mScrollVelocity = -velocity;
+			}
 		}
 		else
 		{

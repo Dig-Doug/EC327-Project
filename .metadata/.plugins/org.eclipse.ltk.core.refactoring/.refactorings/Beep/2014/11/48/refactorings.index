@@ -8,3 +8,5 @@
 1416945594069	Move compilation unit
 1416945598027	Move compilation unit
 1416945648525	Rename type 'LevelRequirementParser'
+1416959334861	Rename field 'mScrollVeloctiy'
+1416959417521	Rename field 'ACCELERATION'
