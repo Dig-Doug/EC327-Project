@@ -185,11 +185,12 @@ containing a value of this type.
         public static final int play_view2=0x7f0a0000;
     }
     public static final class raw {
-        public static final int elephant_shrew=0x7f050000;
-        public static final int levels_test_file=0x7f050001;
-        public static final int matthew_mcconaughey_zurich=0x7f050002;
-        public static final int nodes_test_file=0x7f050003;
-        public static final int test_file=0x7f050004;
+        public static final int database_full=0x7f050000;
+        public static final int elephant_shrew=0x7f050001;
+        public static final int levels_test_file=0x7f050002;
+        public static final int matthew_mcconaughey_zurich=0x7f050003;
+        public static final int nodes_test_file=0x7f050004;
+        public static final int test_file=0x7f050005;
     }
     public static final class string {
         public static final int aboutActivity_messageEditTextPlaceholder=0x7f08000b;

@@ -25,8 +25,8 @@ public class LaunchActivity extends Activity
 	/** Holds a reference to a image view */
 	private ImageView text_image_view;
 
-	private boolean mLevelsLoaded, mWordsLoaded;
-	
+	private boolean mLevelsLoaded = false, mWordsLoaded = false;
+
 	///-----Activity Life Cycle-----
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -37,7 +37,7 @@ public class LaunchActivity extends Activity
 		//grab the image views from XML
 		logo_image_view = (ImageView) findViewById(R.id.launchActivity_logoImageView);
 		text_image_view = (ImageView) findViewById(R.id.launchActivity_textImageView);
-		
+
 		new LoadLevelsTask().execute(this);
 		new LoadWordsTask().execute(this);
 
@@ -67,88 +67,97 @@ public class LaunchActivity extends Activity
 			@Override
 			public void onAnimationEnd(Animation animation)
 			{
-				//wait while the tasks finish
-				while (!mLevelsLoaded && !mWordsLoaded);
-				
-				//load the fade out animation
-				Animation fadeOutAnimation = AnimationUtils.loadAnimation(THIS, R.animator.anim_fadeout);
-				//start the animation
-				logo_image_view.startAnimation(fadeOutAnimation);
-				text_image_view.startAnimation(fadeOutAnimation);
-				//set the listener
-				fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() 
-				{
-
-					@Override
-					public void onAnimationStart(Animation animation) 
-					{
-						// do nothing
-
-					}
-
-					@Override
-					public void onAnimationRepeat(Animation animation) 
-					{
-						// do nothing, does not repeat
-
-					}
-
-					@Override
-					public void onAnimationEnd(Animation animation)
-					{
-						//make sure the image view doesn't reappear after the animation is done
-						logo_image_view.setAlpha(0.0f);
-						text_image_view.setAlpha(0.0f);
-						
-						//transition to map page
-						Intent switchToMain = new Intent(THIS, MainActivity.class);
-						startActivity(switchToMain);
-						
-						//quit
-						finish();
-					}
-				});
+				//do nothing
 			}
 		});
 	}
-	
-	
-	
+
+
+
 	private class LoadLevelsTask extends AsyncTask<Context, Void, Void>
 	{
-	     protected Void doInBackground(Context... contexts)
-	     {
-	    	 LevelManager.load(contexts[0]);
-	         return null;
-	     }
+		protected Void doInBackground(Context... contexts)
+		{
+			LevelManager.load(contexts[0]);
+			return null;
+		}
 
-	     protected void onProgressUpdate(Void... voids)
-	     {
-	         
-	     }
+		protected void onProgressUpdate(Void... voids)
+		{
 
-	     protected void onPostExecute(Void result)
-	     {
-	    	 mLevelsLoaded = true;
-	     }
-	 }
-	
+		}
+
+		protected void onPostExecute(Void result)
+		{
+			mLevelsLoaded = true;
+
+			checkDone();
+		}
+	}
+
 	private class LoadWordsTask extends AsyncTask<Context, Void, Void>
 	{
-	     protected Void doInBackground(Context... contexts)
-	     {
-	    	 WordHandler.load(contexts[0]);
-	         return null;
-	     }
+		protected Void doInBackground(Context... contexts)
+		{
+			WordHandler.load(contexts[0]);
+			return null;
+		}
 
-	     protected void onProgressUpdate(Void... voids)
-	     {
-	         
-	     }
+		protected void onProgressUpdate(Void... voids)
+		{
 
-	     protected void onPostExecute(Void result)
-	     {
-	    	 mLevelsLoaded = true;
-	     }
-	 }
+		}
+
+		protected void onPostExecute(Void result)
+		{
+			mWordsLoaded = true;
+
+			checkDone();
+		}
+	}
+
+	private void checkDone()
+	{
+		if (mWordsLoaded && mLevelsLoaded)
+		{
+			//load the fade out animation
+			Animation fadeOutAnimation = AnimationUtils.loadAnimation(THIS, R.animator.anim_fadeout);
+			//start the animation
+			logo_image_view.startAnimation(fadeOutAnimation);
+			text_image_view.startAnimation(fadeOutAnimation);
+			//set the listener
+			fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() 
+			{
+
+				@Override
+				public void onAnimationStart(Animation animation) 
+				{
+					// do nothing
+
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) 
+				{
+					// do nothing, does not repeat
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation)
+				{
+					//make sure the image view doesn't reappear after the animation is done
+					logo_image_view.setAlpha(0.0f);
+					text_image_view.setAlpha(0.0f);
+
+					//transition to map page
+					Intent switchToMain = new Intent(THIS, MainActivity.class);
+					startActivity(switchToMain);
+
+					//quit
+					finish();
+				}
+			});
+		}
+	}
 }

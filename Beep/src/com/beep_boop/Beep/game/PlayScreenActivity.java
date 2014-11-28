@@ -1,0 +1,63 @@
+package com.beep_boop.Beep.game;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import com.beep_boop.Beep.R;
+
+public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource
+{
+	///-----Member Variables-----
+	/** Tag for logging */
+	private static final String TAG = "PlayScreenActivity";
+	/** Holds a reference to the play view */
+	private PlayView mPlayView;
+	
+	private ArrayList<String> mWordPath = new ArrayList<String>();
+	
+	///-----Activity Life Cycle-----
+	@Override
+	protected void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_play_screen);
+		
+		this.mPlayView = (PlayView) findViewById(R.id.playScreenActivity_playView);	
+		this.mPlayView.setListener(this);
+		this.mPlayView.setDataSource(this);
+		this.mPlayView.setCurrentWord("Matthew McConaughey");
+		this.mWordPath.add("Matthew McConaughey");
+	}
+
+	///-----PlayView.WordDataSource methods-----
+	@Override
+	public Set<String> playViewWordsForWord(PlayView aPlayView, String aWord)
+	{
+		return WordHandler.getLinksForWord(aWord);
+	}
+	
+	public String playViewPreviousWord(PlayView aPlayView)
+	{
+		return this.mWordPath.get(this.mWordPath.size() - 1);
+	}
+
+	///-----PlayView.WordClickListener methods-----
+	@Override
+	public void playViewUserDidClickWord(PlayView aPlayView, String aWord)
+	{
+		this.mWordPath.add(aWord);
+	}
+	
+	public boolean playViewUserCanGoBack(PlayView aPlayView, String aCurrentWord)
+	{
+		return (this.mWordPath.size() > 1);
+	}
+	
+	public void playViewUserDidGoBack(PlayView aPlayView)
+	{
+		this.mWordPath.remove(this.mWordPath.size() - 1);
+	}
+}

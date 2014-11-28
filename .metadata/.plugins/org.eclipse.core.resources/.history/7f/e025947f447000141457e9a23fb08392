@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">Beep</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="mainActivity_toSettingsButton">Settings</string>
-    <string name="title_activity_about">AboutActivity</string>
-
-</resources>

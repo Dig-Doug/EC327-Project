@@ -27,6 +27,8 @@ public class PlayScreenParser {
 		Hashtable<String, Hashtable<String, Integer>> wikiData = null; 
 		try 
 		{
+			Log.v(TAG, "Started parsing word data");
+			
 			//Create a parser
 			XmlPullParser aParser = Xml.newPullParser();
 			aParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -36,6 +38,8 @@ public class PlayScreenParser {
 			aParser.nextTag();
 			//Call the parseLinks function to obtain a Hashtable of link titles and their counts
 			wikiData = parseWords(aParser);
+			
+			Log.v(TAG, "Finished parsing word data");
 		} 
 		catch (XmlPullParserException e) 
 		{
