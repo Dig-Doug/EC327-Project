@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="backgroundImage" format="reference" />
+
+    <declare-styleable name="MapView">
+        <attr name="mapWidthOnScreen" format="float" />
+        <attr name="nodeClickDistance" format="float" />
+        <attr name="animationLength" format="integer" />
+        <attr name="nodeOffImage" format="reference" />
+        <attr name="nodeOnImage" format="reference" />
+        <attr name="nodeSelectedOverlay" format="reference" />
+        <attr name="backgroundImage" />
+    </declare-styleable>
+    <declare-styleable name="PlayView">
+        <attr name="backgroundImage" />
+        <attr name="wordsOnPage" format="integer" />
+    </declare-styleable>
+
+</resources>

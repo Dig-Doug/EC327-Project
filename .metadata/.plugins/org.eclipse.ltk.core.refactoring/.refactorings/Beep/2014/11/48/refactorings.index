@@ -10,3 +10,12 @@
 1416945648525	Rename type 'LevelRequirementParser'
 1416959334861	Rename field 'mScrollVeloctiy'
 1416959417521	Rename field 'ACCELERATION'
+1417186461855	Delete element
+1417187704547	Rename local variable 'nextPoint'
+1417187716125	Rename local variable 'currentTheta'
+1417187724649	Rename local variable 'nextTheta'
+1417189216293	Rename field 'SCROLL_SCALAR'
+1417189229925	Rename field 'SCROLL_ACCELERATION'
+1417189246593	Rename field 'SCROLL_VELOCITY_MIN'
+1417189257623	Rename field 'SCROLL_VELOCITY_SCALAR'
+1417189269472	Rename field 'mScrollMinimumVelocity'

@@ -1,0 +1,558 @@
+package com.beep_boop.Beep.game;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.TimeAnimator;
+import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PointF;
+import android.graphics.Rect;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+
+import com.beep_boop.Beep.R;
+
+public class PlayView extends View
+{
+	///-----Interfaces-----
+	public interface WordClickListener
+	{
+		public void playViewUserDidClickWord(PlayView aPlayView, String aWord);
+		public boolean playViewUserCanGoBack(PlayView aPlayView, String aCurrentWord);
+		public void playViewUserDidGoBack(PlayView aPlayView);
+	}
+
+	public interface WordDataSource
+	{
+		public Set<String> playViewWordsForWord(PlayView aPlayView, String aWord);
+		public String playViewPreviousWord(PlayView aPlayView);
+	}
+
+	enum AnimationState
+	{
+		Displaying, //words are in normal positions
+		AnimatingIn, //words go towards current word
+		AnimatingOut, //words go away from current word
+	}
+
+	///-----Members-----
+	/** Holds the tag used for logging */
+	private static final String TAG = "PlayView";
+
+	private WordClickListener mListener;
+	private WordDataSource mDataSource;
+
+
+	private PointF[] mDrawPoints;
+	private float[] mDrawThetas;
+	private int mStartWordIndex = 0;
+	private int mNumberOfWordsToDraw = 10;
+	private ArrayList<String> mWords = new ArrayList<String>();
+
+	private PointF[] mStartPoints;
+	private float[] mStartThetas;
+	private float mAnimationPercent;
+	private Paint mTextPaint = new Paint();
+
+	/** Holds the minimum distance the finger must move to be considered a scroll */
+	private static final float mMinScrollDelta = 5.0f;
+	/** Holds the last registered point of the touch in screen coords */
+	private PointF mLastTouchPoint = new PointF();
+	/** Holds whether or not we are scrolling */
+	private boolean mScrolling; 
+
+	private float mScrollScalar;
+	private float mScrollAcceleration;
+	private float mScrollVelocityMinimum;
+	private float mScrollVelocityScalar;
+	private float mScrollVelocity = 0.0f;
+	private TimeAnimator mScrollAnimator;
+	private double mLastTouchTime;
+	private float mLastDeltaX, mLastDeltaY;
+	private AnimationState mAnimationState = AnimationState.AnimatingOut;
+	private PointF mCurrentWordPosition;
+	private float mCurrentWordTheta;
+	private int mAnimationInLength, mAnimationOutLength;
+
+	private String mCurrentWord;
+
+	///-----Constructors-----
+	public PlayView(Context context, AttributeSet attrs)
+	{
+		super(context, attrs);
+
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
+		try
+		{
+			mScrollScalar = a.getFloat(R.styleable.PlayView_scrollScalar, 0.05f);
+			mScrollAcceleration = a.getFloat(R.styleable.PlayView_scrollAcceleration, 0.5f);
+			mScrollVelocityMinimum = a.getFloat(R.styleable.PlayView_scrollVelocityMin, 0.25f);
+			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 1000f);
+			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 1000);
+			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			a.recycle();
+		}
+
+		this.init();
+
+		this.startAnimationOut();
+	}
+
+	private void init()
+	{
+		this.mTextPaint = new Paint();
+		this.mTextPaint.setTextSize(20.0f);
+		this.mTextPaint.setColor(0x000000);
+
+		//does a circle pattern
+		ArrayList<PointF> startPoints = new ArrayList<PointF>();
+		ArrayList<Float> startThetas = new ArrayList<Float>();
+		float delta = (float)Math.PI / (this.mNumberOfWordsToDraw + 1);
+		float theta = (float)Math.PI/2;
+		float radius = 0.5f;
+		for (int i = 0; i < this.mNumberOfWordsToDraw + 1; i++,  theta -= delta)
+		{
+			startPoints.add(new PointF(radius * (float)Math.cos(theta), radius * (float)Math.sin(theta) + 0.5f));
+			startThetas.add(theta);
+		}
+		this.setStarts(new PointF(0.1f, 0.5f), 0, startPoints, startThetas);
+
+		this.mScrollAnimator = new TimeAnimator();
+		this.mScrollAnimator.setTimeListener(new TimeAnimator.TimeListener()
+		{
+			@Override
+			public void onTimeUpdate(TimeAnimator animation, long totalTime, long deltaTime) {
+
+				//check if we're in a state where velocity is allowed
+				if (mAnimationState == AnimationState.Displaying)
+				{
+					//if so, scroll the amount
+					scroll(mScrollVelocity * deltaTime);
+					//decrease the velocity
+					mScrollVelocity *= mScrollAcceleration;
+
+					//check if the velocity is less than a threshold
+					if (Math.abs(mScrollVelocity) < 0.002)
+					{
+						//if so, stop velocity
+						mScrollVelocity = 0.0f;
+					}
+				}
+				else
+				{
+					//if not, velocity is 0
+					mScrollVelocity = 0.0f;
+				}
+			}
+		});
+		this.mScrollAnimator.start();
+	}
+
+	@Override
+	public void onDetachedFromWindow()
+	{
+		super.onDetachedFromWindow();
+
+		//clean up the animator
+		this.mScrollAnimator.cancel();
+		this.mScrollAnimator = null;
+	}
+
+	//sets the listener
+	public void setListener(WordClickListener aListener)
+	{
+		this.mListener = aListener;
+	}
+
+	//sets the data source
+	public void setDataSource(WordDataSource aDataSource)
+	{
+		this.mDataSource = aDataSource;
+	}
+
+	public void setCurrentWord(String aWord)
+	{
+		this.mCurrentWord = aWord;
+		this.getWords();
+	}
+
+	private void getWords()
+	{
+		if (this.mDataSource != null)
+		{
+			Set<String> words = this.mDataSource.playViewWordsForWord(this, this.mCurrentWord);
+			if (words != null)
+			{
+				this.mWords.clear();
+				this.mWords.addAll(words);
+			}
+		}
+		else
+		{
+			Log.w(PlayView.TAG, "Data source is null, can't get words for current word");
+		}
+	}
+
+	///-----Functions-----
+	//overridden view method
+	@Override
+	public void onDraw(Canvas canvas)
+	{
+		this.drawBackground(canvas);
+
+		this.calculateDrawPointsAndThetas();
+		for (int i = 0; i < mNumberOfWordsToDraw; i++)
+		{
+			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
+			{
+				float x = mDrawPoints[i].x;
+				float y = mDrawPoints[i].y;
+
+				mTextPaint.setColor(Color.BLACK);
+				mTextPaint.setTextSize(60);
+				String startWord = mWords.get(mStartWordIndex + i);
+
+				Rect rect = new Rect();
+				mTextPaint.getTextBounds(startWord, 0, startWord.length(), rect);
+				//canvas.rotate(mDrawThetas[i], x + rect.exactCenterX(), y + rect.exactCenterY()); //this line was the culprit
+				canvas.drawText(startWord, x, y, mTextPaint);
+			}
+			else if (mStartWordIndex + i >= this.mWords.size())
+			{
+				break;
+			}
+		}	
+	}
+
+
+	//draws the background of the map
+	private void drawBackground(Canvas canvas)
+	{
+
+	}
+
+
+	private void setStarts(PointF aCurrentWordStart, float aCurrentWordTheta, ArrayList<PointF> aPoints, ArrayList<Float> aThetas)
+	{
+		//set the current word position
+		this.mCurrentWordPosition = aCurrentWordStart;
+		this.mCurrentWordTheta = aCurrentWordTheta;
+		
+		//set the number of words to draw
+		this.mNumberOfWordsToDraw = aPoints.size() - 1;
+
+		//initialize arrays
+		this.mStartPoints = new PointF[aPoints.size()];
+		this.mStartThetas = new float[aThetas.size()];
+		this.mDrawPoints = new PointF[aPoints.size()];
+		this.mDrawThetas = new float[aThetas.size()];
+
+		//set the start points
+		for (int i = 0; i < aPoints.size(); i++)
+		{
+			this.mStartPoints[i] = aPoints.get(i);
+			this.mStartThetas[i] = aThetas.get(i);
+		}
+	}
+
+	private void calculateDrawPointsAndThetas()
+	{
+		//enumerate through each point
+		for (int i = 0; i < this.mStartPoints.length - 1; i++)
+		{
+			PointF fromPoint = null, toPoint = null;
+			float fromTheta = 0f, toTheta = 0f;
+			if (this.mAnimationState == AnimationState.Displaying)
+			{
+				fromPoint = this.mStartPoints[i];
+				fromTheta = this.mStartThetas[i];
+				toPoint = this.mStartPoints[i + 1];
+				toTheta = this.mStartThetas[i + 1];
+			}
+			else if (this.mAnimationState == AnimationState.AnimatingIn)
+			{
+				fromPoint = this.mStartPoints[i];
+				fromTheta = this.mStartThetas[i];
+				toPoint = this.mCurrentWordPosition;
+				toTheta = this.mCurrentWordTheta;
+			}
+			else if (this.mAnimationState == AnimationState.AnimatingOut)
+			{
+				fromPoint = this.mCurrentWordPosition;
+				fromTheta = this.mCurrentWordTheta;
+				toPoint = this.mStartPoints[i];
+				toTheta = this.mStartThetas[i];
+			}
+
+			//use linear interpolation to get the delta for the animation
+			float deltaX = (toPoint.x - fromPoint.x) * this.mAnimationPercent;
+			float deltaY = (toPoint.y - fromPoint.y) * this.mAnimationPercent;
+			float deltaTheta = (toTheta - fromTheta) * this.mAnimationPercent;
+
+			//set the draw point
+			this.mDrawPoints[i] = new PointF(fromPoint.x + deltaX, fromPoint.y + deltaY);
+			//times by width and height to get draw points in screen coords instead of percents
+			this.mDrawPoints[i].x *= this.getWidth();
+			this.mDrawPoints[i].y *= this.getHeight();
+			//convert radians to degrees
+			this.mDrawThetas[i] = (fromTheta + deltaTheta)*180/(float)Math.PI;
+		}
+	}
+
+
+	private void startAnimationIn()
+	{
+		this.mAnimationState = AnimationState.AnimatingIn;
+
+		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+		// It will take XXXms for the animator to go from 0 to 1
+		animator.setDuration(this.mAnimationInLength);
+		// Callback that executes on animation steps. 
+		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation)
+			{
+				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
+				requestRedraw();
+			}
+		});
+		animator.addListener(new AnimatorListener()
+		{
+			@Override
+			public void onAnimationCancel(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationEnd(Animator arg0)
+			{
+				mAnimationPercent = 0.0f;
+				mAnimationState = AnimationState.Displaying;
+				requestRedraw();
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationStart(Animator arg0)
+			{ 
+				//do nothing 
+			}
+		});
+
+		animator.start();
+	}
+
+	private void startAnimationOut()
+	{
+		this.mAnimationState = AnimationState.AnimatingOut;
+
+		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+		// It will take XXXms for the animator to go from 0 to 1
+		animator.setDuration(this.mAnimationOutLength);
+		// Callback that executes on animation steps. 
+		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation)
+			{
+				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
+				requestRedraw();
+			}
+		});
+		animator.addListener(new AnimatorListener()
+		{
+			@Override
+			public void onAnimationCancel(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationEnd(Animator arg0)
+			{
+				mAnimationPercent = 0.0f;
+				mAnimationState = AnimationState.Displaying;
+				requestRedraw();
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationStart(Animator arg0)
+			{ 
+				//do nothing 
+			}
+		});
+
+		animator.start();
+	}
+
+	//gets touch events for view
+	@Override
+	public boolean onTouchEvent(MotionEvent event)
+	{
+		//result holds if the touch was processed by the view, which is all cases is yes
+		boolean result = true;
+		if (event.getAction() == MotionEvent.ACTION_DOWN)
+		{
+			//handle touch down
+			this.touchDown(event);
+		}
+		else if (event.getAction() == MotionEvent.ACTION_MOVE)
+		{
+			//handle touch moved
+			this.touchMoved(event);
+		}
+		else if (event.getAction() == MotionEvent.ACTION_UP)
+		{
+			//handle touch up
+			this.touchUp(event);
+		}
+		else
+		{
+			Log.e(PlayView.TAG, "Unknown motion event type: " + event.getAction());
+			result = false;
+		}
+
+		return result;
+	}
+
+	//handles all touch down events
+	private void touchDown(MotionEvent aEvent)
+	{
+		this.mLastTouchPoint.x = aEvent.getX();
+		this.mLastTouchPoint.y = aEvent.getY();
+
+		this.mLastTouchTime = System.currentTimeMillis();
+		this.mScrollVelocity = 0.0f;
+	}
+
+	//handles all touch moved events
+	private void touchMoved(MotionEvent aEvent)
+	{
+		float deltaX = aEvent.getX() - this.mLastTouchPoint.x;
+		float deltaY = aEvent.getY() - this.mLastTouchPoint.y;
+
+		//check if we are already scrolling
+		if (this.mScrolling)
+		{
+			//increment the last touch point
+			this.mLastTouchPoint.x += deltaX;
+			this.mLastTouchPoint.y += deltaY;
+
+			//increment the origin by the delta
+			this.scroll(-deltaY * this.mScrollScalar);
+		}
+		else
+		{
+			//check if we've exceeded the minimum scroll distance
+			if (Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) >= Math.pow(PlayView.mMinScrollDelta, 2))
+			{
+				//if so, we are scrolling
+				this.mScrolling = true;
+			}
+		}
+
+		this.mLastDeltaX = deltaX;
+		this.mLastDeltaY = deltaY;
+	}
+
+	private void scroll(float aIncrement)
+	{
+		//only scroll if scrolling is allowed
+		if (this.mAnimationState == AnimationState.Displaying)
+		{
+			//increment the percent
+			this.mAnimationPercent += aIncrement;
+
+			//bound the percent
+			if (this.mAnimationPercent > 1.0f)
+			{
+				this.mAnimationPercent = 0;
+				this.mStartWordIndex--;
+				if (this.mStartWordIndex < -this.mWords.size())
+				{
+					this.mStartWordIndex = -this.mWords.size();
+				}
+			}
+			else if (this.mAnimationPercent < 0.0f)
+			{
+				this.mAnimationPercent = 1;
+				this.mStartWordIndex++;
+				if (this.mStartWordIndex >= this.mWords.size())
+				{
+					this.mStartWordIndex = this.mWords.size();
+				}
+			}
+
+			//calculate the draw points
+			this.requestRedraw();
+		}
+	}
+
+	private void requestRedraw()
+	{
+		invalidate();
+		requestLayout();
+	}
+
+	//handles all touch up events
+	private void touchUp(MotionEvent aEvent)
+	{
+		//check if we are scrolling
+		if (this.mScrolling)
+		{
+			//calculate the delta time
+			double currentTime = System.currentTimeMillis();
+			double deltaTime = currentTime - this.mLastTouchTime;
+			this.mLastTouchTime = currentTime;
+			//set the velocity
+			float velocity = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;;
+			if (Math.abs(velocity) > this.mScrollVelocityMinimum)
+			{
+				this.mScrollVelocity = -velocity;
+			}
+		}
+		else
+		{
+			//@TODO - click
+		}
+
+		//touch ended, reset all variables
+		this.resetTouchVariables();
+	}
+
+	//resets all touch variables
+	private void resetTouchVariables()
+	{
+		//reset variables here as needed
+		this.mScrolling = false;
+		this.mLastTouchPoint = new PointF(-1.0f, -1.0f);
+	}
+
+}

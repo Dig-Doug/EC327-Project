@@ -20,7 +20,23 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
+        public static final int animationInLength=0x7f01000c;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
         public static final int animationLength=0x7f010003;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int animationOutLength=0x7f01000d;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
@@ -53,6 +69,38 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int nodeSelectedOverlay=0x7f010006;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollAcceleration=0x7f010009;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollScalar=0x7f010008;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollVelocityMin=0x7f01000a;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollVelocityScalar=0x7f01000b;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -337,15 +385,56 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #PlayView_animationInLength com.beep_boop.Beep:animationInLength}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayView_animationOutLength com.beep_boop.Beep:animationOutLength}</code></td><td></td></tr>
            <tr><td><code>{@link #PlayView_backgroundImage com.beep_boop.Beep:backgroundImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayView_scrollAcceleration com.beep_boop.Beep:scrollAcceleration}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayView_scrollScalar com.beep_boop.Beep:scrollScalar}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayView_scrollVelocityMin com.beep_boop.Beep:scrollVelocityMin}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayView_scrollVelocityScalar com.beep_boop.Beep:scrollVelocityScalar}</code></td><td></td></tr>
            <tr><td><code>{@link #PlayView_wordsOnPage com.beep_boop.Beep:wordsOnPage}</code></td><td></td></tr>
            </table>
+           @see #PlayView_animationInLength
+           @see #PlayView_animationOutLength
            @see #PlayView_backgroundImage
+           @see #PlayView_scrollAcceleration
+           @see #PlayView_scrollScalar
+           @see #PlayView_scrollVelocityMin
+           @see #PlayView_scrollVelocityScalar
            @see #PlayView_wordsOnPage
          */
         public static final int[] PlayView = {
-            0x7f010000, 0x7f010007
+            0x7f010000, 0x7f010007, 0x7f010008, 0x7f010009,
+            0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d
         };
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#animationInLength}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:animationInLength
+        */
+        public static final int PlayView_animationInLength = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#animationOutLength}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:animationOutLength
+        */
+        public static final int PlayView_animationOutLength = 7;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#backgroundImage}
           attribute's value can be found in the {@link #PlayView} array.
@@ -356,6 +445,62 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name com.beep_boop.Beep:backgroundImage
         */
         public static final int PlayView_backgroundImage = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#scrollAcceleration}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:scrollAcceleration
+        */
+        public static final int PlayView_scrollAcceleration = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#scrollScalar}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:scrollScalar
+        */
+        public static final int PlayView_scrollScalar = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#scrollVelocityMin}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:scrollVelocityMin
+        */
+        public static final int PlayView_scrollVelocityMin = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#scrollVelocityScalar}
+          attribute's value can be found in the {@link #PlayView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:scrollVelocityScalar
+        */
+        public static final int PlayView_scrollVelocityScalar = 5;
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#wordsOnPage}
           attribute's value can be found in the {@link #PlayView} array.
