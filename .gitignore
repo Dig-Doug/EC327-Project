@@ -12,3 +12,11 @@ Beep/bin/classes/com/beep_boop/Beep/levelSelect/MapActivity.class
 .metadata/.plugins/org.eclipse.core.resources/.history/f9/10c85693dd74001417e7f27150c76470
 
 Beep/bin/classes/com/beep_boop/Beep/Game/PlayView.class
+
+*.class
+
+*.class
+
+*.class
+
+Beep/bin/classes/com/beep_boop/Beep/game/PlayView$1.class

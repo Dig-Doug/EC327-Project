@@ -120,7 +120,7 @@ public class MapView extends View
 			a.recycle();
 		}
 		
-		this.init();
+		this.init();		
 	}
 	
 	private void init()
