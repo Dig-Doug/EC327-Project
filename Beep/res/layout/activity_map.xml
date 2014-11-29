@@ -10,9 +10,9 @@
         android:layout_gravity="center"
         custom:animationLength="1000"
         custom:backgroundImage="@drawable/map_1"
-        custom:mapWidthOnScreen="0.30"
-        custom:nodeOffImage="@drawable/beep_node_off_image"
-        custom:nodeOnImage="@drawable/beep_node_image"
+        custom:mapWidthOnScreen="0.50"
+        custom:nodeOffImage="@drawable/node_star_off"
+        custom:nodeOnImage="@drawable/node_star_on"
         custom:nodeSelectedOverlay="@drawable/node_overlay" />
 
     <ImageButton

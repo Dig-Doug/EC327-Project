@@ -148,8 +148,10 @@ containing a value of this type.
         public static final int map_background=0x7f02000b;
         public static final int map_background_example=0x7f02000c;
         public static final int node_overlay=0x7f02000d;
-        public static final int ss_apple=0x7f02000e;
-        public static final int ss_viking=0x7f02000f;
+        public static final int node_star_off=0x7f02000e;
+        public static final int node_star_on=0x7f02000f;
+        public static final int ss_apple=0x7f020010;
+        public static final int ss_viking=0x7f020011;
     }
     public static final class id {
         public static final int action_settings=0x7f0b0015;
