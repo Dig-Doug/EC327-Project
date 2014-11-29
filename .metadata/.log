@@ -1028,3 +1028,9 @@ Binding(COMMAND+SHIFT+\,
 
 !ENTRY org.eclipse.ui 2 2 2014-11-29 12:16:18.050
 !MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-11-29 12:33:43.179
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/levels_test_file.xml [Res F/Beep/res/raw, type RAW]
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-11-29 12:34:57.707
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/levels_test_file.xml [Res F/Beep/res/raw, type RAW]

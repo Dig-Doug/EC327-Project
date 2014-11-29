@@ -1,16 +1,16 @@
 ﻿<levels>
-    <level key="level_1">
+    <level key="level_0_1">
         <from>Apple</from>
    	    <to>Vikings</to>
     </level>
-   	<level key="level_2">
+   	<level key="level_0_2">
    	    <from>Apple</from>
    	    <to>Norway</to>
             <requires>
                 <req>level_1</req>
             </requires>
     </level>
-    <level key="level_3">
+    <level key="level_0_3">
         <from>Apple</from>
    	    <to>Vikings</to>
             <requires>
