@@ -126,18 +126,22 @@ containing a value of this type.
         public static final int activity_vertical_margin=0x7f070001;
     }
     public static final class drawable {
-        public static final int char_beep=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int launch_screen_logo=0x7f020002;
-        public static final int launch_screen_text_logo=0x7f020003;
-        public static final int map_background=0x7f020004;
-        public static final int map_background_example=0x7f020005;
-        public static final int node_off=0x7f020006;
-        public static final int node_on=0x7f020007;
-        public static final int node_overlay=0x7f020008;
-        public static final int node_test=0x7f020009;
-        public static final int ss_apple=0x7f02000a;
-        public static final int ss_viking=0x7f02000b;
+        public static final int beep_head_outlined_image=0x7f020000;
+        public static final int beep_node_image=0x7f020001;
+        public static final int beep_node_off_image=0x7f020002;
+        public static final int beep_repeatable_map_background_image=0x7f020003;
+        public static final int char_beep=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int launch_screen_logo=0x7f020006;
+        public static final int launch_screen_text_logo=0x7f020007;
+        public static final int map_background=0x7f020008;
+        public static final int map_background_example=0x7f020009;
+        public static final int node_off=0x7f02000a;
+        public static final int node_on=0x7f02000b;
+        public static final int node_overlay=0x7f02000c;
+        public static final int node_test=0x7f02000d;
+        public static final int ss_apple=0x7f02000e;
+        public static final int ss_viking=0x7f02000f;
     }
     public static final class id {
         public static final int aboutActivity_messageEditText=0x7f0b0000;
