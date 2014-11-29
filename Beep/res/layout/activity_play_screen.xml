@@ -5,12 +5,13 @@
     tools:context="${relativePackage}.${activityClass}"
     xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep" >
 
-	<com.beep_boop.Beep.game.PlayView 
+	<com.beep_boop.Beep.game.PlayView
 	    android:id="@+id/playScreenActivity_playView"
 	    android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"
-        custom:wordsOnPage="10"
-        custom:backgroundImage="@drawable/map_background_example"/>
+	    android:layout_height="fill_parent"
+	    android:layout_gravity="center"
+	    custom:backgroundImage="@drawable/play_background"
+	    custom:textColor="@color/launchActivity_loadingTextColor"
+	    custom:wordsOnPage="10" />
 
 </RelativeLayout>

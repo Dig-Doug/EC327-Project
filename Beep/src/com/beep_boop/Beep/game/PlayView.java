@@ -9,12 +9,15 @@ import android.animation.TimeAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -86,6 +89,9 @@ public class PlayView extends View
 	private float mCurrentWordTheta, mCurrentWordDrawTheta;
 	private int mAnimationInLength, mAnimationOutLength;
 	private String mCurrentWord, mNextWord;
+	/** Hold the image to be drawn in the background */
+	private Bitmap mBackgroundImage;
+	private float mBackgroundScaleX, mBackgroundScaleY, mBackgroundRotation;
 
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
@@ -101,6 +107,10 @@ public class PlayView extends View
 			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 500f);
 			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 1000);
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
+			Drawable backgroundImage = a.getDrawable(R.styleable.PlayView_backgroundImage);
+			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
+			int textColor = a.getColor(R.styleable.PlayView_textColor, Color.BLACK);
+			this.mTextPaint.setColor(textColor);
 		}
 		catch (Exception e)
 		{
@@ -264,7 +274,14 @@ public class PlayView extends View
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
-
+		if (this.mBackgroundImage != null)
+		{
+			canvas.save();
+			canvas.rotate(this.mBackgroundRotation);
+			canvas.scale(this.mBackgroundScaleX, this.mBackgroundScaleY);
+			canvas.drawBitmap(this.mBackgroundImage, 0, 0, null);
+			canvas.restore();
+		}
 	}
 
 
@@ -441,6 +458,43 @@ public class PlayView extends View
 		});
 
 		animator.start();
+	}
+	
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh)
+	{
+		super.onSizeChanged(w, h, oldw, oldh);
+
+		if (w > h)
+		{
+			if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
+			{
+				this.mBackgroundRotation = 0f;
+				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
+				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+			}
+			else
+			{
+				this.mBackgroundRotation = 90f;
+				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
+				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
+			}
+		}
+		else
+		{
+			if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
+			{
+				this.mBackgroundRotation = 90f;
+				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
+				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
+			}
+			else
+			{
+				this.mBackgroundRotation = 0f;
+				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
+				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+			}
+		}
 	}
 
 	//gets touch events for view
