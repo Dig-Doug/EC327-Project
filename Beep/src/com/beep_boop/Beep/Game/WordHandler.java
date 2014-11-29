@@ -14,7 +14,7 @@ import com.beep_boop.Beep.R;
 public class WordHandler
 {
 	///-----Static Variables-----
-	private static boolean LOAD_FULL_DATABASE = false;
+	private static boolean LOAD_FULL_DATABASE = true;
 	/** Holds if the singleton has been loaded */
 	private static boolean loaded = false;
 	/** Holds the log tag */
