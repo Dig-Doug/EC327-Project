@@ -11742,3 +11742,13 @@ Binding(COMMAND+SHIFT+\,
 
 !ENTRY com.android.ide.eclipse.adt 1 0 2014-11-28 22:07:03.940
 !MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/levels_test_file.xml [Res F/Beep/res/raw, type RAW]
+!SESSION 2014-11-29 07:55:17.596 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.8.0_11
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-29 07:55:21.913
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
