@@ -149,7 +149,7 @@ containing a value of this type.
         public static final int aboutActivity_showMessage=0x7f0b0002;
         public static final int action_settings=0x7f0b001d;
         public static final int backbutton=0x7f0b000e;
-        public static final int button2=0x7f0b001b;
+        public static final int button2=0x7f0b001c;
         public static final int launchActivity_loadingText=0x7f0b0004;
         public static final int launchActivity_logoImageView=0x7f0b0005;
         public static final int launchActivity_textImageView=0x7f0b0003;
@@ -166,14 +166,14 @@ containing a value of this type.
         public static final int settings=0x7f0b000f;
         public static final int sound=0x7f0b0013;
         public static final int soundbar=0x7f0b0012;
-        public static final int startLevelActivity_objectOne=0x7f0b0014;
-        public static final int startLevelActivity_objectTwo=0x7f0b0017;
-        public static final int startLevelBackButton=0x7f0b0015;
-        public static final int startLevelClicks=0x7f0b001a;
-        public static final int startLevelClicksNumber=0x7f0b0019;
-        public static final int startLevelImage1=0x7f0b0016;
-        public static final int startLevelImage2=0x7f0b0018;
-        public static final int startLevelStartButton=0x7f0b001c;
+        public static final int startLevelActivity_objectOne=0x7f0b0015;
+        public static final int startLevelActivity_objectTwo=0x7f0b0014;
+        public static final int startLevelBackButton=0x7f0b001a;
+        public static final int startLevelClicks=0x7f0b0019;
+        public static final int startLevelClicksNumber=0x7f0b0018;
+        public static final int startLevelImage1=0x7f0b0017;
+        public static final int startLevelImage2=0x7f0b0016;
+        public static final int startLevelStartButton=0x7f0b001b;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
