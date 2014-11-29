@@ -8,20 +8,28 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.beep_boop.Beep.R;
-import com.beep_boop.Beep.game.PlayScreenActivity;
+import com.beep_boop.Beep.about.AboutActivity;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.levels.LevelManager.LevelStateListener;
+import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
 public class MapActivity extends Activity implements NodeClickListener, LevelStateListener
 {
 	///-----Member Variables-----
+	/** Tag used in Log messages */
+	private static final String TAG = "MapActivity";
 	/** Holds a reference to the map view */
 	private MapView mMapView; 
+	/** Reference to this */
+	private Activity THIS = this;
 	
 	///-----Activity Life Cycle-----
 	@Override
@@ -37,6 +45,34 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		mMapView = (MapView)findViewById(R.id.mapActivity_mapView);
 		//setup the map view
 		this.setupMapView();
+		
+		//setup the settings button
+		ImageButton toSettingsButton = (ImageButton) findViewById(R.id.mapActivity_settingsButton);
+		toSettingsButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Log.d(MapActivity.TAG, "To settings button clicked");
+				
+				Intent toSettings = new Intent(THIS, SettingsActivity.class);
+				startActivity(toSettings);
+			}
+		});
+		
+		//setup the about button
+		ImageButton toAboutButton = (ImageButton) findViewById(R.id.mapActivity_aboutButton);
+		toAboutButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Log.d(MapActivity.TAG, "To about button clicked");
+				
+				Intent toAbout = new Intent(THIS, AboutActivity.class);
+				startActivity(toAbout);
+			}
+		});
 	}
 	
 	private void setupMapView()
@@ -73,6 +109,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		
 		//set the node click listener
 		this.mMapView.setListener(this);
+		
+		this.mMapView.setSelectedNode(nodeList.get(0));
 	}
 	
 	@Override

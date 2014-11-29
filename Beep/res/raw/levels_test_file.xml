@@ -1,25 +1,25 @@
 ﻿<levels>
     <level key="level_1">
         <from>Apple</from>
-   	    <to>Vikingss</to>
+   	    <to>Vikings</to>
     </level>
    	<level key="level_2">
    	    <from>Apple</from>
-   	    <to>Vikingss</to>
+   	    <to>Norway</to>
             <requires>
                 <req>level_1</req>
             </requires>
     </level>
     <level key="level_3">
         <from>Apple</from>
-   	    <to>Vikingss</to>
+   	    <to>Vikings</to>
             <requires>
                 <req>level_2</req>
             </requires>
     </level>
     <level key="level_4">
         <from>Apple</from>
-   	    <to>Vikingss</to>
+   	    <to>Vikings</to>
             <requires>
                 <req>level_1</req>
                 <req>level_2</req>
@@ -27,7 +27,7 @@
     </level>
     <level key="level_5">
         <from>Apple</from>
-   	    <to>Vikingss</to>
+   	    <to>Vikings</to>
             <requires>
                 <req>level_3</req>
                 <req>level_4</req>

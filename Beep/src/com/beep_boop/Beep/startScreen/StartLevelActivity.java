@@ -50,7 +50,7 @@ public class StartLevelActivity extends Activity
 		this.mStartWordView.setText(this.mSelectedLevel.fromWord);
 		this.mEndWordView.setText(this.mSelectedLevel.toWord);
 		
-		Button playButton = (Button) findViewById(R.id.startLevelStartButton);
+		Button playButton = (Button) findViewById(R.id.startLevelActivity_startLevelButton);
 		playButton.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -63,7 +63,7 @@ public class StartLevelActivity extends Activity
 			}
 		});
 		
-		Button toMapButton = (Button) findViewById(R.id.startLevelBackButton);
+		Button toMapButton = (Button) findViewById(R.id.startLevelActivity_backToMapButton);
 		toMapButton.setOnClickListener(new OnClickListener()
 		{
 			@Override

@@ -1,7 +1,7 @@
 package com.beep_boop.Beep.game;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
@@ -34,7 +34,7 @@ public class PlayView extends View
 
 	public interface WordDataSource
 	{
-		public Set<String> playViewWordsForWord(PlayView aPlayView, String aWord);
+		public List<String> playViewWordsForWord(PlayView aPlayView, String aWord);
 		public String playViewPreviousWord(PlayView aPlayView);
 	}
 
@@ -96,9 +96,9 @@ public class PlayView extends View
 		try
 		{
 			mScrollScalar = a.getFloat(R.styleable.PlayView_scrollScalar, 0.05f);
-			mScrollAcceleration = a.getFloat(R.styleable.PlayView_scrollAcceleration, 0.5f);
+			mScrollAcceleration = a.getFloat(R.styleable.PlayView_scrollAcceleration, 0.25f);
 			mScrollVelocityMinimum = a.getFloat(R.styleable.PlayView_scrollVelocityMin, 0.25f);
-			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 1000f);
+			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 500f);
 			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 1000);
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
 		}
@@ -211,7 +211,7 @@ public class PlayView extends View
 		this.mWords.clear();
 		if (this.mDataSource != null)
 		{
-			Set<String> words = this.mDataSource.playViewWordsForWord(this, this.mCurrentWord);
+			List<String> words = this.mDataSource.playViewWordsForWord(this, this.mCurrentWord);
 			if (words != null)
 			{
 				this.mWords.addAll(words);

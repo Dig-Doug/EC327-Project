@@ -125,7 +125,7 @@ public class LevelDataParser
 		}
 		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_LEVEL);
 		
-		return new Level(levelKey, false, fromWord, toWord, requiredLevels);
+		return new Level(levelKey, false, fromWord, toWord, requiredLevels, 0.0, 0);
 	}
 
 	private static ArrayList<String> parseRequiredLevels(XmlPullParser aParser) throws XmlPullParserException, IOException 

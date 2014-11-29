@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep" >
-
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"  >
+    
     <com.beep_boop.Beep.levelSelect.MapView
         android:id="@+id/mapActivity_mapView"
         android:layout_width="fill_parent"
@@ -16,4 +15,22 @@
         custom:nodeOnImage="@drawable/beep_node_image"
         custom:nodeSelectedOverlay="@drawable/node_overlay" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/mapActivity_settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/icon_settings"
+        android:text="Button" />
+
+    <ImageButton
+        android:id="@+id/mapActivity_aboutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/icon_about"
+        android:text="Button" />
+
+</RelativeLayout>

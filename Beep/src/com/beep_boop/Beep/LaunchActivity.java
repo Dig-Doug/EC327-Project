@@ -1,4 +1,4 @@
-package com.beep_boop.Beep.launch;
+package com.beep_boop.Beep;
 
 
 import android.app.Activity;

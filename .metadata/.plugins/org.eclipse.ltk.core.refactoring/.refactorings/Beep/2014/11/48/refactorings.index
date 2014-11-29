@@ -22,3 +22,13 @@
 1417229103023	Rename field 'startLevelImage1'
 1417229138785	Rename field 'startLevelImage2'
 1417229665988	Move compilation unit
+1417268614857	Rename field 'startLevelStartButton'
+1417268635412	Rename field 'startLevelBackButton'
+1417268704209	Rename field 'startLevelClicksNumber'
+1417272760513	Move compilation unit
+1417272770910	Delete element
+1417272791315	Move compilation unit
+1417272803167	Rename package 'com.beep_boop.Beep.launch'
+1417272807209	Move compilation unit
+1417272817905	Delete element
+1417272828292	Rename type 'SettingsScreen'

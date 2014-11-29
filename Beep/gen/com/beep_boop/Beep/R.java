@@ -20,7 +20,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int animationInLength=0x7f01000c;
+        public static final int animationInLength=0x7f01000d;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -36,7 +36,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int animationOutLength=0x7f01000d;
+        public static final int animationOutLength=0x7f01000e;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
@@ -69,38 +69,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int nodeSelectedOverlay=0x7f010006;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int scrollAcceleration=0x7f010009;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int scrollScalar=0x7f010008;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int scrollVelocityMin=0x7f01000a;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int scrollVelocityScalar=0x7f01000b;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -108,7 +76,47 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int wordsOnPage=0x7f010007;
+        public static final int overlayAnimationLength=0x7f010007;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollAcceleration=0x7f01000a;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollScalar=0x7f010009;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollVelocityMin=0x7f01000b;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scrollVelocityScalar=0x7f01000c;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int wordsOnPage=0x7f010008;
     }
     public static final class color {
         public static final int launchActivity_backgroundColor=0x7f060000;
@@ -132,47 +140,48 @@ containing a value of this type.
         public static final int beep_repeatable_map_background_image=0x7f020003;
         public static final int char_beep=0x7f020004;
         public static final int ic_launcher=0x7f020005;
-        public static final int launch_screen_logo=0x7f020006;
-        public static final int launch_screen_text_logo=0x7f020007;
-        public static final int map_background=0x7f020008;
-        public static final int map_background_example=0x7f020009;
-        public static final int node_off=0x7f02000a;
-        public static final int node_on=0x7f02000b;
-        public static final int node_overlay=0x7f02000c;
-        public static final int node_test=0x7f02000d;
-        public static final int ss_apple=0x7f02000e;
-        public static final int ss_viking=0x7f02000f;
+        public static final int icon_about=0x7f020006;
+        public static final int icon_settings=0x7f020007;
+        public static final int launch_screen_logo=0x7f020008;
+        public static final int launch_screen_text_logo=0x7f020009;
+        public static final int map_background=0x7f02000a;
+        public static final int map_background_example=0x7f02000b;
+        public static final int node_off=0x7f02000c;
+        public static final int node_on=0x7f02000d;
+        public static final int node_overlay=0x7f02000e;
+        public static final int node_test=0x7f02000f;
+        public static final int ss_apple=0x7f020010;
+        public static final int ss_viking=0x7f020011;
     }
     public static final class id {
-        public static final int aboutActivity_messageEditText=0x7f0b0000;
-        public static final int aboutActivity_messageView=0x7f0b0001;
-        public static final int aboutActivity_showMessage=0x7f0b0002;
-        public static final int action_settings=0x7f0b001c;
-        public static final int backbutton=0x7f0b000e;
-        public static final int launchActivity_loadingText=0x7f0b0004;
-        public static final int launchActivity_logoImageView=0x7f0b0005;
-        public static final int launchActivity_textImageView=0x7f0b0003;
-        public static final int mainActivity_toLaunchButton=0x7f0b0007;
-        public static final int mainActivity_toMapButton=0x7f0b0008;
-        public static final int mainActivity_toPlayButton=0x7f0b0009;
-        public static final int mainActivity_toSettingsButton=0x7f0b0006;
-        public static final int mainActivity_toStartButton=0x7f0b000a;
-        public static final int mapActivity_mapView=0x7f0b000b;
-        public static final int music=0x7f0b0011;
-        public static final int musicbar=0x7f0b0010;
-        public static final int playActivity_playView2=0x7f0b000d;
-        public static final int playScreenActivity_playView=0x7f0b000c;
-        public static final int settings=0x7f0b000f;
-        public static final int sound=0x7f0b0013;
-        public static final int soundbar=0x7f0b0012;
-        public static final int startLevelActivity_fromWordImageView=0x7f0b0015;
-        public static final int startLevelActivity_startWordTextView=0x7f0b001b;
-        public static final int startLevelActivity_toWordImageView=0x7f0b0014;
-        public static final int startLevelActivity_toWordTextView=0x7f0b001a;
-        public static final int startLevelBackButton=0x7f0b0019;
-        public static final int startLevelClicks=0x7f0b0016;
-        public static final int startLevelClicksNumber=0x7f0b0018;
-        public static final int startLevelStartButton=0x7f0b0017;
+        public static final int action_settings=0x7f0b001b;
+        public static final int backbutton=0x7f0b000d;
+        public static final int launchActivity_loadingText=0x7f0b0001;
+        public static final int launchActivity_logoImageView=0x7f0b0002;
+        public static final int launchActivity_textImageView=0x7f0b0000;
+        public static final int mainActivity_toLaunchButton=0x7f0b0004;
+        public static final int mainActivity_toMapButton=0x7f0b0005;
+        public static final int mainActivity_toPlayButton=0x7f0b0006;
+        public static final int mainActivity_toSettingsButton=0x7f0b0003;
+        public static final int mainActivity_toStartButton=0x7f0b0007;
+        public static final int mapActivity_aboutButton=0x7f0b000a;
+        public static final int mapActivity_mapView=0x7f0b0008;
+        public static final int mapActivity_settingsButton=0x7f0b0009;
+        public static final int music=0x7f0b0010;
+        public static final int musicbar=0x7f0b000f;
+        public static final int playActivity_playView2=0x7f0b000c;
+        public static final int playScreenActivity_playView=0x7f0b000b;
+        public static final int settings=0x7f0b000e;
+        public static final int sound=0x7f0b0012;
+        public static final int soundbar=0x7f0b0011;
+        public static final int startLevelActivity_backToMapButton=0x7f0b0017;
+        public static final int startLevelActivity_fromWordImageView=0x7f0b0014;
+        public static final int startLevelActivity_numberOfClicksTextView=0x7f0b0018;
+        public static final int startLevelActivity_startLevelButton=0x7f0b0016;
+        public static final int startLevelActivity_startWordTextView=0x7f0b001a;
+        public static final int startLevelActivity_toWordImageView=0x7f0b0013;
+        public static final int startLevelActivity_toWordTextView=0x7f0b0019;
+        public static final int textView1=0x7f0b0015;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
@@ -277,6 +286,9 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f090001;
+        /**  Style for no action bar 
+         */
+        public static final int NoActionBar=0x7f090002;
     }
     public static final class styleable {
         /** Attributes that can be used with a MapView.
@@ -292,6 +304,7 @@ containing a value of this type.
            <tr><td><code>{@link #MapView_nodeOffImage com.beep_boop.Beep:nodeOffImage}</code></td><td></td></tr>
            <tr><td><code>{@link #MapView_nodeOnImage com.beep_boop.Beep:nodeOnImage}</code></td><td></td></tr>
            <tr><td><code>{@link #MapView_nodeSelectedOverlay com.beep_boop.Beep:nodeSelectedOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapView_overlayAnimationLength com.beep_boop.Beep:overlayAnimationLength}</code></td><td></td></tr>
            </table>
            @see #MapView_animationLength
            @see #MapView_backgroundImage
@@ -300,10 +313,11 @@ containing a value of this type.
            @see #MapView_nodeOffImage
            @see #MapView_nodeOnImage
            @see #MapView_nodeSelectedOverlay
+           @see #MapView_overlayAnimationLength
          */
         public static final int[] MapView = {
             0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
-            0x7f010004, 0x7f010005, 0x7f010006
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007
         };
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#animationLength}
@@ -387,6 +401,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name com.beep_boop.Beep:nodeSelectedOverlay
         */
         public static final int MapView_nodeSelectedOverlay = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#overlayAnimationLength}
+          attribute's value can be found in the {@link #MapView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.beep_boop.Beep:overlayAnimationLength
+        */
+        public static final int MapView_overlayAnimationLength = 7;
         /** Attributes that can be used with a PlayView.
            <p>Includes the following attributes:</p>
            <table>
@@ -412,8 +440,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #PlayView_wordsOnPage
          */
         public static final int[] PlayView = {
-            0x7f010000, 0x7f010007, 0x7f010008, 0x7f010009,
-            0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d
+            0x7f010000, 0x7f010008, 0x7f010009, 0x7f01000a,
+            0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e
         };
         /**
           <p>This symbol is the offset where the {@link com.beep_boop.Beep.R.attr#animationInLength}

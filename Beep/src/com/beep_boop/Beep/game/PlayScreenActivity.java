@@ -1,7 +1,8 @@
 package com.beep_boop.Beep.game;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.util.Log;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
-import com.beep_boop.Beep.startScreen.StartLevelActivity;
 import com.beep_boop.Beep.win.WinActivity;
 
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource
@@ -25,6 +25,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	
 	private ArrayList<String> mWordPath = new ArrayList<String>();
 	private Level mSelectedLevel;
+	private double mStartTime;
 	
 	///-----Activity Life Cycle-----
 	@Override
@@ -36,9 +37,9 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
-			if (extras.containsKey(StartLevelActivity.EXTRA_LEVEL_KEY))
+			if (extras.containsKey(PlayScreenActivity.EXTRA_LEVEL_KEY))
 			{
-				String levelKey = extras.getString(StartLevelActivity.EXTRA_LEVEL_KEY);
+				String levelKey = extras.getString(PlayScreenActivity.EXTRA_LEVEL_KEY);
 				this.mSelectedLevel = LevelManager.getLevelForKey(levelKey);
 			}
 		}
@@ -53,13 +54,18 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		this.mPlayView.setDataSource(this);
 		this.mPlayView.setCurrentWord(this.mSelectedLevel.fromWord);
 		this.mWordPath.add(this.mSelectedLevel.fromWord);
+		
+		this.mStartTime = System.currentTimeMillis();
 	}
 
 	///-----PlayView.WordDataSource methods-----
 	@Override
-	public Set<String> playViewWordsForWord(PlayView aPlayView, String aWord)
+	public List<String> playViewWordsForWord(PlayView aPlayView, String aWord)
 	{
-		return WordHandler.getLinksForWord(aWord);
+		List<String> sorted = new ArrayList<String>();
+		sorted.addAll(WordHandler.getLinksForWord(aWord));
+		Collections.sort(sorted , String.CASE_INSENSITIVE_ORDER);
+		return sorted;
 	}
 	
 	public String playViewPreviousWord(PlayView aPlayView)
@@ -75,7 +81,17 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		
 		if (aWord.equalsIgnoreCase(this.mSelectedLevel.toWord))
 		{
+			String[] pathArray = new String[this.mWordPath.size()];
+			for (int i = 0; i < pathArray.length; i++)
+			{
+				String word = this.mWordPath.get(i);
+				pathArray[i] = word;
+			}
+			
 			Intent winIntent = new Intent(this, WinActivity.class);
+			winIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
+			winIntent.putExtra(WinActivity.EXTRA_TIME, System.currentTimeMillis() - this.mStartTime);
+			winIntent.putExtra(WinActivity.EXTRA_PATH, pathArray);
 			startActivity(winIntent);
 			finish();
 		}

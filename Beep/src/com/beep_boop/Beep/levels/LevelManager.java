@@ -54,9 +54,9 @@ public class LevelManager
 		return LevelManager.INSTANCE.getLevelCompletePrivate(aLevelKey);
 	}
 
-	public static void setLevelComplete(String aLevelKey, boolean aComplete)
+	public static void setLevelComplete(String aLevelKey, boolean aComplete, double aTime, int aSteps)
 	{
-		LevelManager.INSTANCE.setLevelCompletePrivate(aLevelKey, aComplete);
+		LevelManager.INSTANCE.setLevelCompletePrivate(aLevelKey, aComplete, aTime, aSteps);
 	}
 
 	public static void addLevelStateListener(LevelStateListener aListener)
@@ -131,21 +131,30 @@ public class LevelManager
 		return result;
 	}
 
-	private void setLevelCompletePrivate(String aLevelKey, boolean aComplete)
+	private void setLevelCompletePrivate(String aLevelKey, boolean aComplete, double aTime, int aSteps)
 	{
 		if (this.mLevelData.containsKey(aLevelKey))
 		{
-			//store the state
-			this.mLevelData.get(aLevelKey).completed = aComplete;
-
-			//notify listeners
-			for (LevelStateListener listener : this.mLevelStateListeners)
+			if (aComplete)
 			{
-				listener.stateDidChangeForLevel(aLevelKey, aComplete);
-			}
+				//store the state
+				this.mLevelData.get(aLevelKey).completed = aComplete;
+				
+				//store the time & steps
+				if (this.mLevelData.get(aLevelKey).time > aTime)
+					this.mLevelData.get(aLevelKey).time = aTime;
+				if (this.mLevelData.get(aLevelKey).numberOfSteps > aSteps)
+					this.mLevelData.get(aLevelKey).numberOfSteps = aSteps;
 
-			//save
-			this.save();
+				//notify listeners
+				for (LevelStateListener listener : this.mLevelStateListeners)
+				{
+					listener.stateDidChangeForLevel(aLevelKey, aComplete);
+				}
+
+				//save
+				this.save();
+			}
 		}
 		else
 		{

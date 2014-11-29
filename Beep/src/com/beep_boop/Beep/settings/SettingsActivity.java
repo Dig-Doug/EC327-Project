@@ -1,10 +1,13 @@
-package com.beep_boop.Beep;
+package com.beep_boop.Beep.settings;
+
+import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-public class SettingsScreen extends Activity {
+public class SettingsActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
