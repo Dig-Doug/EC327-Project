@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.beep_boop.Beep.R;
@@ -50,7 +50,7 @@ public class StartLevelActivity extends Activity
 		this.mStartWordView.setText(this.mSelectedLevel.fromWord);
 		this.mEndWordView.setText(this.mSelectedLevel.toWord);
 		
-		Button playButton = (Button) findViewById(R.id.startLevelActivity_startLevelButton);
+		ImageButton playButton = (ImageButton) findViewById(R.id.startLevelActivity_startLevelButton);
 		playButton.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -63,7 +63,7 @@ public class StartLevelActivity extends Activity
 			}
 		});
 		
-		Button toMapButton = (Button) findViewById(R.id.startLevelActivity_backToMapButton);
+		ImageButton toMapButton = (ImageButton) findViewById(R.id.startLevelActivity_backToMapButton);
 		toMapButton.setOnClickListener(new OnClickListener()
 		{
 			@Override
