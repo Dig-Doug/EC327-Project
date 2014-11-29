@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/launchActivity_backgroundColor"
     tools:context="${relativePackage}.${activityClass}" >
 
     <TextView
@@ -12,7 +13,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:text="@string/startLevelActivityClicks"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor" />
 
     <TextView
         android:id="@+id/startLevelActivity_toWordTextView"
@@ -23,7 +25,8 @@
         android:layout_alignLeft="@+id/startLevelActivity_toWordImageView"
         android:layout_alignRight="@+id/startLevelActivity_toWordImageView"
         android:text="@string/startLevelActivityObject2"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor" />
 
     <TextView
         android:id="@+id/startLevelActivity_startWordTextView"
@@ -34,7 +37,8 @@
         android:layout_below="@+id/startLevelActivity_fromWordImageView"
         android:layout_marginTop="22dp"
         android:text="@string/startLevelActivityObject1"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor" />
 
     <TextView
         android:id="@+id/startLevelActivity_numberOfClicksTextView"
@@ -43,19 +47,8 @@
         android:layout_above="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:text="@string/startLevelActivityClicksNumber"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ImageButton
-        android:id="@+id/startLevelActivity_backToMapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp"
-        android:layout_toLeftOf="@+id/textView1"
-        android:background="@null"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/beep_arrow1_flipped_image"
-        android:text="@string/startLevelActivityBackButton" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor" />
 
     <ImageButton
         android:id="@+id/startLevelActivity_startLevelButton"
@@ -87,5 +80,17 @@
         android:layout_toLeftOf="@+id/startLevelActivity_numberOfClicksTextView"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/ss_apple" />
+
+    <ImageButton
+        android:id="@+id/startLevelActivity_backToMapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@+id/textView1"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/beep_arrow1_flipped_image"
+        android:text="@string/startLevelActivityBackButton" />
 
 </RelativeLayout>
