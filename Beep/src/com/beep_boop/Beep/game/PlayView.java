@@ -71,6 +71,8 @@ public class PlayView extends View
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 
+	private boolean mTouching = false;
+
 	private float mScrollScalar;
 	private float mScrollAcceleration;
 	private float mScrollVelocityMinimum;
@@ -153,6 +155,17 @@ public class PlayView extends View
 						//if so, stop velocity
 						mScrollVelocity = 0.0f;
 					}
+					if (mScrollVelocity == 0.0f && !mTouching)
+					{
+						if (mStartWordIndex < 0)
+						{
+							scroll(-mScrollVelocityMinimum * deltaTime);
+						}
+						else if (mStartWordIndex > mWords.size() - mNumberOfWordsToDraw)
+						{
+							scroll(mScrollVelocityMinimum * deltaTime);
+						}
+					}
 				}
 				else
 				{
@@ -218,13 +231,13 @@ public class PlayView extends View
 		this.drawBackground(canvas);
 
 		this.calculateDrawPointsAndThetas();
-		
+
 		if (this.mCurrentWord != null)
 		{
 			String word = this.mCurrentWord;
 			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta);
 		}
-		
+
 		for (int i = 0; i < mNumberOfWordsToDraw; i++)
 		{
 			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
@@ -238,7 +251,7 @@ public class PlayView extends View
 			}
 		}	
 	}
-	
+
 	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta)
 	{
 		//Rect rect = new Rect();
@@ -260,7 +273,7 @@ public class PlayView extends View
 		//set the current word position
 		this.mCurrentWordPosition = aCurrentWordStart;
 		this.mCurrentWordTheta = aCurrentWordTheta;
-		
+
 		//set the number of words to draw
 		this.mNumberOfWordsToDraw = aPoints.size() - 1;
 
@@ -283,7 +296,7 @@ public class PlayView extends View
 		//calculate draw position for current word
 		this.mCurrentWordDrawPosition = new PointF(this.mCurrentWordPosition.x * this.getWidth(), this.mCurrentWordPosition.y * this.getHeight());
 		this.mCurrentWordDrawTheta = this.mCurrentWordTheta * 180 / (float)Math.PI;
-		
+
 		//enumerate through each point
 		for (int i = 0; i < this.mStartPoints.length - 1; i++)
 		{
@@ -468,6 +481,8 @@ public class PlayView extends View
 
 		this.mLastTouchTime = System.currentTimeMillis();
 		this.mScrollVelocity = 0.0f;
+
+		this.mTouching = true;
 	}
 
 	//handles all touch moved events
@@ -542,44 +557,47 @@ public class PlayView extends View
 	//handles all touch up events
 	private void touchUp(MotionEvent aEvent)
 	{
-		//check if we are scrolling
-		if (this.mScrolling)
+		if (this.mAnimationState == AnimationState.Displaying)
 		{
-			//calculate the delta time
-			double currentTime = System.currentTimeMillis();
-			double deltaTime = currentTime - this.mLastTouchTime;
-			this.mLastTouchTime = currentTime;
-			//set the velocity
-			float velocity = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;;
-			if (Math.abs(velocity) > this.mScrollVelocityMinimum)
+			//check if we are scrolling
+			if (this.mScrolling)
 			{
-				this.mScrollVelocity = -velocity;
-			}
-		}
-		else
-		{
-			String clickedWord = this.nearestWordToClick(new Point((int)this.mLastTouchPoint.x, (int)this.mLastTouchPoint.y));
-			if (clickedWord != null)
-			{
-				if (clickedWord.equals(this.mCurrentWord))
+				//calculate the delta time
+				double currentTime = System.currentTimeMillis();
+				double deltaTime = currentTime - this.mLastTouchTime;
+				this.mLastTouchTime = currentTime;
+				//set the velocity
+				float velocity = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;;
+				if (Math.abs(velocity) > this.mScrollVelocityMinimum)
 				{
-					boolean canGoBack = this.mListener.playViewUserCanGoBack(this, this.mCurrentWord);
-					if (canGoBack)
+					this.mScrollVelocity = -velocity;
+				}
+			}
+			else
+			{
+				String clickedWord = this.nearestWordToClick(new Point((int)this.mLastTouchPoint.x, (int)this.mLastTouchPoint.y));
+				if (clickedWord != null)
+				{
+					if (clickedWord.equals(this.mCurrentWord))
 					{
-						this.mListener.playViewUserDidGoBack(this);
-						this.mNextWord = this.mDataSource.playViewPreviousWord(this);
-						this.startAnimationIn();
+						boolean canGoBack = this.mListener.playViewUserCanGoBack(this, this.mCurrentWord);
+						if (canGoBack)
+						{
+							this.mListener.playViewUserDidGoBack(this);
+							this.mNextWord = this.mDataSource.playViewPreviousWord(this);
+							this.startAnimationIn();
+						}
+						else
+						{
+							//@TODO - play sound
+						}
 					}
 					else
 					{
-						//@TODO - play sound
+						this.mListener.playViewUserDidClickWord(this, clickedWord);
+						this.mNextWord = clickedWord;
+						this.startAnimationIn();
 					}
-				}
-				else
-				{
-					this.mListener.playViewUserDidClickWord(this, clickedWord);
-					this.mNextWord = clickedWord;
-					this.startAnimationIn();
 				}
 			}
 		}
@@ -593,6 +611,7 @@ public class PlayView extends View
 	{
 		//reset variables here as needed
 		this.mScrolling = false;
+		this.mTouching = false;
 		this.mLastTouchPoint = new PointF(-1.0f, -1.0f);
 	}
 
@@ -610,7 +629,7 @@ public class PlayView extends View
 				word = this.mCurrentWord;
 			}
 		}
-		
+
 		if (word == null)
 		{
 			for (int i = 0; i < this.mNumberOfWordsToDraw; i++)
@@ -633,7 +652,7 @@ public class PlayView extends View
 				}
 			}
 		}
-		
+
 		return word;
 	}
 }

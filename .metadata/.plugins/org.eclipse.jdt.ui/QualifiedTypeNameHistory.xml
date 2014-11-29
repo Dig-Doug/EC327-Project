@@ -13,4 +13,5 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.WordHandler"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="android.animation.Animator"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.game.PlayView.AnimationState"/>
 </qualifiedTypeNameHistroy>

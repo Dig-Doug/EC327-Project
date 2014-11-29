@@ -31,12 +31,12 @@ public class WordHandler
 	}
 	
 	///-----Public Wrapper Methods-----
-	public static void load(Context aContext)
+	public static void load(Context aContext, PlayScreenParser.StatusUpdate aUpdate)
 	{
 		if (!WordHandler.loaded)
 		{
 			WordHandler.INSTANCE = new WordHandler();
-			WordHandler.INSTANCE.loadPrivate(aContext);
+			WordHandler.INSTANCE.loadPrivate(aContext, aUpdate);
 			WordHandler.loaded = true;
 		}
 	}
@@ -52,14 +52,14 @@ public class WordHandler
 	}
 	
 	///-----Private Methods-----
-	private void loadPrivate(Context aContext)
+	private void loadPrivate(Context aContext, PlayScreenParser.StatusUpdate aUpdate)
 	{
 		InputStream in = null;
 		try 
 		{
 			in = aContext.getResources().openRawResource(R.raw.database_full);
 			
-			this.mWordData = PlayScreenParser.parseFile(in);
+			this.mWordData = PlayScreenParser.parseFile(in, aUpdate);
 		}
 		catch (Exception i)
 		{

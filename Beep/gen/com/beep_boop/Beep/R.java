@@ -143,32 +143,33 @@ containing a value of this type.
         public static final int aboutActivity_messageEditText=0x7f0b0000;
         public static final int aboutActivity_messageView=0x7f0b0001;
         public static final int aboutActivity_showMessage=0x7f0b0002;
-        public static final int action_settings=0x7f0b001c;
-        public static final int backbutton=0x7f0b000d;
-        public static final int button2=0x7f0b001a;
-        public static final int launchActivity_logoImageView=0x7f0b0004;
+        public static final int action_settings=0x7f0b001d;
+        public static final int backbutton=0x7f0b000e;
+        public static final int button2=0x7f0b001b;
+        public static final int launchActivity_loadingText=0x7f0b0004;
+        public static final int launchActivity_logoImageView=0x7f0b0005;
         public static final int launchActivity_textImageView=0x7f0b0003;
-        public static final int mainActivity_toLaunchButton=0x7f0b0006;
-        public static final int mainActivity_toMapButton=0x7f0b0007;
-        public static final int mainActivity_toPlayButton=0x7f0b0008;
-        public static final int mainActivity_toSettingsButton=0x7f0b0005;
-        public static final int mainActivity_toStartButton=0x7f0b0009;
-        public static final int mapActivity_mapView=0x7f0b000a;
-        public static final int music=0x7f0b0010;
-        public static final int musicbar=0x7f0b000f;
-        public static final int playActivity_playView2=0x7f0b000c;
-        public static final int playScreenActivity_playView=0x7f0b000b;
-        public static final int settings=0x7f0b000e;
-        public static final int sound=0x7f0b0012;
-        public static final int soundbar=0x7f0b0011;
-        public static final int startLevelActivity_objectOne=0x7f0b0013;
-        public static final int startLevelActivity_objectTwo=0x7f0b0016;
-        public static final int startLevelBackButton=0x7f0b0014;
-        public static final int startLevelClicks=0x7f0b0019;
-        public static final int startLevelClicksNumber=0x7f0b0018;
-        public static final int startLevelImage1=0x7f0b0015;
-        public static final int startLevelImage2=0x7f0b0017;
-        public static final int startLevelStartButton=0x7f0b001b;
+        public static final int mainActivity_toLaunchButton=0x7f0b0007;
+        public static final int mainActivity_toMapButton=0x7f0b0008;
+        public static final int mainActivity_toPlayButton=0x7f0b0009;
+        public static final int mainActivity_toSettingsButton=0x7f0b0006;
+        public static final int mainActivity_toStartButton=0x7f0b000a;
+        public static final int mapActivity_mapView=0x7f0b000b;
+        public static final int music=0x7f0b0011;
+        public static final int musicbar=0x7f0b0010;
+        public static final int playActivity_playView2=0x7f0b000d;
+        public static final int playScreenActivity_playView=0x7f0b000c;
+        public static final int settings=0x7f0b000f;
+        public static final int sound=0x7f0b0013;
+        public static final int soundbar=0x7f0b0012;
+        public static final int startLevelActivity_objectOne=0x7f0b0014;
+        public static final int startLevelActivity_objectTwo=0x7f0b0017;
+        public static final int startLevelBackButton=0x7f0b0015;
+        public static final int startLevelClicks=0x7f0b001a;
+        public static final int startLevelClicksNumber=0x7f0b0019;
+        public static final int startLevelImage1=0x7f0b0016;
+        public static final int startLevelImage2=0x7f0b0018;
+        public static final int startLevelStartButton=0x7f0b001c;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
@@ -193,55 +194,56 @@ containing a value of this type.
         public static final int test_file=0x7f050005;
     }
     public static final class string {
-        public static final int aboutActivity_messageEditTextPlaceholder=0x7f08000b;
-        public static final int aboutActivity_messageViewText=0x7f080009;
-        public static final int aboutActivity_showMessageButtonText=0x7f08000a;
-        public static final int action_settings=0x7f080022;
+        public static final int aboutActivity_messageEditTextPlaceholder=0x7f08000c;
+        public static final int aboutActivity_messageViewText=0x7f08000a;
+        public static final int aboutActivity_showMessageButtonText=0x7f08000b;
+        public static final int action_settings=0x7f080023;
         public static final int app_name=0x7f080000;
-        public static final int backbutton=0x7f080017;
+        public static final int backbutton=0x7f080018;
         public static final int content_description_place_holder=0x7f080001;
-        public static final int hello_world=0x7f08001c;
-        public static final int mainActivity_toLaunchButton=0x7f080004;
-        public static final int mainActivity_toMap=0x7f080005;
-        public static final int mainActivity_toPlayScreen=0x7f080006;
+        public static final int hello_world=0x7f08001d;
+        public static final int launchActivity_loadingText=0x7f080003;
+        public static final int mainActivity_toLaunchButton=0x7f080005;
+        public static final int mainActivity_toMap=0x7f080006;
+        public static final int mainActivity_toPlayScreen=0x7f080007;
         /**  Main Activity 
          */
-        public static final int mainActivity_toSettingsButton=0x7f080003;
-        public static final int mainActivity_toStartButton=0x7f080007;
-        public static final int mapActivity_cannotClickNodeToastMessage=0x7f08000d;
-        public static final int music=0x7f080019;
-        public static final int parseWords=0x7f08001e;
+        public static final int mainActivity_toSettingsButton=0x7f080004;
+        public static final int mainActivity_toStartButton=0x7f080008;
+        public static final int mapActivity_cannotClickNodeToastMessage=0x7f08000e;
+        public static final int music=0x7f08001a;
+        public static final int parseWords=0x7f08001f;
         /**  Play Screen Activity 
          */
-        public static final int placeHolder=0x7f08001d;
-        public static final int settings=0x7f080018;
-        public static final int sound=0x7f08001a;
-        public static final int startLevelActivityBackButton=0x7f080011;
-        public static final int startLevelActivityClicks=0x7f080012;
-        public static final int startLevelActivityClicksNumber=0x7f080013;
-        public static final int startLevelActivityObject1=0x7f08000f;
-        public static final int startLevelActivityObject2=0x7f080010;
-        public static final int startLevelActivityPowerUpsButton=0x7f080015;
-        public static final int startLevelActivityStartButton=0x7f080014;
+        public static final int placeHolder=0x7f08001e;
+        public static final int settings=0x7f080019;
+        public static final int sound=0x7f08001b;
+        public static final int startLevelActivityBackButton=0x7f080012;
+        public static final int startLevelActivityClicks=0x7f080013;
+        public static final int startLevelActivityClicksNumber=0x7f080014;
+        public static final int startLevelActivityObject1=0x7f080010;
+        public static final int startLevelActivityObject2=0x7f080011;
+        public static final int startLevelActivityPowerUpsButton=0x7f080016;
+        public static final int startLevelActivityStartButton=0x7f080015;
         /**  About Activity 
          */
-        public static final int title_activity_about=0x7f080008;
-        public static final int title_activity_drawing_test=0x7f080020;
+        public static final int title_activity_about=0x7f080009;
+        public static final int title_activity_drawing_test=0x7f080021;
         /**  Launch Activity 
          */
         public static final int title_activity_launch=0x7f080002;
         /**  Map Activity 
          */
-        public static final int title_activity_map=0x7f08000c;
-        public static final int title_activity_play_screen=0x7f08001b;
-        public static final int title_activity_play_view2=0x7f080021;
+        public static final int title_activity_map=0x7f08000d;
+        public static final int title_activity_play_screen=0x7f08001c;
+        public static final int title_activity_play_view2=0x7f080022;
         /**  Settings activity 
          */
-        public static final int title_activity_settings=0x7f080016;
+        public static final int title_activity_settings=0x7f080017;
         /**  Start Screen Activity 
          */
-        public static final int title_activity_start_level=0x7f08000e;
-        public static final int wordTitleLabel=0x7f08001f;
+        public static final int title_activity_start_level=0x7f08000f;
+        public static final int wordTitleLabel=0x7f080020;
     }
     public static final class style {
         /** 

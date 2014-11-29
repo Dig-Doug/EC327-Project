@@ -10,8 +10,13 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.util.Log;
 import android.util.Xml;
 
-public class PlayScreenParser {
-
+public class PlayScreenParser
+{
+	public interface StatusUpdate
+	{
+		public void parserStatusUpdate(int aIndex, String aWord);
+	}
+	
 	///-----Members-----
 	private static final String TAG = "playScreenParser"; 
 	private static final String NAMESPACE = null;
@@ -22,7 +27,7 @@ public class PlayScreenParser {
 	private static final String TAG_LINK = "l"; 
 	private static final String TAG_LINK_ATRB_COUNT = "c"; 
 
-	public static Hashtable<String, Hashtable<String, Integer>> parseFile(InputStream aIn)
+	public static Hashtable<String, Hashtable<String, Integer>> parseFile(InputStream aIn, StatusUpdate aUpdate)
 	{
 		Hashtable<String, Hashtable<String, Integer>> wikiData = null; 
 		try 
@@ -37,7 +42,7 @@ public class PlayScreenParser {
 			//Advance our parser to the next tag
 			aParser.nextTag();
 			//Call the parseLinks function to obtain a Hashtable of link titles and their counts
-			wikiData = parseWords(aParser);
+			wikiData = parseWords(aParser, aUpdate);
 			
 			Log.v(TAG, "Finished parsing word data");
 		} 
@@ -64,7 +69,7 @@ public class PlayScreenParser {
 		return wikiData;
 	}
 
-	private static Hashtable<String, Hashtable<String, Integer>> parseWords(XmlPullParser aParser) throws XmlPullParserException, IOException
+	private static Hashtable<String, Hashtable<String, Integer>> parseWords(XmlPullParser aParser, StatusUpdate aUpdate) throws XmlPullParserException, IOException
 	{
 		Hashtable<String, Hashtable<String, Integer>> wikiData = new Hashtable<String, Hashtable<String, Integer>>();
 		
@@ -97,6 +102,11 @@ public class PlayScreenParser {
 				}
 
 				wikiData.put(pageName, links);
+				
+				if (aUpdate != null)
+				{
+					aUpdate.parserStatusUpdate(wikiData.keySet().size(), pageName);
+				}
 			}
 			else 
 			{
@@ -115,7 +125,7 @@ public class PlayScreenParser {
 		
 		//make sure we have a <links> tag
 		//this require threw an error
-		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_LINKS);
+		//aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_LINKS);
 		aParser.nextTag();
 		
 		//This while loop will run until we hit a </links> end tag
@@ -148,7 +158,7 @@ public class PlayScreenParser {
 		}
 		
 		//Tell the parser to require a 
-		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_LINKS);
+		//aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_LINKS);
 		//go past the end </links>
 		aParser.nextTag();
 

@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.beep_boop.Beep.MainActivity;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.WordHandler;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.game.PlayScreenParser;
 
 public class LaunchActivity extends Activity 
 {
@@ -24,8 +26,11 @@ public class LaunchActivity extends Activity
 	private ImageView logo_image_view;
 	/** Holds a reference to a image view */
 	private ImageView text_image_view;
+	
+	private TextView mLoadingTextView;
 
 	private boolean mLevelsLoaded = false, mWordsLoaded = false;
+	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f;
 
 	///-----Activity Life Cycle-----
 	@Override
@@ -37,6 +42,7 @@ public class LaunchActivity extends Activity
 		//grab the image views from XML
 		logo_image_view = (ImageView) findViewById(R.id.launchActivity_logoImageView);
 		text_image_view = (ImageView) findViewById(R.id.launchActivity_textImageView);
+		mLoadingTextView = (TextView) findViewById(R.id.launchActivity_loadingText);
 
 		new LoadLevelsTask().execute(this);
 		new LoadWordsTask().execute(this);
@@ -84,36 +90,51 @@ public class LaunchActivity extends Activity
 
 		protected void onProgressUpdate(Void... voids)
 		{
-
+			updateLoadingProgress();
 		}
 
 		protected void onPostExecute(Void result)
 		{
 			mLevelsLoaded = true;
+			mLevelsPercent = 1.0f;
 
 			checkDone();
 		}
 	}
 
-	private class LoadWordsTask extends AsyncTask<Context, Void, Void>
+	private class LoadWordsTask extends AsyncTask<Context, String, Void> implements PlayScreenParser.StatusUpdate
 	{
 		protected Void doInBackground(Context... contexts)
 		{
-			WordHandler.load(contexts[0]);
+			WordHandler.load(contexts[0], this);
 			return null;
 		}
 
-		protected void onProgressUpdate(Void... voids)
+		protected void onProgressUpdate(String... words)
 		{
-
+			updateLoadingProgress();
 		}
 
 		protected void onPostExecute(Void result)
 		{
 			mWordsLoaded = true;
+			mWordsPercent = 1.0f;
 
 			checkDone();
 		}
+
+		@Override
+		public void parserStatusUpdate(int aIndex, String aWord)
+		{
+			mWordsPercent = aIndex / 5685.0f;
+			publishProgress(aWord);
+		}
+	}
+	
+	private void updateLoadingProgress()
+	{
+		float percent = (this.mLevelsPercent + this.mWordsPercent) / 2 * 100;
+		this.mLoadingTextView.setText(getString(R.string.launchActivity_loadingText) + " " + percent);
 	}
 
 	private void checkDone()
