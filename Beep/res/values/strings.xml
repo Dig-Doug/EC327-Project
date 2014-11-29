@@ -51,6 +51,6 @@
     <string name="title_activity_drawing_test">DrawingTest</string>
     <string name="title_activity_play_view2">PlayView2</string>
     <string name="action_settings">Settings</string>
-    
-    </resources>
-    
+    <string name="title_activity_win">WinActivity</string>
+
+</resources>

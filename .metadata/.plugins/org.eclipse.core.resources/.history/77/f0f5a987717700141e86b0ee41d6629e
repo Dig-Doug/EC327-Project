@@ -1,0 +1,50 @@
+package com.beep_boop.Beep.startScreen;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import com.beep_boop.Beep.R;
+
+public class StartLevelActivity extends Activity
+{	
+	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
+	
+	private static final String TAG = "StartLevelActivity";
+	private Activity THIS = this;
+	private String mLevelKey;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_start_level);
+		
+		Bundle extras = this.getIntent().getExtras();
+		if (extras != null)
+		{
+			if (extras.containsKey(StartLevelActivity.EXTRA_LEVEL_KEY))
+				this.mLevelKey = extras.getString(StartLevelActivity.EXTRA_LEVEL_KEY);
+		}
+		else
+		{
+			Log.e(StartLevelActivity.TAG, "Error getting extras");
+		}
+		
+		Button toMapButton = (Button) findViewById(R.id.startLevelBackButton);
+		toMapButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Log.d(StartLevelActivity.TAG, "To map button clicked");
+				
+				finish();
+			}
+		});
+		
+	}
+}

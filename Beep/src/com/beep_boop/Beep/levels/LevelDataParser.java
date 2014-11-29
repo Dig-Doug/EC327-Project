@@ -89,7 +89,6 @@ public class LevelDataParser
 			}
 			
 		}
-		String name = aParser.getName();
 		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_LEVELS);
 		return levelData;
 	}

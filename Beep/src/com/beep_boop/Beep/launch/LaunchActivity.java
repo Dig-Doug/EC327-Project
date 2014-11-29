@@ -11,11 +11,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.beep_boop.Beep.MainActivity;
 import com.beep_boop.Beep.R;
-import com.beep_boop.Beep.game.WordHandler;
-import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.game.PlayScreenParser;
+import com.beep_boop.Beep.game.WordHandler;
+import com.beep_boop.Beep.levelSelect.MapActivity;
+import com.beep_boop.Beep.levels.LevelManager;
 
 public class LaunchActivity extends Activity 
 {
@@ -172,8 +172,8 @@ public class LaunchActivity extends Activity
 					text_image_view.setAlpha(0.0f);
 
 					//transition to map page
-					Intent switchToMain = new Intent(THIS, MainActivity.class);
-					startActivity(switchToMain);
+					Intent toMap = new Intent(THIS, MapActivity.class);
+					startActivity(toMap);
 
 					//quit
 					finish();

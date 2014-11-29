@@ -19,3 +19,6 @@
 1417189246593	Rename field 'SCROLL_VELOCITY_MIN'
 1417189257623	Rename field 'SCROLL_VELOCITY_SCALAR'
 1417189269472	Rename field 'mScrollMinimumVelocity'
+1417229103023	Rename field 'startLevelImage1'
+1417229138785	Rename field 'startLevelImage2'
+1417229665988	Move compilation unit

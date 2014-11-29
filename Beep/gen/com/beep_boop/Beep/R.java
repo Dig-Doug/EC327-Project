@@ -147,9 +147,8 @@ containing a value of this type.
         public static final int aboutActivity_messageEditText=0x7f0b0000;
         public static final int aboutActivity_messageView=0x7f0b0001;
         public static final int aboutActivity_showMessage=0x7f0b0002;
-        public static final int action_settings=0x7f0b001d;
+        public static final int action_settings=0x7f0b001c;
         public static final int backbutton=0x7f0b000e;
-        public static final int button2=0x7f0b001c;
         public static final int launchActivity_loadingText=0x7f0b0004;
         public static final int launchActivity_logoImageView=0x7f0b0005;
         public static final int launchActivity_textImageView=0x7f0b0003;
@@ -166,14 +165,14 @@ containing a value of this type.
         public static final int settings=0x7f0b000f;
         public static final int sound=0x7f0b0013;
         public static final int soundbar=0x7f0b0012;
-        public static final int startLevelActivity_objectOne=0x7f0b0015;
-        public static final int startLevelActivity_objectTwo=0x7f0b0014;
-        public static final int startLevelBackButton=0x7f0b001a;
-        public static final int startLevelClicks=0x7f0b0019;
+        public static final int startLevelActivity_fromWordImageView=0x7f0b0015;
+        public static final int startLevelActivity_startWordTextView=0x7f0b001b;
+        public static final int startLevelActivity_toWordImageView=0x7f0b0014;
+        public static final int startLevelActivity_toWordTextView=0x7f0b001a;
+        public static final int startLevelBackButton=0x7f0b0019;
+        public static final int startLevelClicks=0x7f0b0016;
         public static final int startLevelClicksNumber=0x7f0b0018;
-        public static final int startLevelImage1=0x7f0b0017;
-        public static final int startLevelImage2=0x7f0b0016;
-        public static final int startLevelStartButton=0x7f0b001b;
+        public static final int startLevelStartButton=0x7f0b0017;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
@@ -185,6 +184,7 @@ containing a value of this type.
         public static final int activity_play_view2=0x7f030006;
         public static final int activity_settings=0x7f030007;
         public static final int activity_start_level=0x7f030008;
+        public static final int activity_win=0x7f030009;
     }
     public static final class menu {
         public static final int play_view2=0x7f0a0000;
@@ -247,6 +247,7 @@ containing a value of this type.
         /**  Start Screen Activity 
          */
         public static final int title_activity_start_level=0x7f08000f;
+        public static final int title_activity_win=0x7f080024;
         public static final int wordTitleLabel=0x7f080020;
     }
     public static final class style {

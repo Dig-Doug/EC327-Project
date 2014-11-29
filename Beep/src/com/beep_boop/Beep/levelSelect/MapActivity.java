@@ -5,14 +5,17 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.game.PlayScreenActivity;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.levels.LevelManager.LevelStateListener;
+import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
 public class MapActivity extends Activity implements NodeClickListener, LevelStateListener
 {
@@ -97,10 +100,9 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	
 	public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode)
 	{
-		//@TODO - switch to next level
-		
-		//@TEST - switches state of level
-		LevelManager.setLevelComplete(aNode.getLevelKey(), !LevelManager.getIsLevelComplete(aNode.getLevelKey()));
+		Intent startLevelIntent = new Intent(this, StartLevelActivity.class);
+		startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, aNode.getLevelKey());
+		startActivity(startLevelIntent);
 	}
 	
 	///-----NodeDataSource methods-----

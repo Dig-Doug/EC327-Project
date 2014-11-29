@@ -73,6 +73,11 @@ public class LevelManager
 	{
 		return LevelManager.INSTANCE.canPlayLevelPrivate(aLevelKey);
 	}
+	
+	public static Level getLevelForKey(String aLevelKey)
+	{
+		return LevelManager.INSTANCE.getLevelForKeyPrivate(aLevelKey);
+	}
 
 	///-----Private Methods-----
 	private void loadPrivate(Context aContext)
@@ -200,6 +205,21 @@ public class LevelManager
 			result = false;
 		}
 
+		return result;
+	}
+	
+	private Level getLevelForKeyPrivate(String aLevelKey)
+	{
+		Level result = null;
+		if (this.mLevelData.containsKey(aLevelKey))
+		{
+			result = this.mLevelData.get(aLevelKey);
+		}
+		else
+		{
+			Log.e(LevelManager.TAG, "No level for key: " + aLevelKey);
+		}
+		
 		return result;
 	}
 

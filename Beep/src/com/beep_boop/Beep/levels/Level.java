@@ -10,7 +10,7 @@ public class Level
 	public String fromWord;
 	public ArrayList<String> requiredLevels;
 	
-	public Level(String aLevelKey, boolean aCompleted, String aToWord, String aFromWord, ArrayList<String> aRequiredLevels)
+	public Level(String aLevelKey, boolean aCompleted, String aFromWord, String aToWord, ArrayList<String> aRequiredLevels)
 	{
 		this.levelKey = aLevelKey;
 		this.completed = aCompleted;

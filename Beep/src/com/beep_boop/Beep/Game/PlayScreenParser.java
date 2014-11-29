@@ -19,7 +19,7 @@ public class PlayScreenParser
 	
 	///-----Members-----
 	private static final String TAG = "playScreenParser"; 
-	private static final String NAMESPACE = null;
+	//private static final String NAMESPACE = null;
 	private static final String TAG_WORD = "w";
 	private static final String TAG_WORD_ATRB_TITLE = "t";
 	//private static final String TAG_LINKCOUNT = "lc"; 
