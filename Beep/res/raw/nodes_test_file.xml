@@ -1,37 +1,33 @@
 ﻿<nodes>
-        <node>
-                <locX>0.1</locX>
-                <locY>0.1</locY>
-                <levelKey>level_1</levelKey>
-        </node>
-        <node>
-                <locX>0.5</locX>
-                <locY>0.1</locY>
-                <levelKey>level_2</levelKey>
-        </node>
-        <node>
-                <locX>0.9</locX>
-                <locY>0.1</locY>
-                <levelKey>level_3</levelKey>
-        </node>
-        <node>
-                <locX>0.1</locX>
-                <locY>0.5</locY>
-                <levelKey>level_4</levelKey>
-        </node>
-        <node>
-                <locX>0.1</locX>
-                <locY>0.9</locY>
-                <levelKey>level_5</levelKey>
-        </node>
-                <node>
-                <locX>0.5</locX>
-                <locY>0.5</locY>
-                <levelKey>level_6</levelKey>
-        </node>
-        <node>
-                <locX>0.9</locX>
-                <locY>0.9</locY>
-                <levelKey>level_7</levelKey>
-        </node>
+        <node><locX>0.113475177304965</locX><locY>0.0687907313540912</locY><levelKey>level_0_1</levelKey></node>
+<node><locX>0.299898682877406</locX><locY>0.0905141202027516</locY><levelKey>level_0_2</levelKey></node>
+<node><locX>0.47112462006079</locX><locY>0.056480811006517</locY><levelKey>level_0_3</levelKey></node>
+<node><locX>0.641337386018237</locX><locY>0.0934105720492397</locY><levelKey>level_0_4</levelKey></node>
+<node><locX>0.782168186423506</locX><locY>0.133960897900072</locY><levelKey>level_0_5</levelKey></node>
+<node><locX>0.700101317122594</locX><locY>0.225199131064446</locY><levelKey>level_0_6</levelKey></node>
+<node><locX>0.536980749746707</locX><locY>0.296886314265025</locY><levelKey>level_0_7</levelKey></node>
+<node><locX>0.408308004052685</locX><locY>0.238957277335264</locY><levelKey>level_0_8</levelKey></node>
+<node><locX>0.263424518743668</locX><locY>0.254887762490949</locY><levelKey>level_0_9</levelKey></node>
+<node><locX>0.224924012158055</locX><locY>0.361332367849384</locY><levelKey>level_0_10</levelKey></node>
+<node><locX>0.353596757852077</locX><locY>0.444605358435916</locY><levelKey>level_0_11</levelKey></node>
+
+<node><locX>0.263424518743668</locX><locY>0.507603186097031</locY><levelKey>level_1_1</levelKey></node>
+<node><locX>0.146909827760892</locX><locY>0.559739319333816</locY><levelKey>level_1_2</levelKey></node>
+<node><locX>0.134751773049645</locX><locY>0.688631426502534</locY><levelKey>level_1_3</levelKey></node>
+<node><locX>0.207700101317123</locX><locY>0.818971759594497</locY><levelKey>level_1_4</levelKey></node>
+<node><locX>0.318135764944276</locX><locY>0.879073135409124</locY><levelKey>level_1_5</levelKey></node>
+<node><locX>0.437689969604863</locX><locY>0.931209268645909</locY><levelKey>level_1_6</levelKey></node>
+
+<node><locX>0.523809523809524</locX><locY>0.494569152787835</locY><levelKey>level_2_1</levelKey></node>
+<node><locX>0.687943262411348</locX><locY>0.542360608254888</locY><levelKey>level_2_2</levelKey></node>
+<node><locX>0.780141843971631</locX><locY>0.625633598841419</locY><levelKey>level_2_3</levelKey></node>
+<node><locX>0.678824721377913</locX><locY>0.67632150615496</locY><levelKey>level_2_4</levelKey></node>
+<node><locX>0.441742654508612</locX><locY>0.735698769007965</locY><levelKey>level_2_5</levelKey></node>
+
+<node><locX>0.408308004052685</locX><locY>0.685734974656046</locY><levelKey>level_2_1_1</levelKey></node>
+
+<node><locX>0.703140830800405</locX><locY>0.78059377262853</locY><levelKey>level_2_2_1</levelKey></node>
+<node><locX>0.854103343465046</locX><locY>0.79507603186097</locY><levelKey>level_2_2_2</levelKey></node>
+<node><locX>0.916919959473151</locX><locY>0.921795800144823</locY><levelKey>level_2_2_3</levelKey></node>
+<node><locX>0.814589665653495</locX><locY>0.923968139029689</locY><levelKey>level_2_2_4</levelKey></node>
 </nodes>

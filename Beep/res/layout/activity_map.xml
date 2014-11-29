@@ -9,7 +9,7 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         custom:animationLength="1000"
-        custom:backgroundImage="@drawable/beep_repeatable_map_background_image"
+        custom:backgroundImage="@drawable/map_1"
         custom:mapWidthOnScreen="0.30"
         custom:nodeOffImage="@drawable/beep_node_off_image"
         custom:nodeOnImage="@drawable/beep_node_image"

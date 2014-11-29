@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-   <declare-styleable name="MapView">
-       <!-- <attr name="showText" format="boolean" /> -->
-       <attr name="nodeOffImage" format="reference|drawable" />
-       <attr name="nodeOnImage" format="reference|drawable" />
-       <attr name="backgroundImage" format="reference|drawable" />
-   </declare-styleable>
-</resources>

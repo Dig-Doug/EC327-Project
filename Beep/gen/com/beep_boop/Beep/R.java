@@ -144,14 +144,12 @@ containing a value of this type.
         public static final int icon_settings=0x7f020007;
         public static final int launch_screen_logo=0x7f020008;
         public static final int launch_screen_text_logo=0x7f020009;
-        public static final int map_background=0x7f02000a;
-        public static final int map_background_example=0x7f02000b;
-        public static final int node_off=0x7f02000c;
-        public static final int node_on=0x7f02000d;
-        public static final int node_overlay=0x7f02000e;
-        public static final int node_test=0x7f02000f;
-        public static final int ss_apple=0x7f020010;
-        public static final int ss_viking=0x7f020011;
+        public static final int map_1=0x7f02000a;
+        public static final int map_background=0x7f02000b;
+        public static final int map_background_example=0x7f02000c;
+        public static final int node_overlay=0x7f02000d;
+        public static final int ss_apple=0x7f02000e;
+        public static final int ss_viking=0x7f02000f;
     }
     public static final class id {
         public static final int action_settings=0x7f0b0015;
