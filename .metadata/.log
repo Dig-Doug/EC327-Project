@@ -1034,3 +1034,6 @@ Binding(COMMAND+SHIFT+\,
 
 !ENTRY com.android.ide.eclipse.adt 1 0 2014-11-29 12:34:57.707
 !MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/levels_test_file.xml [Res F/Beep/res/raw, type RAW]
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-11-29 12:37:43.995
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/levels_test_file.xml [Res F/Beep/res/raw, type RAW]
