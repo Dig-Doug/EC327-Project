@@ -50,3 +50,7 @@ local.properties
 .target
 # TeXlipse plugin
 .texlipse
+
+Beep/bin/classes/com/beep_boop/Beep/R$drawable.class
+
+Beep/gen/com/beep_boop/Beep/R.java
