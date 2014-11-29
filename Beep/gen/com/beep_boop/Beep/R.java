@@ -154,46 +154,37 @@ containing a value of this type.
         public static final int ss_viking=0x7f020011;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b001b;
-        public static final int backbutton=0x7f0b000d;
+        public static final int action_settings=0x7f0b0015;
+        public static final int backbutton=0x7f0b0007;
         public static final int launchActivity_loadingText=0x7f0b0001;
         public static final int launchActivity_logoImageView=0x7f0b0002;
         public static final int launchActivity_textImageView=0x7f0b0000;
-        public static final int mainActivity_toLaunchButton=0x7f0b0004;
-        public static final int mainActivity_toMapButton=0x7f0b0005;
-        public static final int mainActivity_toPlayButton=0x7f0b0006;
-        public static final int mainActivity_toSettingsButton=0x7f0b0003;
-        public static final int mainActivity_toStartButton=0x7f0b0007;
-        public static final int mapActivity_aboutButton=0x7f0b000a;
-        public static final int mapActivity_mapView=0x7f0b0008;
-        public static final int mapActivity_settingsButton=0x7f0b0009;
-        public static final int music=0x7f0b0010;
-        public static final int musicbar=0x7f0b000f;
-        public static final int playActivity_playView2=0x7f0b000c;
-        public static final int playScreenActivity_playView=0x7f0b000b;
-        public static final int settings=0x7f0b000e;
-        public static final int sound=0x7f0b0012;
-        public static final int soundbar=0x7f0b0011;
-        public static final int startLevelActivity_backToMapButton=0x7f0b0017;
-        public static final int startLevelActivity_fromWordImageView=0x7f0b0014;
-        public static final int startLevelActivity_numberOfClicksTextView=0x7f0b0018;
-        public static final int startLevelActivity_startLevelButton=0x7f0b0016;
-        public static final int startLevelActivity_startWordTextView=0x7f0b001a;
-        public static final int startLevelActivity_toWordImageView=0x7f0b0013;
-        public static final int startLevelActivity_toWordTextView=0x7f0b0019;
-        public static final int textView1=0x7f0b0015;
+        public static final int mapActivity_aboutButton=0x7f0b0005;
+        public static final int mapActivity_mapView=0x7f0b0003;
+        public static final int mapActivity_settingsButton=0x7f0b0004;
+        public static final int music=0x7f0b000a;
+        public static final int musicbar=0x7f0b0009;
+        public static final int playScreenActivity_playView=0x7f0b0006;
+        public static final int settings=0x7f0b0008;
+        public static final int sound=0x7f0b000c;
+        public static final int soundbar=0x7f0b000b;
+        public static final int startLevelActivity_backToMapButton=0x7f0b0011;
+        public static final int startLevelActivity_fromWordImageView=0x7f0b000e;
+        public static final int startLevelActivity_numberOfClicksTextView=0x7f0b0012;
+        public static final int startLevelActivity_startLevelButton=0x7f0b0010;
+        public static final int startLevelActivity_startWordTextView=0x7f0b0014;
+        public static final int startLevelActivity_toWordImageView=0x7f0b000d;
+        public static final int startLevelActivity_toWordTextView=0x7f0b0013;
+        public static final int textView1=0x7f0b000f;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
-        public static final int activity_drawing_test=0x7f030001;
-        public static final int activity_launch=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int activity_map=0x7f030004;
-        public static final int activity_play_screen=0x7f030005;
-        public static final int activity_play_view2=0x7f030006;
-        public static final int activity_settings=0x7f030007;
-        public static final int activity_start_level=0x7f030008;
-        public static final int activity_win=0x7f030009;
+        public static final int activity_launch=0x7f030001;
+        public static final int activity_map=0x7f030002;
+        public static final int activity_play_screen=0x7f030003;
+        public static final int activity_settings=0x7f030004;
+        public static final int activity_start_level=0x7f030005;
+        public static final int activity_win=0x7f030006;
     }
     public static final class menu {
         public static final int play_view2=0x7f0a0000;

@@ -23,9 +23,9 @@ public class LaunchActivity extends Activity
 	/** Holds a reference to THIS for use in listeners */
 	private LaunchActivity THIS = this;
 	/** Holds a reference to a image view */
-	private ImageView logo_image_view;
+	private ImageView mLogoImageView;
 	/** Holds a reference to a image view */
-	private ImageView text_image_view;
+	private ImageView mTextImageView;
 	
 	private TextView mLoadingTextView;
 
@@ -40,9 +40,9 @@ public class LaunchActivity extends Activity
 		setContentView(R.layout.activity_launch);
 
 		//grab the image views from XML
-		logo_image_view = (ImageView) findViewById(R.id.launchActivity_logoImageView);
-		text_image_view = (ImageView) findViewById(R.id.launchActivity_textImageView);
-		mLoadingTextView = (TextView) findViewById(R.id.launchActivity_loadingText);
+		this.mLogoImageView = (ImageView) findViewById(R.id.launchActivity_logoImageView);
+		this.mTextImageView = (ImageView) findViewById(R.id.launchActivity_textImageView);
+		this.mLoadingTextView = (TextView) findViewById(R.id.launchActivity_loadingText);
 
 		new LoadLevelsTask().execute(this);
 		new LoadWordsTask().execute(this);
@@ -50,8 +50,9 @@ public class LaunchActivity extends Activity
 		//load the fade in animation
 		Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.animator.anim_fadein);
 		//start the animation
-		logo_image_view.startAnimation(fadeInAnimation);
-		text_image_view.startAnimation(fadeInAnimation);
+		this.mLogoImageView.startAnimation(fadeInAnimation);
+		this.mTextImageView.startAnimation(fadeInAnimation);
+		this.mLoadingTextView.startAnimation(fadeInAnimation);
 		//set the listener
 		fadeInAnimation.setAnimationListener(new Animation.AnimationListener() 
 		{
@@ -126,7 +127,7 @@ public class LaunchActivity extends Activity
 		@Override
 		public void parserStatusUpdate(int aIndex, String aWord)
 		{
-			mWordsPercent = aIndex / 5685.0f;
+			mWordsPercent = aIndex / 5845.0f;
 			publishProgress(aWord);
 		}
 	}
@@ -141,11 +142,13 @@ public class LaunchActivity extends Activity
 	{
 		if (mWordsLoaded && mLevelsLoaded)
 		{
+			this.mLoadingTextView.setAlpha(0.0f);
+			
 			//load the fade out animation
 			Animation fadeOutAnimation = AnimationUtils.loadAnimation(THIS, R.animator.anim_fadeout);
 			//start the animation
-			logo_image_view.startAnimation(fadeOutAnimation);
-			text_image_view.startAnimation(fadeOutAnimation);
+			mLogoImageView.startAnimation(fadeOutAnimation);
+			mTextImageView.startAnimation(fadeOutAnimation);
 			//set the listener
 			fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() 
 			{
@@ -168,8 +171,8 @@ public class LaunchActivity extends Activity
 				public void onAnimationEnd(Animation animation)
 				{
 					//make sure the image view doesn't reappear after the animation is done
-					logo_image_view.setAlpha(0.0f);
-					text_image_view.setAlpha(0.0f);
+					mLogoImageView.setAlpha(0.0f);
+					mTextImageView.setAlpha(0.0f);
 
 					//transition to map page
 					Intent toMap = new Intent(THIS, MapActivity.class);

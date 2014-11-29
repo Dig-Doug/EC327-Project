@@ -32,3 +32,8 @@
 1417272807209	Move compilation unit
 1417272817905	Delete element
 1417272828292	Rename type 'SettingsScreen'
+1417273561191	Delete element
+1417273564405	Delete element
+1417273573137	Delete element
+1417273959555	Rename field 'logo_image_view'
+1417273972881	Rename field 'text_image_view'
