@@ -109,8 +109,7 @@ public class PlayView extends View
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
 			Drawable backgroundImage = a.getDrawable(R.styleable.PlayView_backgroundImage);
 			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
-			int textColor = a.getColor(R.styleable.PlayView_textColor, Color.BLACK);
-			this.mTextPaint.setColor(textColor);
+			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 		}
 		catch (Exception e)
 		{
@@ -128,8 +127,6 @@ public class PlayView extends View
 
 	private void init()
 	{
-		this.mTextPaint = new Paint();
-		this.mTextPaint.setColor(Color.BLACK);
 		this.mTextPaint.setTextSize(60);
 
 		//does a circle pattern
@@ -459,40 +456,43 @@ public class PlayView extends View
 
 		animator.start();
 	}
-	
+
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh)
 	{
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		if (w > h)
+		if (this.mBackgroundImage != null)
 		{
-			if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
+			if (w > h)
 			{
-				this.mBackgroundRotation = 0f;
-				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
-				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+				if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
+				{
+					this.mBackgroundRotation = 0f;
+					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
+					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+				}
+				else
+				{
+					this.mBackgroundRotation = 90f;
+					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
+					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
+				}
 			}
 			else
 			{
-				this.mBackgroundRotation = 90f;
-				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
-				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
-			}
-		}
-		else
-		{
-			if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
-			{
-				this.mBackgroundRotation = 90f;
-				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
-				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
-			}
-			else
-			{
-				this.mBackgroundRotation = 0f;
-				this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
-				this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+				if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
+				{
+					this.mBackgroundRotation = 90f;
+					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
+					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
+				}
+				else
+				{
+					this.mBackgroundRotation = 0f;
+					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
+					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+				}
 			}
 		}
 	}
