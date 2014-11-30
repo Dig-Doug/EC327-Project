@@ -23,7 +23,6 @@ public class StartLevelActivity extends Activity
 	private TextView mStartWordView;
 	private TextView mEndWordView;
 	private Level mSelectedLevel;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
