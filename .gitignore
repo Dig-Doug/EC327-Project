@@ -54,3 +54,7 @@ local.properties
 Beep/bin/classes/com/beep_boop/Beep/R$drawable.class
 
 Beep/gen/com/beep_boop/Beep/R.java
+
+Beep/bin/classes/com/beep_boop/Beep/Game/PlayView.class
+
+Beep/bin/classes/com/beep_boop/Beep/game/PlayView$1.class
