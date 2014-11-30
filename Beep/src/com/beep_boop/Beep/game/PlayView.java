@@ -12,6 +12,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -273,11 +274,12 @@ public class PlayView extends View
 	{
 		if (this.mBackgroundImage != null)
 		{
-			canvas.save();
-			canvas.rotate(this.mBackgroundRotation);
-			canvas.scale(this.mBackgroundScaleX, this.mBackgroundScaleY);
-			canvas.drawBitmap(this.mBackgroundImage, 0, 0, null);
-			canvas.restore();
+			Matrix matrix = new Matrix();
+			matrix.postTranslate(-this.mBackgroundImage.getWidth() / 2.0f, -this.mBackgroundImage.getHeight() / 2.0f);
+			matrix.postRotate(this.mBackgroundRotation);
+			matrix.postScale(this.mBackgroundScaleX, this.mBackgroundScaleY);
+			matrix.postTranslate(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
+			canvas.drawBitmap(this.mBackgroundImage, matrix, null);
 		}
 	}
 
@@ -474,7 +476,7 @@ public class PlayView extends View
 				}
 				else
 				{
-					this.mBackgroundRotation = 90f;
+					this.mBackgroundRotation = -90f;
 					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
 					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
 				}
@@ -483,7 +485,7 @@ public class PlayView extends View
 			{
 				if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
 				{
-					this.mBackgroundRotation = 90f;
+					this.mBackgroundRotation = -90f;
 					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
 					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
 				}
