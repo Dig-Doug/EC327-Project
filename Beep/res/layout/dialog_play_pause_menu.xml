@@ -1,0 +1,53 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:background="@color/launchActivity_backgroundColor"
+    android:stretchColumns="1" >
+
+    <TextView
+        android:id="@+id/playScreenActivity_pauseMenu_titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/playScreenActivity_pauseMenuTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textSize="50sp" />
+
+    <TableRow>
+
+        <ImageButton
+            android:id="@+id/playScreenActivity_pauseMenu_playButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/ic_launcher" />
+
+        <ImageButton
+            android:id="@+id/playScreenActivity_pauseMenu_resetButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/ic_launcher" />
+
+        <ImageButton
+            android:id="@+id/playScreenActivity_pauseMenu_settingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/ic_launcher" />
+
+        <ImageButton
+            android:id="@+id/playScreenActivity_pauseMenu_mapButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/ic_launcher" />
+
+    </TableRow>
+
+</TableLayout>

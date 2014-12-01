@@ -14,7 +14,7 @@ import com.beep_boop.Beep.R;
 public class WordHandler
 {
 	///-----Static Variables-----
-	private static boolean LOAD_FULL_DATABASE = true;
+	private static boolean LOAD_ARTIFICIAL_DATABASE = false;
 	/** Holds if the singleton has been loaded */
 	private static boolean loaded = false;
 	/** Holds the log tag */
@@ -58,13 +58,13 @@ public class WordHandler
 		InputStream in = null;
 		try 
 		{
-			if (LOAD_FULL_DATABASE)
+			if (LOAD_ARTIFICIAL_DATABASE)
 			{
 				in = aContext.getResources().openRawResource(R.raw.database_full);
 			}
 			else
 			{
-				in = aContext.getResources().openRawResource(R.raw.matthew_mcconaughey_zurich);
+				in = aContext.getResources().openRawResource(R.raw.database_no_artificial_links_full);
 			}
 			
 			this.mWordData = PlayScreenParser.parseFile(in, aUpdate);

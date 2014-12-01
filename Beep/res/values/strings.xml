@@ -48,8 +48,7 @@
     <string name="placeHolder">PlayScreen</string>
     <string name="parseWords">Parse Words.</string>
     <string name="wordTitleLabel"> Word Title Goes here.</string>
-    <string name="title_activity_drawing_test">DrawingTest</string>
-    <string name="title_activity_play_view2">PlayView2</string>
+    <string name="playScreenActivity_pauseMenuTitle">Paused</string>
     <string name="action_settings">Settings</string>
     
     <!-- Win Activity -->

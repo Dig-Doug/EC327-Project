@@ -5,13 +5,21 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.win.WinActivity;
 
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource
@@ -56,6 +64,21 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		this.mWordPath.add(this.mSelectedLevel.fromWord);
 		
 		this.mStartTime = System.currentTimeMillis();
+	}
+	
+	private void play()
+	{
+		
+	}
+	
+	private void pause()
+	{
+		
+	}
+	
+	private void reset()
+	{
+		
 	}
 
 	///-----PlayView.WordDataSource methods-----
@@ -105,5 +128,69 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidGoBack(PlayView aPlayView)
 	{
 		this.mWordPath.remove(this.mWordPath.size() - 1);
+	}
+	
+	
+	///-----Pause Menu Fragment Dialog-----
+	public class PauseMenuDialogFragment extends DialogFragment
+	{
+		private PauseMenuDialogFragment PAUSE_THIS = this;
+		
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		    // Get the layout inflater
+		    LayoutInflater inflater = getActivity().getLayoutInflater();
+
+		    // Inflate and set the layout for the dialog
+		    // Pass null as the parent view because its going in the dialog layout
+		    builder.setView(inflater.inflate(R.layout.dialog_play_pause_menu, null));
+		    
+		    Dialog result = builder.create();
+		    ImageButton playButton = (ImageButton) result.findViewById(R.id.playScreenActivity_pauseMenu_playButton);
+		    playButton.setOnClickListener(new OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					play();
+					PAUSE_THIS.dismiss();
+				}
+			});
+		    
+		    ImageButton resetButton = (ImageButton) result.findViewById(R.id.playScreenActivity_pauseMenu_resetButton);
+		    resetButton.setOnClickListener(new OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					reset();
+					PAUSE_THIS.dismiss();
+				}
+			});
+		    
+		    ImageButton settingsButton = (ImageButton) result.findViewById(R.id.playScreenActivity_pauseMenu_settingsButton);
+		    settingsButton.setOnClickListener(new OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					Intent settingsIntent = new Intent(PAUSE_THIS.getActivity(), SettingsActivity.class);
+					startActivity(settingsIntent);
+				}
+			});
+		    
+		    ImageButton mapButton = (ImageButton) result.findViewById(R.id.playScreenActivity_pauseMenu_mapButton);
+		    mapButton.setOnClickListener(new OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					PAUSE_THIS.getActivity().finish();
+				}
+			});
+		    
+		    return result;
+		}
 	}
 }
