@@ -1,8 +1,6 @@
 package com.beep_boop.Beep.settings;
 
 import com.beep_boop.Beep.R;
-import com.beep_boop.Beep.R.layout;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
