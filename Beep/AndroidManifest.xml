@@ -42,13 +42,10 @@
             android:name=".game.PlayScreenActivity"
             android:label="@string/title_activity_play_screen" >
         </activity>
-<<<<<<< Updated upstream
         <activity
             android:name=".win.WinActivity"
             android:label="@string/title_activity_win" >
         </activity>
-=======
->>>>>>> Stashed changes
     </application>
 
 </manifest>

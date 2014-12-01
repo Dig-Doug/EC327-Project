@@ -17,4 +17,5 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levels.LevelManager"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levels.Level"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.PlayScreenActivity"/>
+<fullyQualifiedTypeName name="android.graphics.Matrix"/>
 </qualifiedTypeNameHistroy>

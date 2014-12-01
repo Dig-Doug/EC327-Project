@@ -93,6 +93,7 @@ public class PlayView extends View
 	/** Hold the image to be drawn in the background */
 	private Bitmap mBackgroundImage;
 	private float mBackgroundScaleX, mBackgroundScaleY, mBackgroundRotation;
+	private float mScrollVelocityMax;
 
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
@@ -105,6 +106,7 @@ public class PlayView extends View
 			mScrollScalar = a.getFloat(R.styleable.PlayView_scrollScalar, 0.05f);
 			mScrollAcceleration = a.getFloat(R.styleable.PlayView_scrollAcceleration, 0.25f);
 			mScrollVelocityMinimum = a.getFloat(R.styleable.PlayView_scrollVelocityMin, 0.25f);
+			mScrollVelocityMax = a.getFloat(R.styleable.PlayView_scrollVelocityMax, 0.5f);
 			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 500f);
 			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 1000);
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
@@ -153,7 +155,7 @@ public class PlayView extends View
 				if (mAnimationState == AnimationState.Displaying)
 				{
 					//if so, scroll the amount
-					scroll(mScrollVelocity * deltaTime);
+					scroll((mScrollVelocity > mScrollVelocityMax ? mScrollVelocityMax : mScrollVelocity) * deltaTime);
 					//decrease the velocity
 					mScrollVelocity *= mScrollAcceleration;
 

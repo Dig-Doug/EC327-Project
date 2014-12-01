@@ -1,10 +1,16 @@
 package com.beep_boop.Beep.win;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.game.PlayScreenActivity;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
 
@@ -19,6 +25,9 @@ public class WinActivity extends Activity
 	private Level mCompletedLevel;
 	private String[] mPath;
 
+	private TextView mTimePlaceholderLabel;
+	private TextView mMovePlaceholderLabel;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -26,6 +35,7 @@ public class WinActivity extends Activity
 		setContentView(R.layout.activity_win);
 
 		Bundle extras = this.getIntent().getExtras();
+		double time = 0;
 		if (extras != null)
 		{
 			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY) && 
@@ -33,7 +43,7 @@ public class WinActivity extends Activity
 					extras.containsKey(WinActivity.EXTRA_PATH))
 			{
 				String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);
-				double time = extras.getDouble(WinActivity.EXTRA_TIME);
+				time = extras.getDouble(WinActivity.EXTRA_TIME);
 				this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
 				LevelManager.setLevelComplete(levelKey, true, time, this.mPath.length - 1);
 				this.mCompletedLevel = LevelManager.getLevelForKey(levelKey);
@@ -48,5 +58,21 @@ public class WinActivity extends Activity
 			Log.e(WinActivity.TAG, "Error getting extras");
 			finish();
 		}
+		
+		this.mTimePlaceholderLabel = (TextView) findViewById(R.id.winActivity_timePlaceholderLabel);
+		this.mMovePlaceholderLabel = (TextView) findViewById(R.id.winActivity_movePlaceholderLabel);
+		
+		this.mTimePlaceholderLabel.setText((int)(time / 1000) + " " + getString(R.string.winActivity_timeSuffix));
+		this.mMovePlaceholderLabel.setText((this.mPath.length - 1) + " " + getString(R.string.winActivity_moveSuffix));
+		
+		ImageButton mapButton = (ImageButton) findViewById(R.id.winActivity_mapButton);
+		mapButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				finish();
+			}
+		});
 	}
 }

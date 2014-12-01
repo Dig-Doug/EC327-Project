@@ -51,6 +51,14 @@
     <string name="title_activity_drawing_test">DrawingTest</string>
     <string name="title_activity_play_view2">PlayView2</string>
     <string name="action_settings">Settings</string>
+    
+    <!-- Win Activity -->
     <string name="title_activity_win">WinActivity</string>
-
+    <string name="winActivity_winTitle">You win!</string>
+    <string name="winActivity_timeLabel">Your Time: </string>
+    <string name="winActivity_timeSuffix">secs</string>
+    <string name="winActivity_moveLabel">Your Moves: </string>
+    <string name="winActivity_moveSuffix">moves</string>
+	<string name="winActivity_toMap">To Map</string>
+    
 </resources>

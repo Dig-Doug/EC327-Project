@@ -19,6 +19,7 @@
         <attr name="scrollScalar" format="float" />
         <attr name="scrollAcceleration" format="float" />
         <attr name="scrollVelocityMin" format="float" />
+        <attr name="scrollVelocityMax" format="float" />
         <attr name="scrollVelocityScalar" format="float" />
         <attr name="animationInLength" format="integer" />
         <attr name="animationOutLength" format="integer" />

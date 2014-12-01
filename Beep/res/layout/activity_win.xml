@@ -2,11 +2,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/win_background"
     tools:context="${relativePackage}.${activityClass}" >
 
     <TextView
+        android:id="@+id/winActivity_titleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="@string/winActivity_winTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/winActivity_timeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/winActivity_titleLabel"
+        android:layout_marginLeft="67dp"
+        android:layout_marginTop="29dp"
+        android:text="@string/winActivity_timeLabel"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/winActivity_timePlaceholderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/winActivity_timeLabel"
+        android:layout_alignBottom="@+id/winActivity_timeLabel"
+        android:layout_marginLeft="49dp"
+        android:layout_toRightOf="@+id/winActivity_timeLabel"
+        android:text="@string/winActivity_timeSuffix"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/winActivity_moveLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/winActivity_timeLabel"
+        android:layout_below="@+id/winActivity_timeLabel"
+        android:layout_marginTop="37dp"
+        android:text="@string/winActivity_moveLabel"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/winActivity_movePlaceholderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/winActivity_moveLabel"
+        android:layout_alignBottom="@+id/winActivity_moveLabel"
+        android:layout_alignLeft="@+id/winActivity_timePlaceholderLabel"
+        android:text="@string/winActivity_moveSuffix"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/winActivity_mapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/winActivity_moveLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="66dp"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/beep_arrow1_flipped_image"
+        android:text="@string/winActivity_toMap"
+        android:background="@null" />
 
 </RelativeLayout>
