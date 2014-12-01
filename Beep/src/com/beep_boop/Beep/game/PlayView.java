@@ -136,9 +136,9 @@ public class PlayView extends View
 		ArrayList<PointF> startPoints = new ArrayList<PointF>();
 		ArrayList<Float> startThetas = new ArrayList<Float>();
 		float delta = (float)Math.PI / (this.mNumberOfWordsToDraw + 1);
-		float theta = (float)Math.PI/2;
+		float theta = -(float)Math.PI/2;
 		float radius = 0.5f;
-		for (int i = 0; i < this.mNumberOfWordsToDraw + 1; i++,  theta -= delta)
+		for (int i = 0; i < this.mNumberOfWordsToDraw + 1; i++,  theta += delta)
 		{
 			startPoints.add(new PointF(radius * (float)Math.cos(theta), radius * (float)Math.sin(theta) + 0.5f));
 			startThetas.add(theta);
@@ -559,7 +559,7 @@ public class PlayView extends View
 			this.mLastTouchPoint.y += deltaY;
 
 			//increment the origin by the delta
-			this.scroll(-deltaY * this.mScrollScalar);
+			this.scroll(deltaY * this.mScrollScalar);
 		}
 		else
 		{
@@ -630,7 +630,7 @@ public class PlayView extends View
 				float velocity = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;;
 				if (Math.abs(velocity) > this.mScrollVelocityMinimum)
 				{
-					this.mScrollVelocity = -velocity;
+					this.mScrollVelocity = velocity;
 				}
 			}
 			else
