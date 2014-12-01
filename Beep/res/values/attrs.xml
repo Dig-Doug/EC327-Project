@@ -26,4 +26,7 @@
         <attr name="textColor" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="GoalBar">
+    </declare-styleable>
+    
 </resources>

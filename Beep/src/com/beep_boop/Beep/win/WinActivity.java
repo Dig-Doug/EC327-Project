@@ -36,6 +36,7 @@ public class WinActivity extends Activity
 
 		Bundle extras = this.getIntent().getExtras();
 		double time = 0;
+		boolean personalBestTime = false, personalBestMoves = false;
 		if (extras != null)
 		{
 			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY) && 
@@ -43,10 +44,17 @@ public class WinActivity extends Activity
 					extras.containsKey(WinActivity.EXTRA_PATH))
 			{
 				String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);
+				this.mCompletedLevel = LevelManager.getLevelForKey(levelKey);
+				
 				time = extras.getDouble(WinActivity.EXTRA_TIME);
 				this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
+				
+				if (time < this.mCompletedLevel.time)
+					personalBestTime = true;
+				if (this.mPath.length - 1 < this.mCompletedLevel.numberOfSteps)
+					personalBestMoves = true;
+				
 				LevelManager.setLevelComplete(levelKey, true, time, this.mPath.length - 1);
-				this.mCompletedLevel = LevelManager.getLevelForKey(levelKey);
 			}
 			else
 			{

@@ -19,4 +19,5 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="android.app.DialogFragment"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.game.GoalBar.ClickListener"/>
 </qualifiedTypeNameHistroy>

@@ -1,7 +1,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:background="@color/launchActivity_backgroundColor"
+    android:background="@drawable/pause_menu_background"
     android:stretchColumns="1" >
 
     <TextView
@@ -21,14 +21,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon_play" />
 
         <ImageButton
             android:id="@+id/playScreenActivity_pauseMenu_resetButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:src="@drawable/ic_launcher" />
 
@@ -37,17 +39,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon_settings" />
 
         <ImageButton
             android:id="@+id/playScreenActivity_pauseMenu_mapButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/ic_launcher" />
-
+            android:src="@drawable/icon_map" />
     </TableRow>
 
 </TableLayout>

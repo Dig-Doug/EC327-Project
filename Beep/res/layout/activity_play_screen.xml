@@ -1,17 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}"
-    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-	<com.beep_boop.Beep.game.PlayView
-	    android:id="@+id/playScreenActivity_playView"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_gravity="center"
-	    custom:backgroundImage="@drawable/play_background"
-	    custom:textColor="@color/launchActivity_loadingTextColor"
-	    custom:wordsOnPage="10" />
+    <com.beep_boop.Beep.game.GoalBar
+        android:id="@+id/playScreenActivity_goalBar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp" />
 
-</RelativeLayout>
+    <com.beep_boop.Beep.game.PlayView
+        android:id="@+id/playScreenActivity_playView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        custom:backgroundImage="@drawable/play_background"
+        custom:textColor="@color/launchActivity_loadingTextColor"
+        custom:wordsOnPage="10" />
+
+</LinearLayout>
