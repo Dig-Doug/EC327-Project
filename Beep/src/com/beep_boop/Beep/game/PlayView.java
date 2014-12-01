@@ -103,11 +103,11 @@ public class PlayView extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
 		try
 		{
-			mScrollScalar = a.getFloat(R.styleable.PlayView_scrollScalar, 0.05f);
-			mScrollAcceleration = a.getFloat(R.styleable.PlayView_scrollAcceleration, 0.25f);
-			mScrollVelocityMinimum = a.getFloat(R.styleable.PlayView_scrollVelocityMin, 0.25f);
-			mScrollVelocityMax = a.getFloat(R.styleable.PlayView_scrollVelocityMax, 0.5f);
-			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 500f);
+			mScrollScalar = a.getFloat(R.styleable.PlayView_scrollScalar, 0.005f);
+			mScrollAcceleration = a.getFloat(R.styleable.PlayView_scrollAcceleration, 0.90f);
+			mScrollVelocityMinimum = a.getFloat(R.styleable.PlayView_scrollVelocityMin, 0.015f);
+			mScrollVelocityMax = a.getFloat(R.styleable.PlayView_scrollVelocityMax, 0.15f);
+			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 1f);
 			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 1000);
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
 			Drawable backgroundImage = a.getDrawable(R.styleable.PlayView_backgroundImage);
@@ -154,8 +154,10 @@ public class PlayView extends View
 				//check if we're in a state where velocity is allowed
 				if (mAnimationState == AnimationState.Displaying)
 				{
+					int sign = (mScrollVelocity > 0 ? 1 : -1);
+					float clamped = (Math.abs(mScrollVelocity) > Math.abs(mScrollVelocityMax) ? sign * mScrollVelocityMax : mScrollVelocity);
 					//if so, scroll the amount
-					scroll((mScrollVelocity > mScrollVelocityMax ? mScrollVelocityMax : mScrollVelocity) * deltaTime);
+					scroll(clamped * deltaTime);
 					//decrease the velocity
 					mScrollVelocity *= mScrollAcceleration;
 
@@ -169,11 +171,11 @@ public class PlayView extends View
 					{
 						if (mStartWordIndex < 0)
 						{
-							scroll(-mScrollVelocityMinimum * deltaTime);
+							scroll(-mScrollVelocityMax/2 * deltaTime);
 						}
 						else if (mStartWordIndex > mWords.size() - mNumberOfWordsToDraw)
 						{
-							scroll(mScrollVelocityMinimum * deltaTime);
+							scroll(mScrollVelocityMax/2 * deltaTime);
 						}
 					}
 				}
