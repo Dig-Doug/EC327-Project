@@ -247,7 +247,7 @@ public class PlayView extends View
 		if (this.mCurrentWord != null)
 		{
 			String word = this.mCurrentWord;
-			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta);
+			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth()/2.1f - this.mCurrentWordDrawPosition.x);
 		}
 
 		for (int i = 0; i < mNumberOfWordsToDraw; i++)
@@ -255,7 +255,7 @@ public class PlayView extends View
 			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
 			{
 				String word = this.mWords.get(mStartWordIndex + i);
-				this.drawWord(canvas, word, this.mDrawPoints[i], this.mDrawThetas[i]);
+				this.drawWord(canvas, word, this.mDrawPoints[i], this.mDrawThetas[i], this.getWidth() - this.mDrawPoints[i].x);
 			}
 			else if (mStartWordIndex + i >= this.mWords.size())
 			{
@@ -264,12 +264,20 @@ public class PlayView extends View
 		}	
 	}
 
-	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta)
+	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta, float maxWidth)
 	{
+		float oldTextSize = this.mTextPaint.getTextSize();
+		while (this.mTextPaint.measureText(aWord) > maxWidth)
+		{
+			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() - 1);
+		}
+		
 		//Rect rect = new Rect();
 		//this.mTextPaint.getTextBounds(aWord, 0, aWord.length(), rect);
 		//canvas.rotate(aTheta, aPosition.x + rect.exactCenterX(), aPosition.y + rect.exactCenterY()); //this line was the culprit
 		aCanvas.drawText(aWord, aPosition.x, aPosition.y, this.mTextPaint);
+		
+		this.mTextPaint.setTextSize(oldTextSize);
 	}
 
 
