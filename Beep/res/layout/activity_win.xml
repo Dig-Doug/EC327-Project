@@ -63,15 +63,26 @@
         android:textStyle="bold" />
 
     <ImageButton
-        android:id="@+id/winActivity_mapButton"
+        android:id="@+id/winActivity_nextLevelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/winActivity_moveLabel"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="66dp"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/beep_arrow1_flipped_image"
-        android:text="@string/winActivity_toMap"
+        android:src="@drawable/beep_arrow1_image"
         android:background="@null" />
+
+    <ImageButton
+        android:id="@+id/winActivity_mapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="81dp"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/beep_arrow1_flipped_image"
+        android:text="@string/winActivity_toMap" />
 
 </RelativeLayout>

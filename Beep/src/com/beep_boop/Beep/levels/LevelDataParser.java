@@ -24,6 +24,7 @@ public class LevelDataParser
 	private static final String TAG_REQUIRED_LEVEL = "req";
 	private static final String TAG_FROM_WORD = "from";
 	private static final String TAG_TO_WORD = "to";
+	private static final String TAG_NEXT_LEVEL = "next";
 
 	///-----Constructors-----
 	// None
@@ -98,7 +99,7 @@ public class LevelDataParser
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_LEVEL);
 		String levelKey = aParser.getAttributeValue(null, TAG_LEVEL_ATRB_KEY);
 
-		String fromWord = null, toWord = null;
+		String fromWord = null, toWord = null, nextLevel = null;
 		ArrayList<String> requiredLevels = null;
 		//As long as we are not at an end-tag we will keep creating nodes
 		while (aParser.next() != XmlPullParser.END_TAG)
@@ -121,11 +122,20 @@ public class LevelDataParser
 			{
 				requiredLevels = parseRequiredLevels(aParser);
 			}
+			else if (name.equals(LevelDataParser.TAG_NEXT_LEVEL))
+			{
+				nextLevel = readString(aParser, TAG_NEXT_LEVEL);
+				
+				if (nextLevel.equals(""))
+				{
+					nextLevel = null;
+				}
+			}
 			
 		}
 		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_LEVEL);
 		
-		return new Level(levelKey, false, fromWord, toWord, requiredLevels, 0.0, 0);
+		return new Level(levelKey, nextLevel, false, fromWord, toWord, requiredLevels, 0.0, 0);
 	}
 
 	private static ArrayList<String> parseRequiredLevels(XmlPullParser aParser) throws XmlPullParserException, IOException 

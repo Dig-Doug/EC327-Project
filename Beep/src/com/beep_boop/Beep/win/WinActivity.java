@@ -10,9 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.beep_boop.Beep.R;
-import com.beep_boop.Beep.game.PlayScreenActivity;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
 public class WinActivity extends Activity
 {
@@ -22,6 +22,7 @@ public class WinActivity extends Activity
 	public static final String EXTRA_TIME = "EXTRA_TIME";
 	/** Tag for logging */
 	private static final String TAG = "WinActivity";
+	private WinActivity THIS = this;
 	private Level mCompletedLevel;
 	private String[] mPath;
 
@@ -72,6 +73,25 @@ public class WinActivity extends Activity
 		
 		this.mTimePlaceholderLabel.setText((int)(time / 1000) + " " + getString(R.string.winActivity_timeSuffix));
 		this.mMovePlaceholderLabel.setText((this.mPath.length - 1) + " " + getString(R.string.winActivity_moveSuffix));
+		
+		ImageButton nextLevelButton = (ImageButton) findViewById(R.id.winActivity_nextLevelButton);
+		nextLevelButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
+				startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mCompletedLevel.nextLevelKey);
+				startActivity(startLevelIntent);
+				finish();
+			}
+		});
+		
+		if (this.mCompletedLevel.nextLevelKey == null || !LevelManager.canPlayLevel(this.mCompletedLevel.nextLevelKey))
+		{
+			nextLevelButton.setAlpha(0.0f);
+			nextLevelButton.setEnabled(false);
+		}
 		
 		ImageButton mapButton = (ImageButton) findViewById(R.id.winActivity_mapButton);
 		mapButton.setOnClickListener(new OnClickListener()
