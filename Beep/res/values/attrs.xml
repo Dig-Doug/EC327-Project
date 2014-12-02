@@ -2,6 +2,7 @@
 <resources>
 
     <attr name="backgroundImage" format="reference" />
+    <attr name="textColor" format="reference" />
 
     <declare-styleable name="MapView">
         <attr name="mapWidthOnScreen" format="float" />
@@ -24,10 +25,27 @@
         <attr name="scrollVelocityScalar" format="float" />
         <attr name="animationInLength" format="integer" />
         <attr name="animationOutLength" format="integer" />
-        <attr name="textColor" format="reference" />
+        <attr name="textColor"/>
+    </declare-styleable>
+    <declare-styleable name="GoalBar"></declare-styleable>
+    <declare-styleable name="WordDisplay">
+        <attr name="fromImagePercentX" format="float" />
+        <attr name="fromImagePercentY" format="float" />
+        <attr name="toImagePercentX" format="float" />
+        <attr name="toImagePercentY" format="float" />
+        <attr name="arrowImagePercentX" format="float" />
+        <attr name="arrowImagePercentY" format="float" />
+        <attr name="fromWordPercentX" format="float" />
+        <attr name="fromWordPercentY" format="float" />
+        <attr name="toWordPercentX" format="float" />
+        <attr name="toWordPercentY" format="float" />
+        <attr name="fromImagePercentWidth" format="float" />
+        <attr name="toImagePercentWidth" format="float" />
+        <attr name="arrowImagePercentWidth" format="float" />
+        <attr name="fromWordPercentWidth" format="float" />
+        <attr name="toWordPercentWidth" format="float" />
+        <attr name="textColor"/>
+        <attr name="arrowImage" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="GoalBar">
-    </declare-styleable>
-    
 </resources>

@@ -2,12 +2,14 @@ package com.beep_boop.Beep.startScreen;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.PlayScreenActivity;
@@ -20,8 +22,7 @@ public class StartLevelActivity extends Activity
 	
 	private static final String TAG = "StartLevelActivity";
 	private StartLevelActivity THIS = this;
-	private TextView mStartWordView;
-	private TextView mEndWordView;
+	private WordDisplay mWordDisplay;
 	private Level mSelectedLevel;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -44,10 +45,12 @@ public class StartLevelActivity extends Activity
 			finish();
 		}
 		
-		this.mStartWordView = (TextView) findViewById(R.id.startLevelActivity_startWordTextView);
-		this.mEndWordView = (TextView) findViewById(R.id.startLevelActivity_toWordTextView);
-		this.mStartWordView.setText(this.mSelectedLevel.fromWord);
-		this.mEndWordView.setText(this.mSelectedLevel.toWord);
+		Drawable fromImage = getResources().getDrawable(R.drawable.ss_apple);
+		Bitmap fromBit = ((BitmapDrawable) fromImage).getBitmap();
+		Drawable toImage = getResources().getDrawable(R.drawable.ss_viking);
+		Bitmap toBit = ((BitmapDrawable) toImage).getBitmap();
+		this.mWordDisplay = (WordDisplay) findViewById(R.id.startScreenActivity_wordDisplay);
+		this.mWordDisplay.set(fromBit, toBit, "Test", "To");
 		
 		ImageButton playButton = (ImageButton) findViewById(R.id.startLevelActivity_startLevelButton);
 		playButton.setOnClickListener(new OnClickListener()

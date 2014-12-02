@@ -2,5 +2,8 @@
     
     <color name = "launchActivity_backgroundColor">#FF000000</color>
     <color name = "launchActivity_loadingTextColor">#FFFFFFFF</color>
+    
+    <color name = "startScreenActivity_backgroundColor">#FF12233B</color>
+    <color name = "startScreenActivity_textColor">#FFFFFFFF</color>
 
 </resources>

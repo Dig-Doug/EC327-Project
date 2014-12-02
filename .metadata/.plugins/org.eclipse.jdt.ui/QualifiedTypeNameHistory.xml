@@ -21,4 +21,6 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.GoalBar.ClickListener"/>
 <fullyQualifiedTypeName name="android.animation.Animator.AnimatorListener"/>
 <fullyQualifiedTypeName name="android.graphics.Matrix"/>
+<fullyQualifiedTypeName name="android.app.Service"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
 </qualifiedTypeNameHistroy>

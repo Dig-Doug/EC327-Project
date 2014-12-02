@@ -1,96 +1,35 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/launchActivity_backgroundColor"
-    tools:context="${relativePackage}.${activityClass}" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/startLevelActivity_startLevelButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="@string/startLevelActivityClicks"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/launchActivity_loadingTextColor" />
-
-    <TextView
-        android:id="@+id/startLevelActivity_toWordTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/startLevelActivity_startWordTextView"
-        android:layout_alignBottom="@+id/startLevelActivity_startWordTextView"
-        android:layout_alignLeft="@+id/startLevelActivity_toWordImageView"
-        android:layout_alignRight="@+id/startLevelActivity_toWordImageView"
-        android:text="@string/startLevelActivityObject2"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/launchActivity_loadingTextColor" />
-
-    <TextView
-        android:id="@+id/startLevelActivity_startWordTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/startLevelActivity_fromWordImageView"
-        android:layout_alignRight="@+id/startLevelActivity_fromWordImageView"
-        android:layout_below="@+id/startLevelActivity_fromWordImageView"
-        android:layout_marginTop="22dp"
-        android:text="@string/startLevelActivityObject1"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/launchActivity_loadingTextColor" />
-
-    <TextView
-        android:id="@+id/startLevelActivity_numberOfClicksTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:text="@string/startLevelActivityClicksNumber"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/launchActivity_loadingTextColor" />
-
-    <ImageButton
-        android:id="@+id/startLevelActivity_startLevelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/startLevelActivity_startWordTextView"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="79dp"
-        android:background="@null"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/beep_start_image"
-        android:text="@string/startLevelActivityStartButton" />
-
-    <ImageView
-        android:id="@+id/startLevelActivity_toWordImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_above="@+id/startLevelActivity_startWordTextView"
-        android:layout_alignRight="@+id/startLevelActivity_startLevelButton"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/ss_viking" />
-
-    <ImageView
-        android:id="@+id/startLevelActivity_fromWordImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/startLevelActivity_backToMapButton"
-        android:layout_marginTop="19dp"
-        android:layout_toLeftOf="@+id/startLevelActivity_numberOfClicksTextView"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/ss_apple" />
+    <com.beep_boop.Beep.startScreen.WordDisplay
+        android:id="@+id/startScreenActivity_wordDisplay"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.51" />
 
     <ImageButton
         android:id="@+id/startLevelActivity_backToMapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="18dp"
-        android:layout_toLeftOf="@+id/textView1"
         android:background="@null"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/beep_arrow1_flipped_image"
+        android:src="@drawable/button_start"
         android:text="@string/startLevelActivityBackButton" />
 
-</RelativeLayout>
+    <ImageButton
+        android:id="@+id/startLevelActivity_startLevelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="31dp"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/button_start"
+        android:text="@string/startLevelActivityStartButton" />
+
+</LinearLayout>
