@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -131,6 +132,9 @@ public class PlayView extends View
 	private void init()
 	{
 		this.mTextPaint.setTextSize(60);
+		
+		Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Krungthep.ttf");
+		this.mTextPaint.setTypeface(customFont);
 
 		//does a circle pattern
 		ArrayList<PointF> startPoints = new ArrayList<PointF>();
