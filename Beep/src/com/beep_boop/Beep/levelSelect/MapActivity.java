@@ -110,7 +110,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		//set the node click listener
 		this.mMapView.setListener(this);
 		
-		this.mMapView.setSelectedNode(nodeList.get(0));
+		this.mMapView.setSelectedNode(nodeList.get(0), false);
 	}
 	
 	@Override

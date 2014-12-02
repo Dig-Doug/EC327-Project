@@ -13,7 +13,8 @@
         custom:mapWidthOnScreen="0.50"
         custom:nodeOffImage="@drawable/node_star_off"
         custom:nodeOnImage="@drawable/node_star_on"
-        custom:nodeSelectedOverlay="@drawable/node_overlay" />
+        custom:nodeSelectedOverlayStatic="@drawable/node_overlay"
+        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay" />
 
     <ImageButton
         android:id="@+id/mapActivity_settingsButton"

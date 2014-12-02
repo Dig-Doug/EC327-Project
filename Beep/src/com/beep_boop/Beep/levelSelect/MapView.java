@@ -2,11 +2,15 @@ package com.beep_boop.Beep.levelSelect;
 
 import java.util.ArrayList;
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -36,6 +40,8 @@ public class MapView extends View
 	///-----Members-----
 	/** Holds the tag used for logging */
 	private static final String TAG = "MapView";
+
+	private MapView THIS = this;
 
 	/** Holds the listener who handles node clicks */
 	private NodeClickListener mListener = null;
@@ -78,8 +84,6 @@ public class MapView extends View
 	/** Holds the ON node image */
 	private Bitmap mNodeImageOn;
 	private int mNodeHalfSizeX, mNodeHalfSizeY;
-	/** Holds an overlay for the selected node  */
-	private Bitmap mSelectedNodeOverlay;
 	private int mOverlayHalfSizeX, mOverlayHalfSizeY;
 	/** Holds the current state of the node */
 	private float mSelectedNodeState;
@@ -88,6 +92,9 @@ public class MapView extends View
 	private Paint mNodeOnPaint, mNodeOffPaint;
 	private ValueAnimator mNodeAnimator;
 
+	/** Holds an overlay for the selected node  */
+	private Bitmap mSelectedNodeOverlayStatic;
+	private Bitmap mSelectedNodeOverlayAnimating;
 	private ValueAnimator mSelectedOverlayAnimator;
 	private int mSelectedOverlayAnimationLength;
 	private float mSelectedOverlayAnimationPercent;
@@ -112,8 +119,10 @@ public class MapView extends View
 			this.mNodeImageOn = ((BitmapDrawable) nodeOnImage).getBitmap();
 			Drawable backgroundImage = a.getDrawable(R.styleable.MapView_backgroundImage);
 			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
-			Drawable nodeOverlayImage = a.getDrawable(R.styleable.MapView_nodeSelectedOverlay);
-			this.mSelectedNodeOverlay = ((BitmapDrawable) nodeOverlayImage).getBitmap();
+			Drawable nodeOverlayStaticImage = a.getDrawable(R.styleable.MapView_nodeSelectedOverlayStatic);
+			this.mSelectedNodeOverlayStatic = ((BitmapDrawable) nodeOverlayStaticImage).getBitmap();
+			Drawable nodeOverlayAnimatingImage = a.getDrawable(R.styleable.MapView_nodeSelectedOverlayAnimating);
+			this.mSelectedNodeOverlayAnimating = ((BitmapDrawable) nodeOverlayAnimatingImage).getBitmap();
 			this.mAnimationLength = a.getInteger(R.styleable.MapView_animationLength, 100);
 			this.mMaxNodeClickDistance = a.getFloat(R.styleable.MapView_nodeClickDistance, 0.05f);
 			this.mSelectedOverlayAnimationLength = a.getInteger(R.styleable.MapView_overlayAnimationLength, 1000);
@@ -249,21 +258,67 @@ public class MapView extends View
 		}
 		return result;
 	}
-	
-	public void setSelectedNode(MapNode aNode)
+
+	public void setSelectedNode(MapNode aNode, boolean aAnimated)
 	{
-		this.setSelectedNode(this.mNodes.indexOf(aNode));
+		this.setSelectedNode(this.mNodes.indexOf(aNode), aAnimated, false);
 	}
-	
+
 	//sets the selected node
-	private void setSelectedNode(int aIndex)
+	private void setSelectedNode(int aIndex, boolean aAnimated, boolean aShouldClick)
 	{
-		//set the selected node index
-		this.mSelectedNode = aIndex;
-		//tell the view to center on that node
-		this.centerOnNode(this.mSelectedNode);
-		//start the animation
-		this.startAnimationToNode(this.mNodes.get(aIndex));
+		if (this.mSelectedNode != aIndex)
+		{
+			if (aAnimated)
+			{
+				//start the animation
+				this.startAnimationToNode(this.mNodes.get(aIndex), aShouldClick);
+			}
+			else
+			{
+				this.mSelectedOverlayAnimationStartNode = this.mNodes.get(aIndex);
+				this.mSelectedOverlayAnimationToNode = this.mNodes.get(aIndex);
+			}
+			
+			//set the selected node index
+			this.mSelectedNode = aIndex;
+			//tell the view to center on that node
+			this.centerOnNode(this.mSelectedNode);
+
+
+			if (!aAnimated && aShouldClick)
+			{
+				//click the node
+				if (this.mListener != null)
+				{
+					this.mListener.mapViewUserDidClickNode(this, this.mNodes.get(mSelectedNode));
+				}
+				else
+				{
+					Log.w(MapView.TAG, "Listener is null");
+				}
+			}
+		}
+		else
+		{
+			//tell the view to center on that node
+			this.centerOnNode(this.mSelectedNode);
+
+			if (aShouldClick)
+			{
+				//click the node
+				if (this.mListener != null)
+				{
+					this.mListener.mapViewUserDidClickNode(this, this.mNodes.get(mSelectedNode));
+				}
+				else
+				{
+					Log.w(MapView.TAG, "Listener is null");
+				}
+			}
+		}
+
+		this.requestRedraw();
 	}
 
 	//calculates the max and min origin bounds
@@ -332,7 +387,7 @@ public class MapView extends View
 		this.setOrigin(centered);
 	}
 
-	private void startAnimationToNode(MapNode aToNode)
+	private void startAnimationToNode(MapNode aToNode, boolean aShouldClick)
 	{
 		this.mSelectedOverlayAnimationPercent = 0.0f;
 		this.mSelectedOverlayAnimationStartNode = this.mNodes.get(this.mSelectedNode);
@@ -342,24 +397,66 @@ public class MapView extends View
 		{
 			// Create a new value animator that will use the range 0 to 1
 			this.mSelectedOverlayAnimator = ValueAnimator.ofFloat(0, 1);
+
+			// It will take XXXms for the animator to go from 0 to 1
+			this.mSelectedOverlayAnimator.setDuration(this.mSelectedOverlayAnimationLength);
+			// Callback that executes on animation steps. 
+			this.mSelectedOverlayAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+				@Override
+				public void onAnimationUpdate(ValueAnimator animation)
+				{
+					mSelectedOverlayAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
+					requestRedraw();
+				}
+			});
+
+			if (aShouldClick)
+			{
+				this.mSelectedOverlayAnimator.addListener(new AnimatorListener()
+				{
+
+					@Override
+					public void onAnimationCancel(Animator arg0)
+					{
+						// do nothing
+					}
+
+					@Override
+					public void onAnimationEnd(Animator arg0)
+					{
+						//click the node
+						if (mListener != null)
+						{
+							mListener.mapViewUserDidClickNode(THIS, mNodes.get(mSelectedNode));
+							mSelectedOverlayAnimator = null;
+						}
+						else
+						{
+							Log.w(MapView.TAG, "Listener is null");
+						}
+					}
+
+					@Override
+					public void onAnimationRepeat(Animator arg0)
+					{
+						// do nothing
+					}
+
+					@Override
+					public void onAnimationStart(Animator arg0)
+					{
+						// do nothing
+					}
+				});
+			}
+
+			this.mSelectedOverlayAnimator.start();
 		}
 		else if (this.mSelectedOverlayAnimator.isRunning())
 		{
-			this.mSelectedOverlayAnimator.end();
+			this.mSelectedOverlayAnimator.cancel();
+			this.mSelectedOverlayAnimator = null;
 		}
-
-		// It will take XXXms for the animator to go from 0 to 1
-		this.mSelectedOverlayAnimator.setDuration(this.mSelectedOverlayAnimationLength);
-		// Callback that executes on animation steps. 
-		this.mSelectedOverlayAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-			@Override
-			public void onAnimationUpdate(ValueAnimator animation)
-			{
-				mSelectedOverlayAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
-				requestRedraw();
-			}
-		});
-		this.mSelectedOverlayAnimator.start();
 	}
 
 	//overridden view method
@@ -418,13 +515,24 @@ public class MapView extends View
 			}
 		}
 
-		if (this.mSelectedNodeOverlay != null && this.mSelectedOverlayAnimationStartNode != null)
+		if (this.mSelectedNodeOverlayStatic != null && this.mSelectedOverlayAnimationStartNode != null)
 		{
+			Bitmap drawWith = (this.mSelectedOverlayAnimator == null ? this.mSelectedNodeOverlayStatic : 
+				(this.mSelectedNodeOverlayAnimating == null ? this.mSelectedNodeOverlayStatic : this.mSelectedNodeOverlayAnimating));
 			//draw the overlay
 			float deltaX = (this.mSelectedOverlayAnimationToNode.getX() - this.mSelectedOverlayAnimationStartNode.getX()) * this.mSelectedOverlayAnimationPercent;
 			float deltaY = (this.mSelectedOverlayAnimationToNode.getY() - this.mSelectedOverlayAnimationStartNode.getY()) * this.mSelectedOverlayAnimationPercent;
+			
 			PointF screenDrawCenter = this.convertToScreenSpace(this.mSelectedOverlayAnimationStartNode.getX() + deltaX, this.mSelectedOverlayAnimationStartNode.getY() + deltaY);
-			canvas.drawBitmap(this.mSelectedNodeOverlay, screenDrawCenter.x - this.mOverlayHalfSizeX, screenDrawCenter.y - this.mOverlayHalfSizeY, null);
+			Matrix matrix = new Matrix();
+			if (this.mSelectedOverlayAnimator != null && deltaX < 0)
+			{
+				matrix.setScale(-1,1);
+				matrix.postTranslate(2 * this.mOverlayHalfSizeX, 0);
+			}
+			matrix.postTranslate(screenDrawCenter.x - this.mOverlayHalfSizeX, screenDrawCenter.y - this.mOverlayHalfSizeY);
+			
+			canvas.drawBitmap(drawWith, matrix, null);
 		}
 	}
 
@@ -447,13 +555,14 @@ public class MapView extends View
 		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() / 2);
 		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() / 2);
 
-		this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlay.getWidth() / 2.0f);
-		this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlay.getHeight() / 2.0f);
+		this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlayStatic.getWidth() / 2.0f);
+		this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlayStatic.getHeight() / 2.0f);
 
 		this.calculateOriginBounds();
 	}
 
 	//gets touch events for view
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
@@ -564,16 +673,7 @@ public class MapView extends View
 				{
 					//user can click node
 					Log.v(MapView.TAG, "User clicked node with key: " + nodeNearLocation.getLevelKey());
-					//click the node
-					if (this.mListener != null)
-					{
-						this.mListener.mapViewUserDidClickNode(this, nodeNearLocation);
-					}
-					else
-					{
-						Log.w(MapView.TAG, "Listener is null");
-					}
-					this.setSelectedNode(this.mNodes.indexOf(nodeNearLocation));
+					this.setSelectedNode(this.mNodes.indexOf(nodeNearLocation), true, true);
 				}
 				else
 				{

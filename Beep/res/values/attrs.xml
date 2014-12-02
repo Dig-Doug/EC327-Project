@@ -9,7 +9,8 @@
         <attr name="animationLength" format="integer" />
         <attr name="nodeOffImage" format="reference" />
         <attr name="nodeOnImage" format="reference" />
-        <attr name="nodeSelectedOverlay" format="reference" />
+        <attr name="nodeSelectedOverlayStatic" format="reference" />
+        <attr name="nodeSelectedOverlayAnimating" format="reference" />
         <attr name="backgroundImage" />
         <attr name="overlayAnimationLength" format="integer" />
     </declare-styleable>
