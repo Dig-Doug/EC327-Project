@@ -15,8 +15,9 @@ public class Level
 	public double time;
 	public int numberOfSteps;
 	public int maxMoves;
+	public String fromImage, toImage;
 	
-	public Level(String aLevelKey, String aNextLevelKey, String aFromWord, String aToWord, int aMaxMoves,
+	public Level(String aLevelKey, String aNextLevelKey, String aFromWord, String aToWord, String aFromImage, String aToImage,  int aMaxMoves,
 			ArrayList<String> aRequiredLevels)
 	{
 		this.levelKey = aLevelKey;
@@ -25,6 +26,8 @@ public class Level
 		this.fromWord = aFromWord;
 		this.requiredLevels = aRequiredLevels;
 		this.maxMoves = aMaxMoves;
+		this.fromImage = aFromImage;
+		this.toImage = aToImage;
 		
 		this.completed = false;
 		this.time = Double.MAX_VALUE;

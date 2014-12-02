@@ -26,6 +26,8 @@ public class LevelDataParser
 	private static final String TAG_TO_WORD = "to";
 	private static final String TAG_NEXT_LEVEL = "next";
 	private static final String TAG_MAX_MOVES = "max";
+	private static final String TAG_FROM_IMAGE = "fromImage";
+	private static final String TAG_TO_IMAGE = "toImage";
 
 	///-----Constructors-----
 	// None
@@ -110,7 +112,7 @@ public class LevelDataParser
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_LEVEL);
 		String levelKey = aParser.getAttributeValue(null, TAG_LEVEL_ATRB_KEY);
 
-		String fromWord = null, toWord = null, nextLevel = null;
+		String fromWord = null, toWord = null, nextLevel = null, fromImage = null, toImage = null;
 		int maxMoves = 0;
 		ArrayList<String> requiredLevels = null;
 		//As long as we are not at an end-tag we will keep creating nodes
@@ -147,11 +149,29 @@ public class LevelDataParser
 			{
 				maxMoves = (int)Double.parseDouble(readString(aParser, TAG_MAX_MOVES));
 			}
+			else if (name.equals(LevelDataParser.TAG_FROM_IMAGE))
+			{
+				fromImage = readString(aParser, TAG_FROM_IMAGE);
+				
+				if (fromImage != null && fromImage.equals(""))
+				{
+					fromImage = null;
+				}
+			}
+			else if (name.equals(LevelDataParser.TAG_TO_IMAGE))
+			{
+				toImage = readString(aParser, TAG_TO_IMAGE);
+				
+				if (toImage != null && toImage.equals(""))
+				{
+					toImage = null;
+				}
+			}
 			
 		}
 		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_LEVEL);
 		
-		return new Level(levelKey, nextLevel, fromWord, toWord, maxMoves, requiredLevels);
+		return new Level(levelKey, nextLevel, fromWord, toWord, fromImage, toImage, maxMoves, requiredLevels);
 	}
 
 	private static ArrayList<String> parseRequiredLevels(XmlPullParser aParser) throws XmlPullParserException, IOException 

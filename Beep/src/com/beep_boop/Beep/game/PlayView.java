@@ -112,7 +112,8 @@ public class PlayView extends View
 			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 1000);
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
 			Drawable backgroundImage = a.getDrawable(R.styleable.PlayView_backgroundImage);
-			this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
+			if (backgroundImage != null)
+				this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
 			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 		}
 		catch (Exception e)

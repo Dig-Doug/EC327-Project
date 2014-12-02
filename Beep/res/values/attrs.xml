@@ -25,10 +25,11 @@
         <attr name="scrollVelocityScalar" format="float" />
         <attr name="animationInLength" format="integer" />
         <attr name="animationOutLength" format="integer" />
-        <attr name="textColor"/>
+        <attr name="textColor" />
     </declare-styleable>
     <declare-styleable name="GoalBar"></declare-styleable>
     <declare-styleable name="WordDisplay">
+        <attr name="arrowImage" format="reference" />
         <attr name="fromImagePercentX" format="float" />
         <attr name="fromImagePercentY" format="float" />
         <attr name="toImagePercentX" format="float" />
@@ -44,8 +45,8 @@
         <attr name="arrowImagePercentWidth" format="float" />
         <attr name="fromWordPercentWidth" format="float" />
         <attr name="toWordPercentWidth" format="float" />
-        <attr name="textColor"/>
-        <attr name="arrowImage" format="reference" />
+        <attr name="textColor" />
+        <attr name="backgroundImage" />
     </declare-styleable>
 
 </resources>

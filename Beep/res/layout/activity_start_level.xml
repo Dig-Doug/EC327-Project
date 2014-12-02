@@ -1,35 +1,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:background="@color/startScreenActivity_backgroundColor"
+    android:orientation="vertical"
+    android:padding="5dp" >
 
-    <com.beep_boop.Beep.startScreen.WordDisplay
-        android:id="@+id/startScreenActivity_wordDisplay"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.51" />
-
-    <ImageButton
-        android:id="@+id/startLevelActivity_backToMapButton"
+    <TextView
+        android:id="@+id/startScreenActivity_titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="18dp"
-        android:background="@null"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/button_start"
-        android:text="@string/startLevelActivityBackButton" />
+        android:text="@string/startLevelActivity_mission"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/startScreenActivity_textColor"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/startScreenActivity_movesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/startLevelActivity_moves"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/startScreenActivity_textColor" />
+
+    <TextView
+        android:id="@+id/startScreenActivity_bestTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/startLevelActivity_best"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/startScreenActivity_textColor" />
+
+    <com.beep_boop.Beep.startScreen.WordDisplay
+        android:id="@+id/startScreenActivity_wordDisplay"
+        android:layout_width="336dp"
+        android:layout_height="207dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.00"
+        custom:arrowImage="@drawable/start_arrow"
+        custom:backgroundImage="@drawable/start_background" />
 
     <ImageButton
         android:id="@+id/startLevelActivity_startLevelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="31dp"
         android:background="@null"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/button_start"
-        android:text="@string/startLevelActivityStartButton" />
+        android:padding="10dp"
+        android:src="@drawable/button_start" />
+
+    <ImageButton
+        android:id="@+id/startLevelActivity_backToMapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:padding="10dp"
+        android:src="@drawable/back_btn"
+        android:text="@string/startLevelActivityBackButton" />
 
 </LinearLayout>

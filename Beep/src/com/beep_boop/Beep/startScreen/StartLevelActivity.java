@@ -3,6 +3,8 @@ package com.beep_boop.Beep.startScreen;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.PlayScreenActivity;
@@ -19,7 +22,7 @@ import com.beep_boop.Beep.levels.LevelManager;
 public class StartLevelActivity extends Activity
 {	
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
-	
+
 	private static final String TAG = "StartLevelActivity";
 	private StartLevelActivity THIS = this;
 	private WordDisplay mWordDisplay;
@@ -29,7 +32,7 @@ public class StartLevelActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_level);
-		
+
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -44,14 +47,32 @@ public class StartLevelActivity extends Activity
 			Log.e(StartLevelActivity.TAG, "Error getting extras");
 			finish();
 		}
-		
-		Drawable fromImage = getResources().getDrawable(R.drawable.ss_apple);
-		Bitmap fromBit = ((BitmapDrawable) fromImage).getBitmap();
-		Drawable toImage = getResources().getDrawable(R.drawable.ss_viking);
-		Bitmap toBit = ((BitmapDrawable) toImage).getBitmap();
-		this.mWordDisplay = (WordDisplay) findViewById(R.id.startScreenActivity_wordDisplay);
-		this.mWordDisplay.set(fromBit, toBit, "Test", "To");
-		
+
+		Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/Krungthep.ttf");
+
+		TextView title = (TextView) findViewById(R.id.startScreenActivity_titleTextView);
+		title.setTypeface(customFont);
+
+		TextView move = (TextView) findViewById(R.id.startScreenActivity_movesTextView);
+		move.setTypeface(customFont);
+		move.setText(getString(R.string.startLevelActivity_moves) + this.mSelectedLevel.maxMoves);
+
+		TextView best = (TextView) findViewById(R.id.startScreenActivity_bestTextView);
+		best.setTypeface(customFont);
+		best.setText(getString(R.string.startLevelActivity_best) + (this.mSelectedLevel.numberOfSteps == Double.MAX_VALUE ? "X" : this.mSelectedLevel.numberOfSteps));
+
+		try
+		{
+			Bitmap fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
+			Bitmap toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
+			this.mWordDisplay = (WordDisplay) findViewById(R.id.startScreenActivity_wordDisplay);
+			this.mWordDisplay.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
+		}
+		catch (Exception e)
+		{
+
+		}
+
 		ImageButton playButton = (ImageButton) findViewById(R.id.startLevelActivity_startLevelButton);
 		playButton.setOnClickListener(new OnClickListener()
 		{
@@ -64,7 +85,7 @@ public class StartLevelActivity extends Activity
 				finish();
 			}
 		});
-		
+
 		ImageButton toMapButton = (ImageButton) findViewById(R.id.startLevelActivity_backToMapButton);
 		toMapButton.setOnClickListener(new OnClickListener()
 		{
@@ -72,10 +93,10 @@ public class StartLevelActivity extends Activity
 			public void onClick(View v)
 			{
 				Log.d(StartLevelActivity.TAG, "To map button clicked");
-				
+
 				finish();
 			}
 		});
-		
+
 	}
 }

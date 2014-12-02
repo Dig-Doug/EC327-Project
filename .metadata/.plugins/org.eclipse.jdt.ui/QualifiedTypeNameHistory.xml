@@ -3,10 +3,7 @@
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.view.MotionEvent"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levelSelect.MapView"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.LevelManager"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.WordHandler"/>
@@ -15,12 +12,17 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levels.LevelManager"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levels.Level"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.PlayScreenActivity"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="android.app.DialogFragment"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.GoalBar.ClickListener"/>
 <fullyQualifiedTypeName name="android.animation.Animator.AnimatorListener"/>
-<fullyQualifiedTypeName name="android.graphics.Matrix"/>
 <fullyQualifiedTypeName name="android.app.Service"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.graphics.Matrix"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.drawable"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 </qualifiedTypeNameHistroy>

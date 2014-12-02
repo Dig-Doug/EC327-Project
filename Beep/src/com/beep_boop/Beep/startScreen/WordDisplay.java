@@ -24,7 +24,7 @@ public class WordDisplay extends View
 	/** Holds the tag used for logging */
 	private static final String TAG = "WordDisplay";
 
-	private Bitmap mFromImage, mToImage, mArrowImage;
+	private Bitmap mFromImage, mToImage, mArrowImage, mBackgroundImage;
 	private String mFromWord, mToWord;
 	private float mFromImagePercentX, mFromImagePercentY, mToImagePercentX, mToImagePercentY;
 	private float mArrowImagePercentX, mArrowImagePercentY, mFromWordPercentX, mFromWordPercentY, mToWordPercentX, mToWordPercentY;
@@ -36,14 +36,14 @@ public class WordDisplay extends View
 	private Paint mTextPaint = new Paint();
 	private float mDefaultTextSize = 50f;
 
-	private Matrix mFromImageMatrix = new Matrix(), mToImageMatrix = new Matrix(), mArrowImageMatrix = new Matrix();
+	private Matrix mFromImageMatrix = new Matrix(), mToImageMatrix = new Matrix(), mArrowImageMatrix = new Matrix(), mBackgroundImageMatrix = new Matrix();;
 
 	///-----Constructors-----
 	public WordDisplay(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 
-		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.WordDisplay, 0, 0);
 		try
 		{
 			this.mFromImagePercentX = a.getFloat(R.styleable.WordDisplay_fromImagePercentX, 0.2083f);
@@ -63,7 +63,11 @@ public class WordDisplay extends View
 			this.mToWordPercentWidth = a.getFloat(R.styleable.WordDisplay_toWordPercentWidth, 0.3055f);
 			this.mTextPaint.setColor(a.getColor(R.styleable.WordDisplay_textColor, Color.WHITE));
 			Drawable arrowImage = a.getDrawable(R.styleable.WordDisplay_arrowImage);
-			this.mArrowImage = ((BitmapDrawable) arrowImage).getBitmap();
+			if (arrowImage != null)
+				this.mArrowImage = ((BitmapDrawable) arrowImage).getBitmap();
+			Drawable backImage = a.getDrawable(R.styleable.WordDisplay_backgroundImage);
+			if (backImage != null)
+				this.mBackgroundImage = ((BitmapDrawable) backImage).getBitmap();
 		}
 		catch (Exception e)
 		{
@@ -99,6 +103,8 @@ public class WordDisplay extends View
 		{
 			this.mToWord = aToWord;
 		}
+
+		this.requestRedraw();
 	}
 
 	///-----Functions-----
@@ -106,6 +112,10 @@ public class WordDisplay extends View
 	@Override
 	public void onDraw(Canvas canvas)
 	{
+		if (this.mBackgroundImage != null)
+			canvas.drawBitmap(this.mBackgroundImage, this.mBackgroundImageMatrix, null);
+		if (this.mArrowImage != null)
+			canvas.drawBitmap(this.mArrowImage, this.mArrowImageMatrix, null);
 		if (this.mFromImage != null)
 			canvas.drawBitmap(this.mFromImage, this.mFromImageMatrix, null);
 		if (this.mToImage != null)
@@ -129,13 +139,20 @@ public class WordDisplay extends View
 
 		float aspect = h / (float)w;
 
+		if (this.mBackgroundImage != null)
+		{
+			float backImageScaleX = this.getWidth() / (float)this.mBackgroundImage.getWidth();
+			float backImageScaleY = this.getHeight() / (float)this.mBackgroundImage.getHeight();
+			this.mBackgroundImageMatrix.postScale(backImageScaleX, backImageScaleY);
+		}
+
 		if (this.mFromImage != null)
 		{
 			//from image
 			float fromImageX = this.mFromImagePercentX - this.mFromImagePercentWidth / 2;
-			float fromImageY = this.mFromImagePercentY - this.mFromImagePercentWidth / 2 * aspect;		
+			float fromImageY = this.mFromImagePercentY - this.mFromImagePercentWidth * aspect;		
 			float fromImageScaleX = (this.getWidth() * this.mFromImagePercentWidth) / this.mFromImage.getWidth();
-			float fromImageScaleY = fromImageScaleX * aspect;
+			float fromImageScaleY = (this.getHeight() * this.mFromImagePercentWidth / aspect) / this.mFromImage.getHeight();
 			this.mFromImageMatrix.setScale(fromImageScaleX, fromImageScaleY);
 			this.mFromImageMatrix.postTranslate(fromImageX * this.getWidth(), fromImageY * this.getHeight());
 		}
@@ -144,9 +161,9 @@ public class WordDisplay extends View
 		{
 			//to image
 			float toImageX = this.mToImagePercentX - this.mToImagePercentWidth / 2;
-			float toImageY = this.mToImagePercentY - this.mToImagePercentWidth / 2 * aspect;
+			float toImageY = this.mToImagePercentY - this.mToImagePercentWidth * aspect;
 			float toImageScaleX = (this.getWidth() * this.mToImagePercentWidth) / this.mToImage.getWidth();
-			float toImageScaleY = toImageScaleX * aspect;
+			float toImageScaleY = (this.getHeight() * this.mToImagePercentWidth / aspect) / this.mToImage.getHeight();
 			this.mToImageMatrix.setScale(toImageScaleX, toImageScaleY);
 			this.mToImageMatrix.postTranslate(toImageX * this.getWidth(), toImageY * this.getHeight());
 		}
@@ -155,9 +172,9 @@ public class WordDisplay extends View
 		{
 			//arrow image
 			float arrowImageX = this.mArrowImagePercentX - this.mArrowImagePercentWidth / 2;
-			float arrowImageY = this.mArrowImagePercentY - this.mArrowImagePercentWidth / 2 * aspect;
+			float arrowImageY = this.mArrowImagePercentY - this.mArrowImagePercentWidth * aspect;
 			float arrowImageScaleX = (this.getWidth() * this.mArrowImagePercentWidth) / this.mArrowImage.getWidth();
-			float arrowImageScaleY = arrowImageScaleX * aspect;
+			float arrowImageScaleY =(this.getHeight() * this.mArrowImagePercentWidth / aspect) / this.mArrowImage.getHeight();
 			this.mArrowImageMatrix.setScale(arrowImageScaleX, arrowImageScaleY);
 			this.mArrowImageMatrix.postTranslate(arrowImageX * this.getWidth(), arrowImageY * this.getHeight());
 		}
@@ -194,11 +211,11 @@ public class WordDisplay extends View
 
 			//from word
 			float fromWordX = this.mFromWordPercentX * this.getWidth() - fromBoundingRect.width()/2;
-			float fromWordY = this.mFromWordPercentY * this.getHeight() - fromBoundingRect.height()/2;
+			float fromWordY = this.mFromWordPercentY * this.getHeight() + fromBoundingRect.height()/2;
 			this.mFromWordDraw = new PointF(fromWordX, fromWordY);
 			//to word
 			float toWordX = this.mToWordPercentX * this.getWidth() - toBoundingRect.width()/2;
-			float toWordY = this.mToWordPercentY * this.getHeight() - toBoundingRect.height()/2;
+			float toWordY = this.mToWordPercentY * this.getHeight() + toBoundingRect.height()/2;
 			this.mToWordDraw = new PointF(toWordX, toWordY);
 		}
 	}

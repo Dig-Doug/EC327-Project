@@ -27,13 +27,10 @@
 
     <!-- Start Screen Activity -->
     <string name="title_activity_start_level">StartLevelActivity</string>
-    <string name="startLevelActivityObject1">Apple</string>
-    <string name="startLevelActivityObject2">Viking</string>
     <string name="startLevelActivityBackButton">back</string>
-    <string name="startLevelActivityClicks"> connections</string>
-    <string name="startLevelActivityClicksNumber">000</string>
-    <string name="startLevelActivityStartButton">Start!</string>
-    <string name="startLevelActivityPowerUpsButton">Power Ups</string>
+    <string name="startLevelActivity_mission">Mission </string>
+    <string name="startLevelActivity_moves">Moves: </string>
+    <string name="startLevelActivity_best">Personal Best: </string>
 
     <!-- Settings activity -->
     <string name="title_activity_settings">SettingsActivity</string>
