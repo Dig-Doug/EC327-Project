@@ -1,9 +1,0 @@
-﻿<levels>
-    <level key="level_1">
-    </level>
-        <level key="level_2">
-            <requires>
-                <req>level_1</req>
-            </requires>
-    </level>
-</levels>

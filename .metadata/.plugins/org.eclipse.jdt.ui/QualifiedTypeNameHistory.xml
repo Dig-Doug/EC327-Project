@@ -15,9 +15,10 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levels.LevelManager"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levels.Level"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.PlayScreenActivity"/>
-<fullyQualifiedTypeName name="android.graphics.Matrix"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="android.app.DialogFragment"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.GoalBar.ClickListener"/>
+<fullyQualifiedTypeName name="android.animation.Animator.AnimatorListener"/>
+<fullyQualifiedTypeName name="android.graphics.Matrix"/>
 </qualifiedTypeNameHistroy>

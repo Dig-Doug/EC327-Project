@@ -1,13 +1,17 @@
 package com.beep_boop.Beep.levels;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 
 public class LevelManager 
@@ -25,6 +29,8 @@ public class LevelManager
 	private static final String TAG = "LevelManager";
 	/** Holds the singleton instance of the class */
 	public static LevelManager INSTANCE = new LevelManager();
+
+	private static final String FILENAME = "level_completion_data";
 
 	///-----Member Variables-----
 	/** Holds the data about each level */
@@ -73,7 +79,7 @@ public class LevelManager
 	{
 		return LevelManager.INSTANCE.canPlayLevelPrivate(aLevelKey);
 	}
-	
+
 	public static Level getLevelForKey(String aLevelKey)
 	{
 		return LevelManager.INSTANCE.getLevelForKeyPrivate(aLevelKey);
@@ -88,6 +94,39 @@ public class LevelManager
 			in = aContext.getResources().openRawResource(R.raw.levels_test_file);
 
 			this.mLevelData = LevelDataParser.parseFile(in);
+
+			InputStream instream = MyApplication.getAppContext().openFileInput(FILENAME);
+			if (instream != null)
+			{
+				InputStreamReader inputreader = new InputStreamReader(instream); 
+				BufferedReader buffreader = new BufferedReader(inputreader); 
+				String line = "";
+				try
+				{
+					while ((line = buffreader.readLine()) != null)
+					{
+						String levelKey = null;
+						Boolean completed = false;
+						double time = 0;
+						int moves = 0;
+
+						int completedIndex = line.indexOf(" ", 0);
+						int timeIndex = line.indexOf(" ", completedIndex + 1);
+						int movesIndex = line.indexOf(" ", timeIndex + 1);
+
+						levelKey = line.substring(0, completedIndex);
+						completed = Boolean.parseBoolean(line.substring(completedIndex + 1, timeIndex));
+						time = Double.parseDouble(line.substring(timeIndex + 1, movesIndex));
+						moves = Integer.parseInt(line.substring(movesIndex + 1, line.length()));
+
+						this.setLevelCompletePrivate(levelKey, completed, time, moves);
+					}
+				}
+				catch (Exception e) 
+				{
+					e.printStackTrace();
+				}
+			}
 		}
 		catch (Exception i)
 		{
@@ -116,7 +155,35 @@ public class LevelManager
 
 	private void save()
 	{
-		//@TODO - save level states
+		FileOutputStream fos = null;
+		try
+		{
+			fos = MyApplication.getAppContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+
+			for (String key : this.mLevelData.keySet())
+			{
+				Level currentLevel = this.mLevelData.get(key);
+				currentLevel.writeToFile(fos);
+			}
+		}
+		catch (IOException e)
+		{
+
+		}
+		finally
+		{
+			try
+			{
+				if (fos != null)
+				{
+					fos.close();
+				}
+			}
+			catch (IOException i)
+			{
+
+			}
+		}
 	}
 
 	private boolean getLevelCompletePrivate(String aLevelKey)
@@ -144,7 +211,7 @@ public class LevelManager
 			{
 				//store the state
 				this.mLevelData.get(aLevelKey).completed = aComplete;
-				
+
 				//store the time & steps
 				if (this.mLevelData.get(aLevelKey).time > aTime)
 					this.mLevelData.get(aLevelKey).time = aTime;
@@ -221,7 +288,7 @@ public class LevelManager
 
 		return result;
 	}
-	
+
 	private Level getLevelForKeyPrivate(String aLevelKey)
 	{
 		Level result = null;
@@ -233,7 +300,7 @@ public class LevelManager
 		{
 			Log.e(LevelManager.TAG, "No level for key: " + aLevelKey);
 		}
-		
+
 		return result;
 	}
 

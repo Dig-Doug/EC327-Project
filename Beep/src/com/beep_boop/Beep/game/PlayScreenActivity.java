@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,6 +22,7 @@ import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.settings.SettingsActivity;
+import com.beep_boop.Beep.startScreen.StartLevelActivity;
 import com.beep_boop.Beep.win.WinActivity;
 
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource, GoalBar.ClickListener
@@ -90,11 +92,6 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		new PauseMenuDialogFragment().show(getFragmentManager(), PAUSE_MENU_TAG);
 	}
 
-	private void reset()
-	{
-
-	}
-
 	///-----PlayView.WordDataSource methods-----
 	@Override
 	public List<String> playViewWordsForWord(PlayView aPlayView, String aWord)
@@ -157,7 +154,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	{
 		private PauseMenuDialogFragment PAUSE_THIS = this;
 
-		@Override
+		@SuppressLint("InflateParams") @Override
 		public Dialog onCreateDialog(Bundle savedInstanceState)
 		{
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -185,8 +182,11 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				@Override
 				public void onClick(View v)
 				{
-					reset();
+					Intent startLevelIntent = new Intent(PAUSE_THIS.getActivity(), StartLevelActivity.class);
+					startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mSelectedLevel.nextLevelKey);
+					startActivity(startLevelIntent);
 					PAUSE_THIS.dismiss();
+					finish();
 				}
 			});
 

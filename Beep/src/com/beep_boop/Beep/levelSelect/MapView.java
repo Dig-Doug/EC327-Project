@@ -175,8 +175,6 @@ public class MapView extends View
 	}
 
 	///-----Functions-----
-	//Implements LevelDoneListener interface
-
 	//sets the listener
 	public void setListener(NodeClickListener aListener)
 	{
@@ -187,6 +185,8 @@ public class MapView extends View
 	public void setDataSource(NodeStatusDataSource aDataSource)
 	{
 		this.mDataSource = aDataSource;
+		
+		this.updateStates();
 	}
 
 	//adds a node

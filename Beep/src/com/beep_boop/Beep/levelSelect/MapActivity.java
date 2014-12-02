@@ -16,12 +16,13 @@ import android.widget.Toast;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.about.AboutActivity;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
+import com.beep_boop.Beep.levelSelect.MapView.NodeStatusDataSource;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.levels.LevelManager.LevelStateListener;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
-public class MapActivity extends Activity implements NodeClickListener, LevelStateListener
+public class MapActivity extends Activity implements NodeClickListener, LevelStateListener, NodeStatusDataSource
 {
 	///-----Member Variables-----
 	/** Tag used in Log messages */
@@ -109,6 +110,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		
 		//set the node click listener
 		this.mMapView.setListener(this);
+		this.mMapView.setDataSource(this);
 		
 		this.mMapView.setSelectedNode(nodeList.get(0), false);
 	}
