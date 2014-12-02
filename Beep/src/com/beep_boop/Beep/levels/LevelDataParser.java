@@ -49,10 +49,20 @@ public class LevelDataParser
 		catch (XmlPullParserException e) 
 		{
 			Log.e(TAG, "The XmlPullParserException was caught.");
+			e.printStackTrace();
+			if (e.getMessage() != null)
+			{
+				Log.e(TAG, e.getMessage());
+			}
 		} 
 		catch (IOException i) 
 		{
 			Log.e(TAG, "The IOException was caught.");
+			i.printStackTrace();
+			if (i.getMessage() != null)
+			{
+				Log.e(TAG, i.getMessage());
+			}
 		} 
 		finally 
 		{
@@ -126,7 +136,7 @@ public class LevelDataParser
 			{
 				nextLevel = readString(aParser, TAG_NEXT_LEVEL);
 				
-				if (nextLevel.equals(""))
+				if (nextLevel != null && nextLevel.equals(""))
 				{
 					nextLevel = null;
 				}

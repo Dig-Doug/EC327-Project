@@ -59,5 +59,12 @@
     <string name="winActivity_moveLabel">Your Moves: </string>
     <string name="winActivity_moveSuffix">moves</string>
 	<string name="winActivity_toMap">To Map</string>
+	
+	<!-- Sharing -->
+	<string name="share_emailDefaultText1">I went from </string>
+	<string name="share_emailDefaultText2"> to </string>
+	<string name="share_emailDefaultText3"> in </string>
+	<string name="share_emailDefaultText4"> moves and in only </string>
+	<string name="share_emailDefaultText5"> secs. Can you?</string>
     
 </resources>

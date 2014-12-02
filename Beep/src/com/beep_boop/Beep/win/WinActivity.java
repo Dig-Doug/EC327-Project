@@ -2,6 +2,7 @@ package com.beep_boop.Beep.win;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -102,5 +103,29 @@ public class WinActivity extends Activity
 				finish();
 			}
 		});
+		
+		ImageButton shareButton = (ImageButton) findViewById(R.id.winActivity_shareButton);
+		shareButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				shareWithFriend();
+			}
+		});
+	}
+	
+	private void shareWithFriend()
+	{
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		Uri data = Uri.parse("mailto:?subject=" + "" + "&body=" + "" + "&to=" + "");  
+		intent.setData(data);  
+		String message = getString(R.string.share_emailDefaultText1) + this.mCompletedLevel.fromWord + 
+				getString(R.string.share_emailDefaultText2) + this.mCompletedLevel.toWord + 
+				getString(R.string.share_emailDefaultText3) + this.mCompletedLevel.numberOfSteps + 
+				getString(R.string.share_emailDefaultText4) + this.mCompletedLevel.time + 
+				getString(R.string.share_emailDefaultText5);
+		intent.putExtra(Intent.EXTRA_TEXT, message);
+		startActivity(Intent.createChooser(intent, "Send Email"));
 	}
 }

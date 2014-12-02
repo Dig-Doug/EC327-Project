@@ -66,23 +66,34 @@
         android:id="@+id/winActivity_nextLevelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/winActivity_moveLabel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="66dp"
+        android:layout_below="@+id/winActivity_movePlaceholderLabel"
+        android:layout_marginTop="64dp"
+        android:layout_toRightOf="@+id/winActivity_timePlaceholderLabel"
+        android:background="@null"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/beep_arrow1_image"
-        android:background="@null" />
+        android:src="@drawable/beep_arrow1_image" />
 
     <ImageButton
         android:id="@+id/winActivity_mapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="81dp"
+        android:layout_alignTop="@+id/winActivity_nextLevelButton"
+        android:layout_toLeftOf="@+id/winActivity_shareButton"
         android:background="@null"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/beep_arrow1_flipped_image"
+        android:text="@string/winActivity_toMap" />
+
+    <ImageButton
+        android:id="@+id/winActivity_shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="46dp"
+        android:layout_toRightOf="@+id/winActivity_timeLabel"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/ic_launcher"
         android:text="@string/winActivity_toMap" />
 
 </RelativeLayout>

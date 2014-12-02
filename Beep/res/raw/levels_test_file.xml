@@ -1,5 +1,5 @@
 ﻿<levels>
-<level key="level_0_1"><from>Apple</from><to>Vikings</to><next>level_0_2</next><requires><req></req></requires></level>
+<level key="level_0_1"><from>Apple</from><to>Vikings</to><next>level_0_2</next><requires></requires></level>
 <level key="level_0_2"><from>Apple</from><to>Vikings</to><next>level_0_3</next><requires><req>level_0_1</req></requires></level>
 <level key="level_0_3"><from>Apple</from><to>Vikings</to><next>level_0_4</next><requires><req>level_0_2</req></requires></level>
 <level key="level_0_4"><from>Apple</from><to>Vikings</to><next>level_0_5</next><requires><req>level_0_3</req></requires></level>

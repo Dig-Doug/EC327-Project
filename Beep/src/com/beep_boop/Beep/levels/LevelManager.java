@@ -92,6 +92,11 @@ public class LevelManager
 		catch (Exception i)
 		{
 			Log.e(LevelManager.TAG, "The IOException was caught.");
+			i.printStackTrace();
+			if (i.getMessage() != null)
+			{
+				Log.e(TAG, i.getMessage());
+			}
 		}
 		finally 
 		{
