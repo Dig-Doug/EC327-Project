@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
-<<<<<<< Updated upstream
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1416333481027_0" label="Window Working Set" name="Aggregate for window 1416333481026"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1416346246522_1" label="Window Working Set" name="Aggregate for window 1416346246522"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1416435809755_2" label="Window Working Set" name="Aggregate for window 1416435809755"/>
@@ -50,6 +49,7 @@
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417556105330_46" label="Window Working Set" name="Aggregate for window 1417556105329"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417561830434_47" label="Window Working Set" name="Aggregate for window 1417561830434"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417632986866_48" label="Window Working Set" name="Aggregate for window 1417632986866"/>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417549807045_0" label="Window Working Set" name="Aggregate for window 1417549807044"/>
@@ -58,4 +58,6 @@
 =======
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417643525348_49" label="Window Working Set" name="Aggregate for window 1417643525348"/>
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 6306aa8... Commit
 </workingSetManager>
