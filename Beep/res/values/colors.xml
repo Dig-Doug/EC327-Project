@@ -5,5 +5,13 @@
     
     <color name = "startScreenActivity_backgroundColor">#FF12233B</color>
     <color name = "startScreenActivity_textColor">#FFFFFFFF</color>
+    
+    <color name = "winActivity_backgroundColor">#FF12233B</color>
+    <color name = "winActivity_textColor">#FFFFFFFF</color>
+    <color name = "winActivity_successTextColor">#FF00FF00</color>
+    
+    <color name = "loseActivity_backgroundColor">#FF12233B</color>
+    <color name = "loseActivity_textColor">#FFFFFFFF</color>
+    <color name = "loseActivity_failedTextColor">#FFFF0000</color>
 
 </resources>

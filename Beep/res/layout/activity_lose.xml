@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/loseActivity_backgroundColor"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/loseActivity_titleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/loseActivity_title"
+        android:textColor="@color/loseActivity_textColor"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/loseActivity_subtitleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/loseActivity_failed"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/loseActivity_failedTextColor"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="199dp"
+        android:layout_height="208dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/char_beep" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" >
+
+        <ImageButton
+            android:id="@+id/loseActivity_mapButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/back_btn"/>
+
+        <ImageButton
+            android:id="@+id/loseActivity_restartLevelButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/button_start" />
+    </LinearLayout>
+
+</LinearLayout>

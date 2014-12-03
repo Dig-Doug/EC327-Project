@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.lose.LoseActivity;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
 import com.beep_boop.Beep.win.WinActivity;
@@ -127,6 +128,13 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			winIntent.putExtra(WinActivity.EXTRA_TIME, System.currentTimeMillis() - this.mStartTime - this.mPauseTimeTotal);
 			winIntent.putExtra(WinActivity.EXTRA_PATH, pathArray);
 			startActivity(winIntent);
+			finish();
+		}
+		else if (this.mWordPath.size() > this.mSelectedLevel.maxMoves)
+		{
+			Intent loseIntent = new Intent(this, LoseActivity.class);
+			loseIntent.putExtra(LoseActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
+			startActivity(loseIntent);
 			finish();
 		}
 	}

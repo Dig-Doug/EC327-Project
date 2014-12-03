@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 
 public class PlayView extends View
@@ -134,7 +135,7 @@ public class PlayView extends View
 	{
 		this.mTextPaint.setTextSize(60);
 		
-		Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Krungthep.ttf");
+		Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), MyApplication.FONT);
 		this.mTextPaint.setTypeface(customFont);
 
 		//does a circle pattern

@@ -1,99 +1,91 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/win_background"
-    tools:context="${relativePackage}.${activityClass}" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/winActivity_backgroundColor"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/winActivity_titleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/winActivity_winTitle"
+        android:textColor="@color/winActivity_textColor"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/winActivity_successLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/winActivity_success"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textColor="@color/winActivity_successTextColor"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="199dp"
+        android:layout_height="208dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/char_beep" />
+
+    <TextView
+        android:id="@+id/winActivity_moveLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/winActivity_moveLabel"
+        android:textColor="@color/winActivity_textColor"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/winActivity_timeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/winActivity_titleLabel"
-        android:layout_marginLeft="67dp"
-        android:layout_marginTop="29dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/winActivity_timeLabel"
         android:textColor="@color/launchActivity_loadingTextColor"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/winActivity_timePlaceholderLabel"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/winActivity_timeLabel"
-        android:layout_alignBottom="@+id/winActivity_timeLabel"
-        android:layout_marginLeft="49dp"
-        android:layout_toRightOf="@+id/winActivity_timeLabel"
-        android:text="@string/winActivity_timeSuffix"
-        android:textColor="@color/launchActivity_loadingTextColor"
-        android:textStyle="bold" />
+        android:layout_gravity="center_horizontal" >
 
-    <TextView
-        android:id="@+id/winActivity_moveLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/winActivity_timeLabel"
-        android:layout_below="@+id/winActivity_timeLabel"
-        android:layout_marginTop="37dp"
-        android:text="@string/winActivity_moveLabel"
-        android:textColor="@color/launchActivity_loadingTextColor"
-        android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/winActivity_mapButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/back_btn"
+            android:text="@string/winActivity_toMap" />
 
-    <TextView
-        android:id="@+id/winActivity_movePlaceholderLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/winActivity_moveLabel"
-        android:layout_alignBottom="@+id/winActivity_moveLabel"
-        android:layout_alignLeft="@+id/winActivity_timePlaceholderLabel"
-        android:text="@string/winActivity_moveSuffix"
-        android:textColor="@color/launchActivity_loadingTextColor"
-        android:textStyle="bold" />
-
-    <ImageButton
-        android:id="@+id/winActivity_nextLevelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/winActivity_movePlaceholderLabel"
-        android:layout_marginTop="64dp"
-        android:layout_toRightOf="@+id/winActivity_timePlaceholderLabel"
-        android:background="@null"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/beep_arrow1_image" />
-
-    <ImageButton
-        android:id="@+id/winActivity_mapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/winActivity_nextLevelButton"
-        android:layout_toLeftOf="@+id/winActivity_shareButton"
-        android:background="@null"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/beep_arrow1_flipped_image"
-        android:text="@string/winActivity_toMap" />
+        <ImageButton
+            android:id="@+id/winActivity_nextLevelButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/button_start" />
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/winActivity_shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="46dp"
-        android:layout_toRightOf="@+id/winActivity_timeLabel"
+        android:layout_gravity="center_horizontal"
         android:background="@null"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/back_btn"
         android:text="@string/winActivity_toMap" />
 
-</RelativeLayout>
+</LinearLayout>

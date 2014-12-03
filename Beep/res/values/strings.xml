@@ -50,12 +50,19 @@
     
     <!-- Win Activity -->
     <string name="title_activity_win">WinActivity</string>
-    <string name="winActivity_winTitle">You win!</string>
+    <string name="winActivity_winTitle">Mission:</string>
+    <string name="winActivity_success">SUCCESS!</string>
+    <string name="winActivity_failed">FAILED!</string>
     <string name="winActivity_timeLabel">Your Time: </string>
     <string name="winActivity_timeSuffix">secs</string>
     <string name="winActivity_moveLabel">Your Moves: </string>
     <string name="winActivity_moveSuffix">moves</string>
 	<string name="winActivity_toMap">To Map</string>
+	
+	<!-- Lose Activity -->
+	<string name="title_activity_lose">LoseActivity</string>
+	<string name="loseActivity_title">Mission:</string>
+    <string name="loseActivity_failed">FAILED!</string>
 	
 	<!-- Sharing -->
 	<string name="share_emailDefaultText1">I went from </string>

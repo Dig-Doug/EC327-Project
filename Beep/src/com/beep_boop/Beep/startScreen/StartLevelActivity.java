@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.PlayScreenActivity;
 import com.beep_boop.Beep.levels.Level;
@@ -48,30 +47,31 @@ public class StartLevelActivity extends Activity
 			finish();
 		}
 
-		Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/Krungthep.ttf");
+		Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
 
 		TextView title = (TextView) findViewById(R.id.startScreenActivity_titleTextView);
 		title.setTypeface(customFont);
 
 		TextView move = (TextView) findViewById(R.id.startScreenActivity_movesTextView);
 		move.setTypeface(customFont);
-		move.setText(getString(R.string.startLevelActivity_moves) + this.mSelectedLevel.maxMoves);
+		move.setText(getString(R.string.startLevelActivity_moves) + " " + this.mSelectedLevel.maxMoves);
 
 		TextView best = (TextView) findViewById(R.id.startScreenActivity_bestTextView);
 		best.setTypeface(customFont);
-		best.setText(getString(R.string.startLevelActivity_best) + (this.mSelectedLevel.numberOfSteps == Double.MAX_VALUE ? "X" : this.mSelectedLevel.numberOfSteps));
+		best.setText(getString(R.string.startLevelActivity_best) + " " + (this.mSelectedLevel.numberOfSteps == Integer.MAX_VALUE ? "X" : this.mSelectedLevel.numberOfSteps));
 
+		Bitmap fromBit = null, toBit = null;
 		try
 		{
-			Bitmap fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
-			Bitmap toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
-			this.mWordDisplay = (WordDisplay) findViewById(R.id.startScreenActivity_wordDisplay);
-			this.mWordDisplay.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
+			fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
+			toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
 		}
 		catch (Exception e)
 		{
-
+			Log.e(TAG, "Error getting level images");
 		}
+		this.mWordDisplay = (WordDisplay) findViewById(R.id.startScreenActivity_wordDisplay);
+		this.mWordDisplay.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
 
 		ImageButton playButton = (ImageButton) findViewById(R.id.startLevelActivity_startLevelButton);
 		playButton.setOnClickListener(new OnClickListener()

@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 
 public class WordDisplay extends View
@@ -22,7 +23,7 @@ public class WordDisplay extends View
 
 	///-----Members-----
 	/** Holds the tag used for logging */
-	private static final String TAG = "WordDisplay";
+	//private static final String TAG = "WordDisplay";
 
 	private Bitmap mFromImage, mToImage, mArrowImage, mBackgroundImage;
 	private String mFromWord, mToWord;
@@ -80,7 +81,7 @@ public class WordDisplay extends View
 
 		if (!this.isInEditMode())
 		{
-			Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/Krungthep.ttf");
+			Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), MyApplication.FONT);
 			this.mTextPaint.setTypeface(customFont);
 		}
 	}

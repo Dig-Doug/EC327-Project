@@ -2,6 +2,7 @@ package com.beep_boop.Beep.win;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
@@ -29,7 +31,7 @@ public class WinActivity extends Activity
 
 	private TextView mTimePlaceholderLabel;
 	private TextView mMovePlaceholderLabel;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -41,22 +43,23 @@ public class WinActivity extends Activity
 		boolean personalBestTime = false, personalBestMoves = false;
 		if (extras != null)
 		{
-			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY) && 
-					extras.containsKey(WinActivity.EXTRA_TIME) && 
-					extras.containsKey(WinActivity.EXTRA_PATH))
+			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY))
 			{
 				String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);
 				this.mCompletedLevel = LevelManager.getLevelForKey(levelKey);
-				
-				time = extras.getDouble(WinActivity.EXTRA_TIME);
-				this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
-				
-				if (time < this.mCompletedLevel.time)
-					personalBestTime = true;
-				if (this.mPath.length - 1 < this.mCompletedLevel.numberOfSteps)
-					personalBestMoves = true;
-				
-				LevelManager.setLevelComplete(levelKey, true, time, this.mPath.length - 1);
+
+				if (extras.containsKey(WinActivity.EXTRA_TIME) && extras.containsKey(WinActivity.EXTRA_PATH))
+				{
+					time = extras.getDouble(WinActivity.EXTRA_TIME);
+					this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
+
+					if (time < this.mCompletedLevel.time)
+						personalBestTime = true;
+					if (this.mPath.length - 1 < this.mCompletedLevel.numberOfSteps)
+						personalBestMoves = true;
+
+					LevelManager.setLevelComplete(levelKey, true, time, this.mPath.length - 1);
+				}
 			}
 			else
 			{
@@ -69,12 +72,27 @@ public class WinActivity extends Activity
 			finish();
 		}
 		
-		this.mTimePlaceholderLabel = (TextView) findViewById(R.id.winActivity_timePlaceholderLabel);
-		this.mMovePlaceholderLabel = (TextView) findViewById(R.id.winActivity_movePlaceholderLabel);
+		Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
 		
-		this.mTimePlaceholderLabel.setText((int)(time / 1000) + " " + getString(R.string.winActivity_timeSuffix));
-		this.mMovePlaceholderLabel.setText((this.mPath.length - 1) + " " + getString(R.string.winActivity_moveSuffix));
+		TextView title = (TextView) findViewById(R.id.winActivity_titleLabel);
+		title.setTypeface(customFont);
 		
+		TextView subTitle = (TextView) findViewById(R.id.winActivity_successLabel);
+		subTitle.setTypeface(customFont);
+
+		this.mTimePlaceholderLabel = (TextView) findViewById(R.id.winActivity_timeLabel);
+		this.mTimePlaceholderLabel.setText(getString(R.string.winActivity_timeLabel) + " " + (int)(time / 1000) + " " + getString(R.string.winActivity_timeSuffix));
+		this.mTimePlaceholderLabel.setTypeface(customFont);
+		
+		this.mMovePlaceholderLabel = (TextView) findViewById(R.id.winActivity_moveLabel);
+		this.mMovePlaceholderLabel.setText(getString(R.string.winActivity_moveLabel) + " " + (this.mPath.length - 1) + " " + getString(R.string.winActivity_moveSuffix));
+		this.mMovePlaceholderLabel.setTypeface(customFont);
+		
+		this.setupButtons();
+	}
+	
+	private void setupButtons()
+	{
 		ImageButton nextLevelButton = (ImageButton) findViewById(R.id.winActivity_nextLevelButton);
 		nextLevelButton.setOnClickListener(new OnClickListener()
 		{
@@ -103,7 +121,7 @@ public class WinActivity extends Activity
 				finish();
 			}
 		});
-		
+
 		ImageButton shareButton = (ImageButton) findViewById(R.id.winActivity_shareButton);
 		shareButton.setOnClickListener(new OnClickListener()
 		{
@@ -114,7 +132,7 @@ public class WinActivity extends Activity
 			}
 		});
 	}
-	
+
 	private void shareWithFriend()
 	{
 		Intent intent = new Intent(Intent.ACTION_VIEW);

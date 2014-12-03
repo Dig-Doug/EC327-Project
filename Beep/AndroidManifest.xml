@@ -47,6 +47,10 @@
             android:name=".win.WinActivity"
             android:label="@string/title_activity_win" >
         </activity>
+        <activity
+            android:name=".lose.LoseActivity"
+            android:label="@string/title_activity_lose" >
+        </activity>
     </application>
 
 </manifest>
