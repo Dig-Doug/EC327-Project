@@ -26,7 +26,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/loseActivity_imageView"
         android:layout_width="199dp"
         android:layout_height="208dp"
         android:layout_gravity="center_horizontal"

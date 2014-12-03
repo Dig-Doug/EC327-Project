@@ -26,10 +26,11 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/winActivity_imageView"
         android:layout_width="199dp"
         android:layout_height="208dp"
         android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/char_beep" />
 
     <TextView
