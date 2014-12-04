@@ -153,9 +153,9 @@ public class PlayView extends View
 		//does a circle pattern
 		ArrayList<PointF> startPoints = new ArrayList<PointF>();
 		ArrayList<Float> startThetas = new ArrayList<Float>();
-		float delta = (float)Math.PI / (this.mNumberOfWordsToDraw + 1);
-		float theta = -(float)Math.PI/2;
-		for (int i = 0; i < this.mNumberOfWordsToDraw + 1; i++,  theta += delta)
+		float delta = (float)(Math.PI * 0.85f) / (this.mNumberOfWordsToDraw + 1);
+		float theta = -((float)Math.PI/2 * 0.85f);
+		for (int i = 0; i < this.mNumberOfWordsToDraw + 2; i++,  theta += delta)
 		{
 			startPoints.add(new PointF(this.mRadius * (float)Math.cos(theta), this.mRadius * (float)Math.sin(theta) + 0.5f));
 			startThetas.add(theta);
