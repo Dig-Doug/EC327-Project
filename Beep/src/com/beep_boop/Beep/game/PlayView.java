@@ -58,53 +58,46 @@ public class PlayView extends View
 
 	private WordClickListener mListener;
 	private WordDataSource mDataSource;
-
-
-	private PointF[] mDrawPoints;
-	private float[] mDrawThetas;
-	private int mStartWordIndex = 0;
-	private int mNumberOfWordsToDraw = 10;
+	
 	private ArrayList<String> mWords = new ArrayList<String>();
-
-	private PointF[] mStartPoints;
-	private float[] mStartThetas;
-	private float mAnimationPercent;
-	private Paint mTextPaint = new Paint();
-
-	/** Holds the minimum distance the finger must move to be considered a scroll */
-	private static final float mMinScrollDelta = 5.0f;
-	/** Holds the last registered point of the touch in screen coords */
-	private PointF mLastTouchPoint = new PointF();
-	/** Holds whether or not we are scrolling */
-	private boolean mScrolling; 
-
-	private boolean mTouching = false;
-
-	private float mScrollScalar;
-	private float mScrollAcceleration;
-	private float mScrollVelocityMinimum;
-	private float mScrollVelocityScalar;
-	private float mScrollVelocity = 0.0f;
-	private TimeAnimator mScrollAnimator;
-	private double mLastTouchTime;
-	private float mLastDeltaX, mLastDeltaY;
-	private AnimationState mAnimationState = AnimationState.AnimatingOut;
-	private PointF mCurrentWordPosition, mCurrentWordDrawPosition;
-	private float mCurrentWordTheta, mCurrentWordDrawTheta;
-	private int mAnimationInLength, mAnimationOutLength;
 	private String mCurrentWord, mNextWord;
+
 	/** Hold the image to be drawn in the background */
 	private Bitmap mBackgroundImage;
 	private float mBackgroundScaleX, mBackgroundScaleY, mBackgroundRotation;
-	private float mScrollVelocityMax;
-
-	private float mRadius = 0.45f;
 	
-	private Paint mScrollBarPaint = new Paint();
-	private Paint mScrollBarBackgroundPaint = new Paint();
-	private float mScrollBarPointRadius = 0.03f;
-	private float mScrollBarPointOuterRadius = 0.05f;
-	private float mScrollBarWidth = 0.02f;
+	private Paint mTextPaint = new Paint();
+	private float mRadius = 0.45f;
+	private PointF[] mStartPoints, mDrawPoints;
+	private float[] mStartThetas, mDrawThetas;
+	private PointF mCurrentWordPosition, mCurrentWordDrawPosition;
+	private float mCurrentWordTheta, mCurrentWordDrawTheta;
+	private int mStartWordIndex = 0;
+	private int mNumberOfWordsToDraw = 10;
+	
+	private float mAnimationPercent;
+	private AnimationState mAnimationState = AnimationState.AnimatingOut;
+	private int mAnimationInLength, mAnimationOutLength;
+
+	/** Holds the last registered point of the touch in screen coords */
+	private PointF mLastTouchPoint = new PointF();
+	private boolean mTouching = false;
+	private double mLastTouchTime;
+	private float mLastDeltaX, mLastDeltaY;
+	
+	/** Holds whether or not we are scrolling */
+	private boolean mScrolling; 
+	/** Holds the minimum distance the finger must move to be considered a scroll */
+	private static final float mMinScrollDelta = 5.0f;
+	private float mScrollScalar, mScrollAcceleration, mScrollVelocityMinimum, mScrollVelocityScalar;
+	private float mScrollVelocity = 0.0f;
+	private TimeAnimator mScrollAnimator;
+	private float mScrollVelocityMax;
+	private float mSwipeVelocityMin;
+	
+	//--Scroll Bar--
+	private Paint mScrollBarPaint = new Paint(), mScrollBarBackgroundPaint = new Paint();
+	private float mScrollBarPointRadius = 0.03f, mScrollBarPointOuterRadius = 0.05f, mScrollBarWidth = 0.02f;
 	private RectF mScrollBarOuterOval, mScrollBarInnerOval, mScrollBarPointOuterOval, mScrollBarPointInnerOval;
 
 	///-----Constructors-----
@@ -128,6 +121,7 @@ public class PlayView extends View
 			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mScrollBarPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarColor, Color.WHITE));
 			this.mScrollBarBackgroundPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarBackgroundColor, Color.BLACK));
+			this.mSwipeVelocityMin = a.getFloat(R.styleable.PlayView_swipeVelocityMin, 0.10f);
 		}
 		catch (Exception e)
 		{
@@ -252,83 +246,7 @@ public class PlayView extends View
 			Log.w(PlayView.TAG, "Data source is null, can't get words for current word");
 		}
 	}
-
-	///-----Functions-----
-	//overridden view method
-	@Override
-	public void onDraw(Canvas canvas)
-	{
-		this.drawBackground(canvas);
-
-		this.calculateScrollBar();
-		this.drawScroll(canvas);
-
-		this.calculateDrawPointsAndThetas();
-
-		if (this.mCurrentWord != null)
-		{
-			String word = this.mCurrentWord;
-			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth() * this.mRadius - this.mCurrentWordDrawPosition.x);
-		}
-
-		for (int i = 0; i < mNumberOfWordsToDraw; i++)
-		{
-			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
-			{
-				String word = this.mWords.get(mStartWordIndex + i);
-				this.drawWord(canvas, word, this.mDrawPoints[i], this.mDrawThetas[i], this.getWidth() - this.mDrawPoints[i].x);
-			}
-			else if (mStartWordIndex + i >= this.mWords.size())
-			{
-				break;
-			}
-		}	
-	}
-
-	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta, float maxWidth)
-	{
-		float oldTextSize = this.mTextPaint.getTextSize();
-		while (this.mTextPaint.measureText(aWord) > maxWidth)
-		{
-			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() - 1);
-		}
-
-		//Rect rect = new Rect();
-		//this.mTextPaint.getTextBounds(aWord, 0, aWord.length(), rect);
-		//canvas.rotate(aTheta, aPosition.x + rect.exactCenterX(), aPosition.y + rect.exactCenterY()); //this line was the culprit
-		aCanvas.drawText(aWord, aPosition.x, aPosition.y, this.mTextPaint);
-
-		this.mTextPaint.setTextSize(oldTextSize);
-	}
-
-
-	//draws the background of the map
-	private void drawBackground(Canvas canvas)
-	{
-		if (this.mBackgroundImage != null)
-		{
-			Matrix matrix = new Matrix();
-			matrix.postTranslate(-this.mBackgroundImage.getWidth() / 2.0f, -this.mBackgroundImage.getHeight() / 2.0f);
-			matrix.postRotate(this.mBackgroundRotation);
-			matrix.postScale(this.mBackgroundScaleX, this.mBackgroundScaleY);
-			matrix.postTranslate(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
-			canvas.drawBitmap(this.mBackgroundImage, matrix, null);
-		}
-	}
-
-	private void drawScroll(Canvas canvas)
-	{
-		if (this.mScrollBarOuterOval != null)
-			canvas.drawOval(this.mScrollBarOuterOval, this.mScrollBarPaint);
-		if (this.mScrollBarInnerOval != null)
-			canvas.drawOval(this.mScrollBarInnerOval, this.mScrollBarBackgroundPaint);
-		if (this.mScrollBarPointOuterOval != null)
-			canvas.drawOval(this.mScrollBarPointOuterOval, this.mScrollBarBackgroundPaint);
-		if (this.mScrollBarPointInnerOval != null)
-			canvas.drawOval(this.mScrollBarPointInnerOval, this.mScrollBarPaint);
-	}
-
-
+	
 	private void setStarts(PointF aCurrentWordStart, float aCurrentWordTheta, ArrayList<PointF> aPoints, ArrayList<Float> aThetas)
 	{
 		//set the current word position
@@ -351,7 +269,270 @@ public class PlayView extends View
 			this.mStartThetas[i] = aThetas.get(i);
 		}
 	}
+	
+	///-----Animations-----
+	private void startAnimationIn()
+	{
+		this.mAnimationState = AnimationState.AnimatingIn;
 
+		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+		// It will take XXXms for the animator to go from 0 to 1
+		animator.setDuration(this.mAnimationInLength);
+		// Callback that executes on animation steps. 
+		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation)
+			{
+				mTextPaint.setAlpha((int)((1.0f - mAnimationPercent) * 255));
+				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
+				requestRedraw();
+			}
+		});
+		animator.addListener(new AnimatorListener()
+		{
+			@Override
+			public void onAnimationCancel(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationEnd(Animator arg0)
+			{
+				startAnimationOut();
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationStart(Animator arg0)
+			{ 
+				//do nothing 
+			}
+		});
+
+		animator.start();
+		requestRedraw();
+	}
+
+	private void startAnimationOut()
+	{
+		this.mAnimationState = AnimationState.AnimatingOut;
+		
+		mTextPaint.setAlpha(0);
+		mAnimationPercent = 0.0f;
+		setCurrentWord(mNextWord);
+		mNextWord = null;
+
+		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+		// It will take XXXms for the animator to go from 0 to 1
+		animator.setDuration(this.mAnimationOutLength);
+		// Callback that executes on animation steps. 
+		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation)
+			{
+				mTextPaint.setAlpha((int)(mAnimationPercent * 255));
+				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
+				requestRedraw();
+			}
+		});
+		animator.addListener(new AnimatorListener()
+		{
+			@Override
+			public void onAnimationCancel(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationEnd(Animator arg0)
+			{
+				mTextPaint.setAlpha(255);
+				mAnimationPercent = 0.0f;
+				mAnimationState = AnimationState.Displaying;
+				requestRedraw();
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator arg0)
+			{ 
+				//do nothing 
+			}
+
+			@Override
+			public void onAnimationStart(Animator arg0)
+			{ 
+				//do nothing 
+			}
+		});
+
+		animator.start();
+		requestRedraw();
+	}
+	
+	private void scroll(float aIncrement)
+	{
+		//only scroll if scrolling is allowed
+		if (this.mAnimationState == AnimationState.Displaying)
+		{
+			//increment the percent
+			this.mAnimationPercent += aIncrement;
+
+			//bound the percent
+			if (this.mAnimationPercent > 1.0f)
+			{
+				this.mAnimationPercent = 0;
+				this.mStartWordIndex--;
+				if (this.mStartWordIndex < -this.mWords.size())
+				{
+					this.mStartWordIndex = -this.mWords.size();
+				}
+			}
+			else if (this.mAnimationPercent < 0.0f)
+			{
+				this.mAnimationPercent = 1;
+				this.mStartWordIndex++;
+				if (this.mStartWordIndex >= this.mWords.size())
+				{
+					this.mStartWordIndex = this.mWords.size();
+				}
+			}
+
+			//calculate the draw points
+			this.requestRedraw();
+		}
+	}
+
+	///-----Drawing-----
+	//overridden view method
+	@Override
+	public void onDraw(Canvas canvas)
+	{
+		this.drawBackground(canvas);
+
+		this.calculateScrollBar();
+		this.drawScroll(canvas);
+
+		this.calculateDrawPointsAndThetas();
+
+		if (this.mCurrentWord != null)
+		{
+			String word = this.mCurrentWord;
+			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth() * (this.mRadius - this.mScrollBarPointOuterRadius) - this.mCurrentWordDrawPosition.x);
+		}
+
+		for (int i = 0; i < mNumberOfWordsToDraw; i++)
+		{
+			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
+			{
+				String word = this.mWords.get(mStartWordIndex + i);
+				this.drawWord(canvas, word, this.mDrawPoints[i], this.mDrawThetas[i], this.getWidth() - this.mDrawPoints[i].x);
+			}
+			else if (mStartWordIndex + i >= this.mWords.size())
+			{
+				break;
+			}
+		}	
+	}
+	
+
+	//draws the background of the map
+	private void drawBackground(Canvas canvas)
+	{
+		if (this.mBackgroundImage != null)
+		{
+			Matrix matrix = new Matrix();
+			matrix.postTranslate(-this.mBackgroundImage.getWidth() / 2.0f, -this.mBackgroundImage.getHeight() / 2.0f);
+			matrix.postRotate(this.mBackgroundRotation);
+			matrix.postScale(this.mBackgroundScaleX, this.mBackgroundScaleY);
+			matrix.postTranslate(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
+			canvas.drawBitmap(this.mBackgroundImage, matrix, null);
+		}
+	}
+	
+	private void drawScroll(Canvas canvas)
+	{
+		if (this.mScrollBarOuterOval != null)
+			canvas.drawOval(this.mScrollBarOuterOval, this.mScrollBarPaint);
+		if (this.mScrollBarInnerOval != null)
+			canvas.drawOval(this.mScrollBarInnerOval, this.mScrollBarBackgroundPaint);
+		if (this.mScrollBarPointOuterOval != null)
+			canvas.drawOval(this.mScrollBarPointOuterOval, this.mScrollBarBackgroundPaint);
+		if (this.mScrollBarPointInnerOval != null)
+			canvas.drawOval(this.mScrollBarPointInnerOval, this.mScrollBarPaint);
+	}
+
+	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta, float maxWidth)
+	{
+		float oldTextSize = this.mTextPaint.getTextSize();
+		while (this.mTextPaint.measureText(aWord) > maxWidth)
+		{
+			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() - 1);
+		}
+
+		//Rect rect = new Rect();
+		//this.mTextPaint.getTextBounds(aWord, 0, aWord.length(), rect);
+		//canvas.rotate(aTheta, aPosition.x + rect.exactCenterX(), aPosition.y + rect.exactCenterY()); //this line was the culprit
+		aCanvas.drawText(aWord, aPosition.x, aPosition.y, this.mTextPaint);
+
+		this.mTextPaint.setTextSize(oldTextSize);
+	}
+	
+	private void requestRedraw()
+	{
+		invalidate();
+		requestLayout();
+	}
+	
+	///-----Calculations-----
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh)
+	{
+		super.onSizeChanged(w, h, oldw, oldh);
+
+		this.calculateBackgroundScale();
+	}
+	
+	private void calculateScrollBar()
+	{
+		this.mScrollBarOuterOval = new RectF(-this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
+				(0.5f - (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight(), 
+				this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
+				(0.5f + (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight());
+		this.mScrollBarInnerOval = new RectF(-this.getWidth() * ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),
+				 (0.5f - (this.mRadius - mScrollBarPointOuterRadius) + this.mScrollBarWidth) * this.getHeight(), 
+				 this.getWidth() *  ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),  
+				 (0.5f + (this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth) * this.getHeight());
+
+		float percent = this.mStartWordIndex / ((float)this.mWords.size() - this.mNumberOfWordsToDraw);
+		float angle = (float)(-Math.PI/2 + Math.PI * percent);
+		//bound angle
+		if (angle < -Math.PI/2)
+		{
+			angle = (float)-Math.PI/2;
+		}
+		else if (angle > Math.PI/2)
+		{
+			angle = (float)Math.PI/2;
+		}
+		
+		float pointX = (float)(Math.cos(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2));
+		float pointY = (float)(Math.sin(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2)) + 0.5f;
+		this.mScrollBarPointOuterOval = new RectF((pointX - this.mScrollBarPointOuterRadius) * this.getWidth(), 
+				pointY * this.getHeight() - this.mScrollBarPointOuterRadius * this.getWidth(), 
+				(pointX + this.mScrollBarPointOuterRadius) * this.getWidth(), 
+				pointY * this.getHeight() + this.mScrollBarPointOuterRadius * this.getWidth());
+		this.mScrollBarPointInnerOval = new RectF((pointX - this.mScrollBarPointRadius) * this.getWidth(), 
+				pointY * this.getHeight() - this.mScrollBarPointRadius * this.getWidth(), 
+				(pointX + this.mScrollBarPointRadius) * this.getWidth(), 
+				pointY * this.getHeight() + this.mScrollBarPointRadius * this.getWidth());
+	}
+	
 	private void calculateDrawPointsAndThetas()
 	{
 		//calculate draw position for current word
@@ -399,131 +580,24 @@ public class PlayView extends View
 			this.mDrawThetas[i] = (fromTheta + deltaTheta) * 180 / (float)Math.PI;
 		}
 	}
-
-
-	private void startAnimationIn()
+	
+	private void calculateBackgroundScale()
 	{
-		this.mAnimationState = AnimationState.AnimatingIn;
-
-		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-		// It will take XXXms for the animator to go from 0 to 1
-		animator.setDuration(this.mAnimationInLength);
-		// Callback that executes on animation steps. 
-		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-			@Override
-			public void onAnimationUpdate(ValueAnimator animation)
-			{
-				mTextPaint.setAlpha((int)((1.0f - mAnimationPercent) * 255));
-				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
-				requestRedraw();
-			}
-		});
-		animator.addListener(new AnimatorListener()
-		{
-			@Override
-			public void onAnimationCancel(Animator arg0)
-			{ 
-				//do nothing 
-			}
-
-			@Override
-			public void onAnimationEnd(Animator arg0)
-			{
-				mTextPaint.setAlpha(0);
-				mAnimationPercent = 0.0f;
-				mAnimationState = AnimationState.Displaying;
-				requestRedraw();
-				setCurrentWord(mNextWord);
-				mNextWord = null;
-				startAnimationOut();
-			}
-
-			@Override
-			public void onAnimationRepeat(Animator arg0)
-			{ 
-				//do nothing 
-			}
-
-			@Override
-			public void onAnimationStart(Animator arg0)
-			{ 
-				//do nothing 
-			}
-		});
-
-		animator.start();
-	}
-
-	private void startAnimationOut()
-	{
-		this.mAnimationState = AnimationState.AnimatingOut;
-
-		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-		// It will take XXXms for the animator to go from 0 to 1
-		animator.setDuration(this.mAnimationOutLength);
-		// Callback that executes on animation steps. 
-		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-			@Override
-			public void onAnimationUpdate(ValueAnimator animation)
-			{
-				mTextPaint.setAlpha((int)(mAnimationPercent * 255));
-				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
-				requestRedraw();
-			}
-		});
-		animator.addListener(new AnimatorListener()
-		{
-			@Override
-			public void onAnimationCancel(Animator arg0)
-			{ 
-				//do nothing 
-			}
-
-			@Override
-			public void onAnimationEnd(Animator arg0)
-			{
-				mTextPaint.setAlpha(255);
-				mAnimationPercent = 0.0f;
-				mAnimationState = AnimationState.Displaying;
-				requestRedraw();
-			}
-
-			@Override
-			public void onAnimationRepeat(Animator arg0)
-			{ 
-				//do nothing 
-			}
-
-			@Override
-			public void onAnimationStart(Animator arg0)
-			{ 
-				//do nothing 
-			}
-		});
-
-		animator.start();
-	}
-
-	@Override
-	protected void onSizeChanged(int w, int h, int oldw, int oldh)
-	{
-		super.onSizeChanged(w, h, oldw, oldh);
-
 		if (this.mBackgroundImage != null)
 		{
-			if (w > h)
+			if (this.getWidth() > this.getHeight())
 			{
 				if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
 				{
 					this.mBackgroundRotation = 0f;
-					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
-					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+					this.mBackgroundScaleX = this.getWidth() / (float)this.mBackgroundImage.getWidth();
+					this.mBackgroundScaleY = this.getHeight() / (float)this.mBackgroundImage.getHeight();
 				}
 				else
 				{
 					this.mBackgroundRotation = -90f;
-					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
-					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
+					this.mBackgroundScaleX = this.getWidth() / (float)this.mBackgroundImage.getHeight();
+					this.mBackgroundScaleY = this.getHeight() / (float)this.mBackgroundImage.getWidth();
 				}
 			}
 			else
@@ -531,44 +605,20 @@ public class PlayView extends View
 				if (this.mBackgroundImage.getWidth() > this.mBackgroundImage.getHeight())
 				{
 					this.mBackgroundRotation = -90f;
-					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getHeight();
-					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getWidth();
+					this.mBackgroundScaleX = this.getWidth() / (float)this.mBackgroundImage.getHeight();
+					this.mBackgroundScaleY = this.getHeight() / (float)this.mBackgroundImage.getWidth();
 				}
 				else
 				{
 					this.mBackgroundRotation = 0f;
-					this.mBackgroundScaleX = w / (float)this.mBackgroundImage.getWidth();
-					this.mBackgroundScaleY = h / (float)this.mBackgroundImage.getHeight();
+					this.mBackgroundScaleX = this.getWidth() / (float)this.mBackgroundImage.getWidth();
+					this.mBackgroundScaleY = this.getHeight() / (float)this.mBackgroundImage.getHeight();
 				}
 			}
 		}
 	}
 	
-	private void calculateScrollBar()
-	{
-		this.mScrollBarOuterOval = new RectF(-this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
-				(0.5f - (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight(), 
-				this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
-				(0.5f + (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight());
-		this.mScrollBarInnerOval = new RectF(-this.getWidth() * ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),
-				 (0.5f - (this.mRadius - mScrollBarPointOuterRadius) + this.mScrollBarWidth) * this.getHeight(), 
-				 this.getWidth() *  ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),  
-				 (0.5f + (this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth) * this.getHeight());
-
-		float percent = this.mStartWordIndex / ((float)this.mWords.size() - this.mNumberOfWordsToDraw);
-		float angle = (float)(-Math.PI/2 + Math.PI * percent);
-		float pointX = (float)(Math.cos(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2));
-		float pointY = (float)(Math.sin(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2)) + 0.5f;
-		this.mScrollBarPointOuterOval = new RectF((pointX - this.mScrollBarPointOuterRadius) * this.getWidth(), 
-				pointY * this.getHeight() - this.mScrollBarPointOuterRadius * this.getWidth(), 
-				(pointX + this.mScrollBarPointOuterRadius) * this.getWidth(), 
-				pointY * this.getHeight() + this.mScrollBarPointOuterRadius * this.getWidth());
-		this.mScrollBarPointInnerOval = new RectF((pointX - this.mScrollBarPointRadius) * this.getWidth(), 
-				pointY * this.getHeight() - this.mScrollBarPointRadius * this.getWidth(), 
-				(pointX + this.mScrollBarPointRadius) * this.getWidth(), 
-				pointY * this.getHeight() + this.mScrollBarPointRadius * this.getWidth());
-	}
-
+	///-----Touch Handling-----
 	//gets touch events for view
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
@@ -641,45 +691,6 @@ public class PlayView extends View
 		this.mLastDeltaY = deltaY;
 	}
 
-	private void scroll(float aIncrement)
-	{
-		//only scroll if scrolling is allowed
-		if (this.mAnimationState == AnimationState.Displaying)
-		{
-			//increment the percent
-			this.mAnimationPercent += aIncrement;
-
-			//bound the percent
-			if (this.mAnimationPercent > 1.0f)
-			{
-				this.mAnimationPercent = 0;
-				this.mStartWordIndex--;
-				if (this.mStartWordIndex < -this.mWords.size())
-				{
-					this.mStartWordIndex = -this.mWords.size();
-				}
-			}
-			else if (this.mAnimationPercent < 0.0f)
-			{
-				this.mAnimationPercent = 1;
-				this.mStartWordIndex++;
-				if (this.mStartWordIndex >= this.mWords.size())
-				{
-					this.mStartWordIndex = this.mWords.size();
-				}
-			}
-
-			//calculate the draw points
-			this.requestRedraw();
-		}
-	}
-
-	private void requestRedraw()
-	{
-		invalidate();
-		requestLayout();
-	}
-
 	//handles all touch up events
 	private void touchUp(MotionEvent aEvent)
 	{
@@ -693,10 +704,21 @@ public class PlayView extends View
 				double deltaTime = currentTime - this.mLastTouchTime;
 				this.mLastTouchTime = currentTime;
 				//set the velocity
-				float velocity = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;;
-				if (Math.abs(velocity) > this.mScrollVelocityMinimum)
+				float velocityX = (float)(this.mLastDeltaX / deltaTime);
+				float velocityY = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;
+				if (velocityX > this.mSwipeVelocityMin && velocityX > velocityY)
 				{
-					this.mScrollVelocity = velocity;
+					boolean canGoBack = this.mListener.playViewUserCanGoBack(this, this.mCurrentWord);
+					if (canGoBack)
+					{
+						this.mListener.playViewUserDidGoBack(this);
+						this.mNextWord = this.mDataSource.playViewPreviousWord(this);
+						this.startAnimationOut();
+					}
+				}
+				else if (Math.abs(velocityY) > this.mScrollVelocityMinimum)
+				{
+					this.mScrollVelocity = velocityY;
 				}
 			}
 			else

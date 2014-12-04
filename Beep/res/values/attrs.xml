@@ -26,8 +26,9 @@
         <attr name="animationInLength" format="integer" />
         <attr name="animationOutLength" format="integer" />
         <attr name="textColor" />
-                <attr name="scrollBarColor" format="reference" />
+        <attr name="scrollBarColor" format="reference" />
         <attr name="scrollBarBackgroundColor" format="reference" />
+        <attr name="swipeVelocityMin" format="float" />
     </declare-styleable>
     <declare-styleable name="GoalBar">
     </declare-styleable>
