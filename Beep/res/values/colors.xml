@@ -16,5 +16,7 @@
     <color name = "loseActivity_backgroundColor">#FF12233B</color>
     <color name = "loseActivity_textColor">#FFFFFFFF</color>
     <color name = "loseActivity_failedTextColor">#FFCC6F71</color>
+    
+    <color name = "playScreenActivity_textColor">#FF12233B</color>
 
 </resources>

@@ -7,17 +7,26 @@
     <com.beep_boop.Beep.game.GoalBar
         android:id="@+id/playScreenActivity_goalBar"
         android:layout_width="fill_parent"
-        android:layout_height="50dp" />
+        android:layout_height="113dp" 
+        android:layout_gravity="center"
+        custom:arrowImage="@drawable/start_arrow"
+        custom:backgroundImage="@drawable/goal_bar_background"
+        />
 
     <com.beep_boop.Beep.game.PlayView
         android:id="@+id/playScreenActivity_playView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
         android:layout_gravity="center"
+        android:layout_height="fill_parent"
         custom:backgroundImage="@drawable/background_play"
         custom:textColor="@color/launchActivity_loadingTextColor"
         custom:wordsOnPage="10"
         custom:scrollBarBackgroundColor="@color/playScreenActivity_backgroundColor"
         custom:scrollBarColor="@color/playScreenActivity_scrollColor" />
+        custom:textColor="@color/playScreenActivity_textColor"
+        custom:wordsOnPage="9" 
+        custom:animationInLength="300"
+        custom:animationOutLength="500"/>
+    	
 
 </LinearLayout>

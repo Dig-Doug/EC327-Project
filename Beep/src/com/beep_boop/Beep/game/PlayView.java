@@ -162,6 +162,7 @@ public class PlayView extends View
 		}
 		this.setStarts(new PointF(0.05f, 0.5f), 0, startPoints, startThetas);
 
+
 		this.mScrollAnimator = new TimeAnimator();
 		this.mScrollAnimator.setTimeListener(new TimeAnimator.TimeListener()
 		{
@@ -188,11 +189,11 @@ public class PlayView extends View
 					{
 						if (mStartWordIndex < 0)
 						{
-							scroll(-mScrollVelocityMax/2 * deltaTime);
+							scroll(-mScrollVelocityMax * deltaTime);
 						}
 						else if (mStartWordIndex > mWords.size() - mNumberOfWordsToDraw)
 						{
-							scroll(mScrollVelocityMax/2 * deltaTime);
+							scroll(mScrollVelocityMax * deltaTime);
 						}
 					}
 				}

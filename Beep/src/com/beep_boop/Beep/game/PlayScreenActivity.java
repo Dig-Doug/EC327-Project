@@ -11,6 +11,8 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.lose.LoseActivity;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
+import com.beep_boop.Beep.startScreen.WordDisplay;
 import com.beep_boop.Beep.win.WinActivity;
 
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource, GoalBar.ClickListener
@@ -76,7 +79,21 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 		this.mStartTime = System.currentTimeMillis();
 	}
+	private void init_goalBar()
+	{
+		Bitmap fromBit = null, toBit = null;
+		try
+		{
+			fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
+			toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
+		}
+		catch (Exception e)
+		{
+			Log.e(TAG, "Error getting level images");
+		}
+		this.mGoalBar.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
 
+	}
 	private void play()
 	{
 		if (this.mPauseStartTime != -1)

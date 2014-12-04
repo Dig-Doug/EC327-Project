@@ -29,7 +29,8 @@
                 <attr name="scrollBarColor" format="reference" />
         <attr name="scrollBarBackgroundColor" format="reference" />
     </declare-styleable>
-    <declare-styleable name="GoalBar"></declare-styleable>
+    <declare-styleable name="GoalBar">
+    </declare-styleable>
     <declare-styleable name="WordDisplay">
         <attr name="arrowImage" format="reference" />
         <attr name="fromImagePercentX" format="float" />
