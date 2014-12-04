@@ -82,6 +82,7 @@ public class StartLevelActivity extends Activity
 				Intent playIntent = new Intent(THIS, PlayScreenActivity.class);
 				playIntent.putExtra(PlayScreenActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
 				startActivity(playIntent);
+				overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 				finish();
 			}
 		});

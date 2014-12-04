@@ -58,6 +58,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 				
 				Intent toSettings = new Intent(THIS, SettingsActivity.class);
 				startActivity(toSettings);
+				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 			}
 		});
 		
@@ -72,6 +73,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 				
 				Intent toAbout = new Intent(THIS, AboutActivity.class);
 				startActivity(toAbout);
+				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 			}
 		});
 	}

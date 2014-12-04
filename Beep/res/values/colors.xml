@@ -6,12 +6,15 @@
     <color name = "startScreenActivity_backgroundColor">#FF12233B</color>
     <color name = "startScreenActivity_textColor">#FFFFFFFF</color>
     
+    <color name = "playScreenActivity_backgroundColor">#FF12233B</color>
+    <color name = "playScreenActivity_scrollColor">#FFFFFFFF</color>
+    
     <color name = "winActivity_backgroundColor">#FF12233B</color>
     <color name = "winActivity_textColor">#FFFFFFFF</color>
-    <color name = "winActivity_successTextColor">#FF00FF00</color>
+    <color name = "winActivity_successTextColor">#FF6CC7BB</color>
     
     <color name = "loseActivity_backgroundColor">#FF12233B</color>
     <color name = "loseActivity_textColor">#FFFFFFFF</color>
-    <color name = "loseActivity_failedTextColor">#FFFF0000</color>
+    <color name = "loseActivity_failedTextColor">#FFCC6F71</color>
 
 </resources>

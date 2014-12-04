@@ -16,7 +16,7 @@ public class SettingsActivity extends Activity {
 	public void returnfromsettings(View view){
 		//this functions returns from the settings menu
 		finish();
-				
+		overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
 	}
 	
 }

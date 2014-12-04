@@ -22,7 +22,8 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.drawable"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.animator"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
 </qualifiedTypeNameHistroy>

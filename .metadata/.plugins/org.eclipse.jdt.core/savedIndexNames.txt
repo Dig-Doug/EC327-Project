@@ -1,18 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-INDEX VERSION 1.126+/Users/yes/Desktop/EC327-Project/.metadata/.plugins/org.eclipse.jdt.core
-2448135972.index
-3070904283.index
-438745643.index
-1208117420.index
-=======
-INDEX VERSION 1.126+/Users/Doug/Documents/College/Year 1 Semester 1/EC327 - Densmore - Intro to Sftw Eng/Project/EC327-Project/.metadata/.plugins/org.eclipse.jdt.core
-3639494721.index
-2990356587.index
->>>>>>> Stashed changes
-=======
 INDEX VERSION 1.126+/Users/Doug/Documents/College/Year 1 Semester 1/EC327 - Densmore - Intro to Sftw Eng/Project/EC327-Project/.metadata/.plugins/org.eclipse.jdt.core
 3414058029.index
 3639494721.index
 2990356587.index
->>>>>>> parent of 6306aa8... Commit

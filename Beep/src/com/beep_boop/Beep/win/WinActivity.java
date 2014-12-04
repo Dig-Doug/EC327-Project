@@ -93,6 +93,7 @@ public class WinActivity extends Activity
 	
 	private void setupButtons()
 	{
+		/*
 		ImageButton nextLevelButton = (ImageButton) findViewById(R.id.winActivity_nextLevelButton);
 		nextLevelButton.setOnClickListener(new OnClickListener()
 		{
@@ -111,6 +112,7 @@ public class WinActivity extends Activity
 			nextLevelButton.setAlpha(0.0f);
 			nextLevelButton.setEnabled(false);
 		}
+		*/
 		
 		ImageButton mapButton = (ImageButton) findViewById(R.id.winActivity_mapButton);
 		mapButton.setOnClickListener(new OnClickListener()

@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -97,6 +98,15 @@ public class PlayView extends View
 	private float mBackgroundScaleX, mBackgroundScaleY, mBackgroundRotation;
 	private float mScrollVelocityMax;
 
+	private float mRadius = 0.45f;
+	
+	private Paint mScrollBarPaint = new Paint();
+	private Paint mScrollBarBackgroundPaint = new Paint();
+	private float mScrollBarPointRadius = 0.03f;
+	private float mScrollBarPointOuterRadius = 0.05f;
+	private float mScrollBarWidth = 0.02f;
+	private RectF mScrollBarOuterOval, mScrollBarInnerOval, mScrollBarPointOuterOval, mScrollBarPointInnerOval;
+
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
 	{
@@ -116,6 +126,8 @@ public class PlayView extends View
 			if (backgroundImage != null)
 				this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
 			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
+			this.mScrollBarPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarColor, Color.WHITE));
+			this.mScrollBarBackgroundPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarBackgroundColor, Color.BLACK));
 		}
 		catch (Exception e)
 		{
@@ -134,7 +146,7 @@ public class PlayView extends View
 	private void init()
 	{
 		this.mTextPaint.setTextSize(60);
-		
+
 		Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), MyApplication.FONT);
 		this.mTextPaint.setTypeface(customFont);
 
@@ -143,13 +155,12 @@ public class PlayView extends View
 		ArrayList<Float> startThetas = new ArrayList<Float>();
 		float delta = (float)Math.PI / (this.mNumberOfWordsToDraw + 1);
 		float theta = -(float)Math.PI/2;
-		float radius = 0.5f;
 		for (int i = 0; i < this.mNumberOfWordsToDraw + 1; i++,  theta += delta)
 		{
-			startPoints.add(new PointF(radius * (float)Math.cos(theta), radius * (float)Math.sin(theta) + 0.5f));
+			startPoints.add(new PointF(this.mRadius * (float)Math.cos(theta), this.mRadius * (float)Math.sin(theta) + 0.5f));
 			startThetas.add(theta);
 		}
-		this.setStarts(new PointF(0.1f, 0.5f), 0, startPoints, startThetas);
+		this.setStarts(new PointF(0.05f, 0.5f), 0, startPoints, startThetas);
 
 		this.mScrollAnimator = new TimeAnimator();
 		this.mScrollAnimator.setTimeListener(new TimeAnimator.TimeListener()
@@ -248,12 +259,15 @@ public class PlayView extends View
 	{
 		this.drawBackground(canvas);
 
+		this.calculateScrollBar();
+		this.drawScroll(canvas);
+
 		this.calculateDrawPointsAndThetas();
 
 		if (this.mCurrentWord != null)
 		{
 			String word = this.mCurrentWord;
-			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth()/2.1f - this.mCurrentWordDrawPosition.x);
+			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth() * this.mRadius - this.mCurrentWordDrawPosition.x);
 		}
 
 		for (int i = 0; i < mNumberOfWordsToDraw; i++)
@@ -277,12 +291,12 @@ public class PlayView extends View
 		{
 			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() - 1);
 		}
-		
+
 		//Rect rect = new Rect();
 		//this.mTextPaint.getTextBounds(aWord, 0, aWord.length(), rect);
 		//canvas.rotate(aTheta, aPosition.x + rect.exactCenterX(), aPosition.y + rect.exactCenterY()); //this line was the culprit
 		aCanvas.drawText(aWord, aPosition.x, aPosition.y, this.mTextPaint);
-		
+
 		this.mTextPaint.setTextSize(oldTextSize);
 	}
 
@@ -299,6 +313,18 @@ public class PlayView extends View
 			matrix.postTranslate(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
 			canvas.drawBitmap(this.mBackgroundImage, matrix, null);
 		}
+	}
+
+	private void drawScroll(Canvas canvas)
+	{
+		if (this.mScrollBarOuterOval != null)
+			canvas.drawOval(this.mScrollBarOuterOval, this.mScrollBarPaint);
+		if (this.mScrollBarInnerOval != null)
+			canvas.drawOval(this.mScrollBarInnerOval, this.mScrollBarBackgroundPaint);
+		if (this.mScrollBarPointOuterOval != null)
+			canvas.drawOval(this.mScrollBarPointOuterOval, this.mScrollBarBackgroundPaint);
+		if (this.mScrollBarPointInnerOval != null)
+			canvas.drawOval(this.mScrollBarPointInnerOval, this.mScrollBarPaint);
 	}
 
 
@@ -515,6 +541,31 @@ public class PlayView extends View
 				}
 			}
 		}
+	}
+	
+	private void calculateScrollBar()
+	{
+		this.mScrollBarOuterOval = new RectF(-this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
+				(0.5f - (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight(), 
+				this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
+				(0.5f + (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight());
+		this.mScrollBarInnerOval = new RectF(-this.getWidth() * ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),
+				 (0.5f - (this.mRadius - mScrollBarPointOuterRadius) + this.mScrollBarWidth) * this.getHeight(), 
+				 this.getWidth() *  ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),  
+				 (0.5f + (this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth) * this.getHeight());
+
+		float percent = this.mStartWordIndex / ((float)this.mWords.size() - this.mNumberOfWordsToDraw);
+		float angle = (float)(-Math.PI/2 + Math.PI * percent);
+		float pointX = (float)(Math.cos(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2));
+		float pointY = (float)(Math.sin(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2)) + 0.5f;
+		this.mScrollBarPointOuterOval = new RectF((pointX - this.mScrollBarPointOuterRadius) * this.getWidth(), 
+				pointY * this.getHeight() - this.mScrollBarPointOuterRadius * this.getWidth(), 
+				(pointX + this.mScrollBarPointOuterRadius) * this.getWidth(), 
+				pointY * this.getHeight() + this.mScrollBarPointOuterRadius * this.getWidth());
+		this.mScrollBarPointInnerOval = new RectF((pointX - this.mScrollBarPointRadius) * this.getWidth(), 
+				pointY * this.getHeight() - this.mScrollBarPointRadius * this.getWidth(), 
+				(pointX + this.mScrollBarPointRadius) * this.getWidth(), 
+				pointY * this.getHeight() + this.mScrollBarPointRadius * this.getWidth());
 	}
 
 	//gets touch events for view

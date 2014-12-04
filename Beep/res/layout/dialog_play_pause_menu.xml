@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/playScreenActivity_pauseMenu_titleTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/playScreenActivity_pauseMenuTitle"
@@ -23,7 +23,9 @@
             android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/icon_play" />
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:src="@drawable/pause_screen_play_button" />
 
         <ImageButton
             android:id="@+id/playScreenActivity_pauseMenu_resetButton"
@@ -31,8 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/pause_screen_reset_button" />
 
         <ImageButton
             android:id="@+id/playScreenActivity_pauseMenu_settingsButton"
@@ -40,8 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/icon_settings" />
+            android:src="@drawable/pause_screen_menu_button" />
 
         <ImageButton
             android:id="@+id/playScreenActivity_pauseMenu_mapButton"
@@ -49,8 +55,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/icon_map" />
+            android:src="@drawable/pause_screen_home_button" />
     </TableRow>
 
 </TableLayout>
