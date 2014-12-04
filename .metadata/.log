@@ -1817,3 +1817,32 @@ Binding(COMMAND+SHIFT+\,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+
+!ENTRY org.eclipse.ui 2 2 2014-12-04 11:42:17.032
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+!SESSION 2014-12-04 14:03:39.193 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.8.0_11
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-12-04 14:03:43.524
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.tm.tcf 4 0 2014-12-04 15:41:40.886
+!MESSAGE Cannot send datagram packet to /155.41.63.255
+!STACK 0
+java.io.IOException: Network is down
+	at java.net.PlainDatagramSocketImpl.send(Native Method)
+	at java.net.DatagramSocket.send(DatagramSocket.java:671)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.sendDatagramPacket(LocatorService.java:764)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.sendEmptyPacket(LocatorService.java:856)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.sendAll(LocatorService.java:866)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.refresh_timer(LocatorService.java:522)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService.access$0(LocatorService.java:474)
+	at org.eclipse.tm.internal.tcf.services.local.LocatorService$1$1.run(LocatorService.java:184)
+	at org.eclipse.tm.tcf.protocol.Protocol$3.run(Protocol.java:209)
+	at org.eclipse.tm.tcf.EventQueue.run(EventQueue.java:99)
+	at java.lang.Thread.run(Thread.java:745)

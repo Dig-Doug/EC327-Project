@@ -25,6 +25,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
@@ -58,14 +60,14 @@ public class PlayView extends View
 
 	private WordClickListener mListener;
 	private WordDataSource mDataSource;
-	
+
 	private ArrayList<String> mWords = new ArrayList<String>();
 	private String mCurrentWord, mNextWord;
 
 	/** Hold the image to be drawn in the background */
 	private Bitmap mBackgroundImage;
 	private float mBackgroundScaleX, mBackgroundScaleY, mBackgroundRotation;
-	
+
 	private Paint mTextPaint = new Paint();
 	private float mRadius = 0.45f;
 	private PointF[] mStartPoints, mDrawPoints;
@@ -74,7 +76,7 @@ public class PlayView extends View
 	private float mCurrentWordTheta, mCurrentWordDrawTheta;
 	private int mStartWordIndex = 0;
 	private int mNumberOfWordsToDraw = 10;
-	
+
 	private float mAnimationPercent;
 	private AnimationState mAnimationState = AnimationState.AnimatingOut;
 	private int mAnimationInLength, mAnimationOutLength;
@@ -84,17 +86,17 @@ public class PlayView extends View
 	private boolean mTouching = false;
 	private double mLastTouchTime;
 	private float mLastDeltaX, mLastDeltaY;
-	
+
 	/** Holds whether or not we are scrolling */
 	private boolean mScrolling; 
 	/** Holds the minimum distance the finger must move to be considered a scroll */
 	private static final float mMinScrollDelta = 5.0f;
-	private float mScrollScalar, mScrollAcceleration, mScrollVelocityMinimum, mScrollVelocityScalar;
+	private float mScrollScalar, mScrollCurrentScalar, mScrollAcceleration, mScrollVelocityMinimum, mScrollVelocityScalar;
 	private float mScrollVelocity = 0.0f;
 	private TimeAnimator mScrollAnimator;
 	private float mScrollVelocityMax;
 	private float mSwipeVelocityMin;
-	
+
 	//--Scroll Bar--
 	private Paint mScrollBarPaint = new Paint(), mScrollBarBackgroundPaint = new Paint();
 	private float mScrollBarPointRadius = 0.03f, mScrollBarPointOuterRadius = 0.05f, mScrollBarWidth = 0.02f;
@@ -113,8 +115,8 @@ public class PlayView extends View
 			mScrollVelocityMinimum = a.getFloat(R.styleable.PlayView_scrollVelocityMin, 0.015f);
 			mScrollVelocityMax = a.getFloat(R.styleable.PlayView_scrollVelocityMax, 0.15f);
 			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 1f);
-			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 1000);
-			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 1000);
+			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 250);
+			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 500);
 			Drawable backgroundImage = a.getDrawable(R.styleable.PlayView_backgroundImage);
 			if (backgroundImage != null)
 				this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
@@ -161,8 +163,8 @@ public class PlayView extends View
 		this.mScrollAnimator.setTimeListener(new TimeAnimator.TimeListener()
 		{
 			@Override
-			public void onTimeUpdate(TimeAnimator animation, long totalTime, long deltaTime) {
-
+			public void onTimeUpdate(TimeAnimator animation, long totalTime, long deltaTime)
+			{
 				//check if we're in a state where velocity is allowed
 				if (mAnimationState == AnimationState.Displaying)
 				{
@@ -179,16 +181,39 @@ public class PlayView extends View
 						//if so, stop velocity
 						mScrollVelocity = 0.0f;
 					}
-					if (mScrollVelocity == 0.0f && !mTouching)
+					if (mStartWordIndex < 0)
 					{
-						if (mStartWordIndex < 0)
+						if (mScrollVelocity == 0.0f && !mTouching)
 						{
 							scroll(-mScrollVelocityMax * deltaTime);
 						}
-						else if (mStartWordIndex > mWords.size() - mNumberOfWordsToDraw)
+						else if (mTouching)
+						{
+							mScrollCurrentScalar = mScrollScalar / Math.abs(mStartWordIndex);
+						}
+						else
+						{
+							mScrollVelocity *= mScrollAcceleration * mScrollAcceleration * mScrollAcceleration;
+						}
+					}
+					else if (mStartWordIndex > mWords.size() - mNumberOfWordsToDraw)
+					{
+						if (mScrollVelocity == 0.0f && !mTouching)
 						{
 							scroll(mScrollVelocityMax * deltaTime);
 						}
+						else if (mTouching)
+						{
+							mScrollCurrentScalar = mScrollScalar / Math.abs(mStartWordIndex - mWords.size() + mNumberOfWordsToDraw);
+						}
+						else
+						{
+							mScrollVelocity *= mScrollAcceleration * mScrollAcceleration * mScrollAcceleration;
+						}
+					}
+					else
+					{
+						mScrollCurrentScalar = mScrollScalar;
 					}
 				}
 				else
@@ -246,7 +271,7 @@ public class PlayView extends View
 			Log.w(PlayView.TAG, "Data source is null, can't get words for current word");
 		}
 	}
-	
+
 	private void setStarts(PointF aCurrentWordStart, float aCurrentWordTheta, ArrayList<PointF> aPoints, ArrayList<Float> aThetas)
 	{
 		//set the current word position
@@ -269,13 +294,14 @@ public class PlayView extends View
 			this.mStartThetas[i] = aThetas.get(i);
 		}
 	}
-	
+
 	///-----Animations-----
 	private void startAnimationIn()
 	{
 		this.mAnimationState = AnimationState.AnimatingIn;
 
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+		animator.setInterpolator(new DecelerateInterpolator());
 		// It will take XXXms for the animator to go from 0 to 1
 		animator.setDuration(this.mAnimationInLength);
 		// Callback that executes on animation steps. 
@@ -322,13 +348,14 @@ public class PlayView extends View
 	private void startAnimationOut()
 	{
 		this.mAnimationState = AnimationState.AnimatingOut;
-		
+
 		mTextPaint.setAlpha(0);
 		mAnimationPercent = 0.0f;
 		setCurrentWord(mNextWord);
 		mNextWord = null;
 
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+		animator.setInterpolator(new DecelerateInterpolator());
 		// It will take XXXms for the animator to go from 0 to 1
 		animator.setDuration(this.mAnimationOutLength);
 		// Callback that executes on animation steps. 
@@ -374,7 +401,7 @@ public class PlayView extends View
 		animator.start();
 		requestRedraw();
 	}
-	
+
 	private void scroll(float aIncrement)
 	{
 		//only scroll if scrolling is allowed
@@ -422,24 +449,50 @@ public class PlayView extends View
 
 		if (this.mCurrentWord != null)
 		{
+			if (this.mAnimationState == AnimationState.Displaying)
+			{
+				this.mTextPaint.setAlpha(255);
+			}
+
 			String word = this.mCurrentWord;
-			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth() * (this.mRadius - this.mScrollBarPointOuterRadius) - this.mCurrentWordDrawPosition.x);
+			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth() * (this.mRadius - this.mScrollBarPointOuterRadius) - this.mCurrentWordDrawPosition.x, 1.0f);
 		}
 
 		for (int i = 0; i < mNumberOfWordsToDraw; i++)
 		{
+			float scale = 1.0f;
+			if (this.mAnimationState == AnimationState.Displaying)
+			{
+				if (i == 0)
+				{
+					scale = this.mAnimationPercent;
+					int alpha = (int)(255 * (this.mAnimationPercent));
+					this.mTextPaint.setAlpha(alpha);
+				}
+				else if (i == mNumberOfWordsToDraw - 1)
+				{
+					scale = 1.0f - this.mAnimationPercent;
+					int alpha = (int)(255 * (1.0 - this.mAnimationPercent));
+					this.mTextPaint.setAlpha(alpha);
+				}
+				else
+				{
+					this.mTextPaint.setAlpha(255);
+				}
+			}
+
 			if (mStartWordIndex + i < this.mWords.size() && mStartWordIndex + i >= 0)
 			{
 				String word = this.mWords.get(mStartWordIndex + i);
-				this.drawWord(canvas, word, this.mDrawPoints[i], this.mDrawThetas[i], this.getWidth() - this.mDrawPoints[i].x);
+				this.drawWord(canvas, word, this.mDrawPoints[i], this.mDrawThetas[i], this.getWidth() * (1.0f - this.mRadius), scale);
 			}
 			else if (mStartWordIndex + i >= this.mWords.size())
 			{
 				break;
 			}
-		}	
+		}
 	}
-	
+
 
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
@@ -454,7 +507,7 @@ public class PlayView extends View
 			canvas.drawBitmap(this.mBackgroundImage, matrix, null);
 		}
 	}
-	
+
 	private void drawScroll(Canvas canvas)
 	{
 		if (this.mScrollBarOuterOval != null)
@@ -467,13 +520,15 @@ public class PlayView extends View
 			canvas.drawOval(this.mScrollBarPointInnerOval, this.mScrollBarPaint);
 	}
 
-	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta, float maxWidth)
+	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta, float maxWidth, float aScale)
 	{
 		float oldTextSize = this.mTextPaint.getTextSize();
 		while (this.mTextPaint.measureText(aWord) > maxWidth)
 		{
 			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() - 1);
 		}
+		if (aScale != 1.0f)
+			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() * aScale);
 
 		//Rect rect = new Rect();
 		//this.mTextPaint.getTextBounds(aWord, 0, aWord.length(), rect);
@@ -482,13 +537,13 @@ public class PlayView extends View
 
 		this.mTextPaint.setTextSize(oldTextSize);
 	}
-	
+
 	private void requestRedraw()
 	{
 		invalidate();
 		requestLayout();
 	}
-	
+
 	///-----Calculations-----
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh)
@@ -497,7 +552,7 @@ public class PlayView extends View
 
 		this.calculateBackgroundScale();
 	}
-	
+
 	private void calculateScrollBar()
 	{
 		this.mScrollBarOuterOval = new RectF(-this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
@@ -505,11 +560,16 @@ public class PlayView extends View
 				this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
 				(0.5f + (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight());
 		this.mScrollBarInnerOval = new RectF(-this.getWidth() * ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),
-				 (0.5f - (this.mRadius - mScrollBarPointOuterRadius) + this.mScrollBarWidth) * this.getHeight(), 
-				 this.getWidth() *  ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),  
-				 (0.5f + (this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth) * this.getHeight());
+				(0.5f - (this.mRadius - mScrollBarPointOuterRadius) + this.mScrollBarWidth) * this.getHeight(), 
+				this.getWidth() *  ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),  
+				(0.5f + (this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth) * this.getHeight());
 
-		float percent = this.mStartWordIndex / ((float)this.mWords.size() - this.mNumberOfWordsToDraw);
+		float percent = 0.0f;
+		if (this.mAnimationState == AnimationState.Displaying)
+		{	
+			int denom = (this.mWords.size() > this.mNumberOfWordsToDraw ?  this.mWords.size() - this.mNumberOfWordsToDraw : this.mWords.size());
+			percent = (this.mStartWordIndex - this.mAnimationPercent) / ((float)denom);
+		}
 		float angle = (float)(-Math.PI/2 + Math.PI * percent);
 		//bound angle
 		if (angle < -Math.PI/2)
@@ -520,7 +580,7 @@ public class PlayView extends View
 		{
 			angle = (float)Math.PI/2;
 		}
-		
+
 		float pointX = (float)(Math.cos(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2));
 		float pointY = (float)(Math.sin(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2)) + 0.5f;
 		this.mScrollBarPointOuterOval = new RectF((pointX - this.mScrollBarPointOuterRadius) * this.getWidth(), 
@@ -532,7 +592,7 @@ public class PlayView extends View
 				(pointX + this.mScrollBarPointRadius) * this.getWidth(), 
 				pointY * this.getHeight() + this.mScrollBarPointRadius * this.getWidth());
 	}
-	
+
 	private void calculateDrawPointsAndThetas()
 	{
 		//calculate draw position for current word
@@ -580,7 +640,7 @@ public class PlayView extends View
 			this.mDrawThetas[i] = (fromTheta + deltaTheta) * 180 / (float)Math.PI;
 		}
 	}
-	
+
 	private void calculateBackgroundScale()
 	{
 		if (this.mBackgroundImage != null)
@@ -617,7 +677,7 @@ public class PlayView extends View
 			}
 		}
 	}
-	
+
 	///-----Touch Handling-----
 	//gets touch events for view
 	@Override
@@ -675,7 +735,7 @@ public class PlayView extends View
 			this.mLastTouchPoint.y += deltaY;
 
 			//increment the origin by the delta
-			this.scroll(deltaY * this.mScrollScalar);
+			this.scroll(deltaY * this.mScrollCurrentScalar);
 		}
 		else
 		{

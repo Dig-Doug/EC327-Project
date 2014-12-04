@@ -70,7 +70,7 @@ public class LoseActivity extends Activity
 			public void onClick(View v)
 			{
 				Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
-				startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mLevel.nextLevelKey);
+				startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mLevel.levelKey);
 				startActivity(startLevelIntent);
 				finish();
 			}
