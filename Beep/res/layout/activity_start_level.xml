@@ -44,7 +44,7 @@
         android:layout_weight="0.00"
         android:padding="10dp"
         custom:arrowImage="@drawable/start_arrow"
-        custom:backgroundImage="@drawable/start_background" />
+        custom:backgroundImage="@drawable/background_start_screen_menu" />
 
     <ImageButton
         android:id="@+id/startLevelActivity_startLevelButton"

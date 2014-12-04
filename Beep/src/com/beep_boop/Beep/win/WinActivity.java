@@ -73,12 +73,6 @@ public class WinActivity extends Activity
 		}
 		
 		Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
-		
-		TextView title = (TextView) findViewById(R.id.winActivity_titleLabel);
-		title.setTypeface(customFont);
-		
-		TextView subTitle = (TextView) findViewById(R.id.winActivity_successLabel);
-		subTitle.setTypeface(customFont);
 
 		this.mTimePlaceholderLabel = (TextView) findViewById(R.id.winActivity_timeLabel);
 		this.mTimePlaceholderLabel.setText(getString(R.string.winActivity_timeLabel) + " " + (int)(time / 1000) + " " + getString(R.string.winActivity_timeSuffix));
