@@ -25,7 +25,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.beep_boop.Beep.MyApplication;
@@ -768,13 +767,7 @@ public class PlayView extends View
 				float velocityY = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;
 				if (velocityX > this.mSwipeVelocityMin && velocityX > velocityY)
 				{
-					boolean canGoBack = this.mListener.playViewUserCanGoBack(this, this.mCurrentWord);
-					if (canGoBack)
-					{
-						this.mListener.playViewUserDidGoBack(this);
-						this.mNextWord = this.mDataSource.playViewPreviousWord(this);
-						this.startAnimationOut();
-					}
+					this.goBack();
 				}
 				else if (Math.abs(velocityY) > this.mScrollVelocityMinimum)
 				{
@@ -812,6 +805,19 @@ public class PlayView extends View
 
 		//touch ended, reset all variables
 		this.resetTouchVariables();
+	}
+	
+	public boolean goBack()
+	{
+		boolean canGoBack = this.mListener.playViewUserCanGoBack(this, this.mCurrentWord);
+		if (canGoBack)
+		{
+			this.mListener.playViewUserDidGoBack(this);
+			this.mNextWord = this.mDataSource.playViewPreviousWord(this);
+			this.startAnimationOut();
+		}
+		
+		return canGoBack;
 	}
 
 	//resets all touch variables

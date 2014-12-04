@@ -168,6 +168,15 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	{
 		this.mWordPath.remove(this.mWordPath.size() - 1);
 	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if (!this.mPlayView.goBack())
+		{
+			super.onBackPressed();
+		}
+	}
 
 	///-----Goal Bar Click Listener-----
 	@Override
