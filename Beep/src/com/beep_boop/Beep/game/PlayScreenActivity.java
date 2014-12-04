@@ -4,29 +4,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.lose.LoseActivity;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
-import com.beep_boop.Beep.startScreen.WordDisplay;
 import com.beep_boop.Beep.win.WinActivity;
 
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource, GoalBar.ClickListener
@@ -39,6 +36,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	/** Holds a reference to the play view */
 	private PlayView mPlayView;
 	private GoalBar mGoalBar;
+	private PlayScreenActivity THIS = this;
 
 	private ArrayList<String> mWordPath = new ArrayList<String>();
 	private Level mSelectedLevel;
@@ -75,12 +73,14 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		this.mWordPath.add(this.mSelectedLevel.fromWord);
 
 		this.mGoalBar = (GoalBar) findViewById(R.id.playScreenActivity_goalBar);
-		this.mGoalBar.setListener(this);
+		this.initGoalBar();
 
 		this.mStartTime = System.currentTimeMillis();
 	}
-	private void init_goalBar()
+	
+	private void initGoalBar()
 	{
+		this.mGoalBar.setListener(this);
 		Bitmap fromBit = null, toBit = null;
 		try
 		{
@@ -107,7 +107,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	private void pause()
 	{
 		this.mPauseStartTime = System.currentTimeMillis();
-		new PauseMenuDialogFragment().show(getFragmentManager(), PAUSE_MENU_TAG);
+		PauseMenuDialogFragment dialog = new PauseMenuDialogFragment(this);//.show(getFragmentManager(), PAUSE_MENU_TAG);
+		dialog.show();
 	}
 
 	///-----PlayView.WordDataSource methods-----
@@ -177,23 +178,24 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 
 	///-----Pause Menu Fragment Dialog-----
-	public class PauseMenuDialogFragment extends DialogFragment
+	public class PauseMenuDialogFragment extends Dialog
 	{
 		private PauseMenuDialogFragment PAUSE_THIS = this;
 
-		@SuppressLint("InflateParams") @Override
-		public Dialog onCreateDialog(Bundle savedInstanceState)
-		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			// Get the layout inflater
-			LayoutInflater inflater = getActivity().getLayoutInflater();
+		public PauseMenuDialogFragment (final Context context)
+	    {
+	        super(context, R.style.TransparentDialog);
 
-			// Inflate and set the layout for the dialog
-			View rootView = inflater.inflate(R.layout.dialog_play_pause_menu, null);
-			builder.setView(rootView);
-
-			ImageButton playButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_playButton);
-			playButton.setOnClickListener(new OnClickListener()
+	        // This is the layout XML file that describes your Dialog layout
+	        this.setContentView(R.layout.dialog_play_pause_menu);  
+	        getWindow().setBackgroundDrawableResource(R.color.transparent);
+	        
+	        Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
+	        TextView title = (TextView) findViewById(R.id.playScreenActivity_pauseMenu_titleTextView);
+	        title.setTypeface(customFont);
+	        
+	        ImageButton playButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_playButton);
+			playButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
@@ -203,13 +205,13 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				}
 			});
 
-			ImageButton resetButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_resetButton);
-			resetButton.setOnClickListener(new OnClickListener()
+			ImageButton resetButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_resetButton);
+			resetButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					Intent startLevelIntent = new Intent(PAUSE_THIS.getActivity(), StartLevelActivity.class);
+					Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
 					startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
 					startActivity(startLevelIntent);
 					PAUSE_THIS.dismiss();
@@ -219,36 +221,34 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				}
 			});
 
-			ImageButton settingsButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_settingsButton);
-			settingsButton.setOnClickListener(new OnClickListener()
+			ImageButton settingsButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_settingsButton);
+			settingsButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					Intent settingsIntent = new Intent(PAUSE_THIS.getActivity(), SettingsActivity.class);
+					Intent settingsIntent = new Intent(THIS, SettingsActivity.class);
 					startActivity(settingsIntent);
 					overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 				}
 			});
 
-			ImageButton mapButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_mapButton);
-			mapButton.setOnClickListener(new OnClickListener()
+			ImageButton mapButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_mapButton);
+			mapButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					PAUSE_THIS.getActivity().finish();
+					THIS.finish();
 				}
 			});
-
-			return builder.create();
-		}
+	    }
+		
 		
 		@Override
-		public void onDismiss(DialogInterface dialog)
+		public void onBackPressed()
 		{
-			super.onDismiss(dialog);
-			
+			super.onBackPressed();
 			play();
 		}
 	}
