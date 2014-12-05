@@ -22,7 +22,6 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.drawable"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.animator"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
 <fullyQualifiedTypeName name="android.animation.TimeInterpolator"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.style"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
@@ -33,4 +32,5 @@
 <fullyQualifiedTypeName name="android.widget.RadioGroup.OnCheckedChangeListener"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication.FontChangeListener"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
 </qualifiedTypeNameHistroy>

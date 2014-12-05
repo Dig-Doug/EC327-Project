@@ -9,7 +9,7 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         custom:animationLength="1000"
-        custom:backgroundImage="@drawable/background_map"
+        custom:backgroundImage="@array/map_backgroundImages"
         custom:mapWidthOnScreen="1.0"
         custom:nodeOffImage="@drawable/node_star_off"
         custom:nodeOnImage="@drawable/node_star_on"

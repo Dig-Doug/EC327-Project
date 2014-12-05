@@ -87,8 +87,6 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			Drawable backImage = a.getDrawable(R.styleable.GoalBar_backgroundImage);
 			if (backImage != null)
 				this.mBackgroundImage = ((BitmapDrawable) backImage).getBitmap();
-			this.mClickNumber = a.getFloat(R.styleable.GoalBar_clickNumber, )
-			
 		}
 		catch (Exception e)
 		{
@@ -140,7 +138,6 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			canvas.drawText(this.mFromWord, this.mFromWordDraw.x, this.mFromWordDraw.y, this.mTextPaint);
 		if (this.mToWord != null)
 			canvas.drawText(this.mToWord, this.mToWordDraw.x, this.mToWordDraw.y, this.mTextPaint);
-		canvas.drawText(this.mNumberOfClicks, , y, paint)
 	}
 	public void set(Bitmap aFromImage, Bitmap aToImage, String aFromWord, String aToWord)
 	{
@@ -319,23 +316,4 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		this.mNumberOfClicks = aNumberOfClicks;
 		requestRedraw();
 	}
-
-    public static String convertNumtoWord(int number) {
-        String soFar;
-
-        if (number % 100 < 20){
-          soFar = numNames[number % 100];
-          number /= 100;
-        }
-        else {
-          soFar = numNames[number % 10];
-          number /= 10;
-
-          soFar = tensNames[number % 10] + soFar;
-          number /= 10;
-        }
-        if (number == 0) return soFar;
-        return numNames[number] + " hundred" + soFar;
-      }
-
 }
