@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+        <string-array name="fonts">
+        <item>fonts/Krungthep.ttf</item>
+        <item>fonts/Times New Roman.ttf</item>
+        <item>fonts/Nasa.ttf</item>
+    </string-array>
+    
+    <string-array name="fontNames">
+        <item>Krungthep</item>
+        <item>Times New Roman</item>
+        <item>NASA</item>
+    </string-array>
+    
+</resources>

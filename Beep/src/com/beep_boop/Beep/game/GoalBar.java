@@ -1,5 +1,6 @@
 package com.beep_boop.Beep.game;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -9,7 +10,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -88,17 +88,16 @@ public class GoalBar extends View
 		{
 			a.recycle();
 		}
-		if (!this.isInEditMode())
-		{
-			Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), MyApplication.FONT);
-			this.mTextPaint.setTypeface(customFont);
-		}
+
 		this.init();
 	}
 
 	private void init()
 	{
-		
+		if (!this.isInEditMode())
+		{
+			this.mTextPaint.setTypeface(MyApplication.MAIN_FONT);
+		}
 	}
 
 	@Override
@@ -106,7 +105,7 @@ public class GoalBar extends View
 	{
 		super.onDetachedFromWindow();
 	}
-
+	
 	//sets the listener
 	public void setListener(ClickListener aListener)
 	{
@@ -161,6 +160,7 @@ public class GoalBar extends View
 	}
 
 	//gets touch events for view
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{

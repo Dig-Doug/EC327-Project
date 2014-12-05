@@ -2,15 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation = "vertical"
+    android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
     <Button
         android:id="@+id/backbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/backbutton"
-        android:onClick="returnfromsettings"/>
+        android:onClick="returnfromsettings"
+        android:text="@string/backbutton" />
 
     <TextView
         android:id="@+id/settings"
@@ -44,5 +44,34 @@
         android:layout_height="wrap_content"
         android:text="@string/sound"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/settingsActivity_fontTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settingsActivity_fontTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RadioGroup
+        android:id="@+id/settingsActivity_fontGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/settingsActivity_fontGroup_krungthep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/settingsActivity_fontGroup_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/settingsActivity_fontGroup_nasa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
 
 </LinearLayout>

@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +29,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 {
 	///-----Member Variables-----
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
-	private static final String PAUSE_MENU_TAG = "PAUSE_MENU_TAG";
+	//private static final String PAUSE_MENU_TAG = "PAUSE_MENU_TAG";
 	/** Tag for logging */
 	private static final String TAG = "PlayScreenActivity";
 	/** Holds a reference to the play view */
@@ -199,9 +198,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	        this.setContentView(R.layout.dialog_play_pause_menu);  
 	        getWindow().setBackgroundDrawableResource(R.color.transparent);
 	        
-	        Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
 	        TextView title = (TextView) findViewById(R.id.playScreenActivity_pauseMenu_titleTextView);
-	        title.setTypeface(customFont);
+	        title.setTypeface(MyApplication.MAIN_FONT);
 	        
 	        ImageButton playButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_playButton);
 			playButton.setOnClickListener(new View.OnClickListener()

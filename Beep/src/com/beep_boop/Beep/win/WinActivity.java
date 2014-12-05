@@ -2,7 +2,6 @@ package com.beep_boop.Beep.win;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,6 @@ import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
-import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
 public class WinActivity extends Activity
 {
@@ -25,7 +23,7 @@ public class WinActivity extends Activity
 	public static final String EXTRA_TIME = "EXTRA_TIME";
 	/** Tag for logging */
 	private static final String TAG = "WinActivity";
-	private WinActivity THIS = this;
+	//private WinActivity THIS = this;
 	private Level mCompletedLevel;
 	private String[] mPath;
 
@@ -72,15 +70,13 @@ public class WinActivity extends Activity
 			finish();
 		}
 		
-		Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
-
 		this.mTimePlaceholderLabel = (TextView) findViewById(R.id.winActivity_timeLabel);
 		this.mTimePlaceholderLabel.setText(getString(R.string.winActivity_timeLabel) + " " + (int)(time / 1000) + " " + getString(R.string.winActivity_timeSuffix));
-		this.mTimePlaceholderLabel.setTypeface(customFont);
+		this.mTimePlaceholderLabel.setTypeface(MyApplication.MAIN_FONT);
 		
 		this.mMovePlaceholderLabel = (TextView) findViewById(R.id.winActivity_moveLabel);
 		this.mMovePlaceholderLabel.setText(getString(R.string.winActivity_moveLabel) + " " + (this.mPath.length - 1) + " " + getString(R.string.winActivity_moveSuffix));
-		this.mMovePlaceholderLabel.setTypeface(customFont);
+		this.mMovePlaceholderLabel.setTypeface(MyApplication.MAIN_FONT);
 		
 		this.setupButtons();
 	}

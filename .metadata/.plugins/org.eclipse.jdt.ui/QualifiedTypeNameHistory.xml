@@ -18,7 +18,6 @@
 <fullyQualifiedTypeName name="android.app.Service"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="android.graphics.Matrix"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.drawable"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
@@ -29,4 +28,6 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.style"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="android.graphics.Matrix"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 </qualifiedTypeNameHistroy>
