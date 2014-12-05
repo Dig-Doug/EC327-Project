@@ -1,13 +1,21 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/pause_menu"
-    android:stretchColumns="1" >
+    android:background="@color/transparent"
+    android:orientation="vertical" >
+    
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/pause_menu"
+        android:stretchColumns="1" >
 
     <TextView
         android:id="@+id/playScreenActivity_pauseMenu_titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/playScreenActivity_pauseMenuTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -23,8 +31,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:paddingRight="10dp"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/pause_screen_play_button" />
 
         <ImageButton
@@ -33,9 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
             android:contentDescription="@string/content_description_place_holder"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/pause_screen_reset_button" />
 
         <ImageButton
@@ -44,9 +52,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
             android:contentDescription="@string/content_description_place_holder"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/pause_screen_menu_button" />
 
         <ImageButton
@@ -55,10 +63,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
             android:contentDescription="@string/content_description_place_holder"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/pause_screen_home_button" />
     </TableRow>
 
 </TableLayout>
+
+</LinearLayout>

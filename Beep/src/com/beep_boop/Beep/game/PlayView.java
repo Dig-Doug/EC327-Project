@@ -7,6 +7,7 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.TimeAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -18,20 +19,18 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 
-public class PlayView extends View
+public class PlayView extends View implements MyApplication.FontChangeListener
 {
 	///-----Interfaces-----
 	public interface WordClickListener
@@ -68,7 +67,7 @@ public class PlayView extends View
 	private Bitmap mBackgroundImage;
 	private float mBackgroundScaleX, mBackgroundScaleY, mBackgroundRotation;
 
-	private Paint mTextPaint = new Paint();
+	private Paint mTextPaint = new Paint(), mCurrentWordTextPaint = new Paint();
 	private float mRadius = 0.45f;
 	private PointF[] mStartPoints, mDrawPoints;
 	private float[] mStartThetas, mDrawThetas;
@@ -121,6 +120,7 @@ public class PlayView extends View
 			if (backgroundImage != null)
 				this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
 			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
+			this.mCurrentWordTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mScrollBarPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarColor, Color.WHITE));
 			this.mScrollBarBackgroundPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarBackgroundColor, Color.BLACK));
 			this.mSwipeVelocityMin = a.getFloat(R.styleable.PlayView_swipeVelocityMin, 0.10f);
@@ -141,10 +141,15 @@ public class PlayView extends View
 
 	private void init()
 	{
+		MyApplication.addFontChangeListener(this);
+		
+		this.mCurrentWordTextPaint.setTextSize(80);
+		this.mCurrentWordTextPaint.setTextAlign(Paint.Align.CENTER);
+		this.mCurrentWordTextPaint.setTypeface(MyApplication.SPECIALTY_FONT);
+		
 		this.mTextPaint.setTextSize(60);
-
-		Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), MyApplication.FONT);
-		this.mTextPaint.setTypeface(customFont);
+		this.mTextPaint.setTextAlign(Paint.Align.LEFT);
+		this.mTextPaint.setTypeface(MyApplication.PLAY_FONT);
 
 		//does a circle pattern
 		ArrayList<PointF> startPoints = new ArrayList<PointF>();
@@ -156,7 +161,7 @@ public class PlayView extends View
 			startPoints.add(new PointF(this.mRadius * (float)Math.cos(theta), this.mRadius * (float)Math.sin(theta) + 0.5f));
 			startThetas.add(theta);
 		}
-		this.setStarts(new PointF(0.05f, 0.5f), 0, startPoints, startThetas);
+		this.setStarts(new PointF(0.2f, 0.5f), 0, startPoints, startThetas);
 
 
 		this.mScrollAnimator = new TimeAnimator();
@@ -230,10 +235,18 @@ public class PlayView extends View
 	public void onDetachedFromWindow()
 	{
 		super.onDetachedFromWindow();
+		
+		MyApplication.removeFontChangeListener(this);
 
 		//clean up the animator
 		this.mScrollAnimator.cancel();
 		this.mScrollAnimator = null;
+	}
+	
+	public void fontDidChange()
+	{
+		this.mTextPaint.setTypeface(MyApplication.PLAY_FONT);
+		this.mCurrentWordTextPaint.setTypeface(MyApplication.SPECIALTY_FONT);
 	}
 
 	//sets the listener
@@ -309,8 +322,8 @@ public class PlayView extends View
 			@Override
 			public void onAnimationUpdate(ValueAnimator animation)
 			{
-				mTextPaint.setAlpha((int)((1.0f - mAnimationPercent) * 255));
 				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
+				setGlobalTextAlpha(1.0f - mAnimationPercent);
 				requestRedraw();
 			}
 		});
@@ -348,11 +361,9 @@ public class PlayView extends View
 	private void startAnimationOut()
 	{
 		this.mAnimationState = AnimationState.AnimatingOut;
-
-		mTextPaint.setAlpha(0);
-		mAnimationPercent = 0.0f;
-		setCurrentWord(mNextWord);
-		mNextWord = null;
+		this.mAnimationPercent = 0.0f;
+		this.setCurrentWord(mNextWord);
+		this.mNextWord = null;
 
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
 		animator.setInterpolator(new DecelerateInterpolator());
@@ -363,8 +374,8 @@ public class PlayView extends View
 			@Override
 			public void onAnimationUpdate(ValueAnimator animation)
 			{
-				mTextPaint.setAlpha((int)(mAnimationPercent * 255));
 				mAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
+				setGlobalTextAlpha(mAnimationPercent);
 				requestRedraw();
 			}
 		});
@@ -379,7 +390,7 @@ public class PlayView extends View
 			@Override
 			public void onAnimationEnd(Animator arg0)
 			{
-				mTextPaint.setAlpha(255);
+				setGlobalTextAlpha(1.0f);
 				mAnimationPercent = 0.0f;
 				mAnimationState = AnimationState.Displaying;
 				requestRedraw();
@@ -400,6 +411,12 @@ public class PlayView extends View
 
 		animator.start();
 		requestRedraw();
+	}
+	
+	private void setGlobalTextAlpha(float aAlpha)
+	{
+		this.mCurrentWordTextPaint.setAlpha((int)(255 * aAlpha));
+		this.mTextPaint.setAlpha((int)(255 * aAlpha));
 	}
 
 	private void scroll(float aIncrement)
@@ -449,13 +466,18 @@ public class PlayView extends View
 
 		if (this.mCurrentWord != null)
 		{
-			if (this.mAnimationState == AnimationState.Displaying)
-			{
-				this.mTextPaint.setAlpha(255);
-			}
+			float maxWidth = this.getHeight() * (this.mRadius * 1.4f);
+			float oldTextSize = this.mCurrentWordTextPaint.getTextSize();
+			this.mCurrentWordTextPaint.setTextSize(oldTextSize + 20); 
+			this.calculateTextSize(this.mCurrentWordTextPaint, this.mCurrentWord, maxWidth);
+			canvas.save();
+			canvas.translate(this.mCurrentWordDrawPosition.x, this.mCurrentWordDrawPosition.y);
+			canvas.rotate(-90);
+			canvas.drawText(this.mCurrentWord, 0, 0, this.mCurrentWordTextPaint);
 
-			String word = this.mCurrentWord;
-			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth() * (this.mRadius - this.mScrollBarPointOuterRadius) - this.mCurrentWordDrawPosition.x, 1.0f);
+			this.mCurrentWordTextPaint.setTextSize(oldTextSize);
+			
+			canvas.restore();
 		}
 
 		for (int i = 0; i < mNumberOfWordsToDraw; i++)
@@ -519,20 +541,22 @@ public class PlayView extends View
 		if (this.mScrollBarPointInnerOval != null)
 			canvas.drawOval(this.mScrollBarPointInnerOval, this.mScrollBarPaint);
 	}
+	
+	private void calculateTextSize(Paint aPaint, String aWord, float aMaxWidth)
+	{
+		while (aPaint.measureText(aWord) > aMaxWidth)
+		{
+			aPaint.setTextSize(aPaint.getTextSize() - 1);
+		}
+	}
 
 	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta, float maxWidth, float aScale)
 	{
 		float oldTextSize = this.mTextPaint.getTextSize();
-		while (this.mTextPaint.measureText(aWord) > maxWidth)
-		{
-			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() - 1);
-		}
+		this.calculateTextSize(this.mTextPaint, aWord, maxWidth);
 		if (aScale != 1.0f)
 			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() * aScale);
-
-		//Rect rect = new Rect();
-		//this.mTextPaint.getTextBounds(aWord, 0, aWord.length(), rect);
-		//canvas.rotate(aTheta, aPosition.x + rect.exactCenterX(), aPosition.y + rect.exactCenterY()); //this line was the culprit
+		
 		aCanvas.drawText(aWord, aPosition.x, aPosition.y, this.mTextPaint);
 
 		this.mTextPaint.setTextSize(oldTextSize);
@@ -680,6 +704,7 @@ public class PlayView extends View
 
 	///-----Touch Handling-----
 	//gets touch events for view
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
@@ -768,13 +793,7 @@ public class PlayView extends View
 				float velocityY = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;
 				if (velocityX > this.mSwipeVelocityMin && velocityX > velocityY)
 				{
-					boolean canGoBack = this.mListener.playViewUserCanGoBack(this, this.mCurrentWord);
-					if (canGoBack)
-					{
-						this.mListener.playViewUserDidGoBack(this);
-						this.mNextWord = this.mDataSource.playViewPreviousWord(this);
-						this.startAnimationOut();
-					}
+					this.goBack();
 				}
 				else if (Math.abs(velocityY) > this.mScrollVelocityMinimum)
 				{
@@ -813,6 +832,19 @@ public class PlayView extends View
 		//touch ended, reset all variables
 		this.resetTouchVariables();
 	}
+	
+	public boolean goBack()
+	{
+		boolean canGoBack = this.mListener.playViewUserCanGoBack(this, this.mCurrentWord);
+		if (canGoBack)
+		{
+			this.mListener.playViewUserDidGoBack(this);
+			this.mNextWord = this.mDataSource.playViewPreviousWord(this);
+			this.startAnimationOut();
+		}
+		
+		return canGoBack;
+	}
 
 	//resets all touch variables
 	private void resetTouchVariables()
@@ -829,9 +861,9 @@ public class PlayView extends View
 		Rect rect = new Rect();
 		if (this.mCurrentWord != null)
 		{
-			this.mTextPaint.getTextBounds(this.mCurrentWord, 0, this.mCurrentWord.length(), rect);
-			rect.set((int)this.mCurrentWordDrawPosition.x, (int)this.mCurrentWordDrawPosition.y - rect.height(), 
-					(int)this.mCurrentWordDrawPosition.x + rect.width(), (int)this.mCurrentWordDrawPosition.y);
+			this.mCurrentWordTextPaint.getTextBounds(this.mCurrentWord, 0, this.mCurrentWord.length(), rect);
+			rect.set((int)this.mCurrentWordDrawPosition.x - rect.height()/2, (int)this.mCurrentWordDrawPosition.y - rect.width()/2, 
+					(int)this.mCurrentWordDrawPosition.x + rect.height()/2, (int)this.mCurrentWordDrawPosition.y + rect.width()/2);
 			if (rect.contains(aPoint.x, aPoint.y))
 			{
 				word = this.mCurrentWord;

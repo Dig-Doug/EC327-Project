@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,17 +46,15 @@ public class StartLevelActivity extends Activity
 			finish();
 		}
 
-		Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
-
 		TextView title = (TextView) findViewById(R.id.startScreenActivity_titleTextView);
-		title.setTypeface(customFont);
+		title.setTypeface(MyApplication.MAIN_FONT);
 
 		TextView move = (TextView) findViewById(R.id.startScreenActivity_movesTextView);
-		move.setTypeface(customFont);
+		move.setTypeface(MyApplication.MAIN_FONT);
 		move.setText(getString(R.string.startLevelActivity_moves) + " " + this.mSelectedLevel.maxMoves);
 
 		TextView best = (TextView) findViewById(R.id.startScreenActivity_bestTextView);
-		best.setTypeface(customFont);
+		best.setTypeface(MyApplication.MAIN_FONT);
 		best.setText(getString(R.string.startLevelActivity_best) + " " + (this.mSelectedLevel.numberOfSteps == Integer.MAX_VALUE ? "X" : this.mSelectedLevel.numberOfSteps));
 
 		Bitmap fromBit = null, toBit = null;

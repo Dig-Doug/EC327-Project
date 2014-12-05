@@ -50,14 +50,6 @@ public class LoseActivity extends Activity
 			finish();
 		}
 		
-		Typeface customFont = Typeface.createFromAsset(getAssets(), MyApplication.FONT);
-		
-		TextView title = (TextView) findViewById(R.id.loseActivity_titleLabel);
-		title.setTypeface(customFont);
-		
-		TextView subTitle = (TextView) findViewById(R.id.loseActivity_subtitleLabel);
-		subTitle.setTypeface(customFont);
-		
 		this.setupButtons();
 	}
 	

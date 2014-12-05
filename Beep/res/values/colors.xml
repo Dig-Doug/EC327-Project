@@ -1,5 +1,7 @@
 <resources>
     
+    <color name="transparent">#A0000000</color>
+    
     <color name = "launchActivity_backgroundColor">#FF000000</color>
     <color name = "launchActivity_loadingTextColor">#FFFFFFFF</color>
     

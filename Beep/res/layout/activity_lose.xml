@@ -1,53 +1,51 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/loseActivity_backgroundColor"
-    android:orientation="vertical" >
+    android:background="@drawable/starry_backround"
+    android:gravity="top" >
 
-    <TextView
-        android:id="@+id/loseActivity_titleLabel"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/loseActivity_title"
-        android:textColor="@color/loseActivity_failedTextColor"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/loseActivity_subtitleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/loseActivity_failed"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/loseActivity_failedTextColor"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/loseActivity_restartLevelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="@string/content_description_place_holder"
+            android:padding="10dp"
+            android:src="@drawable/button_retry" />
+
+        <ImageButton
+            android:id="@+id/loseActivity_mapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@null"
+            android:contentDescription="@string/content_description_place_holder"
+            android:paddingBottom="20dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/button_map" />
+    </LinearLayout>
 
     <ImageView
-        android:id="@+id/loseActivity_imageView"
-        android:layout_width="199dp"
-        android:layout_height="208dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/char_beep" />
-
-    <ImageButton
-        android:id="@+id/loseActivity_restartLevelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/button_retry" />
+        android:src="@drawable/mission_failed_bubble" />
 
-    <ImageButton
-        android:id="@+id/loseActivity_mapButton"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/button_map" />
+        android:src="@drawable/spaceship_failure" />
 
-</LinearLayout>
+</RelativeLayout>

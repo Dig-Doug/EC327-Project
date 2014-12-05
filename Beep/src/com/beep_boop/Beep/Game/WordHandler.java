@@ -89,28 +89,6 @@ public class WordHandler
 		}
 	}
 	
-	private String getClosestKeyForWord(String aWord)
-	{
-		String result = null;
-		if (!this.mWordData.containsKey(aWord))
-		{
-			for (String nextKey : this.mWordData.keySet())
-			{
-				if (nextKey.equalsIgnoreCase(aWord))
-				{
-					result = nextKey;
-					break;
-				}
-			}
-		}
-		else
-		{
-			result = aWord;
-		}
-		
-		return result;
-	}
-	
 	private Set<String> getLinksForWordPrivate(String aWord)
 	{
 		Set<String> result = null;

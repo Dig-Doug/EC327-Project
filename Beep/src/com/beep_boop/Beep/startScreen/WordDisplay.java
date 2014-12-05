@@ -9,7 +9,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -81,8 +80,7 @@ public class WordDisplay extends View
 
 		if (!this.isInEditMode())
 		{
-			Typeface customFont = Typeface.createFromAsset(getContext().getAssets(), MyApplication.FONT);
-			this.mTextPaint.setTypeface(customFont);
+			this.mTextPaint.setTypeface(MyApplication.MAIN_FONT);
 		}
 	}
 
