@@ -29,8 +29,15 @@ import com.beep_boop.Beep.startScreen.StartLevelActivity;
 import com.beep_boop.Beep.startScreen.WordDisplay;
 import com.beep_boop.Beep.win.WinActivity;
 
+
+
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource, GoalBar.ClickListener
 {
+	
+	public interface NumberOfClicksChangedListener
+	{
+		public void numberOfClicksChanged(int aNumberOfClicks);
+	}
 	///-----Member Variables-----
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
 	private static final String PAUSE_MENU_TAG = "PAUSE_MENU_TAG";
@@ -39,6 +46,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	/** Holds a reference to the play view */
 	private PlayView mPlayView;
 	private GoalBar mGoalBar;
+	
 
 	private ArrayList<String> mWordPath = new ArrayList<String>();
 	private Level mSelectedLevel;
@@ -130,7 +138,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidClickWord(PlayView aPlayView, String aWord)
 	{
 		this.mWordPath.add(aWord);
-
+		this.mGoalBar.numberOfClicksChanged(this.mWordPath.size()-1);
 		if (aWord.equalsIgnoreCase(this.mSelectedLevel.toWord))
 		{
 			String[] pathArray = new String[this.mWordPath.size()];
@@ -166,6 +174,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidGoBack(PlayView aPlayView)
 	{
 		this.mWordPath.remove(this.mWordPath.size() - 1);
+		this.mGoalBar.numberOfClicksChanged(this.mWordPath.size()-1);
 	}
 
 	///-----Goal Bar Click Listener-----

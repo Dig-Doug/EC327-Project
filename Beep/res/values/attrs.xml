@@ -3,6 +3,22 @@
 
     <attr name="backgroundImage" format="reference" />
     <attr name="textColor" format="reference" />
+    <attr name="arrowImage" format="reference" />
+    <attr name="fromImagePercentX" format="float" />
+    <attr name="fromImagePercentY" format="float" />
+    <attr name="toImagePercentX" format="float" />
+    <attr name="toImagePercentY" format="float" />
+    <attr name="arrowImagePercentX" format="float" />
+    <attr name="arrowImagePercentY" format="float" />
+    <attr name="fromWordPercentX" format="float" />
+    <attr name="fromWordPercentY" format="float" />
+    <attr name="toWordPercentX" format="float" />
+    <attr name="toWordPercentY" format="float" />
+    <attr name="fromImagePercentWidth" format="float" />
+    <attr name="toImagePercentWidth" format="float" />
+    <attr name="arrowImagePercentWidth" format="float" />
+    <attr name="fromWordPercentWidth" format="float" />
+    <attr name="toWordPercentWidth" format="float" />
 
     <declare-styleable name="MapView">
         <attr name="mapWidthOnScreen" format="float" />
@@ -31,24 +47,42 @@
         <attr name="swipeVelocityMin" format="float" />
     </declare-styleable>
     <declare-styleable name="GoalBar">
+        <attr name="arrowImage" />
+        <attr name="fromImagePercentX" />
+        <attr name="fromImagePercentY" />
+        <attr name="toImagePercentX" />
+        <attr name="toImagePercentY" />
+        <attr name="arrowImagePercentX" />
+        <attr name="arrowImagePercentY" />
+        <attr name="fromWordPercentX" />
+        <attr name="fromWordPercentY" />
+        <attr name="toWordPercentX" />
+        <attr name="toWordPercentY" />
+        <attr name="fromImagePercentWidth" />
+        <attr name="toImagePercentWidth" />
+        <attr name="arrowImagePercentWidth" />
+        <attr name="fromWordPercentWidth" />
+        <attr name="toWordPercentWidth" />
+        <attr name="textColor" />
+        <attr name="backgroundImage" />
     </declare-styleable>
     <declare-styleable name="WordDisplay">
-        <attr name="arrowImage" format="reference" />
-        <attr name="fromImagePercentX" format="float" />
-        <attr name="fromImagePercentY" format="float" />
-        <attr name="toImagePercentX" format="float" />
-        <attr name="toImagePercentY" format="float" />
-        <attr name="arrowImagePercentX" format="float" />
-        <attr name="arrowImagePercentY" format="float" />
-        <attr name="fromWordPercentX" format="float" />
-        <attr name="fromWordPercentY" format="float" />
-        <attr name="toWordPercentX" format="float" />
-        <attr name="toWordPercentY" format="float" />
-        <attr name="fromImagePercentWidth" format="float" />
-        <attr name="toImagePercentWidth" format="float" />
-        <attr name="arrowImagePercentWidth" format="float" />
-        <attr name="fromWordPercentWidth" format="float" />
-        <attr name="toWordPercentWidth" format="float" />
+        <attr name="arrowImage" />
+        <attr name="fromImagePercentX" />
+        <attr name="fromImagePercentY" />
+        <attr name="toImagePercentX" />
+        <attr name="toImagePercentY" />
+        <attr name="arrowImagePercentX" />
+        <attr name="arrowImagePercentY" />
+        <attr name="fromWordPercentX" />
+        <attr name="fromWordPercentY" />
+        <attr name="toWordPercentX" />
+        <attr name="toWordPercentY" />
+        <attr name="fromImagePercentWidth" />
+        <attr name="toImagePercentWidth" />
+        <attr name="arrowImagePercentWidth" />
+        <attr name="fromWordPercentWidth" />
+        <attr name="toWordPercentWidth" />
         <attr name="textColor" />
         <attr name="backgroundImage" />
     </declare-styleable>

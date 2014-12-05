@@ -19,11 +19,15 @@ import android.view.View;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.game.PlayScreenActivity.NumberOfClicksChangedListener;
 
 
+import java.text.DecimalFormat;
 
-public class GoalBar extends View
+
+public class GoalBar extends View implements NumberOfClicksChangedListener
 {
+	
 	
 	///-----Interfaces-----
 	public interface ClickListener
@@ -35,11 +39,13 @@ public class GoalBar extends View
 	/** Holds the tag used for logging */
 	private static final String TAG = "GoalBar";
 	private Bitmap mFromImage, mToImage, mArrowImage, mBackgroundImage;
-	private String mFromWord, mToWord;
+	private String mFromWord, mToWord, mClickString;
 	private float mFromImagePercentX, mFromImagePercentY, mToImagePercentX, mToImagePercentY;
 	private float mArrowImagePercentX, mArrowImagePercentY, mFromWordPercentX, mFromWordPercentY, mToWordPercentX, mToWordPercentY;
 	private float mFromImagePercentWidth, mToImagePercentWidth;
 	private float mArrowImagePercentWidth, mFromWordPercentWidth, mToWordPercentWidth;
+
+
 
 	private PointF mFromWordDraw, mToWordDraw;
 	
@@ -48,6 +54,8 @@ public class GoalBar extends View
 	
 	private Matrix mFromImageMatrix = new Matrix(), mToImageMatrix = new Matrix(), mArrowImageMatrix = new Matrix(), mBackgroundImageMatrix = new Matrix();
 	private ClickListener mListener;
+	
+	private int mNumberOfClicks;
 
 	///-----Constructors-----
 	public GoalBar(Context context, AttributeSet attrs)
@@ -57,28 +65,30 @@ public class GoalBar extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
 		try
 		{
-			this.mFromImagePercentX = a.getFloat(R.styleable.WordDisplay_fromImagePercentX, 0.1337f);
-			this.mFromImagePercentY = a.getFloat(R.styleable.WordDisplay_fromImagePercentY, 0.4481f);
-			this.mToImagePercentX = a.getFloat(R.styleable.WordDisplay_toImagePercentX, 0.8447f);
-			this.mToImagePercentY = a.getFloat(R.styleable.WordDisplay_toImagePercentY, 0.4481f);
-			this.mArrowImagePercentX = a.getFloat(R.styleable.WordDisplay_arrowImagePercentX, 0.5f);
-			this.mArrowImagePercentY = a.getFloat(R.styleable.WordDisplay_arrowImagePercentY, 0.2573f);
-			this.mFromWordPercentX = a.getFloat(R.styleable.WordDisplay_fromWordPercentX, 0.3434f);
-			this.mFromWordPercentY = a.getFloat(R.styleable.WordDisplay_fromWordPercentY, 0.2573f);
-			this.mToWordPercentX = a.getFloat(R.styleable.WordDisplay_toWordPercentX, 0.6058f);
-			this.mToWordPercentY = a.getFloat(R.styleable.WordDisplay_toWordPercentY, 0.2573f);
-			this.mFromImagePercentWidth = a.getFloat(R.styleable.WordDisplay_fromImagePercentWidth, 0.1642f);
-			this.mToImagePercentWidth = a.getFloat(R.styleable.WordDisplay_toImagePercentWidth, 0.1642f);
-			this.mArrowImagePercentWidth = a.getFloat(R.styleable.WordDisplay_arrowImagePercentWidth, 0.8724f);
-			this.mFromWordPercentWidth = a.getFloat(R.styleable.WordDisplay_fromWordPercentWidth, 0.1818f);
-			this.mToWordPercentWidth = a.getFloat(R.styleable.WordDisplay_toWordPercentWidth, 0.1818f);
-			this.mTextPaint.setColor(a.getColor(R.styleable.WordDisplay_textColor, Color.WHITE));
-			Drawable arrowImage = a.getDrawable(R.styleable.WordDisplay_arrowImage); 
+			this.mFromImagePercentX = a.getFloat(R.styleable.GoalBar_fromImagePercentX, 0.1337f);
+			this.mFromImagePercentY = a.getFloat(R.styleable.GoalBar_fromImagePercentY, 0.4481f);
+			this.mToImagePercentX = a.getFloat(R.styleable.GoalBar_toImagePercentX, 0.8447f);
+			this.mToImagePercentY = a.getFloat(R.styleable.GoalBar_toImagePercentY, 0.4481f);
+			this.mArrowImagePercentX = a.getFloat(R.styleable.GoalBar_arrowImagePercentX, 0.5f);
+			this.mArrowImagePercentY = a.getFloat(R.styleable.GoalBar_arrowImagePercentY, 0.2573f);
+			this.mFromWordPercentX = a.getFloat(R.styleable.GoalBar_fromWordPercentX, 0.3434f);
+			this.mFromWordPercentY = a.getFloat(R.styleable.GoalBar_fromWordPercentY, 0.2573f);
+			this.mToWordPercentX = a.getFloat(R.styleable.GoalBar_toWordPercentX, 0.6058f);
+			this.mToWordPercentY = a.getFloat(R.styleable.GoalBar_toWordPercentY, 0.2573f);
+			this.mFromImagePercentWidth = a.getFloat(R.styleable.GoalBar_fromImagePercentWidth, 0.1642f);
+			this.mToImagePercentWidth = a.getFloat(R.styleable.GoalBar_toImagePercentWidth, 0.1642f);
+			this.mArrowImagePercentWidth = a.getFloat(R.styleable.GoalBar_arrowImagePercentWidth, 0.8724f);
+			this.mFromWordPercentWidth = a.getFloat(R.styleable.GoalBar_fromWordPercentWidth, 0.1818f);
+			this.mToWordPercentWidth = a.getFloat(R.styleable.GoalBar_toWordPercentWidth, 0.1818f);
+			this.mTextPaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
+			Drawable arrowImage = a.getDrawable(R.styleable.GoalBar_arrowImage); 
 			if (arrowImage != null)
 				this.mArrowImage = ((BitmapDrawable) arrowImage).getBitmap();
-			Drawable backImage = a.getDrawable(R.styleable.WordDisplay_backgroundImage);
+			Drawable backImage = a.getDrawable(R.styleable.GoalBar_backgroundImage);
 			if (backImage != null)
 				this.mBackgroundImage = ((BitmapDrawable) backImage).getBitmap();
+			this.mClickNumber = a.getFloat(R.styleable.GoalBar_clickNumber, )
+			
 		}
 		catch (Exception e)
 		{
@@ -131,6 +141,7 @@ public class GoalBar extends View
 			canvas.drawText(this.mFromWord, this.mFromWordDraw.x, this.mFromWordDraw.y, this.mTextPaint);
 		if (this.mToWord != null)
 			canvas.drawText(this.mToWord, this.mToWordDraw.x, this.mToWordDraw.y, this.mTextPaint);
+		canvas.drawText(this.mNumberOfClicks, , y, paint)
 	}
 	public void set(Bitmap aFromImage, Bitmap aToImage, String aFromWord, String aToWord)
 	{
@@ -302,5 +313,29 @@ public class GoalBar extends View
 			this.mToWordDraw = new PointF(toWordX, toWordY);
 		}
 	}
+
+	@Override
+	public void numberOfClicksChanged(int aNumberOfClicks) {
+		this.mNumberOfClicks = aNumberOfClicks;
+		requestRedraw();
+	}
+
+    public static String convertNumtoWord(int number) {
+        String soFar;
+
+        if (number % 100 < 20){
+          soFar = numNames[number % 100];
+          number /= 100;
+        }
+        else {
+          soFar = numNames[number % 10];
+          number /= 10;
+
+          soFar = tensNames[number % 10] + soFar;
+          number /= 10;
+        }
+        if (number == 0) return soFar;
+        return numNames[number] + " hundred" + soFar;
+      }
 
 }
