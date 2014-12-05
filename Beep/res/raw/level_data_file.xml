@@ -1,0 +1,28 @@
+﻿<levels>
+<level key="level_1"><from>Apple</from><to>Vikings</to><next>level_2</next><max>10</max><requires><req></req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_2"><from>Apple</from><to>Vikings</to><next>level_3</next><max>10</max><requires><req>level_1</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_3"><from>Apple</from><to>Vikings</to><next>level_4</next><max>10</max><requires><req>level_2</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_4"><from>Apple</from><to>Vikings</to><next>level_5</next><max>10</max><requires><req>level_3</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_5"><from>Apple</from><to>Vikings</to><next>level_6</next><max>10</max><requires><req>level_4</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_6"><from>Apple</from><to>Vikings</to><next>level_7</next><max>10</max><requires><req>level_5</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_7"><from>Apple</from><to>Vikings</to><next>level_8</next><max>10</max><requires><req>level_6</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_8"><from>Apple</from><to>Vikings</to><next>level_9</next><max>10</max><requires><req>level_7</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_9"><from>Apple</from><to>Vikings</to><next>level_10</next><max>10</max><requires><req>level_8</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_10"><from>Apple</from><to>Vikings</to><next>level_11</next><max>10</max><requires><req>level_9</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_11"><from>Apple</from><to>Vikings</to><next>level_12</next><max>10</max><requires><req>level_10</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_12"><from>Apple</from><to>Vikings</to><next>level_13</next><max>10</max><requires><req>level_11</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_13"><from>Apple</from><to>Vikings</to><next>level_14</next><max>10</max><requires><req>level_12</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_14"><from>Apple</from><to>Vikings</to><next>level_15</next><max>10</max><requires><req>level_13</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_15"><from>Apple</from><to>Vikings</to><next>level_16</next><max>10</max><requires><req>level_14</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_16"><from>Apple</from><to>Vikings</to><next>level_17</next><max>10</max><requires><req>level_15</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_17"><from>Apple</from><to>Vikings</to><next>level_18</next><max>10</max><requires><req>level_16</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_18"><from>Apple</from><to>Vikings</to><next>level_19</next><max>10</max><requires><req>level_17</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_19"><from>Apple</from><to>Vikings</to><next>level_20</next><max>10</max><requires><req>level_18</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_20"><from>Apple</from><to>Vikings</to><next>level_21</next><max>10</max><requires><req>level_19</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_21"><from>Apple</from><to>Vikings</to><next>level_22</next><max>10</max><requires><req>level_20</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_22"><from>Apple</from><to>Vikings</to><next>level_23</next><max>10</max><requires><req>level_21</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_23"><from>Apple</from><to>Vikings</to><next>level_24</next><max>10</max><requires><req>level_22</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_24"><from>Apple</from><to>Vikings</to><next>level_25</next><max>10</max><requires><req>level_23</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_25"><from>Apple</from><to>Vikings</to><next>level_26</next><max>10</max><requires><req>level_24</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+<level key="level_26"><from>Apple</from><to>Vikings</to><next></next><max>10</max><requires><req>level_25</req><req></req><req></req></requires><fromImage></fromImage><toImage></toImage></level>
+</levels>

@@ -85,7 +85,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		InputStream in = null;
 		try 
 		{
-			in = getResources().openRawResource(R.raw.nodes_test_file);
+			in = getResources().openRawResource(R.raw.map_data_file);
 			nodeList = MapNodeLoader.parseFile(in);
 		}
 		catch (Exception i)

@@ -91,7 +91,7 @@ public class LevelManager
 		InputStream in = null;
 		try 
 		{
-			in = aContext.getResources().openRawResource(R.raw.levels_test_file);
+			in = aContext.getResources().openRawResource(R.raw.level_data_file);
 
 			this.mLevelData = LevelDataParser.parseFile(in);
 
