@@ -29,7 +29,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:paddingBottom="10dp"
+            android:paddingBottom="20dp"
             android:paddingTop="10dp"
             android:src="@drawable/button_share" />
     </LinearLayout>
@@ -38,7 +38,9 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/mission_success_bubble" />
 
@@ -78,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="212dp"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/spaceship_success" />
 

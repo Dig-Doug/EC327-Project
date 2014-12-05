@@ -549,8 +549,8 @@ public class MapView extends View
 		super.onSizeChanged(w, h, oldw, oldh);
 
 		this.mScaleX =  w / (float)(this.MAP_ON_SCREEN_WIDTH * this.mBackgroundImage.getWidth());
-		this.mScaleY = this.mScaleX * (h / (float)w);
-		this.MAP_ON_SCREEN_HEIGHT = this.mScaleY;
+		this.MAP_ON_SCREEN_HEIGHT = this.MAP_ON_SCREEN_WIDTH * (h / (float)w);
+		this.mScaleY = h / (float)(this.MAP_ON_SCREEN_HEIGHT * this.mBackgroundImage.getHeight());
 
 		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() / 2);
 		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() / 2);
