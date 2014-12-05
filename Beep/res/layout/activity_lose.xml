@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background_mission_failed" >
+    android:background="@drawable/starry_backround"
+    android:gravity="top" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,7 +30,22 @@
             android:paddingBottom="20dp"
             android:paddingTop="10dp"
             android:src="@drawable/button_map" />
-
     </LinearLayout>
-    
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/mission_failed_bubble" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/spaceship_failure" />
+
 </RelativeLayout>
