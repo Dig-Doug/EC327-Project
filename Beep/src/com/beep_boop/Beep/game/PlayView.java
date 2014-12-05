@@ -155,7 +155,7 @@ public class PlayView extends View
 			startPoints.add(new PointF(this.mRadius * (float)Math.cos(theta), this.mRadius * (float)Math.sin(theta) + 0.5f));
 			startThetas.add(theta);
 		}
-		this.setStarts(new PointF(0.05f, 0.5f), 0, startPoints, startThetas);
+		this.setStarts(new PointF(0.2f, 0.5f), 0, startPoints, startThetas);
 
 
 		this.mScrollAnimator = new TimeAnimator();
@@ -453,10 +453,22 @@ public class PlayView extends View
 				this.mTextPaint.setAlpha(255);
 			}
 
-			String word = this.mCurrentWord;
-			this.drawWord(canvas, word, this.mCurrentWordDrawPosition, this.mCurrentWordDrawTheta, this.getWidth() * (this.mRadius - this.mScrollBarPointOuterRadius) - this.mCurrentWordDrawPosition.x, 1.0f);
+			this.mTextPaint.setTextAlign(Paint.Align.CENTER);
+			float maxWidth = this.getHeight() * (this.mRadius * 1.4f);
+			float oldTextSize = this.mTextPaint.getTextSize();
+			this.mTextPaint.setTextSize(oldTextSize + 20); 
+			this.calculateTextSize(this.mTextPaint, this.mCurrentWord, maxWidth);
+			canvas.save();
+			canvas.translate(this.mCurrentWordDrawPosition.x, this.mCurrentWordDrawPosition.y);
+			canvas.rotate(-90);
+			canvas.drawText(this.mCurrentWord, 0, 0, this.mTextPaint);
+
+			this.mTextPaint.setTextSize(oldTextSize);
+			
+			canvas.restore();
 		}
 
+		this.mTextPaint.setTextAlign(Paint.Align.LEFT);
 		for (int i = 0; i < mNumberOfWordsToDraw; i++)
 		{
 			float scale = 1.0f;
@@ -518,14 +530,19 @@ public class PlayView extends View
 		if (this.mScrollBarPointInnerOval != null)
 			canvas.drawOval(this.mScrollBarPointInnerOval, this.mScrollBarPaint);
 	}
+	
+	private void calculateTextSize(Paint aPaint, String aWord, float aMaxWidth)
+	{
+		while (aPaint.measureText(aWord) > aMaxWidth)
+		{
+			aPaint.setTextSize(aPaint.getTextSize() - 1);
+		}
+	}
 
 	private void drawWord(Canvas aCanvas, String aWord, PointF aPosition, float aTheta, float maxWidth, float aScale)
 	{
 		float oldTextSize = this.mTextPaint.getTextSize();
-		while (this.mTextPaint.measureText(aWord) > maxWidth)
-		{
-			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() - 1);
-		}
+		this.calculateTextSize(this.mTextPaint, aWord, maxWidth);
 		if (aScale != 1.0f)
 			this.mTextPaint.setTextSize(this.mTextPaint.getTextSize() * aScale);
 
