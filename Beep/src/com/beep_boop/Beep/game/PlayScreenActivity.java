@@ -104,7 +104,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			Log.e(TAG, "Error getting to level image");
 		}
 		this.mGoalBar.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
-
+		
+		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves);
 	}
 
 	@Override
@@ -154,7 +155,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidClickWord(PlayView aPlayView, String aWord)
 	{
 		this.mWordPath.add(aWord);
-		this.mGoalBar.numberOfClicksChanged(this.mWordPath.size()-1);
+		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves - this.mWordPath.size()+1);
 		if (aWord.equalsIgnoreCase(this.mSelectedLevel.toWord))
 		{
 			String[] pathArray = new String[this.mWordPath.size()];
@@ -190,7 +191,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidGoBack(PlayView aPlayView)
 	{
 		this.mWordPath.remove(this.mWordPath.size() - 1);
-		this.mGoalBar.numberOfClicksChanged(this.mWordPath.size()-1);
+		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves - this.mWordPath.size()+1);
 	}
 	
 	@Override
