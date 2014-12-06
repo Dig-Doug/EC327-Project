@@ -21,8 +21,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.stars.StarManager;
 
-public class MapView extends View
+public class MapView extends View implements StarManager.ScreenSpaceCoverter
 {
 	///-----Interfaces-----
 	public interface NodeClickListener
@@ -106,6 +107,9 @@ public class MapView extends View
 	private static final float SCROLL_SCALAR = 2.0f;
 
 	private int mBackgroundTotalHeight = 0;
+	
+	
+	private StarManager mStarManager;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -163,6 +167,41 @@ public class MapView extends View
 			int parrallaxImage = a.getResourceId(R.styleable.MapView_parrallaxImage, -1);
 			if (parrallaxImage != -1)
 				this.mParrallaxImage = BitmapFactory.decodeResource(getResources(), parrallaxImage, null);
+			
+			int starArray = a.getResourceId(R.styleable.MapView_starImages, -1);
+			if (starArray != -1)
+			{
+				TypedArray stars = context.getResources().obtainTypedArray(starArray);
+
+				try
+				{
+					Bitmap[] starImages = new Bitmap[stars.length()];
+					for (int i = 0; i < stars.length(); i++)
+					{
+						int bitmapID = stars.getResourceId(i, -1);
+						if (bitmapID != -1)
+						{
+							BitmapFactory.Options options = new BitmapFactory.Options();
+							starImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+						}
+					}
+					
+					this.mStarManager = new StarManager(this, 100, starImages, new PointF(0.0f, 0.01f), 
+							1.0f, 5.0f, 
+							-(float)Math.PI/16, (float)Math.PI/16, 
+							0.01f, 0.99f, 
+							0.1f, 0.3f, 
+							0.01f, 0.09f);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally
+				{
+					stars.recycle();
+				}
+			}
 		}
 		catch (Exception e)
 		{
@@ -200,11 +239,27 @@ public class MapView extends View
 		this.mNodeAnimator.setRepeatMode(ValueAnimator.REVERSE);
 		this.mNodeAnimator.start();
 	}
+	
+	@Override
+	public void onAttachedToWindow()
+	{
+		super.onAttachedToWindow();
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.start();
+		}
+	}
 
 	@Override
 	public void onDetachedFromWindow()
 	{
 		super.onDetachedFromWindow();
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.pause();
+		}
 
 		//clean up the animator
 		this.mNodeAnimator.cancel();
@@ -245,6 +300,11 @@ public class MapView extends View
 		{
 			this.mParrallaxImage.recycle();
 			this.mParrallaxImage = null;
+		}
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.destroy();
 		}
 	}
 
@@ -542,6 +602,12 @@ public class MapView extends View
 		this.drawParrallax(canvas);
 
 		canvas.scale(this.mScaleX, this.mScaleY);
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.draw(canvas);
+		}
+		
 		//draw background
 		this.drawBackground(canvas);
 		//draw all the nodes on top
@@ -847,6 +913,27 @@ public class MapView extends View
 		//reset variables here as needed
 		this.mScrolling = false;
 		this.mLastTouchPoint = new PointF(-1.0f, -1.0f);
+	}
+	
+	///-----Star Manager Methods-----
+	public boolean starManagerIsPointOnScreen(StarManager aManager, PointF aPoint)
+	{
+		boolean result = false;
+		if (Math.abs(aPoint.x - this.mOrigin.x) < this.MAP_ON_SCREEN_WIDTH * 1.5f)
+		{
+			//check if it's on screen in the Y direction
+			if (Math.abs(aPoint.y - this.mOrigin.y) < this.MAP_ON_SCREEN_HEIGHT * 1.5f)
+			{
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
+	public PointF starManagerConvertToScreenSpace(StarManager aManager, PointF aPoint)
+	{
+		return this.convertToScreenSpace(aPoint.x, aPoint.y);
 	}
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="starImages" format="reference" />
     <attr name="backgroundImage" format="reference" />
     <attr name="textColor" format="reference" />
     <attr name="arrowImage" format="reference" />
@@ -32,6 +33,7 @@
         <attr name="overlayAnimationLength" format="integer" />
         <attr name="parrallaxImage" format="reference" />
         <attr name="parrallaxScalar" format="float" />
+        <attr name="starImages" />
     </declare-styleable>
     <declare-styleable name="PlayView">
         <attr name="backgroundImage" />

@@ -22,4 +22,10 @@
         <item>@drawable/map_background_panel_six</item>
     </array>
     
+    <array name="starImages">
+        <item>@drawable/star1</item>
+        <item>@drawable/star2</item>
+        <item>@drawable/star3</item>
+    </array>
+    
 </resources>

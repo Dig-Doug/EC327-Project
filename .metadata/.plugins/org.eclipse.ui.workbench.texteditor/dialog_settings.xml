@@ -2,30 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value=", float a" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value=", a"/>
+			<item value="mScrollAnimator"/>
+			<item value="mStarAnimator"/>
 			<item value="mCurrentWordDrawPosition"/>
 			<item value="mCurrentWordPosition"/>
 			<item value="go back"/>
 			<item value="win"/>
 			<item value="winActivity"/>
-			<item value="&quot;fonts/Krungthep.ttf&quot;"/>
-			<item value="0,"/>
-			<item value=" = "/>
 		</list>
 		<list key="replacehistory">
+			<item value=", float a"/>
+			<item value="mStarAnimator"/>
 			<item value="lose"/>
 			<item value="loseActivity"/>
 			<item value="MyApplication.FONT"/>
 			<item value="R.styleable"/>
 			<item value="&quot; format=&quot;float&quot; /&gt;"/>
 			<item value="&lt;attr name=&quot;a"/>
-			<item value="&lt;attr name=&quot;t"/>
-			<item value="&lt;attr name=&quot;f"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
