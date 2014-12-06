@@ -90,5 +90,9 @@
         <attr name="textColor" />
         <attr name="backgroundImage" />
     </declare-styleable>
+    
+    <declare-styleable name="StarryBackgroundView">
+        <attr name="backgroundImage" />
+    </declare-styleable>
 
 </resources>

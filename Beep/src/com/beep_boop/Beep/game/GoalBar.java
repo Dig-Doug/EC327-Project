@@ -56,7 +56,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	{
 		super(context, attrs);
 
-		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.GoalBar, 0, 0);
 		try
 		{
 			this.mFromImagePercentX = a.getFloat(R.styleable.GoalBar_fromImagePercentX, 0.1337f);
@@ -71,7 +71,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			this.mToWordPercentY = a.getFloat(R.styleable.GoalBar_toWordPercentY, 0.2573f);
 			this.mFromImagePercentWidth = a.getFloat(R.styleable.GoalBar_fromImagePercentWidth, 0.1642f);
 			this.mToImagePercentWidth = a.getFloat(R.styleable.GoalBar_toImagePercentWidth, 0.1642f);
-			this.mArrowImagePercentWidth = a.getFloat(R.styleable.GoalBar_arrowImagePercentWidth, 0.8724f);
+			this.mArrowImagePercentWidth = a.getFloat(R.styleable.GoalBar_arrowImagePercentWidth, 0.08724f);
 			this.mFromWordPercentWidth = a.getFloat(R.styleable.GoalBar_fromWordPercentWidth, 0.1818f);
 			this.mToWordPercentWidth = a.getFloat(R.styleable.GoalBar_toWordPercentWidth, 0.1818f);
 			this.mTextPaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
@@ -146,7 +146,6 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	@Override
 	public void onDraw(Canvas canvas)
 	{
-		this.drawBackground(canvas);
 		if (this.mBackgroundImage != null)
 			canvas.drawBitmap(this.mBackgroundImage, this.mBackgroundImageMatrix, null);
 		if (this.mArrowImage != null)
@@ -181,12 +180,6 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		}
 
 		this.requestRedraw();
-	}
-	//draws the background of the map
-	private void drawBackground(Canvas canvas)
-	{
-		invalidate();
-		requestLayout();
 	}
 
 	//gets touch events for view
