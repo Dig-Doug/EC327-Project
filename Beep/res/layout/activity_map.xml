@@ -38,18 +38,4 @@
         android:background="@null"
         android:padding="10dp" />
 
-    <com.beep_boop.Beep.levelSelect.MapView
-        android:id="@+id/mapActivity_mapView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        custom:animationLength="1000"
-        custom:backgroundImage="@drawable/map_1"
-        custom:mapWidthOnScreen="0.50"
-        custom:nodeOffImage="@drawable/node_star_off"
-        custom:nodeOnImage="@drawable/node_star_on"
-        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay"
-        custom:nodeSelectedOverlayStatic="@drawable/node_overlay" />
-
 </RelativeLayout>
