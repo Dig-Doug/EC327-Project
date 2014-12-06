@@ -109,8 +109,8 @@ public class MyApplication extends Application
     	}
     }
 //    private class startmusic extends AsyncTask
-
-/*public class MusicService extends Service  implements MediaPlayer.OnErrorListener{
+/*
+public class MusicService extends Service  implements MediaPlayer.OnErrorListener{
 
     private final IBinder mBinder = new ServiceBinder();
     MediaPlayer mPlayer;

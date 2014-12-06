@@ -74,7 +74,7 @@ public class MapView extends View
 	/** Holds the amount of the map on the screen height wise */
 	private float MAP_ON_SCREEN_HEIGHT = 1.0f;
 
-	private float mScaleX, mScaleY;
+	private float mScaleX = 1.0f, mScaleY = 1.0f;
 	/** Hold the image to be drawn in the background */
 	private Bitmap[] mBackgroundImages; // This may need to be broken up into multiple images, in which case an array should be used
 
