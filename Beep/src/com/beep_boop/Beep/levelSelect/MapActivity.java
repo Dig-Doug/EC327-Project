@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.about.AboutActivity;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
@@ -48,8 +48,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		mMapView = (MapView)findViewById(R.id.mapActivity_mapView);
 		//setup the map view
 		this.setupMapView();
-		//MediaPlayer song = MediaPlayer.create(this,R.raw.thememain);
-		//song.start();
+		MyApplication.activityStarted(this);
 		//setup the settings button
 		ImageButton toSettingsButton = (ImageButton) findViewById(R.id.mapActivity_settingsButton);
 		toSettingsButton.setOnClickListener(new OnClickListener()
@@ -121,15 +120,37 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	}
 	
 	@Override
+	protected void onStop(){
+		super.onStop();
+		MyApplication.activityPaused(this);
+		
+	}
+	
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		MyApplication.mServ.resumeMusic();
+		
+	}
+	
+	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
 		//unsubscribe to level state updates
 		LevelManager.removeLevelStateListener(this);
+		MyApplication.activityPaused((Activity)this);
+		//MyApplication.mServ.stopMusic();
+		MyApplication.doUnbindService();
 		
 		this.mMapView.destroy();
 	}
-
+	
+	/*@Override
+	protected void onRestart(){
+		super.onRestart();
+		//MyApplication
+	}*/
 	///-----NodeClickListener methods-----
 	public boolean mapViewUserCanClickNode(MapView aMapView, MapNode aNode)
 	{

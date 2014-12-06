@@ -30,7 +30,7 @@ public class LoseActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lose);
-
+		MyApplication.activityStarted(this);
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -51,6 +51,12 @@ public class LoseActivity extends Activity
 		}
 		
 		this.setupButtons();
+	}
+	
+	@Override
+	protected void onStop(){
+		super.onStop();
+		MyApplication.activityPaused(this);
 	}
 	
 	private void setupButtons()

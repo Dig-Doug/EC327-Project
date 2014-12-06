@@ -18,7 +18,7 @@ public class SettingsActivity extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		
+		MyApplication.activityStarted(this);
 		
 		RadioGroup fontGroup = (RadioGroup) findViewById(R.id.settingsActivity_fontGroup);
 		//set the fonts of the radio buttons
@@ -55,6 +55,12 @@ public class SettingsActivity extends Activity {
 			}
         	
         });
+	}
+	
+	@Override
+	protected void onStop(){
+		super.onStop();
+		MyApplication.activityPaused(this);
 	}
 	
 	public void returnfromsettings(View view){

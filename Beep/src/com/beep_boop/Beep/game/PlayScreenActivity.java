@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
@@ -57,7 +58,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_screen);
-
+		MyApplication.activityCreated(this);
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -85,6 +86,18 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 		this.mStartTime = System.currentTimeMillis();
 	}
+	@Override
+	protected void onStop(){
+		super.onStop();
+		MyApplication.activityPaused(this);
+	}
+	
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		MyApplication.mServ.resumeMusic();
+	}
+	
 	private void initGoalBar()
 	{
 		Bitmap fromBit = null, toBit = null;

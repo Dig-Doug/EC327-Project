@@ -5,8 +5,8 @@
 		<item value="296" key="DIALOG_X_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="563" key="dialogHeight"/>
-		<item value="900" key="dialogWidth"/>
+		<item value="500" key="dialogHeight"/>
+		<item value="800" key="dialogWidth"/>
 		<list key="textEntries">
 		</list>
 		<list key="orderedElements">
@@ -17,27 +17,26 @@
 		</list>
 	</section>
 	<section name="NewWizardAction">
-		<item value="com.android.ide.eclipse.editors.wizards.NewXmlFileWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<item value="org.eclipse.jdt.ui.wizards.NewClassCreationWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.ui.Basic"/>
 			<item value="com.android.ide.eclipse.wizards.category"/>
 			<item value="org.eclipse.cdt.ui.newCWizards"/>
 			<item value="org.eclipse.jdt.ui.java"/>
 			<item value="org.eclipse.jdt.ui.java/org.eclipse.jdt.junit"/>
-			<item value="com.objectaid.uml.new"/>
-			<item value="org.eclipse.rse.ui.newWizards.rseCategory"/>
-		</list>
-	</section>
-	<section name="ImportExportAction">
-		<item value="org.eclipse.ui.wizards.import.ExternalProject" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
-		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
-			<item value="org.eclipse.ui.Basic"/>
 		</list>
 	</section>
 	<section name="ShowViewDialog">
 		<item value="308" key="DIALOG_WIDTH"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 		<item value="415" key="DIALOG_HEIGHT"/>
-		<item value="566" key="DIALOG_X_ORIGIN"/>
 		<item value="121" key="DIALOG_Y_ORIGIN"/>
+		<item value="566" key="DIALOG_X_ORIGIN"/>
+	</section>
+	<section name="ImportExportAction">
+		<item value="org.eclipse.ui.wizards.import.ExternalProject" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
 	</section>
 </section>

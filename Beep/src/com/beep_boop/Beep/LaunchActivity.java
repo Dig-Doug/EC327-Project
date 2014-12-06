@@ -40,7 +40,7 @@ public class LaunchActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launch);
-
+		MyApplication.activityStarted(this);
 		//grab the image views from XML
 		this.mLogoImageView = (ImageView) findViewById(R.id.launchActivity_logoImageView);
 		this.mTextImageView = (ImageView) findViewById(R.id.launchActivity_textImageView);
@@ -81,7 +81,18 @@ public class LaunchActivity extends Activity
 		});
 	}
 
+	@Override
+	protected void onStop(){
+		super.onStop();
+		MyApplication.activityPaused(this);
+		
+	}
 
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		MyApplication.mServ.resumeMusic();
+	}
 
 	private class LoadLevelsTask extends AsyncTask<Context, Void, Void>
 	{

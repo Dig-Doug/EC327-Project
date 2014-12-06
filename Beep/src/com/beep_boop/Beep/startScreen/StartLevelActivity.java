@@ -30,7 +30,7 @@ public class StartLevelActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_level);
-
+		MyApplication.activityStarted(this);
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -96,6 +96,18 @@ public class StartLevelActivity extends Activity
 			}
 		});
 
+	}
+	
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		MyApplication.mServ.resumeMusic();
+	}
+	
+	@Override
+	protected void onStop(){
+		super.onStop();
+		MyApplication.activityPaused(this);
 	}
 	
 	@Override
