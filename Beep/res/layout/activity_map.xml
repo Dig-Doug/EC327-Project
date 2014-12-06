@@ -13,20 +13,20 @@
         custom:mapWidthOnScreen="1.0"
         custom:nodeOffImage="@drawable/map_node"
         custom:nodeOnImage="@drawable/map_node_blank"
-        custom:nodeSelectedOverlayStatic="@drawable/node_overlay"
-        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay"
-        custom:parrallaxImage="@drawable/starry_backround"
+        custom:nodeSelectedOverlayStatic="@drawable/map_spaceship"
+        custom:nodeSelectedOverlayAnimating="@drawable/map_spaceship"
+        custom:parrallaxImage="@drawable/starry_background"
         custom:starImages="@array/starImages" />
 
     <ImageButton
         android:id="@+id/mapActivity_settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/icon_settings"
-        android:text=""
         android:background="@null"
-        android:padding="10dp" />
+        android:contentDescription="@string/content_description_place_holder"
+        android:padding="10dp"
+        android:src="@drawable/pause_screen_menu_button"
+        android:text="" />
 
     <ImageButton
         android:id="@+id/mapActivity_aboutButton"
