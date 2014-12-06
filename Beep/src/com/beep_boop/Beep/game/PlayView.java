@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -116,9 +117,9 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			mScrollVelocityScalar = a.getFloat(R.styleable.PlayView_scrollVelocityScalar, 1f);
 			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 250);
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 500);
-			Drawable backgroundImage = a.getDrawable(R.styleable.PlayView_backgroundImage);
-			if (backgroundImage != null)
-				this.mBackgroundImage = ((BitmapDrawable) backgroundImage).getBitmap();
+			int backgroundImage = a.getResourceId(R.styleable.PlayView_backgroundImage, -1);
+			if (backgroundImage != -1)
+				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage, null);
 			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mCurrentWordTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mScrollBarPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarColor, Color.WHITE));
@@ -241,6 +242,15 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 		//clean up the animator
 		this.mScrollAnimator.cancel();
 		this.mScrollAnimator = null;
+	}
+	
+	public void destroy()
+	{
+		if (this.mBackgroundImage != null)
+		{
+			this.mBackgroundImage.recycle();
+			this.mBackgroundImage = null;
+		}
 	}
 	
 	public void fontDidChange()

@@ -15,8 +15,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -116,10 +114,10 @@ public class MapView extends View
 		{
 			float mapWidth = a.getFloat(R.styleable.MapView_mapWidthOnScreen, 1.0f);
 			this.MAP_ON_SCREEN_WIDTH = mapWidth;
-			Drawable nodeOffImage = a.getDrawable(R.styleable.MapView_nodeOffImage);
-			this.mNodeImageOff = ((BitmapDrawable) nodeOffImage).getBitmap();
-			Drawable nodeOnImage = a.getDrawable(R.styleable.MapView_nodeOnImage);
-			this.mNodeImageOn = ((BitmapDrawable) nodeOnImage).getBitmap();
+			int nodeOffImage = a.getResourceId(R.styleable.MapView_nodeOffImage, -1);
+			this.mNodeImageOff = BitmapFactory.decodeResource(getResources(), nodeOffImage, null);
+			int nodeOnImage = a.getResourceId(R.styleable.MapView_nodeOnImage, -1);
+			this.mNodeImageOn = BitmapFactory.decodeResource(getResources(), nodeOnImage, null);
 
 			int imageArray = a.getResourceId(R.styleable.MapView_backgroundImage, -1);
 			if (imageArray != -1)
@@ -136,7 +134,6 @@ public class MapView extends View
 						if (bitmapID != -1)
 						{
 							BitmapFactory.Options options = new BitmapFactory.Options();
-							options.inSampleSize = 2;
 							this.mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
 							this.mBackgroundTotalHeight += this.mBackgroundImages[i].getHeight();
 						}
@@ -151,10 +148,10 @@ public class MapView extends View
 					imgs.recycle();
 				}
 			}
-			Drawable nodeOverlayStaticImage = a.getDrawable(R.styleable.MapView_nodeSelectedOverlayStatic);
-			this.mSelectedNodeOverlayStatic = ((BitmapDrawable) nodeOverlayStaticImage).getBitmap();
-			Drawable nodeOverlayAnimatingImage = a.getDrawable(R.styleable.MapView_nodeSelectedOverlayAnimating);
-			this.mSelectedNodeOverlayAnimating = ((BitmapDrawable) nodeOverlayAnimatingImage).getBitmap();
+			int nodeOverlayStaticImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayStatic, -1);
+			this.mSelectedNodeOverlayStatic = BitmapFactory.decodeResource(getResources(), nodeOverlayStaticImage, null);
+			int nodeOverlayAnimatingImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayAnimating, -1);
+			this.mSelectedNodeOverlayAnimating = BitmapFactory.decodeResource(getResources(), nodeOverlayAnimatingImage, null);
 			this.mAnimationLength = a.getInteger(R.styleable.MapView_animationLength, 100);
 			this.mMaxNodeClickDistance = a.getFloat(R.styleable.MapView_nodeClickDistance, 0.05f);
 			this.mSelectedOverlayAnimationLength = a.getInteger(R.styleable.MapView_overlayAnimationLength, 1000);
@@ -204,6 +201,38 @@ public class MapView extends View
 		//clean up the animator
 		this.mNodeAnimator.cancel();
 		this.mNodeAnimator = null;
+	}
+	
+	public void destroy()
+	{
+		if (this.mNodeImageOff != null)
+		{
+			this.mNodeImageOff.recycle();
+			this.mNodeImageOff = null;
+		}
+		if (this.mNodeImageOn != null)
+		{
+			this.mNodeImageOn.recycle();
+			this.mNodeImageOn = null;
+		}
+		for (int i = 0; i < this.mBackgroundImages.length; i++)
+		{
+			if (this.mBackgroundImages[i] != null)
+			{
+				this.mBackgroundImages[i].recycle();
+				this.mBackgroundImages[i] = null;
+			}
+		}
+		if (this.mSelectedNodeOverlayStatic != null)
+		{
+			this.mSelectedNodeOverlayStatic.recycle();
+			this.mSelectedNodeOverlayStatic = null;
+		}
+		if (this.mSelectedNodeOverlayAnimating != null)
+		{
+			this.mSelectedNodeOverlayAnimating.recycle();
+			this.mSelectedNodeOverlayAnimating = null;
+		}
 	}
 
 	///-----Functions-----

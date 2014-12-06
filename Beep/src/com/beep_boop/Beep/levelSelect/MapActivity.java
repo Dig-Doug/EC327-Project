@@ -126,6 +126,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		super.onDestroy();
 		//unsubscribe to level state updates
 		LevelManager.removeLevelStateListener(this);
+		
+		this.mMapView.destroy();
 	}
 
 	///-----NodeClickListener methods-----

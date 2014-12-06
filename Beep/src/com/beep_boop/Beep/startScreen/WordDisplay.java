@@ -3,6 +3,7 @@ package com.beep_boop.Beep.startScreen;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -62,12 +63,12 @@ public class WordDisplay extends View
 			this.mFromWordPercentWidth = a.getFloat(R.styleable.WordDisplay_fromWordPercentWidth, 0.3055f);
 			this.mToWordPercentWidth = a.getFloat(R.styleable.WordDisplay_toWordPercentWidth, 0.3055f);
 			this.mTextPaint.setColor(a.getColor(R.styleable.WordDisplay_textColor, Color.WHITE));
-			Drawable arrowImage = a.getDrawable(R.styleable.WordDisplay_arrowImage);
-			if (arrowImage != null)
-				this.mArrowImage = ((BitmapDrawable) arrowImage).getBitmap();
-			Drawable backImage = a.getDrawable(R.styleable.WordDisplay_backgroundImage);
-			if (backImage != null)
-				this.mBackgroundImage = ((BitmapDrawable) backImage).getBitmap();
+			int arrowImage = a.getResourceId(R.styleable.WordDisplay_arrowImage, -1);
+			if (arrowImage != -1)
+				this.mArrowImage = BitmapFactory.decodeResource(getResources(), arrowImage, null);
+			int backImage = a.getResourceId(R.styleable.WordDisplay_backgroundImage, -1);
+			if (backImage != -1)
+				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backImage, null);
 		}
 		catch (Exception e)
 		{
@@ -81,6 +82,30 @@ public class WordDisplay extends View
 		if (!this.isInEditMode())
 		{
 			this.mTextPaint.setTypeface(MyApplication.MAIN_FONT);
+		}
+	}
+	
+	public void destroy()
+	{
+		if (this.mArrowImage != null)
+		{
+			this.mArrowImage.recycle();
+			this.mArrowImage = null;
+		}
+		if (this.mBackgroundImage != null)
+		{
+			this.mBackgroundImage.recycle();
+			this.mBackgroundImage = null;
+		}
+		if (this.mFromImage != null)
+		{
+			this.mFromImage.recycle();
+			this.mFromImage = null;
+		}
+		if (this.mToImage != null)
+		{
+			this.mToImage.recycle();
+			this.mToImage = null;
 		}
 	}
 
