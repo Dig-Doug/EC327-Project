@@ -558,7 +558,6 @@ public class MapView extends View
 			float scaledY = (Math.abs(this.mOrigin.y)) * this.getHeight();
 			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY - this.getHeight(), null);
 			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY, null);
-			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY + this.getHeight(), null);
 			canvas.restore();
 		}
 	}
