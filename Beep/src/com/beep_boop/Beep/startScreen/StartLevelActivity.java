@@ -97,4 +97,11 @@ public class StartLevelActivity extends Activity
 		});
 
 	}
+	
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		this.mWordDisplay.destroy();
+	}
 }

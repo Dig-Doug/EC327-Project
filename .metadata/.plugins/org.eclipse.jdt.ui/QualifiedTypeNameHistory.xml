@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.levelSelect.MapView"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="android.graphics.Paint"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.LevelManager"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.game.WordHandler"/>
+<fullyQualifiedTypeName name="android.animation.Animator"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.game.PlayView.AnimationState"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.levels.LevelManager"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.levels.Level"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.game.PlayScreenActivity"/>
+<fullyQualifiedTypeName name="android.app.DialogFragment"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.game.GoalBar.ClickListener"/>
+<fullyQualifiedTypeName name="android.animation.Animator.AnimatorListener"/>
 <fullyQualifiedTypeName name="android.app.Service"/>
-<fullyQualifiedTypeName name="android.media.MediaPlayer"/>
-<fullyQualifiedTypeName name="android.content.Intent"/>
-<fullyQualifiedTypeName name="android.os.Binder"/>
-<fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="android.media.MediaPlayer.OnErrorListener"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication.MusicService"/>
-<fullyQualifiedTypeName name="android.content.ServiceConnection"/>
-<fullyQualifiedTypeName name="android.content.ComponentName"/>
-<fullyQualifiedTypeName name="android.os.IBinder"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.drawable"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.animator"/>
+<fullyQualifiedTypeName name="android.animation.TimeInterpolator"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.style"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="android.graphics.Matrix"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.array"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
+<fullyQualifiedTypeName name="android.widget.RadioGroup.OnCheckedChangeListener"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication.FontChangeListener"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
+<fullyQualifiedTypeName name="android.graphics.BitmapFactory.Options"/>
 </qualifiedTypeNameHistroy>

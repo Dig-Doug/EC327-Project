@@ -100,6 +100,17 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		this.mGoalBar.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
 
 	}
+	
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		
+		this.mGoalBar.destroy();
+		this.mPlayView.destroy();
+	}
+	
+	
 	private void play()
 	{
 		if (this.mPauseStartTime != -1)

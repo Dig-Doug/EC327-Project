@@ -4,14 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,9 +19,6 @@ import android.view.View;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.PlayScreenActivity.NumberOfClicksChangedListener;
-
-
-import java.text.DecimalFormat;
 
 
 public class GoalBar extends View implements NumberOfClicksChangedListener
@@ -79,12 +75,12 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			this.mFromWordPercentWidth = a.getFloat(R.styleable.GoalBar_fromWordPercentWidth, 0.1818f);
 			this.mToWordPercentWidth = a.getFloat(R.styleable.GoalBar_toWordPercentWidth, 0.1818f);
 			this.mTextPaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
-			Drawable arrowImage = a.getDrawable(R.styleable.GoalBar_arrowImage); 
-			if (arrowImage != null)
-				this.mArrowImage = ((BitmapDrawable) arrowImage).getBitmap();
-			Drawable backImage = a.getDrawable(R.styleable.GoalBar_backgroundImage);
-			if (backImage != null)
-				this.mBackgroundImage = ((BitmapDrawable) backImage).getBitmap();
+			int arrowImage = a.getResourceId(R.styleable.GoalBar_arrowImage, -1); 
+			if (arrowImage != -1)
+				this.mArrowImage = BitmapFactory.decodeResource(getResources(), arrowImage, null);
+			int backImage = a.getResourceId(R.styleable.GoalBar_backgroundImage, -1);
+			if (backImage != -1)
+				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backImage, null);
 		//	this.mClickNumber = a.getFloat(R.styleable.GoalBar_clickNumber, )
 		}
 		catch (Exception e)
@@ -111,6 +107,30 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	public void onDetachedFromWindow()
 	{
 		super.onDetachedFromWindow();
+	}
+	
+	public void destroy()
+	{
+		if (this.mArrowImage != null)
+		{
+			this.mArrowImage.recycle();
+			this.mArrowImage = null;
+		}
+		if (this.mBackgroundImage != null)
+		{
+			this.mBackgroundImage.recycle();
+			this.mBackgroundImage = null;
+		}
+		if (this.mFromImage != null)
+		{
+			this.mFromImage.recycle();
+			this.mFromImage = null;
+		}
+		if (this.mToImage != null)
+		{
+			this.mToImage.recycle();
+			this.mToImage = null;
+		}
 	}
 	
 	//sets the listener
