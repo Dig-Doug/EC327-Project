@@ -140,6 +140,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 			//display message
 			Toast.makeText(this, getString(R.string.mapActivity_cannotClickNodeToastMessage), Toast.LENGTH_SHORT).show();
 		}
+		
 		//return result
 		return result;
 	}

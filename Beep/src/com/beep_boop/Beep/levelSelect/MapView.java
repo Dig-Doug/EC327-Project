@@ -78,6 +78,9 @@ public class MapView extends View
 	/** Hold the image to be drawn in the background */
 	private Bitmap[] mBackgroundImages; // This may need to be broken up into multiple images, in which case an array should be used
 
+	private Bitmap mParrallaxImage;
+	private float mParrallaxScale = 1.0f;
+
 	/** Holds the OFF node image */
 	private Bitmap mNodeImageOff;
 	/** Holds the ON node image */
@@ -148,12 +151,18 @@ public class MapView extends View
 				}
 			}
 			int nodeOverlayStaticImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayStatic, -1);
-			this.mSelectedNodeOverlayStatic = BitmapFactory.decodeResource(getResources(), nodeOverlayStaticImage, null);
+			if (nodeOverlayStaticImage != -1)
+				this.mSelectedNodeOverlayStatic = BitmapFactory.decodeResource(getResources(), nodeOverlayStaticImage, null);
 			int nodeOverlayAnimatingImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayAnimating, -1);
-			this.mSelectedNodeOverlayAnimating = BitmapFactory.decodeResource(getResources(), nodeOverlayAnimatingImage, null);
+			if (nodeOverlayAnimatingImage != -1)
+				this.mSelectedNodeOverlayAnimating = BitmapFactory.decodeResource(getResources(), nodeOverlayAnimatingImage, null);
 			this.mAnimationLength = a.getInteger(R.styleable.MapView_animationLength, 100);
 			this.mMaxNodeClickDistance = a.getFloat(R.styleable.MapView_nodeClickDistance, 0.05f);
 			this.mSelectedOverlayAnimationLength = a.getInteger(R.styleable.MapView_overlayAnimationLength, 1000);
+
+			int parrallaxImage = a.getResourceId(R.styleable.MapView_parrallaxImage, -1);
+			if (parrallaxImage != -1)
+				this.mParrallaxImage = BitmapFactory.decodeResource(getResources(), parrallaxImage, null);
 		}
 		catch (Exception e)
 		{
@@ -201,7 +210,7 @@ public class MapView extends View
 		this.mNodeAnimator.cancel();
 		this.mNodeAnimator = null;
 	}
-	
+
 	public void destroy()
 	{
 		if (this.mNodeImageOff != null)
@@ -231,6 +240,11 @@ public class MapView extends View
 		{
 			this.mSelectedNodeOverlayAnimating.recycle();
 			this.mSelectedNodeOverlayAnimating = null;
+		}
+		if (this.mParrallaxImage != null)
+		{
+			this.mParrallaxImage.recycle();
+			this.mParrallaxImage = null;
 		}
 	}
 
@@ -525,12 +539,28 @@ public class MapView extends View
 
 		canvas.save();
 
+		this.drawParrallax(canvas);
+
 		canvas.scale(this.mScaleX, this.mScaleY);
 		//draw background
 		this.drawBackground(canvas);
 		//draw all the nodes on top
 		this.drawNodesWithinView(canvas);
 		canvas.restore();
+	}
+
+	private void drawParrallax(Canvas canvas)
+	{
+		if (this.mParrallaxImage != null)
+		{
+			canvas.save();
+			canvas.scale(this.mParrallaxScale, this.mParrallaxScale);
+			float scaledY = (Math.abs(this.mOrigin.y)) * this.getHeight();
+			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY - this.getHeight(), null);
+			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY, null);
+			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY + this.getHeight(), null);
+			canvas.restore();
+		}
 	}
 
 	//draws the background of the map
@@ -632,6 +662,13 @@ public class MapView extends View
 		{
 			this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlayStatic.getWidth() / 2.0f);
 			this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlayStatic.getHeight() / 2.0f);
+		}
+
+		if (this.mParrallaxImage != null)
+		{
+			float scaleX = (w / (float)this.mParrallaxImage.getWidth());
+			float scaleY = (h / (float)this.mParrallaxImage.getHeight());
+			this.mParrallaxScale = Math.max(scaleX, scaleY);
 		}
 
 		this.calculateOriginBounds();

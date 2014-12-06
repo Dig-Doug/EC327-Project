@@ -30,6 +30,8 @@
         <attr name="nodeSelectedOverlayAnimating" format="reference" />
         <attr name="backgroundImage" />
         <attr name="overlayAnimationLength" format="integer" />
+        <attr name="parrallaxImage" format="reference" />
+        <attr name="parrallaxScalar" format="float" />
     </declare-styleable>
     <declare-styleable name="PlayView">
         <attr name="backgroundImage" />

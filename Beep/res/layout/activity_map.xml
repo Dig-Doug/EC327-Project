@@ -14,7 +14,8 @@
         custom:nodeOffImage="@drawable/map_node"
         custom:nodeOnImage="@drawable/map_node_blank"
         custom:nodeSelectedOverlayStatic="@drawable/node_overlay"
-        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay" />
+        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay"
+        custom:parrallaxImage="@drawable/starry_backround" />
 
     <ImageButton
         android:id="@+id/mapActivity_settingsButton"
