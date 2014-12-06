@@ -186,12 +186,11 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 						}
 					}
 					
-					this.mStarManager = new StarManager(this, 100, starImages, new PointF(0.0f, 0.01f), 
-							1.0f, 5.0f, 
-							-(float)Math.PI/16, (float)Math.PI/16, 
+					this.mStarManager = new StarManager(this, 100, starImages, new PointF(0.0f, 0f), 
+							0.25f, 1.0f, 
+							-5, 5, 
 							0.01f, 0.99f, 
-							0.1f, 0.3f, 
-							0.01f, 0.09f);
+							0.05f, 0.2f);
 				}
 				catch (Exception e)
 				{
