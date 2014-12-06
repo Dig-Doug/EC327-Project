@@ -7913,3 +7913,19 @@ java.io.IOException: Network is down
 	at org.eclipse.tm.tcf.protocol.Protocol$3.run(Protocol.java:209)
 	at org.eclipse.tm.tcf.EventQueue.run(EventQueue.java:99)
 	at java.lang.Thread.run(Thread.java:745)
+!SESSION 2014-12-06 16:12:41.061 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.8.0_11
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-12-06 16:12:42.695
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.net 1 0 2014-12-06 16:12:45.372
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui 4 4 2014-12-06 16:17:58.780
+!MESSAGE Referenced part does not exist yet: org.eclipse.ui.views.ProblemView.

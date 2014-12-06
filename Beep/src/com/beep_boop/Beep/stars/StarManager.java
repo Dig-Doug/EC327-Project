@@ -23,13 +23,12 @@ public class StarManager
 
 	private float mCreationAngleLowerBound, mCreationAngleUpperBound;
 	private float mCreationPositionLowerBound, mCreationPositionUpperBound;
-	private float mCreationVelocityXLowerBound, mCreationVelocityXUpperBound;
-	private float mCreationVelocityYLowerBound, mCreationVelocityYUpperBound;
+	private float mCreationVelocityLowerBound, mCreationVelocityUpperBound;
 	private PointF mGravity;
 
 	private TimeAnimator mStarAnimator;
 	
-	private RectF mBounds = new RectF(0.0f, 0.0f, 1.0f, 1.0f);
+	private RectF mBounds = new RectF(-0.05f, -0.05f, 1.05f, 1.05f);
 
 
 	public StarManager(ScreenSpaceCoverter aScreenSpaceConverter,
@@ -37,8 +36,7 @@ public class StarManager
 			float aScaleLowerBound, float aScaleUpperBound, 
 			float aAngleLowerBound, float aAngleUpperBound, 
 			float aPositionLowerBound, float aPositionUpperBound, 
-			float aVelocityXLowerBound, float aVelocityXUpperBound, 
-			float aVelocityYLowerBound, float aVelocityYUpperBound)
+			float aVelocityLowerBound, float aVelocityUpperBound)
 	{
 		this.mScreenSpaceConverter = aScreenSpaceConverter;
 		this.mStars = new Star[aMaxStars];
@@ -46,14 +44,12 @@ public class StarManager
 		this.mGravity = aGravity;
 		this.mScaleLowerBound = aScaleLowerBound;
 		this.mScaleUpperBound = aScaleUpperBound;
-		this.mCreationAngleLowerBound = aAngleLowerBound;
-		this.mCreationAngleUpperBound = aAngleUpperBound;
+		this.mCreationAngleLowerBound = aAngleLowerBound * (float)Math.PI / 180.0f;
+		this.mCreationAngleUpperBound = aAngleUpperBound * (float)Math.PI / 180.0f;
 		this.mCreationPositionLowerBound = aPositionLowerBound;
 		this.mCreationPositionUpperBound = aPositionUpperBound;
-		this.mCreationVelocityXLowerBound = aVelocityXLowerBound;
-		this.mCreationVelocityXUpperBound = aVelocityXUpperBound;
-		this.mCreationVelocityYLowerBound = aVelocityYLowerBound;
-		this.mCreationVelocityYUpperBound = aVelocityYUpperBound;
+		this.mCreationVelocityLowerBound = aVelocityLowerBound;
+		this.mCreationVelocityUpperBound = aVelocityUpperBound;
 	}
 
 	public void start()
@@ -108,17 +104,12 @@ public class StarManager
 			newStar = new Star();
 		}
 		
-		float xVelocity = (float)(Math.random() * 2.0f - 1.0f) * (this.mCreationVelocityXUpperBound - this.mCreationVelocityXLowerBound);
-		
-		float randAngle = (float)(Math.random() * 2.0f - 1.0f) * (this.mCreationAngleUpperBound - this.mCreationAngleLowerBound);
-		randAngle += this.mCreationAngleLowerBound;
-		float yVelocity = (float)Math.sin(randAngle) * (this.mCreationVelocityYUpperBound - this.mCreationVelocityYLowerBound);
-		
-		xVelocity += this.mCreationVelocityXLowerBound * (xVelocity > 0 ? 1 : -1);
-		yVelocity += this.mCreationVelocityYLowerBound * (yVelocity > 0 ? 1 : -1);
-		
-		newStar.velocity.x = xVelocity;
-		newStar.velocity.y = yVelocity;
+		float randAngle = (float)(Math.random()) * (this.mCreationAngleUpperBound - this.mCreationAngleLowerBound) + this.mCreationAngleLowerBound;
+		float xVelocity = (float)Math.cos(randAngle);
+		float yVelocity = (float)Math.sin(randAngle);
+		float speed = (float)(Math.random()) * (this.mCreationVelocityUpperBound - this.mCreationVelocityLowerBound) + this.mCreationVelocityLowerBound;
+		newStar.velocity.x = xVelocity * speed;
+		newStar.velocity.y = yVelocity * speed;
 		
 		if (xVelocity > 0.0f)
 		{
@@ -126,7 +117,7 @@ public class StarManager
 		}
 		else
 		{
-			newStar.location.x = this.mBounds.right;
+			newStar.location.x = this.mBounds.right * 0.99f;
 		}
 		newStar.location.y = (float)(Math.random()) * (this.mCreationPositionUpperBound - this.mCreationPositionLowerBound) + this.mCreationPositionLowerBound;
 		
@@ -152,12 +143,12 @@ public class StarManager
 				}
 				else
 				{
-					this.mStars[i] = null;
+					this.mStars[i] = createNewStar(this.mStars[i]);
 				}
 			}
 			else
 			{
-				this.mStars[i] = createNewStar(this.mStars[i]);
+				this.mStars[i] = createNewStar(null);
 			}
 		}
 	}
@@ -172,9 +163,9 @@ public class StarManager
 				{
 					PointF screenDraw = this.mScreenSpaceConverter.starManagerConvertToScreenSpace(this, star.location);
 					aCanvas.save();
-					//aCanvas.translate(screenDraw.x, screenDraw.y);
-					//aCanvas.scale(star.scale, star.scale);
-					aCanvas.drawBitmap(this.mStarImages[star.imageIndex], screenDraw.x, screenDraw.y, null);
+					aCanvas.translate(screenDraw.x, screenDraw.y);
+					aCanvas.scale(star.scale, star.scale);
+					aCanvas.drawBitmap(this.mStarImages[star.imageIndex], 0, 0, null);
 					aCanvas.restore();
 				}
 			}
