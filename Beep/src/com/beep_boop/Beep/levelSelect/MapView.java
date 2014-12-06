@@ -128,7 +128,6 @@ public class MapView extends View
 
 				try
 				{
-
 					this.mBackgroundImages = new Bitmap[imgs.length()];
 					for (int i = 0; i < imgs.length(); i++)
 					{
@@ -587,15 +586,24 @@ public class MapView extends View
 	{
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		this.mScaleX = this.MAP_ON_SCREEN_WIDTH * (this.getWidth() / (float)this.mBackgroundImages[0].getWidth());
+		if (this.mBackgroundImages != null && this.mBackgroundImages[0] != null)
+		{
+			this.mScaleX = this.MAP_ON_SCREEN_WIDTH * (this.getWidth() / (float)this.mBackgroundImages[0].getWidth());
+		}
 		this.mScaleY = this.mScaleX;
 		this.MAP_ON_SCREEN_HEIGHT = (this.getHeight() / (float)this.mBackgroundTotalHeight) / this.mScaleY;
 
-		this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() / 2);
-		this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() / 2);
+		if (this.mNodeImageOff != null)
+		{
+			this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() / 2);
+			this.mNodeHalfSizeY = (int)(this.mNodeImageOff.getHeight() / 2);
+		}
 
-		this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlayStatic.getWidth() / 2.0f);
-		this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlayStatic.getHeight() / 2.0f);
+		if (this.mSelectedNodeOverlayStatic != null)
+		{
+			this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlayStatic.getWidth() / 2.0f);
+			this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlayStatic.getHeight() / 2.0f);
+		}
 
 		this.calculateOriginBounds();
 	}

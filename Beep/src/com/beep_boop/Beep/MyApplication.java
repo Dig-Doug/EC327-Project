@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Application;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
@@ -15,6 +17,35 @@ import android.widget.Toast;
 
 public class MyApplication extends Application
 {
+	/*private boolean mIsBound = false;
+	private MusicService mServ;
+	private ServiceConnection Scon =new ServiceConnection(){
+
+		public void onServiceConnected(ComponentName name, IBinder
+	     binder) {
+		mServ = ((MusicService.ServiceBinder) binder).getService();
+		}
+
+		public void onServiceDisconnected(ComponentName name) {
+			mServ = null;
+		}
+		};
+
+		void doBindService(){
+	 		bindService(new Intent(this,MusicService.class),
+					Scon,Context.BIND_AUTO_CREATE);
+			mIsBound = true;
+		}
+
+		void doUnbindService()
+		{
+			if(mIsBound)
+			{
+				unbindService(Scon);
+	      		mIsBound = false;
+			}
+		}
+		*/
 	public interface FontChangeListener
 	{
 		public void fontDidChange();
@@ -31,7 +62,10 @@ public class MyApplication extends Application
     {
         super.onCreate();
         MyApplication.context = getApplicationContext();
-        
+		//doBindService();
+		//Intent music = new Intent();
+		//music.setClass(this,MusicService.class);
+		//startService(music);
         MyApplication.MAIN_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[0];
 		MyApplication.MAIN_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.MAIN_FONT_NAME);
 		MyApplication.PLAY_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[1];
@@ -76,7 +110,7 @@ public class MyApplication extends Application
     }
 //    private class startmusic extends AsyncTask
 
-public class MusicService extends Service  implements MediaPlayer.OnErrorListener{
+/*public class MusicService extends Service  implements MediaPlayer.OnErrorListener{
 
     private final IBinder mBinder = new ServiceBinder();
     MediaPlayer mPlayer;
@@ -181,5 +215,5 @@ public class MusicService extends Service  implements MediaPlayer.OnErrorListene
 		}
 		return false;
 	}
-}
+}*/
 }
