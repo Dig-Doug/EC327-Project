@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	/** Reference to this */
 	private Activity THIS = this;
 	
+	
 	///-----Activity Life Cycle-----
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -46,7 +48,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		mMapView = (MapView)findViewById(R.id.mapActivity_mapView);
 		//setup the map view
 		this.setupMapView();
-		
+		//MediaPlayer song = MediaPlayer.create(this,R.raw.thememain);
+		//song.start();
 		//setup the settings button
 		ImageButton toSettingsButton = (ImageButton) findViewById(R.id.mapActivity_settingsButton);
 		toSettingsButton.setOnClickListener(new OnClickListener()

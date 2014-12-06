@@ -2,15 +2,19 @@ package com.beep_boop.Beep;
 
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.beep_boop.Beep.MyApplication.MusicService;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.PlayScreenParser;
 import com.beep_boop.Beep.game.WordHandler;
@@ -19,6 +23,7 @@ import com.beep_boop.Beep.levels.LevelManager;
 
 public class LaunchActivity extends Activity 
 {
+	
 	///-----Member Variables-----
 	/** Holds a reference to THIS for use in listeners */
 	private LaunchActivity THIS = this;
@@ -32,6 +37,34 @@ public class LaunchActivity extends Activity
 	private boolean mLevelsLoaded = false, mWordsLoaded = false;
 	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f;
 
+	private boolean mIsBound = false;
+	private MusicService mServ;
+	private ServiceConnection Scon =new ServiceConnection(){
+
+		public void onServiceConnected(ComponentName name, IBinder
+	     binder) {
+		mServ = ((MusicService.ServiceBinder)binder).getService();
+		}
+
+		public void onServiceDisconnected(ComponentName name) {
+			mServ = null;
+		}
+		};
+
+		void doBindService(){
+	 		bindService(new Intent(this,MusicService.class),
+					Scon,Context.BIND_AUTO_CREATE);
+			mIsBound = true;
+		}
+
+		void doUnbindService()
+		{
+			if(mIsBound)
+			{
+				unbindService(Scon);
+	      		mIsBound = false;
+			}
+		}
 	///-----Activity Life Cycle-----
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -46,7 +79,11 @@ public class LaunchActivity extends Activity
 
 		new LoadLevelsTask().execute(this);
 		new LoadWordsTask().execute(this);
-
+		
+		doBindService();
+		Intent music = new Intent();
+		music.setClass(this,MusicService.class);
+		startService(music);
 		//load the fade in animation
 		Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.animator.anim_fadein);
 		//start the animation
