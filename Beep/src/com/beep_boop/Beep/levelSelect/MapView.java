@@ -621,11 +621,14 @@ public class MapView extends View
 
 			PointF screenDrawCenter = this.convertToScreenSpace(this.mSelectedOverlayAnimationStartNode.getX() + deltaX, this.mSelectedOverlayAnimationStartNode.getY() + deltaY);
 			Matrix matrix = new Matrix();
+			//flips the picture if moving in other direction
+			/*
 			if (this.mSelectedOverlayAnimator != null && deltaX < 0)
 			{
 				matrix.setScale(-1,1);
 				matrix.postTranslate(2 * this.mOverlayHalfSizeX, 0);
 			}
+			*/
 			matrix.postTranslate(screenDrawCenter.x - this.mOverlayHalfSizeX, screenDrawCenter.y - this.mOverlayHalfSizeY);
 
 			canvas.drawBitmap(drawWith, matrix, null);

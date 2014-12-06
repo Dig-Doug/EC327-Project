@@ -305,7 +305,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			float toWordMaxWidth = this.mToWordPercentWidth * this.getWidth();
 			this.mTextPaint.setTextSize(this.mDefaultTextSize);
 			float textSizeTo = this.mTextPaint.getTextSize();
-			while (this.mTextPaint.measureText(this.mFromWord) > toWordMaxWidth)
+			while (this.mTextPaint.measureText(this.mToWord) > toWordMaxWidth)
 			{
 				textSizeTo--;
 				this.mTextPaint.setTextSize(textSizeTo);

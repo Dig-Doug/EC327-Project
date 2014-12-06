@@ -90,11 +90,18 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		try
 		{
 			fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
+		}
+		catch (Exception e)
+		{
+			Log.e(TAG, "Error getting from level image");
+		}
+		try
+		{
 			toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
 		}
 		catch (Exception e)
 		{
-			Log.e(TAG, "Error getting level images");
+			Log.e(TAG, "Error getting to level image");
 		}
 		this.mGoalBar.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
 
