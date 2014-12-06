@@ -26,10 +26,7 @@ import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.lose.LoseActivity;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
-import com.beep_boop.Beep.startScreen.WordDisplay;
 import com.beep_boop.Beep.win.WinActivity;
-
-
 
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource, GoalBar.ClickListener
 {
@@ -84,10 +81,11 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 		this.mGoalBar = (GoalBar) findViewById(R.id.playScreenActivity_goalBar);
 		this.mGoalBar.setListener(this);
+		this.initGoalBar();
 
 		this.mStartTime = System.currentTimeMillis();
 	}
-	private void init_goalBar()
+	private void initGoalBar()
 	{
 		Bitmap fromBit = null, toBit = null;
 		try

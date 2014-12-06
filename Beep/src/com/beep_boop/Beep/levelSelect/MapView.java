@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -134,8 +135,9 @@ public class MapView extends View
 						int bitmapID = imgs.getResourceId(i, -1);
 						if (bitmapID != -1)
 						{
-							Drawable backgroundImage = context.getResources().getDrawable(bitmapID);
-							this.mBackgroundImages[i] = ((BitmapDrawable) backgroundImage).getBitmap();
+							BitmapFactory.Options options = new BitmapFactory.Options();
+							options.inSampleSize = 2;
+							this.mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
 							this.mBackgroundTotalHeight += this.mBackgroundImages[i].getHeight();
 						}
 					}
@@ -184,7 +186,7 @@ public class MapView extends View
 			public void onAnimationUpdate(ValueAnimator animation)
 			{
 				mSelectedNodeState = ((Float) (animation.getAnimatedValue())).floatValue();
-				//mNodeOffPaint.setAlpha((int)(255 * (1.0f - mSelectedNodeState)));
+				mNodeOffPaint.setAlpha((int)(255 * (1.0f - mSelectedNodeState)));
 				mNodeOnPaint.setAlpha((int)(255 * mSelectedNodeState));
 				requestRedraw();
 			}

@@ -11,8 +11,8 @@
         custom:animationLength="1000"
         custom:backgroundImage="@array/map_backgroundImages"
         custom:mapWidthOnScreen="1.0"
-        custom:nodeOffImage="@drawable/node_star_off"
-        custom:nodeOnImage="@drawable/node_star_on"
+        custom:nodeOffImage="@drawable/map_node"
+        custom:nodeOnImage="@drawable/map_node_blank"
         custom:nodeSelectedOverlayStatic="@drawable/node_overlay"
         custom:nodeSelectedOverlayAnimating="@drawable/node_overlay" />
 

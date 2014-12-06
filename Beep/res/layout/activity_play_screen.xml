@@ -8,7 +8,7 @@
     <com.beep_boop.Beep.game.GoalBar
         android:id="@+id/playScreenActivity_goalBar"
         android:layout_width="fill_parent"
-        android:layout_height="113dp" 
+        android:layout_height="100dp" 
         android:layout_gravity="center"
         custom:arrowImage="@drawable/start_arrow"
         custom:backgroundImage="@drawable/goal_bar_background"
@@ -24,10 +24,6 @@
         custom:wordsOnPage="10"
         custom:scrollBarBackgroundColor="@color/playScreenActivity_backgroundColor"
         custom:scrollBarColor="@color/playScreenActivity_scrollColor" />
-        custom:textColor="@color/playScreenActivity_textColor"
-        custom:wordsOnPage="9" 
-        custom:animationInLength="300"
-        custom:animationOutLength="500"/>
     	
 
 </LinearLayout>
