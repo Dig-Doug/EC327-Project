@@ -26,7 +26,6 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.style"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="android.graphics.Matrix"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.array"/>
 <fullyQualifiedTypeName name="android.widget.RadioGroup.OnCheckedChangeListener"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
@@ -34,4 +33,5 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
 <fullyQualifiedTypeName name="android.graphics.BitmapFactory.Options"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 </qualifiedTypeNameHistroy>
