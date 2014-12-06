@@ -67,6 +67,8 @@
         <attr name="toWordPercentWidth" />
         <attr name="textColor" />
         <attr name="backgroundImage" />
+        <attr name="clickNumberPercentX" format="float"/>
+        <attr name="clickNumberPercentY" format="float"/>
     </declare-styleable>
     <declare-styleable name="WordDisplay">
         <attr name="arrowImage" />

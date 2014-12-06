@@ -38,7 +38,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	private float mArrowImagePercentX, mArrowImagePercentY, mFromWordPercentX, mFromWordPercentY, mToWordPercentX, mToWordPercentY;
 	private float mFromImagePercentWidth, mToImagePercentWidth;
 	private float mArrowImagePercentWidth, mFromWordPercentWidth, mToWordPercentWidth;
-
+	private float mClickNumberPercentX, mClickNumberPercentY;
 
 
 	private PointF mFromWordDraw, mToWordDraw;
@@ -81,7 +81,9 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			int backImage = a.getResourceId(R.styleable.GoalBar_backgroundImage, -1);
 			if (backImage != -1)
 				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backImage, null);
-		//	this.mClickNumber = a.getFloat(R.styleable.GoalBar_clickNumber, )
+			this.mClickNumberPercentX = a.getFloat(R.styleable.GoalBar_clickNumberPercentX, 0.5f);
+			this.mClickNumberPercentY = a.getFloat(R.styleable.GoalBar_clickNumberPercentY, 0.8f);
+			
 		}
 		catch (Exception e)
 		{
@@ -157,7 +159,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			canvas.drawText(this.mFromWord, this.mFromWordDraw.x, this.mFromWordDraw.y, this.mTextPaint);
 		if (this.mToWord != null)
 			canvas.drawText(this.mToWord, this.mToWordDraw.x, this.mToWordDraw.y, this.mTextPaint);
-	//	canvas.drawText(this.mNumberOfClicks, , y, paint)
+		canvas.drawText(this.mNumberOfClicks+"", this.mClickNumberPercentX, this.mClickNumberPercentY, this.mTextPaint);
 	}
 	public void set(Bitmap aFromImage, Bitmap aToImage, String aFromWord, String aToWord)
 	{
