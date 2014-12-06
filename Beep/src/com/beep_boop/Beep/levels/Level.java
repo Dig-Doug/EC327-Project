@@ -16,9 +16,10 @@ public class Level
 	public int numberOfSteps;
 	public int maxMoves;
 	public String fromImage, toImage;
+	public String hint;
 	
 	public Level(String aLevelKey, String aNextLevelKey, String aFromWord, String aToWord, String aFromImage, String aToImage,  int aMaxMoves,
-			ArrayList<String> aRequiredLevels)
+			ArrayList<String> aRequiredLevels, String aHint)
 	{
 		this.levelKey = aLevelKey;
 		this.nextLevelKey = aNextLevelKey;
@@ -32,6 +33,8 @@ public class Level
 		this.completed = false;
 		this.time = Double.MAX_VALUE;
 		this.numberOfSteps = Integer.MAX_VALUE;
+		
+		this.hint = aHint;
 	}
 	
 	public void writeToFile(FileOutputStream aOut)

@@ -63,6 +63,7 @@
 	<string name="title_activity_lose">LoseActivity</string>
 	<string name="loseActivity_title">MISSION:</string>
     <string name="loseActivity_failed">FAILED!</string>
+    <string name="loseActivity_hint">hint!</string>
 	
 	<!-- Sharing -->
 	<string name="share_emailDefaultText1">I went from </string>

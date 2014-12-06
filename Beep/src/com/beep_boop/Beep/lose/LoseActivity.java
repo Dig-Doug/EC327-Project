@@ -51,6 +51,10 @@ public class LoseActivity extends Activity
 		}
 		
 		this.setupButtons();
+		
+		TextView hintView = (TextView) findViewById(R.id.loseActivity_hintText);
+		hintView.setText(this.mLevel.hint);
+		hintView.setTypeface(MyApplication.MAIN_FONT);
 	}
 	
 	private void setupButtons()
