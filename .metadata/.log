@@ -10065,3 +10065,6 @@ java.lang.OutOfMemoryError: Requested array size exceeds VM limit
 
 !ENTRY com.android.ide.eclipse.adt 1 0 2014-12-07 15:15:17.839
 !MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/map_data_file.xml [Res F/Beep/res/raw, type RAW]
+
+!ENTRY org.eclipse.ui 2 2 2014-12-07 15:34:02.866
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
