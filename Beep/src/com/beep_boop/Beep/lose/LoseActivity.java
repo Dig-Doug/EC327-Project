@@ -14,6 +14,7 @@ import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.stars.StarryBackgroundView;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
 public class LoseActivity extends Activity
@@ -25,11 +26,16 @@ public class LoseActivity extends Activity
 	private LoseActivity THIS = this;
 	private Level mLevel;
 	
+	private StarryBackgroundView mStarBackground;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lose);
+		
+		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.aboutActivity_background);
+		
 		MyApplication.activityStarted(this);
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
@@ -87,5 +93,12 @@ public class LoseActivity extends Activity
 				finish();
 			}
 		});
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		this.mStarBackground.destroy();
 	}
 }

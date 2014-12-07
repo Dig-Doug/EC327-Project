@@ -1,8 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/starry_background"
     android:gravity="top" >
+
+    <com.beep_boop.Beep.stars.StarryBackgroundView
+        android:id="@+id/loseActivity_background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        custom:backgroundImage="@drawable/starry_background"
+        custom:starImages="@array/starImages" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,19 +21,23 @@
 
         <TextView
             android:id="@+id/loseActivity_hintText"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:maxEms="30"
             android:maxLines="3"
             android:minLines="1"
             android:text="@string/loseActivity_hint"
             android:textColor="@color/loseActivity_textColor"
+            android:textColorLink="@color/launchActivity_loadingTextColor"
             android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/loseActivity_restartLevelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:padding="10dp"
@@ -44,16 +56,16 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/mission_failed_bubble" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/content_description_place_holder"

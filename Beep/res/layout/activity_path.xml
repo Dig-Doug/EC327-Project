@@ -1,12 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <TextView
+    <com.beep_boop.Beep.stars.StarryBackgroundView
+        android:id="@+id/pathActivity_background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        custom:backgroundImage="@drawable/starry_background"
+        custom:starImages="@array/starImages" />
+
+    <ImageButton
+        android:id="@+id/pathActivity_nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/button_next" />
+
+    <TextView
+        android:id="@+id/pathActivity_pathTextView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:maxEms="20"
+        android:scrollbars="vertical"
+        android:text="@string/content_description_place_holder"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textSize="30sp" 
+        android:gravity="center"/>
 
 </RelativeLayout>

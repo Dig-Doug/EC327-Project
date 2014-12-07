@@ -12,7 +12,7 @@ import com.beep_boop.Beep.stars.StarryBackgroundView;
 public class AboutActivity extends Activity
 {
 	private StarryBackgroundView mStarBackground;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -21,6 +21,7 @@ public class AboutActivity extends Activity
 		MyApplication.activityStarted(this);
 
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.aboutActivity_background);
+
 		ImageButton backButton = (ImageButton) findViewById(R.id.aboutActivity_backButton);
 		backButton.setOnClickListener(new View.OnClickListener()
 		{
@@ -32,25 +33,28 @@ public class AboutActivity extends Activity
 			}
 		});
 	}
-	
+
 	@Override
 	protected void onStop()
 	{
 		super.onStop();
 		MyApplication.activityPaused(this);
-		
+
 	}
 	@Override
 	protected void onRestart(){
 		super.onRestart();
 		MyApplication.mServ.resumeMusic();
-		
+
 	}
-	
+
 	@Override
 	protected void onDestroy()
 	{
-	super.onDestroy();
-	this.mStarBackground.destroy();
+		super.onDestroy();
+		if (this.mStarBackground != null)
+		{
+			this.mStarBackground.destroy();
+		}
 	}
 }

@@ -14,10 +14,12 @@ import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class WinActivity extends Activity
 {
 	///-----Member Variables-----
+	private WinActivity THIS = this;
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
 	public static final String EXTRA_PATH = "EXTRA_PATH";
 	public static final String EXTRA_TIME = "EXTRA_TIME";
@@ -29,16 +31,20 @@ public class WinActivity extends Activity
 
 	private TextView mTimePlaceholderLabel;
 	private TextView mMovePlaceholderLabel;
+	
+	private StarryBackgroundView mStarBackground;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_win);
+		
+		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.winActivity_background);
 
 		Bundle extras = this.getIntent().getExtras();
 		double time = 0;
-		boolean personalBestTime = false, personalBestMoves = false;
+		//boolean personalBestTime = false, personalBestMoves = false;
 		if (extras != null)
 		{
 			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY))
@@ -51,11 +57,12 @@ public class WinActivity extends Activity
 					time = extras.getDouble(WinActivity.EXTRA_TIME);
 					this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
 
+					/*
 					if (time < this.mCompletedLevel.time)
 						personalBestTime = true;
 					if (this.mPath.length - 1 < this.mCompletedLevel.numberOfSteps)
 						personalBestMoves = true;
-
+					*/
 					LevelManager.setLevelComplete(levelKey, true, time, this.mPath.length - 1);
 				}
 			}
@@ -110,6 +117,11 @@ public class WinActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
+				Intent pathIntent = new Intent(THIS, PathActivity.class);
+				pathIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, mCompletedLevel.levelKey);
+				pathIntent.putExtra(WinActivity.EXTRA_PATH, mPath);
+				startActivity(pathIntent);
+				overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 				finish();
 			}
 		});
@@ -137,5 +149,29 @@ public class WinActivity extends Activity
 				getString(R.string.share_emailDefaultText5);
 		intent.putExtra(Intent.EXTRA_TEXT, message);
 		startActivity(Intent.createChooser(intent, "Send Email"));
+	}
+	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		MyApplication.activityPaused(this);
+
+	}
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		MyApplication.mServ.resumeMusic();
+
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		if (this.mStarBackground != null)
+		{
+			this.mStarBackground.destroy();
+		}
 	}
 }
