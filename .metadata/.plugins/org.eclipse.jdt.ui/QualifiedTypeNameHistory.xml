@@ -10,4 +10,5 @@
 <fullyQualifiedTypeName name="android.content.ServiceConnection"/>
 <fullyQualifiedTypeName name="android.content.ComponentName"/>
 <fullyQualifiedTypeName name="android.os.IBinder"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
 </qualifiedTypeNameHistroy>

@@ -48,6 +48,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		mMapView = (MapView)findViewById(R.id.mapActivity_mapView);
 		//setup the map view
 		this.setupMapView();
+		
 		MyApplication.activityStarted(this);
 		//setup the settings button
 		ImageButton toSettingsButton = (ImageButton) findViewById(R.id.mapActivity_settingsButton);
