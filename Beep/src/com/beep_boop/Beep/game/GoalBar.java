@@ -48,7 +48,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	private Paint mTextPaintCenter = new Paint();
 	private Paint mTextPaintClicks = new Paint();
 	private float mDefaultTextSize = 50f;
-	private float mClicksTextSize = 80f; 
+	private float mClicksTextSize = 70f; 
 	
 	private Matrix mFromImageMatrix = new Matrix(), mToImageMatrix = new Matrix(), mArrowImageMatrix = new Matrix(), mBackgroundImageMatrix = new Matrix();
 	private ClickListener mListener;
@@ -80,6 +80,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			this.mTextPaintLeft.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
 			this.mTextPaintRight.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
 			this.mTextPaintCenter.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
+			this.mTextPaintClicks.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
 			int arrowImage = a.getResourceId(R.styleable.GoalBar_arrowImage, -1); 
 			if (arrowImage != -1)
 				this.mArrowImage = BitmapFactory.decodeResource(getResources(), arrowImage, null);
