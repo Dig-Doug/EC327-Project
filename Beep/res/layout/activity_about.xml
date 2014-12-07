@@ -23,4 +23,23 @@
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/button_back" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/mission_success_bubble" />
+
+    <TextView
+        android:id="@+id/aboutActivity_aboutText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageView1"
+        android:gravity="center"
+        android:text="@string/aboutActivity_aboutBlurb"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textSize="13sp" />
+
 </RelativeLayout>

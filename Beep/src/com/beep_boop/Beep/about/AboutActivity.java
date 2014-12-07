@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
@@ -21,6 +22,9 @@ public class AboutActivity extends Activity
 		MyApplication.activityStarted(this);
 
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.aboutActivity_background);
+		
+		TextView aboutBlurb = (TextView) findViewById(R.id.aboutActivity_aboutText);
+		aboutBlurb.setTypeface(MyApplication.MAIN_FONT);
 
 		ImageButton backButton = (ImageButton) findViewById(R.id.aboutActivity_backButton);
 		backButton.setOnClickListener(new View.OnClickListener()

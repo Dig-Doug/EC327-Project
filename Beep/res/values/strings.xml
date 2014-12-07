@@ -17,10 +17,7 @@
 
     <!-- About Activity -->
     <string name="title_activity_about">AboutActivity</string>
-    <string name="aboutActivity_messageViewText">Enter a message!</string>
-    <string name="aboutActivity_showMessageButtonText">Display Message</string>
-    <string name="aboutActivity_messageEditTextPlaceholder">Type a message here</string>
-
+    <string name="aboutActivity_aboutBlurb">This app was made by Brian Tan, Daniel Gorelick, Doug Roeper, Nicholas Maresco, and Pablo Velarde for the class EC327 - Introduction to Software Engineering at Boston University. \n \n Based on the classic Wikipedia game, this game aims to simplify play on a mobile platform by eliminating reading through dense articles on a small screen. By using a subset of Wikipedia (Schools-Wikipedia.org), we\'ve also cut down on the total number of links for each word, further simplifying gameplay for the user. \n \n \n We hope you enjoy!</string>
     <!-- Map Activity -->
     <string name="title_activity_map">MapActivity</string>
     <string name="mapActivity_cannotClickNodeToastMessage">You can\'t play that level yet!</string>

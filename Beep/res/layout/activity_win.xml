@@ -85,6 +85,7 @@
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/spaceship_success" />
