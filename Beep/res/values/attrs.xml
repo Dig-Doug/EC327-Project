@@ -95,6 +95,9 @@
     
     <declare-styleable name="StarryBackgroundView">
         <attr name="backgroundImage" />
+        <attr name="foregroundImage" format="reference"/>
+        <attr name="starImages" />
+        <attr name="numberOfStars" format="integer" />
     </declare-styleable>
 
 </resources>

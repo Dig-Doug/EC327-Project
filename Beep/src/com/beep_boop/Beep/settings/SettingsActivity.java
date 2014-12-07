@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.stars.StarryBackgroundView;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends Activity
+{
+	private StarryBackgroundView mStarBackground;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -19,6 +23,7 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		
+		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.settingsActivity_background);
 		
 		RadioGroup fontGroup = (RadioGroup) findViewById(R.id.settingsActivity_fontGroup);
 		//set the fonts of the radio buttons
@@ -55,12 +60,25 @@ public class SettingsActivity extends Activity {
 			}
         	
         });
+        
+        ImageButton backButton = (ImageButton) findViewById(R.id.settingsActivity_backButton);
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
+			@Override
+			public void onClick(View v)
+			{
+				finish();
+				overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
+			}
+		});
 	}
 	
-	public void returnfromsettings(View view){
-		//this functions returns from the settings menu
-		finish();
-		overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		
+		this.mStarBackground.destroy();
 	}
 	
 }

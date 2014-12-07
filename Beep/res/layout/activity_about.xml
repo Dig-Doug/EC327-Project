@@ -1,7 +1,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal" >
+
+    <com.beep_boop.Beep.stars.StarryBackgroundView
+        android:id="@+id/aboutActivity_background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        custom:backgroundImage="@drawable/starry_background"
+        custom:starImages="@array/starImages" />
+
+    <ImageButton
+        android:id="@+id/aboutActivity_backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/button_back" />
 
 </RelativeLayout>

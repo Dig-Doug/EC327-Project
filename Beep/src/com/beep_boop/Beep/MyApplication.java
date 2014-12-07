@@ -3,17 +3,8 @@ package com.beep_boop.Beep;
 import java.util.ArrayList;
 
 import android.app.Application;
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Typeface;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnErrorListener;
-import android.os.Binder;
-import android.os.IBinder;
-import android.widget.Toast;
 
 public class MyApplication extends Application
 {

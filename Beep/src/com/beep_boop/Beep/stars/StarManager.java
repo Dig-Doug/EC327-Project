@@ -10,6 +10,7 @@ public class StarManager
 {
 	public interface ScreenSpaceCoverter
 	{
+		public void starManagerNeedsRedraw();
 		public boolean starManagerIsPointOnScreen(StarManager aManager, PointF aPoint);
 		public PointF starManagerConvertToScreenSpace(StarManager aManager, PointF aPoint);
 	}
@@ -27,11 +28,13 @@ public class StarManager
 	private PointF mGravity;
 
 	private TimeAnimator mStarAnimator;
-	
+
 	private RectF mBounds = new RectF(-0.05f, -0.05f, 1.05f, 1.05f);
 
+	private boolean mNeedsRedraw;
 
-	public StarManager(ScreenSpaceCoverter aScreenSpaceConverter,
+
+	public StarManager(ScreenSpaceCoverter aScreenSpaceConverter, boolean aShouldRedraw,
 			int aMaxStars, Bitmap[] aStarImages, PointF aGravity,
 			float aScaleLowerBound, float aScaleUpperBound, 
 			float aAngleLowerBound, float aAngleUpperBound, 
@@ -39,6 +42,7 @@ public class StarManager
 			float aVelocityLowerBound, float aVelocityUpperBound)
 	{
 		this.mScreenSpaceConverter = aScreenSpaceConverter;
+		this.mNeedsRedraw = aShouldRedraw;
 		this.mStars = new Star[aMaxStars];
 		this.mStarImages = aStarImages;
 		this.mGravity = aGravity;
@@ -63,6 +67,10 @@ public class StarManager
 				public void onTimeUpdate(TimeAnimator animation, long totalTime, long deltaTime)
 				{
 					updateStars(deltaTime/1000.0f);
+					if (mNeedsRedraw)
+					{
+						mScreenSpaceConverter.starManagerNeedsRedraw();
+					}
 				}
 			});
 			this.mStarAnimator.start();
@@ -75,7 +83,10 @@ public class StarManager
 
 	public void pause()
 	{
-		this.mStarAnimator.pause();
+		if (mStarAnimator != null)
+		{
+			this.mStarAnimator.pause();
+		}
 	}
 
 	public void destroy()
@@ -95,7 +106,7 @@ public class StarManager
 			}
 		}
 	}
-	
+
 	private Star createNewStar(Star oldStar)
 	{
 		Star newStar = oldStar;
@@ -103,14 +114,14 @@ public class StarManager
 		{
 			newStar = new Star();
 		}
-		
+
 		float randAngle = (float)(Math.random()) * (this.mCreationAngleUpperBound - this.mCreationAngleLowerBound) + this.mCreationAngleLowerBound;
-		float xVelocity = (float)Math.cos(randAngle);
+		float xVelocity = (float)Math.cos(randAngle) * (Math.random() - 0.5f > 0 ? 1 : -1);
 		float yVelocity = (float)Math.sin(randAngle);
 		float speed = (float)(Math.random()) * (this.mCreationVelocityUpperBound - this.mCreationVelocityLowerBound) + this.mCreationVelocityLowerBound;
 		newStar.velocity.x = xVelocity * speed;
 		newStar.velocity.y = yVelocity * speed;
-		
+
 		if (xVelocity > 0.0f)
 		{
 			newStar.location.x = this.mBounds.left;
@@ -120,13 +131,13 @@ public class StarManager
 			newStar.location.x = this.mBounds.right * 0.99f;
 		}
 		newStar.location.y = (float)(Math.random()) * (this.mCreationPositionUpperBound - this.mCreationPositionLowerBound) + this.mCreationPositionLowerBound;
-		
+
 		newStar.imageIndex = (int)(this.mStarImages.length * Math.random());
 		newStar.scale = (float)(Math.random()) * (this.mScaleUpperBound - this.mScaleLowerBound) + this.mScaleLowerBound;
-		
+
 		return newStar;
 	}
-	
+
 	private void updateStars(double aDelta)
 	{
 		for (int i = 0; i < this.mStars.length; i++)

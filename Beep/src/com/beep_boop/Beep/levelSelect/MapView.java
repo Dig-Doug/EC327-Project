@@ -186,7 +186,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 						}
 					}
 					
-					this.mStarManager = new StarManager(this, 100, starImages, new PointF(0.0f, 0f), 
+					this.mStarManager = new StarManager(this, false, 100, starImages, new PointF(0.0f, 0f), 
 							0.25f, 1.0f, 
 							-5, 5, 
 							0.01f, 0.99f, 
@@ -933,6 +933,11 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	public PointF starManagerConvertToScreenSpace(StarManager aManager, PointF aPoint)
 	{
 		return this.convertToScreenSpace(aPoint.x, aPoint.y);
+	}
+	
+	public void starManagerNeedsRedraw()
+	{
+		//do nothing
 	}
 
 }
