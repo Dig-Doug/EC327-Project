@@ -15,7 +15,7 @@
         custom:nodeOnImage="@drawable/map_node_blank"
         custom:nodeSelectedOverlayStatic="@drawable/node_overlay"
         custom:nodeSelectedOverlayAnimating="@drawable/node_overlay"
-        custom:parrallaxImage="@drawable/starry_backround"
+        custom:parrallaxImage="@drawable/starry_background"
         custom:starImages="@array/starImages" />
 
     <ImageButton
