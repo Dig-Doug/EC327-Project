@@ -61,7 +61,7 @@ public class StarryBackgroundView extends View implements StarManager.ScreenSpac
 					
 					this.mStarManager = new StarManager(this, true, numberOfStars, starImages, new PointF(0.0f, 0f), 
 							0.25f, 1.0f, 
-							-5, 5, 
+							-15, 15, 
 							0.01f, 0.99f, 
 							0.05f, 0.2f);
 				}

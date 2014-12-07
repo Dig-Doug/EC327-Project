@@ -15,6 +15,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -107,7 +108,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	private static final float SCROLL_SCALAR = 2.0f;
 
 	private int mBackgroundTotalHeight = 0;
-	
+	private boolean mBackgroundLoaded = false;
 	
 	private StarManager mStarManager;
 
@@ -119,41 +120,18 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
 		try
 		{
+			int imageArray = a.getResourceId(R.styleable.MapView_backgroundImage, -1);
+			if (imageArray != -1)
+			{
+				new LoadBackgroundImagesTask().execute(imageArray);
+			}
+			
 			float mapWidth = a.getFloat(R.styleable.MapView_mapWidthOnScreen, 1.0f);
 			this.MAP_ON_SCREEN_WIDTH = mapWidth;
 			int nodeOffImage = a.getResourceId(R.styleable.MapView_nodeOffImage, -1);
 			this.mNodeImageOff = BitmapFactory.decodeResource(getResources(), nodeOffImage, null);
 			int nodeOnImage = a.getResourceId(R.styleable.MapView_nodeOnImage, -1);
 			this.mNodeImageOn = BitmapFactory.decodeResource(getResources(), nodeOnImage, null);
-
-			int imageArray = a.getResourceId(R.styleable.MapView_backgroundImage, -1);
-			if (imageArray != -1)
-			{
-				TypedArray imgs = context.getResources().obtainTypedArray(imageArray);
-
-				try
-				{
-					this.mBackgroundImages = new Bitmap[imgs.length()];
-					for (int i = 0; i < imgs.length(); i++)
-					{
-						int bitmapID = imgs.getResourceId(i, -1);
-						if (bitmapID != -1)
-						{
-							BitmapFactory.Options options = new BitmapFactory.Options();
-							this.mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
-							this.mBackgroundTotalHeight += this.mBackgroundImages[i].getHeight();
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-				finally
-				{
-					imgs.recycle();
-				}
-			}
 			int nodeOverlayStaticImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayStatic, -1);
 			if (nodeOverlayStaticImage != -1)
 				this.mSelectedNodeOverlayStatic = BitmapFactory.decodeResource(getResources(), nodeOverlayStaticImage, null);
@@ -171,8 +149,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 			int starArray = a.getResourceId(R.styleable.MapView_starImages, -1);
 			if (starArray != -1)
 			{
-				TypedArray stars = context.getResources().obtainTypedArray(starArray);
-
+				TypedArray stars = getContext().getResources().obtainTypedArray(starArray);
 				try
 				{
 					Bitmap[] starImages = new Bitmap[stars.length()];
@@ -186,7 +163,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 						}
 					}
 					
-					this.mStarManager = new StarManager(this, false, 100, starImages, new PointF(0.0f, 0f), 
+					mStarManager = new StarManager(THIS, false, 100, starImages, new PointF(0.0f, 0f), 
 							0.25f, 1.0f, 
 							-5, 5, 
 							0.01f, 0.99f, 
@@ -212,6 +189,46 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		}
 
 		this.init();		
+	}
+	
+	private class LoadBackgroundImagesTask extends AsyncTask<Integer, Void, Void>
+	{
+		protected Void doInBackground(Integer... ints)
+		{
+			int imageArray = ints[0];
+			TypedArray imgs = getContext().getResources().obtainTypedArray(imageArray);
+
+			try
+			{
+				mBackgroundImages = new Bitmap[imgs.length()];
+				for (int i = 0; i < imgs.length(); i++)
+				{
+					int bitmapID = imgs.getResourceId(i, -1);
+					if (bitmapID != -1)
+					{
+						BitmapFactory.Options options = new BitmapFactory.Options();
+						mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+						mBackgroundTotalHeight += mBackgroundImages[i].getHeight();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				imgs.recycle();
+			}
+			
+			return null;
+		}
+
+		protected void onPostExecute(Void result)
+		{
+			mBackgroundLoaded = true;
+			calculateBackground();
+		}
 	}
 
 	private void init()
@@ -248,6 +265,11 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		{
 			this.mStarManager.start();
 		}
+		
+		if (this.mNodeAnimator != null)
+		{
+			this.mNodeAnimator.start();
+		}
 	}
 
 	@Override
@@ -259,10 +281,11 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		{
 			this.mStarManager.pause();
 		}
-
-		//clean up the animator
-		this.mNodeAnimator.cancel();
-		this.mNodeAnimator = null;
+		
+		if (this.mNodeAnimator != null)
+		{
+			this.mNodeAnimator.end();
+		}
 	}
 
 	public void destroy()
@@ -304,6 +327,13 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		if (this.mStarManager != null)
 		{
 			this.mStarManager.destroy();
+		}
+		
+		if (this.mNodeAnimator != null)
+		{
+			//clean up the animator
+			this.mNodeAnimator.cancel();
+			this.mNodeAnimator = null;
 		}
 	}
 
@@ -630,7 +660,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
-		if (this.mBackgroundImages != null)
+		if (this.mBackgroundImages != null && mBackgroundLoaded)
 		{
 			for (int i = this.mBackgroundImages.length - 1; i >= 0; i--)
 			{
@@ -712,13 +742,6 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	{
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		if (this.mBackgroundImages != null && this.mBackgroundImages[0] != null)
-		{
-			this.mScaleX = this.MAP_ON_SCREEN_WIDTH * (this.getWidth() / (float)this.mBackgroundImages[0].getWidth());
-		}
-		this.mScaleY = this.mScaleX;
-		this.MAP_ON_SCREEN_HEIGHT = (this.getHeight() / (float)this.mBackgroundTotalHeight) / this.mScaleY;
-
 		if (this.mNodeImageOff != null)
 		{
 			this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() / 2);
@@ -737,6 +760,18 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 			float scaleY = (h / (float)this.mParrallaxImage.getHeight());
 			this.mParrallaxScale = Math.max(scaleX, scaleY);
 		}
+		
+		this.calculateBackground();
+	}
+	
+	private void calculateBackground()
+	{
+		if (this.mBackgroundImages != null && this.mBackgroundImages[0] != null)
+		{
+			this.mScaleX = this.MAP_ON_SCREEN_WIDTH * (this.getWidth() / (float)this.mBackgroundImages[0].getWidth());
+		}
+		this.mScaleY = this.mScaleX;
+		this.MAP_ON_SCREEN_HEIGHT = (this.getHeight() / (float)this.mBackgroundTotalHeight) / this.mScaleY;
 
 		this.calculateOriginBounds();
 	}
