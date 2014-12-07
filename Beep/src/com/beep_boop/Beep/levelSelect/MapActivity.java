@@ -1,9 +1,5 @@
 package com.beep_boop.Beep.levelSelect;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -82,40 +78,12 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	
 	private void setupMapView()
 	{
-		//load the nodes
-		ArrayList<MapNode> nodeList = null;
-		InputStream in = null;
-		try 
-		{
-			in = getResources().openRawResource(R.raw.map_data_file);
-			nodeList = MapNodeLoader.parseFile(in);
-		}
-		catch (Exception i)
-		{
-			Log.e("fileinput", "The IOException was caught.");
-		}
-		finally 
-		{
-			if (in != null)
-			{
-				try
-				{
-					in.close();
-				}
-				catch (IOException e)
-				{
-					
-				}
-			}
-		}
-		
 		//set the node click listener
 		this.mMapView.setListener(this);
 		this.mMapView.setDataSource(this);
 		//add the nodes to the map view
-		this.mMapView.addNodes(nodeList); 
-		
-		this.mMapView.setSelectedNode(nodeList.get(0), false);
+		this.mMapView.addNodes(MapHandler.getNodes()); 
+		this.mMapView.setSelectedNode(MapHandler.getNodes().get(0), false);
 	}
 	
 	@Override

@@ -9,6 +9,7 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 
 public class StarryBackgroundView extends View implements StarManager.ScreenSpaceCoverter

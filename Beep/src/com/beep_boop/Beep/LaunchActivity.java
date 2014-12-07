@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.beep_boop.Beep.game.PlayScreenParser;
 import com.beep_boop.Beep.game.WordHandler;
 import com.beep_boop.Beep.levelSelect.MapActivity;
+import com.beep_boop.Beep.levelSelect.MapHandler;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.stars.StarryBackgroundView;
 //import com.beep_boop.Beep.MyApplication.MusicService;
@@ -31,7 +32,7 @@ public class LaunchActivity extends Activity
 	private ProgressBar mLoadingSpinner;
 	private TextView mLoadingText;
 	
-	private boolean mLevelsLoaded = false, mWordsLoaded = false, mStarted = false;
+	private boolean mLevelsLoaded = false, mWordsLoaded = false, mMapLoaded = false, mStarted = false;
 	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f;
 
 	private StarryBackgroundView mStarBackground;
@@ -48,6 +49,7 @@ public class LaunchActivity extends Activity
 
 		//grab the image views from XML
 		this.mStartButton = (ImageButton) findViewById(R.id.launchActivity_startButton);
+		this.mStartButton.setEnabled(false);
 		this.mStartButton.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -59,13 +61,12 @@ public class LaunchActivity extends Activity
 		
 		this.mLoadingSpinner = (ProgressBar) findViewById(R.id.launchActivity_loadingSpinner);
 		this.mLoadingText = (TextView) findViewById(R.id.launchActivity_loadingText);
-		
-		this.mStartButton.setEnabled(false);
 		this.hideLoading();
-
+		
 		new LoadLevelsTask().execute(this);
 		new LoadWordsTask().execute(this);
-		
+		new LoadMapTask().execute(this);
+
 		//load the fade in animation
 		Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.animator.anim_fadein);
 		//start the animation
@@ -133,7 +134,7 @@ public class LaunchActivity extends Activity
 
 	private void checkDone()
 	{
-		if (mWordsLoaded && mLevelsLoaded && mStarted)
+		if (mWordsLoaded && mLevelsLoaded && mMapLoaded && mStarted)
 		{
 			this.hideLoading();
 			
@@ -194,6 +195,26 @@ public class LaunchActivity extends Activity
 		{
 			mWordsPercent = aIndex / 5845.0f;
 			publishProgress(aWord);
+		}
+	}
+	
+	private class LoadMapTask extends AsyncTask<Context, String, Void>
+	{
+		protected Void doInBackground(Context... contexts)
+		{
+			MapHandler.load(contexts[0]);
+			return null;
+		}
+
+		protected void onProgressUpdate(String... words)
+		{
+			updateLoadingProgress();
+		}
+
+		protected void onPostExecute(Void result)
+		{
+			mMapLoaded = true;
+			checkDone();
 		}
 	}
 }

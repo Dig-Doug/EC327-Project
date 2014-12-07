@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.view.MotionEvent"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levelSelect.MapView"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
@@ -20,7 +19,6 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.drawable"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.animator"/>
 <fullyQualifiedTypeName name="android.animation.TimeInterpolator"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.style"/>
@@ -31,7 +29,11 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication.FontChangeListener"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
 <fullyQualifiedTypeName name="android.graphics.BitmapFactory.Options"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="android.graphics.Matrix"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.stars.StarManager.ScreenSpaceCoverter"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
 </qualifiedTypeNameHistroy>

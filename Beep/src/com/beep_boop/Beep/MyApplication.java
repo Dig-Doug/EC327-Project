@@ -48,11 +48,12 @@ public class MyApplication extends Application
     public static String MAIN_FONT_NAME, PLAY_FONT_NAME, SPECIALTY_FONT_NAME;
     
     private static ArrayList<FontChangeListener> fontChangeListeners = new ArrayList<FontChangeListener>();
-
+    
     public void onCreate()
     {
         super.onCreate();
         MyApplication.context = getApplicationContext();
+        
 		//doBindService();
 		//Intent music = new Intent();
 		//music.setClass(this,MusicService.class);
@@ -65,10 +66,10 @@ public class MyApplication extends Application
 		MyApplication.SPECIALTY_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.SPECIALTY_FONT_NAME);
     }
 
-    public static Context getAppContext() {
+    public static Context getAppContext()
+    {
         return MyApplication.context;
     }
-    
     
     public static void addFontChangeListener(FontChangeListener aListener)
     {
