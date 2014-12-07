@@ -47,6 +47,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	private ArrayList<String> mWordPath = new ArrayList<String>();
 	private Level mSelectedLevel;
 	private double mStartTime;
+	private boolean mPaused = false;
 	private double mPauseTimeTotal = 0;
 	private double mPauseStartTime = -1;
 
@@ -132,6 +133,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	private void play()
 	{
+		this.mPaused = false;
 		if (this.mPauseStartTime != -1)
 		{
 			double pausedTime = System.currentTimeMillis() - this.mPauseStartTime;
@@ -142,9 +144,12 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	private void pause()
 	{
-		this.mPauseStartTime = System.currentTimeMillis();
-		PauseMenuDialogFragment dialog = new PauseMenuDialogFragment(this);//.show(getFragmentManager(), PAUSE_MENU_TAG);
-		dialog.show();
+		if (!this.mPaused)
+		{
+			this.mPauseStartTime = System.currentTimeMillis();
+			PauseMenuDialogFragment dialog = new PauseMenuDialogFragment(this);//.show(getFragmentManager(), PAUSE_MENU_TAG);
+			dialog.show();
+		}
 	}
 
 	///-----PlayView.WordDataSource methods-----
