@@ -57,7 +57,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_screen);
-		MyApplication.activityCreated(this);
+		
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -88,13 +88,13 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	@Override
 	protected void onStop(){
 		super.onStop();
-		MyApplication.activityPaused(this);
+		
 	}
 	
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-		MyApplication.mServ.resumeMusic();
+	//	MyApplication.mServ.resumeMusic();
 	}
 	
 	private void initGoalBar()

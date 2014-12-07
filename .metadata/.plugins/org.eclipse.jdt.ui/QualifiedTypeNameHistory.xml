@@ -34,8 +34,12 @@
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.util.LruCache"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
+<<<<<<< Updated upstream
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.color"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R.styleable"/>
+=======
+<fullyQualifiedTypeName name="com.beep_boop.Beep.LaunchActivity"/>
+>>>>>>> Stashed changes
 </qualifiedTypeNameHistroy>

@@ -27,7 +27,7 @@ public class PathActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_path);
-		MyApplication.activityStarted(this);
+		//MyApplication.activityStarted(this);
 
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.pathActivity_background);
 		ImageButton nextButton = (ImageButton) findViewById(R.id.pathActivity_nextButton);
@@ -86,7 +86,7 @@ public class PathActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-		MyApplication.activityPaused(this);
+	//	MyApplication.activityPaused(this);
 
 	}
 	@Override

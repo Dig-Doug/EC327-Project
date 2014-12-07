@@ -17,7 +17,7 @@ public class MusicService extends Service  implements MediaPlayer.OnErrorListene
     public MusicService() { }
 
     public class ServiceBinder extends Binder {
-     	 MusicService getService()
+     	 public MusicService getService()
     	 {
     		return MusicService.this;
     	 }
