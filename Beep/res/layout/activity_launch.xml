@@ -9,10 +9,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        custom:backgroundImage="@drawable/starry_background"
+        custom:backgroundImage="@drawable/spash_background"
         custom:starImages="@array/starImages" />
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -27,7 +28,7 @@
             android:layout_marginTop="146dp"
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/button_map" />
+            android:src="@drawable/button_start_blue" />
 
         <TextView
             android:id="@+id/launchActivity_loadingText"
@@ -46,6 +47,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="35dp" />
+
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/splash_earth" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/splash_title_2" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/splash_cosmo" />
 
 </RelativeLayout>

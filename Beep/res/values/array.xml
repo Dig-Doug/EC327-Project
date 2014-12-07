@@ -20,6 +20,7 @@
         <item>@drawable/map_background_panel_4</item>
         <item>@drawable/map_background_panel_5</item>
         <item>@drawable/map_background_panel_6</item>
+        <item>@drawable/map_background_panel_7</item>
     </array>
     
     <array name="starImages">

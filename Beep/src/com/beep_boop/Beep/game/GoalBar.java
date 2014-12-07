@@ -92,7 +92,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			this.mClickTitlePercentHeight = a.getFloat(R.styleable.GoalBar_clickTitlePercentHeight, 0.15f);
 			
 			this.mClickNumberPercentX = a.getFloat(R.styleable.GoalBar_clickNumberPercentX, 0.5f);
-			this.mClickNumberPercentY = a.getFloat(R.styleable.GoalBar_clickNumberPercentY, 0.7f);
+			this.mClickNumberPercentY = a.getFloat(R.styleable.GoalBar_clickNumberPercentY, 0.75f);
 			this.mClickNumberPercentHeight = a.getFloat(R.styleable.GoalBar_clickNumberPercentHeight, 0.3f);
 		}
 		catch (Exception e)
