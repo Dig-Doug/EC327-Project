@@ -14,23 +14,22 @@ import com.beep_boop.Beep.R;
 public class WordHandler
 {
 	///-----Static Variables-----
-	private static boolean LOAD_ARTIFICIAL_DATABASE = false;
 	/** Holds if the singleton has been loaded */
 	private static boolean loaded = false;
 	/** Holds the log tag */
 	private static final String TAG = "LevelManager";
 	/** Holds the singleton instance of the class */
 	public static WordHandler INSTANCE;
-	
+
 	///-----Member Variables-----
 	/** Holds all the word data */
 	private Hashtable<String, Hashtable<String, Integer>> mWordData;
-	
+
 	private WordHandler()
 	{
-		
+
 	}
-	
+
 	///-----Public Wrapper Methods-----
 	public static void load(Context aContext, PlayScreenParser.StatusUpdate aUpdate)
 	{
@@ -41,32 +40,24 @@ public class WordHandler
 			WordHandler.loaded = true;
 		}
 	}
-	
+
 	public static Set<String> getLinksForWord(String aWord)
 	{
 		return WordHandler.INSTANCE.getLinksForWordPrivate(aWord);
 	}
-	
+
 	public static Collection<Integer> getCountsForWord(String aWord)
 	{
 		return WordHandler.INSTANCE.getCountsForWordPrivate(aWord);
 	}
-	
+
 	///-----Private Methods-----
 	private void loadPrivate(Context aContext, PlayScreenParser.StatusUpdate aUpdate)
 	{
 		InputStream in = null;
 		try 
 		{
-			if (LOAD_ARTIFICIAL_DATABASE)
-			{
-				in = aContext.getResources().openRawResource(R.raw.database_full);
-			}
-			else
-			{
-				in = aContext.getResources().openRawResource(R.raw.database_no_artificial_links_full);
-			}
-			
+			in = aContext.getResources().openRawResource(R.raw.database_no_artificial_links_full);
 			this.mWordData = PlayScreenParser.parseFile(in, aUpdate);
 		}
 		catch (Exception i)
@@ -83,12 +74,12 @@ public class WordHandler
 				}
 				catch (IOException e)
 				{
-					
+
 				}
 			}
 		}
 	}
-	
+
 	private Set<String> getLinksForWordPrivate(String aWord)
 	{
 		Set<String> result = null;
@@ -101,10 +92,10 @@ public class WordHandler
 		{
 			Log.e(WordHandler.TAG, "No word: " + aWord);
 		}
-		
+
 		return result;
 	}
-	
+
 	private Collection<Integer> getCountsForWordPrivate(String aWord)
 	{
 		Collection<Integer> result = null;
@@ -117,7 +108,7 @@ public class WordHandler
 		{
 			Log.e(WordHandler.TAG, "No word: " + aWord);
 		}
-		
+
 		return result;
 	}
 }
