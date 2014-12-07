@@ -51,13 +51,15 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	private double mPauseTimeTotal = 0;
 	private double mPauseStartTime = -1;
 
+	boolean activityStarted = false;
 	///-----Activity Life Cycle-----
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_screen);
-		
+		MyApplication.playSong();
+
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -88,13 +90,16 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	@Override
 	protected void onStop(){
 		super.onStop();
-		
+		if(!activityStarted){
+			MyApplication.pauseSong();
+		}
 	}
 	
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-	//	MyApplication.mServ.resumeMusic();
+		MyApplication.playSong();
+
 	}
 	
 	private void initGoalBar()
@@ -125,11 +130,17 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void onDestroy()
 	{
 		super.onDestroy();
+		//MyApplication.pauseSong();
 
 		this.mGoalBar.destroy();
 		this.mPlayView.destroy();
 	}
 
+	@Override
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
+	}
 
 	private void play()
 	{
@@ -187,6 +198,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			winIntent.putExtra(WinActivity.EXTRA_TIME, System.currentTimeMillis() - this.mStartTime - this.mPauseTimeTotal);
 			winIntent.putExtra(WinActivity.EXTRA_PATH, pathArray);
 			startActivity(winIntent);
+			activityStarted = true;
 			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 			finish();
 		}
@@ -195,6 +207,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			Intent loseIntent = new Intent(this, LoseActivity.class);
 			loseIntent.putExtra(LoseActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
 			startActivity(loseIntent);
+			activityStarted = true;
 			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 			finish();
 		}
@@ -267,6 +280,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 					Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
 					startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
 					startActivity(startLevelIntent);
+					activityStarted =true;
 					PAUSE_THIS.dismiss();
 					finish();
 					overridePendingTransition(R.animator.anim_activity_right_in, R.animator.anim_activity_right_out);
@@ -282,6 +296,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				{
 					Intent settingsIntent = new Intent(THIS, SettingsActivity.class);
 					startActivity(settingsIntent);
+					activityStarted = true;
 					overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 				}
 			});

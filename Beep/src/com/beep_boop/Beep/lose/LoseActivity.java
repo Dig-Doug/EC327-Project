@@ -28,12 +28,15 @@ public class LoseActivity extends Activity
 	
 	private StarryBackgroundView mStarBackground;
 	
+	boolean activityStarted = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lose);
-		
+		MyApplication.playSong();
+
 
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.aboutActivity_background);
 		
@@ -69,7 +72,9 @@ public class LoseActivity extends Activity
 	@Override
 	protected void onStop(){
 		super.onStop();
-		
+		if(!activityStarted){
+			MyApplication.pauseSong();
+		}
 	}
 	
 	private void setupButtons()
@@ -83,6 +88,7 @@ public class LoseActivity extends Activity
 				Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
 				startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mLevel.levelKey);
 				startActivity(startLevelIntent);
+				activityStarted = true;
 				finish();
 			}
 		});
@@ -102,6 +108,19 @@ public class LoseActivity extends Activity
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		
+
 		this.mStarBackground.destroy();
 	}
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		MyApplication.playSong();
+	}
+	@Override
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
+	}
+	
 }

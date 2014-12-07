@@ -39,7 +39,8 @@ public class WinActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_win);
-		
+		MyApplication.playSong();
+
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.winActivity_background);
 
 		Bundle extras = this.getIntent().getExtras();
@@ -155,20 +156,27 @@ public class WinActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-		//MyApplication.activityPaused(this);
+		MyApplication.pauseSong();
 
 	}
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-		MyApplication.mServ.resumeMusic();
+		MyApplication.playSong();
 
+	}
+	@Override
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		MyApplication.pauseSong();
+
 		if (this.mStarBackground != null)
 		{
 			this.mStarBackground.destroy();

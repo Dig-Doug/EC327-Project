@@ -25,12 +25,13 @@ public class StartLevelActivity extends Activity
 	private StartLevelActivity THIS = this;
 	private WordDisplay mWordDisplay;
 	private Level mSelectedLevel;
+	boolean activityStarted;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_level);
-		
+		MyApplication.playSong();
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -86,6 +87,7 @@ public class StartLevelActivity extends Activity
 				Intent playIntent = new Intent(THIS, PlayScreenActivity.class);
 				playIntent.putExtra(PlayScreenActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
 				startActivity(playIntent);
+				activityStarted = true;
 				overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 				finish();
 			}
@@ -108,19 +110,29 @@ public class StartLevelActivity extends Activity
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-	//	MyApplication.mServ.resumeMusic();
+		MyApplication.playSong();
 	}
 	
 	@Override
 	protected void onStop(){
 		super.onStop();
-		
+		if(!activityStarted){
+			MyApplication.pauseSong();
+		}
 	}
 	
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
+		//if(!activityStarted){
+		//	MyApplication.pauseSong();
+		//}
 		this.mWordDisplay.destroy();
+	}
+	@Override
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
 	}
 }

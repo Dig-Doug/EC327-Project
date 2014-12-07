@@ -35,7 +35,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	/** Reference to this */
 	private Activity THIS = this;
 	
-	
+	boolean activityStarted = false;
 	
 	///-----Activity Life Cycle-----
 	@Override
@@ -66,6 +66,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 				
 				Intent toSettings = new Intent(THIS, SettingsActivity.class);
 				startActivity(toSettings);
+				activityStarted = true;
 				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 			}
 		});
@@ -81,6 +82,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 				
 				Intent toAbout = new Intent(THIS, AboutActivity.class);
 				startActivity(toAbout);
+				activityStarted = true;
 				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 			}
 		});
@@ -99,7 +101,9 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	@Override
 	protected void onStop(){
 		super.onStop();
+		if(!activityStarted){
 		MyApplication.pauseSong();
+		}
 	}
 	
 	@Override
@@ -115,12 +119,21 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	}
 	
 	@Override
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
+	}
+	
+	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
 		//unsubscribe to level state updates
 		LevelManager.removeLevelStateListener(this);
+		if(!activityStarted){
 		MyApplication.pauseSong();
+		}
+		
 		this.mMapView.destroy();
 	}
 	
@@ -146,6 +159,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		Intent startLevelIntent = new Intent(this, StartLevelActivity.class);
 		startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, aNode.getLevelKey());
 		startActivity(startLevelIntent);
+		this.activityStarted = true;
 	}
 	
 	///-----NodeDataSource methods-----

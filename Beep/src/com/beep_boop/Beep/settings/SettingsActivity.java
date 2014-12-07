@@ -21,6 +21,7 @@ public class SettingsActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		MyApplication.playSong();
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.settingsActivity_background);
 		RadioGroup fontGroup = (RadioGroup) findViewById(R.id.settingsActivity_fontGroup);
 		//set the fonts of the radio buttons
@@ -72,14 +73,26 @@ public class SettingsActivity extends Activity
 	protected void onStop(){
 		super.onStop();
 		
+		MyApplication.pauseSong();
+
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		
+
 		this.mStarBackground.destroy();
 	}
-
-
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		MyApplication.playSong();
+	}
+	@Override
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
+	}
 }

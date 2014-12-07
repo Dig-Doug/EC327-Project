@@ -98,7 +98,7 @@ public class LaunchActivity extends Activity
 
 		if (!this.mStartedMap)
 		{
-		//	MyApplication.pauseSong();
+			MyApplication.pauseSong();
 		}
 		this.mStarBackground.destroy();
 		
@@ -109,7 +109,7 @@ public class LaunchActivity extends Activity
 		super.onStop();
 		if (!this.mStartedMap)
 		{
-		//	MyApplication.pauseSong();
+			MyApplication.pauseSong();
 		}
 
 	}
@@ -117,14 +117,14 @@ public class LaunchActivity extends Activity
 	@Override
 	protected void onStart(){
 		super.onStart();
-		//MyApplication.playSong();
+		MyApplication.playSong();
 
 	}
 	
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-		//MyApplication.playSong();
+		MyApplication.playSong();
 		
 		
 	}
