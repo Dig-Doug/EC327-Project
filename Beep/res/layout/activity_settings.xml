@@ -24,44 +24,10 @@
         android:src="@drawable/button_back" />
 
     <TextView
-        android:id="@+id/settingsActivity_fontTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/aboutActivity_backButton"
-        android:layout_marginBottom="146dp"
-        android:text="@string/settingsActivity_fontTitle"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <RadioGroup
-        android:id="@+id/settingsActivity_fontGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/aboutActivity_backButton"
-        android:layout_marginBottom="30dp"
-        android:layout_toRightOf="@+id/settings" >
-
-        <RadioButton
-            android:id="@+id/settingsActivity_fontGroup_krungthep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:id="@+id/settingsActivity_fontGroup_times"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:id="@+id/settingsActivity_fontGroup_nasa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RadioGroup>
-
-    <TextView
         android:id="@+id/settingsActivity_musicBarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/musicbar"
-        android:layout_marginBottom="14dp"
+        android:layout_above="@+id/settingsActivity_musicBar"
         android:layout_toLeftOf="@+id/settingsActivity_fontTitle"
         android:text="@string/music"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -71,7 +37,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/settings"
         android:layout_marginTop="99dp" />
+
+    <TextView
+        android:id="@+id/settingsActivity_fontTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settingsActivity_fontGroup"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="46dp"
+        android:layout_marginLeft="27dp"
+        android:text="@string/settingsActivity_fontTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textColorHint="@color/launchActivity_loadingTextColor" />
+
+    <RadioGroup
+        android:id="@+id/settingsActivity_fontGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settingsActivity_backButton"
+        android:layout_marginBottom="110dp"
+        android:layout_toLeftOf="@+id/settingsActivity_backButton" >
+
+        <RadioButton
+            android:id="@+id/settingsActivity_fontGroup_krungthep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/launchActivity_loadingTextColor"
+            android:textColorHint="@color/launchActivity_loadingTextColor" />
+
+        <RadioButton
+            android:id="@+id/settingsActivity_fontGroup_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/launchActivity_loadingTextColor"
+            android:textColorHint="@color/launchActivity_loadingTextColor" />
+
+        <RadioButton
+            android:id="@+id/settingsActivity_fontGroup_nasa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/launchActivity_loadingTextColor"
+            android:textColorHint="@color/launchActivity_loadingTextColor" />
+    </RadioGroup>
 
 </RelativeLayout>
