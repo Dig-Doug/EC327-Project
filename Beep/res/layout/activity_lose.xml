@@ -61,7 +61,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/mission_failed_bubble" />
+        android:src="@drawable/topbar_failed" />
 
     <ImageView
         android:layout_width="300dp"
