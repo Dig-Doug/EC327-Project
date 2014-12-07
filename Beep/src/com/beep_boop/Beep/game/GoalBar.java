@@ -38,50 +38,57 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	private float mArrowImagePercentX, mArrowImagePercentY, mFromWordPercentX, mFromWordPercentY, mToWordPercentX, mToWordPercentY;
 	private float mFromImagePercentWidth, mToImagePercentWidth;
 	private float mArrowImagePercentWidth, mFromWordPercentWidth, mToWordPercentWidth;
+	private float mClickNumberPercentX, mClickNumberPercentY;
 
 
-
-	private PointF mFromWordDraw, mToWordDraw;
+	private PointF mFromWordDraw, mToWordDraw, mClicksDraw;
 	
-	private Paint mTextPaint = new Paint();
+	private Paint mTextPaintLeft = new Paint();
+	private Paint mTextPaintRight = new Paint();
+	private Paint mTextPaintCenter = new Paint();
+	private Paint mTextPaintClicks = new Paint();
 	private float mDefaultTextSize = 50f;
+	private float mClicksTextSize = 80f; 
 	
 	private Matrix mFromImageMatrix = new Matrix(), mToImageMatrix = new Matrix(), mArrowImageMatrix = new Matrix(), mBackgroundImageMatrix = new Matrix();
 	private ClickListener mListener;
-	
-	private int mNumberOfClicks;
+
 
 	///-----Constructors-----
 	public GoalBar(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 
-		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PlayView, 0, 0);
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.GoalBar, 0, 0);
 		try
 		{
 			this.mFromImagePercentX = a.getFloat(R.styleable.GoalBar_fromImagePercentX, 0.1337f);
-			this.mFromImagePercentY = a.getFloat(R.styleable.GoalBar_fromImagePercentY, 0.4481f);
+			this.mFromImagePercentY = a.getFloat(R.styleable.GoalBar_fromImagePercentY, 0.2000f);
 			this.mToImagePercentX = a.getFloat(R.styleable.GoalBar_toImagePercentX, 0.8447f);
-			this.mToImagePercentY = a.getFloat(R.styleable.GoalBar_toImagePercentY, 0.4481f);
+			this.mToImagePercentY = a.getFloat(R.styleable.GoalBar_toImagePercentY, 0.2000f);
 			this.mArrowImagePercentX = a.getFloat(R.styleable.GoalBar_arrowImagePercentX, 0.5f);
-			this.mArrowImagePercentY = a.getFloat(R.styleable.GoalBar_arrowImagePercentY, 0.2573f);
+			this.mArrowImagePercentY = a.getFloat(R.styleable.GoalBar_arrowImagePercentY, 0.1575f);
 			this.mFromWordPercentX = a.getFloat(R.styleable.GoalBar_fromWordPercentX, 0.3434f);
-			this.mFromWordPercentY = a.getFloat(R.styleable.GoalBar_fromWordPercentY, 0.2573f);
-			this.mToWordPercentX = a.getFloat(R.styleable.GoalBar_toWordPercentX, 0.6058f);
-			this.mToWordPercentY = a.getFloat(R.styleable.GoalBar_toWordPercentY, 0.2573f);
+			this.mFromWordPercentY = a.getFloat(R.styleable.GoalBar_fromWordPercentY, 0.2740f);
+			this.mToWordPercentX = a.getFloat(R.styleable.GoalBar_toWordPercentX, 0.6200f);
+			this.mToWordPercentY = a.getFloat(R.styleable.GoalBar_toWordPercentY, 0.2740f);
 			this.mFromImagePercentWidth = a.getFloat(R.styleable.GoalBar_fromImagePercentWidth, 0.1642f);
 			this.mToImagePercentWidth = a.getFloat(R.styleable.GoalBar_toImagePercentWidth, 0.1642f);
-			this.mArrowImagePercentWidth = a.getFloat(R.styleable.GoalBar_arrowImagePercentWidth, 0.8724f);
-			this.mFromWordPercentWidth = a.getFloat(R.styleable.GoalBar_fromWordPercentWidth, 0.1818f);
-			this.mToWordPercentWidth = a.getFloat(R.styleable.GoalBar_toWordPercentWidth, 0.1818f);
-			this.mTextPaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
+			this.mArrowImagePercentWidth = a.getFloat(R.styleable.GoalBar_arrowImagePercentWidth, 0.0500f);
+			this.mFromWordPercentWidth = a.getFloat(R.styleable.GoalBar_fromWordPercentWidth, 0.2000f);
+			this.mToWordPercentWidth = a.getFloat(R.styleable.GoalBar_toWordPercentWidth, 0.2000f);
+			this.mTextPaintLeft.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
+			this.mTextPaintRight.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
+			this.mTextPaintCenter.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
 			int arrowImage = a.getResourceId(R.styleable.GoalBar_arrowImage, -1); 
 			if (arrowImage != -1)
 				this.mArrowImage = BitmapFactory.decodeResource(getResources(), arrowImage, null);
 			int backImage = a.getResourceId(R.styleable.GoalBar_backgroundImage, -1);
 			if (backImage != -1)
 				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backImage, null);
-		//	this.mClickNumber = a.getFloat(R.styleable.GoalBar_clickNumber, )
+			this.mClickNumberPercentX = a.getFloat(R.styleable.GoalBar_clickNumberPercentX, 0.5f);
+			this.mClickNumberPercentY = a.getFloat(R.styleable.GoalBar_clickNumberPercentY, 0.8f);
+			
 		}
 		catch (Exception e)
 		{
@@ -99,7 +106,16 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	{
 		if (!this.isInEditMode())
 		{
-			this.mTextPaint.setTypeface(MyApplication.MAIN_FONT);
+			this.mTextPaintLeft.setTypeface(MyApplication.MAIN_FONT);
+			this.mTextPaintRight.setTypeface(MyApplication.MAIN_FONT);
+			this.mTextPaintCenter.setTypeface(MyApplication.MAIN_FONT);
+			this.mTextPaintClicks.setTypeface(MyApplication.MAIN_FONT);
+			this.mTextPaintRight.setTextAlign(Paint.Align.RIGHT);
+			this.mTextPaintCenter.setTextAlign(Paint.Align.CENTER);
+			this.mTextPaintClicks.setTextAlign(Paint.Align.CENTER);
+			this.mTextPaintClicks.setTextSize(this.mClicksTextSize);
+			
+			
 		}
 	}
 
@@ -144,7 +160,6 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	@Override
 	public void onDraw(Canvas canvas)
 	{
-		this.drawBackground(canvas);
 		if (this.mBackgroundImage != null)
 			canvas.drawBitmap(this.mBackgroundImage, this.mBackgroundImageMatrix, null);
 		if (this.mArrowImage != null)
@@ -154,10 +169,11 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		if (this.mToImage != null)
 			canvas.drawBitmap(this.mToImage, this.mToImageMatrix, null);
 		if (this.mFromWord != null)
-			canvas.drawText(this.mFromWord, this.mFromWordDraw.x, this.mFromWordDraw.y, this.mTextPaint);
+			canvas.drawText(this.mFromWord, this.mFromWordDraw.x, this.mFromWordDraw.y, this.mTextPaintCenter);
 		if (this.mToWord != null)
-			canvas.drawText(this.mToWord, this.mToWordDraw.x, this.mToWordDraw.y, this.mTextPaint);
-	//	canvas.drawText(this.mNumberOfClicks, , y, paint)
+			canvas.drawText(this.mToWord, this.mToWordDraw.x, this.mToWordDraw.y, this.mTextPaintCenter);
+		if (this.mClickString != null)
+			canvas.drawText(this.mClickString, this.mClicksDraw.x, this.mClicksDraw.y, this.mTextPaintClicks);
 	}
 	public void set(Bitmap aFromImage, Bitmap aToImage, String aFromWord, String aToWord)
 	{
@@ -179,12 +195,6 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		}
 
 		this.requestRedraw();
-	}
-	//draws the background of the map
-	private void drawBackground(Canvas canvas)
-	{
-		invalidate();
-		requestLayout();
 	}
 
 	//gets touch events for view
@@ -249,7 +259,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		super.onSizeChanged(w, h, oldw, oldh);
 
 		float aspect = h / (float)w;
-
+		createClickStringBounds();
 		if (this.mBackgroundImage != null)
 		{
 			float backImageScaleX = this.getWidth() / (float)this.mBackgroundImage.getWidth();
@@ -294,39 +304,41 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		{
 			//text size
 			float fromWordMaxWidth = this.mFromWordPercentWidth * this.getWidth();
-			this.mTextPaint.setTextSize(this.mDefaultTextSize);
-			float textSizeFrom = this.mTextPaint.getTextSize();
-			while (this.mTextPaint.measureText(this.mFromWord) > fromWordMaxWidth)
+			this.mTextPaintLeft.setTextSize(this.mDefaultTextSize);
+			float textSizeFrom = this.mTextPaintLeft.getTextSize();
+			while (this.mTextPaintLeft.measureText(this.mFromWord) > fromWordMaxWidth)
 			{
 				textSizeFrom--;
-				this.mTextPaint.setTextSize(textSizeFrom);
+				this.mTextPaintLeft.setTextSize(textSizeFrom);
 			}
 
 			float toWordMaxWidth = this.mToWordPercentWidth * this.getWidth();
-			this.mTextPaint.setTextSize(this.mDefaultTextSize);
-			float textSizeTo = this.mTextPaint.getTextSize();
-			while (this.mTextPaint.measureText(this.mFromWord) > toWordMaxWidth)
+			this.mTextPaintLeft.setTextSize(this.mDefaultTextSize);
+			float textSizeTo = this.mTextPaintLeft.getTextSize();
+			while (this.mTextPaintLeft.measureText(this.mToWord) > toWordMaxWidth)
 			{
 				textSizeTo--;
-				this.mTextPaint.setTextSize(textSizeTo);
+				this.mTextPaintLeft.setTextSize(textSizeTo);
 			}
 
 			float smallestTextSize = (textSizeFrom > textSizeTo ? textSizeTo : textSizeFrom);
-			this.mTextPaint.setTextSize(smallestTextSize);
+			this.mTextPaintLeft.setTextSize(smallestTextSize);
+			this.mTextPaintRight.setTextSize(smallestTextSize);
+			this.mTextPaintCenter.setTextSize(smallestTextSize);
 
 			//get bounding boxes
 			Rect fromBoundingRect = new Rect();
-			this.mTextPaint.getTextBounds(this.mFromWord, 0, this.mFromWord.length(), fromBoundingRect);
+			this.mTextPaintLeft.getTextBounds(this.mFromWord, 0, this.mFromWord.length(), fromBoundingRect);
 			Rect toBoundingRect = new Rect();
-			this.mTextPaint.getTextBounds(this.mToWord, 0, this.mToWord.length(), toBoundingRect);
+			this.mTextPaintLeft.getTextBounds(this.mToWord, 0, this.mToWord.length(), toBoundingRect);
 
 			//from word
-			float fromWordX = this.mFromWordPercentX * this.getWidth() - fromBoundingRect.width()/2;
-			float fromWordY = this.mFromWordPercentY * this.getHeight() + fromBoundingRect.height()/2;
+			float fromWordX = this.mFromWordPercentX * this.getWidth();
+			float fromWordY = this.mFromWordPercentY * this.getHeight();
 			this.mFromWordDraw = new PointF(fromWordX, fromWordY);
 			//to word
-			float toWordX = this.mToWordPercentX * this.getWidth() - toBoundingRect.width()/2;
-			float toWordY = this.mToWordPercentY * this.getHeight() + toBoundingRect.height()/2;
+			float toWordX = this.mToWordPercentX * this.getWidth();
+			float toWordY = this.mToWordPercentY * this.getHeight();
 			this.mToWordDraw = new PointF(toWordX, toWordY);
 		}
 	}
@@ -334,7 +346,19 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	@Override
 	public void numberOfClicksChanged(int aNumberOfClicks)
 	{
-		this.mNumberOfClicks = aNumberOfClicks;
+		this.mClickString = "Moves left: " + aNumberOfClicks;
+		createClickStringBounds();
 		requestRedraw();
+	}
+	
+	public void createClickStringBounds()
+	{
+		if (this.mClickString != null)
+		{
+			//moves left text
+			float clickStringX = this.mClickNumberPercentX * this.getWidth();
+			float clickStringY = this.mClickNumberPercentY * this.getHeight();
+			this.mClicksDraw = new PointF(clickStringX, clickStringY);
+		}	
 	}
 }

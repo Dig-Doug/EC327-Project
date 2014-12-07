@@ -14,12 +14,18 @@
     </string-array>
     
     <array name="map_backgroundImages">
-        <item>@drawable/map_background_panel_one</item>
-        <item>@drawable/map_background_panel_two</item>
-        <item>@drawable/map_background_panel_three</item>
-        <item>@drawable/map_background_panel_four</item>
-        <item>@drawable/map_background_panel_five</item>
-        <item>@drawable/map_background_panel_six</item>
+        <item>@drawable/map_background_panel_1</item>
+        <item>@drawable/map_background_panel_2</item>
+        <item>@drawable/map_background_panel_3</item>
+        <item>@drawable/map_background_panel_4</item>
+        <item>@drawable/map_background_panel_5</item>
+        <item>@drawable/map_background_panel_6</item>
+    </array>
+    
+    <array name="starImages">
+        <item>@drawable/star1</item>
+        <item>@drawable/star2</item>
+        <item>@drawable/star3</item>
     </array>
     
 </resources>

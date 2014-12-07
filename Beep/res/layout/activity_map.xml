@@ -14,14 +14,16 @@
         custom:nodeOffImage="@drawable/map_node"
         custom:nodeOnImage="@drawable/map_node_blank"
         custom:nodeSelectedOverlayStatic="@drawable/node_overlay"
-        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay" />
+        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay"
+        custom:parrallaxImage="@drawable/starry_background"
+        custom:starImages="@array/starImages" />
 
     <ImageButton
         android:id="@+id/mapActivity_settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/icon_settings"
+        android:src="@drawable/settings_icon"
         android:text=""
         android:background="@null"
         android:padding="10dp" />
@@ -33,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/icon_about"
+        android:src="@drawable/info_icon"
         android:text=""
         android:background="@null"
         android:padding="10dp" />

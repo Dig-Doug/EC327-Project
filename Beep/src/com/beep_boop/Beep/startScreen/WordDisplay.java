@@ -10,8 +10,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -48,11 +46,11 @@ public class WordDisplay extends View
 		try
 		{
 			this.mFromImagePercentX = a.getFloat(R.styleable.WordDisplay_fromImagePercentX, 0.2083f);
-			this.mFromImagePercentY = a.getFloat(R.styleable.WordDisplay_fromImagePercentY, 0.4545f);
+			this.mFromImagePercentY = a.getFloat(R.styleable.WordDisplay_fromImagePercentY, 0.4f);
 			this.mToImagePercentX = a.getFloat(R.styleable.WordDisplay_toImagePercentX, 0.7916f);
-			this.mToImagePercentY = a.getFloat(R.styleable.WordDisplay_toImagePercentY, 0.4545f);
+			this.mToImagePercentY = a.getFloat(R.styleable.WordDisplay_toImagePercentY, 0.4f);
 			this.mArrowImagePercentX = a.getFloat(R.styleable.WordDisplay_arrowImagePercentX, 0.5f);
-			this.mArrowImagePercentY = a.getFloat(R.styleable.WordDisplay_arrowImagePercentY, 0.5f);
+			this.mArrowImagePercentY = a.getFloat(R.styleable.WordDisplay_arrowImagePercentY, 0.4f);
 			this.mFromWordPercentX = a.getFloat(R.styleable.WordDisplay_fromWordPercentX, 0.2083f);
 			this.mFromWordPercentY = a.getFloat(R.styleable.WordDisplay_fromWordPercentY, 0.8409f);
 			this.mToWordPercentX = a.getFloat(R.styleable.WordDisplay_toWordPercentX, 0.7916f);
@@ -79,12 +77,13 @@ public class WordDisplay extends View
 			a.recycle();
 		}
 
+		this.mTextPaint.setTextAlign(Paint.Align.CENTER);
 		if (!this.isInEditMode())
 		{
 			this.mTextPaint.setTypeface(MyApplication.MAIN_FONT);
 		}
 	}
-	
+
 	public void destroy()
 	{
 		if (this.mArrowImage != null)
@@ -128,6 +127,8 @@ public class WordDisplay extends View
 			this.mToWord = aToWord;
 		}
 
+		this.calculateBounds();
+
 		this.requestRedraw();
 	}
 
@@ -161,86 +162,93 @@ public class WordDisplay extends View
 	{
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		float aspect = h / (float)w;
+		this.calculateBounds();
+	}
 
-		if (this.mBackgroundImage != null)
-		{
-			float backImageScaleX = this.getWidth() / (float)this.mBackgroundImage.getWidth();
-			float backImageScaleY = this.getHeight() / (float)this.mBackgroundImage.getHeight();
-			this.mBackgroundImageMatrix.postScale(backImageScaleX, backImageScaleY);
-		}
+	private void calculateBounds()
+	{
+		float aspect = this.getHeight() / (float)this.getWidth();
 
-		if (this.mFromImage != null)
+		if (!Float.isNaN(aspect) && !Float.isInfinite(aspect))
 		{
-			//from image
-			float fromImageX = this.mFromImagePercentX - this.mFromImagePercentWidth / 2;
-			float fromImageY = this.mFromImagePercentY - this.mFromImagePercentWidth * aspect;		
-			float fromImageScaleX = (this.getWidth() * this.mFromImagePercentWidth) / this.mFromImage.getWidth();
-			float fromImageScaleY = (this.getHeight() * this.mFromImagePercentWidth / aspect) / this.mFromImage.getHeight();
-			this.mFromImageMatrix.setScale(fromImageScaleX, fromImageScaleY);
-			this.mFromImageMatrix.postTranslate(fromImageX * this.getWidth(), fromImageY * this.getHeight());
-		}
 
-		if (this.mToImage != null)
-		{
-			//to image
-			float toImageX = this.mToImagePercentX - this.mToImagePercentWidth / 2;
-			float toImageY = this.mToImagePercentY - this.mToImagePercentWidth * aspect;
-			float toImageScaleX = (this.getWidth() * this.mToImagePercentWidth) / this.mToImage.getWidth();
-			float toImageScaleY = (this.getHeight() * this.mToImagePercentWidth / aspect) / this.mToImage.getHeight();
-			this.mToImageMatrix.setScale(toImageScaleX, toImageScaleY);
-			this.mToImageMatrix.postTranslate(toImageX * this.getWidth(), toImageY * this.getHeight());
-		}
-
-		if (this.mArrowImage != null)
-		{
-			//arrow image
-			float arrowImageX = this.mArrowImagePercentX - this.mArrowImagePercentWidth / 2;
-			float arrowImageY = this.mArrowImagePercentY - this.mArrowImagePercentWidth * aspect;
-			float arrowImageScaleX = (this.getWidth() * this.mArrowImagePercentWidth) / this.mArrowImage.getWidth();
-			float arrowImageScaleY =(this.getHeight() * this.mArrowImagePercentWidth / aspect) / this.mArrowImage.getHeight();
-			this.mArrowImageMatrix.setScale(arrowImageScaleX, arrowImageScaleY);
-			this.mArrowImageMatrix.postTranslate(arrowImageX * this.getWidth(), arrowImageY * this.getHeight());
-		}
-
-		if (this.mFromWord != null && this.mToWord != null)
-		{
-			//text size
-			float fromWordMaxWidth = this.mFromWordPercentWidth * this.getWidth();
-			this.mTextPaint.setTextSize(this.mDefaultTextSize);
-			float textSizeFrom = this.mTextPaint.getTextSize();
-			while (this.mTextPaint.measureText(this.mFromWord) > fromWordMaxWidth)
+			if (this.mBackgroundImage != null)
 			{
-				textSizeFrom--;
-				this.mTextPaint.setTextSize(textSizeFrom);
+				this.mBackgroundImageMatrix = new Matrix();
+				float backImageScaleX = this.getWidth() / (float)this.mBackgroundImage.getWidth();
+				float backImageScaleY = this.getHeight() / (float)this.mBackgroundImage.getHeight();
+				this.mBackgroundImageMatrix.postScale(backImageScaleX, backImageScaleY);
 			}
 
-			float toWordMaxWidth = this.mToWordPercentWidth * this.getWidth();
-			this.mTextPaint.setTextSize(this.mDefaultTextSize);
-			float textSizeTo = this.mTextPaint.getTextSize();
-			while (this.mTextPaint.measureText(this.mFromWord) > toWordMaxWidth)
+			if (this.mFromImage != null)
 			{
-				textSizeTo--;
-				this.mTextPaint.setTextSize(textSizeTo);
+				this.mFromImageMatrix = new Matrix();
+				//from image
+				float fromImageX = this.mFromImagePercentX - this.mFromImagePercentWidth / 2;
+				float fromImageY = this.mFromImagePercentY - this.mFromImagePercentWidth * aspect;		
+				float fromImageScaleX = (this.getWidth() * this.mFromImagePercentWidth) / this.mFromImage.getWidth();
+				float fromImageScaleY = (this.getHeight() * this.mFromImagePercentWidth / aspect) / this.mFromImage.getHeight();
+				this.mFromImageMatrix.setScale(fromImageScaleX, fromImageScaleY);
+				this.mFromImageMatrix.postTranslate(fromImageX * this.getWidth(), fromImageY * this.getHeight());
 			}
 
-			float smallestTextSize = (textSizeFrom > textSizeTo ? textSizeTo : textSizeFrom);
-			this.mTextPaint.setTextSize(smallestTextSize);
+			if (this.mToImage != null)
+			{
+				this.mToImageMatrix = new Matrix();
+				//to image
+				float toImageX = this.mToImagePercentX - this.mToImagePercentWidth / 2;
+				float toImageY = this.mToImagePercentY - this.mToImagePercentWidth * aspect;
+				float toImageScaleX = (this.getWidth() * this.mToImagePercentWidth) / this.mToImage.getWidth();
+				float toImageScaleY = (this.getHeight() * this.mToImagePercentWidth / aspect) / this.mToImage.getHeight();
+				this.mToImageMatrix.setScale(toImageScaleX, toImageScaleY);
+				this.mToImageMatrix.postTranslate(toImageX * this.getWidth(), toImageY * this.getHeight());
+			}
 
-			//get bounding boxes
-			Rect fromBoundingRect = new Rect();
-			this.mTextPaint.getTextBounds(this.mFromWord, 0, this.mFromWord.length(), fromBoundingRect);
-			Rect toBoundingRect = new Rect();
-			this.mTextPaint.getTextBounds(this.mToWord, 0, this.mToWord.length(), toBoundingRect);
+			if (this.mArrowImage != null)
+			{
+				this.mArrowImageMatrix = new Matrix();
+				//arrow image
+				float arrowImageX = this.mArrowImagePercentX - this.mArrowImagePercentWidth / 2;
+				float arrowImageY = this.mArrowImagePercentY - this.mArrowImagePercentWidth * aspect;
+				float arrowImageScaleX = (this.getWidth() * this.mArrowImagePercentWidth) / this.mArrowImage.getWidth();
+				float arrowImageScaleY =(this.getHeight() * this.mArrowImagePercentWidth / aspect) / this.mArrowImage.getHeight();
+				this.mArrowImageMatrix.setScale(arrowImageScaleX, arrowImageScaleY);
+				this.mArrowImageMatrix.postTranslate(arrowImageX * this.getWidth(), arrowImageY * this.getHeight());
+			}
 
-			//from word
-			float fromWordX = this.mFromWordPercentX * this.getWidth() - fromBoundingRect.width()/2;
-			float fromWordY = this.mFromWordPercentY * this.getHeight() + fromBoundingRect.height()/2;
-			this.mFromWordDraw = new PointF(fromWordX, fromWordY);
-			//to word
-			float toWordX = this.mToWordPercentX * this.getWidth() - toBoundingRect.width()/2;
-			float toWordY = this.mToWordPercentY * this.getHeight() + toBoundingRect.height()/2;
-			this.mToWordDraw = new PointF(toWordX, toWordY);
+			if (this.mFromWord != null && this.mToWord != null)
+			{
+				//text size
+				float fromWordMaxWidth = this.mFromWordPercentWidth * this.getWidth();
+				this.mTextPaint.setTextSize(this.mDefaultTextSize);
+				float textSizeFrom = this.mTextPaint.getTextSize();
+				while (this.mTextPaint.measureText(this.mFromWord) > fromWordMaxWidth)
+				{
+					textSizeFrom--;
+					this.mTextPaint.setTextSize(textSizeFrom);
+				}
+
+				float toWordMaxWidth = this.mToWordPercentWidth * this.getWidth();
+				this.mTextPaint.setTextSize(this.mDefaultTextSize);
+				float textSizeTo = this.mTextPaint.getTextSize();
+				while (this.mTextPaint.measureText(this.mToWord) > toWordMaxWidth)
+				{
+					textSizeTo--;
+					this.mTextPaint.setTextSize(textSizeTo);
+				}
+
+				float smallestTextSize = Math.min(textSizeFrom, textSizeTo);
+				this.mTextPaint.setTextSize(smallestTextSize);
+
+				//from word
+				float fromWordX = this.mFromWordPercentX * this.getWidth();
+				float fromWordY = this.mFromWordPercentY * this.getHeight();
+				this.mFromWordDraw = new PointF(fromWordX, fromWordY);
+				//to word
+				float toWordX = this.mToWordPercentX * this.getWidth();
+				float toWordY = this.mToWordPercentY * this.getHeight();
+				this.mToWordDraw = new PointF(toWordX, toWordY);
+			}
 		}
 	}
 

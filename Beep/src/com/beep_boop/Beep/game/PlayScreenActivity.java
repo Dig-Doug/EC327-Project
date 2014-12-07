@@ -4,21 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
@@ -31,20 +27,22 @@ import com.beep_boop.Beep.win.WinActivity;
 
 public class PlayScreenActivity extends Activity implements PlayView.WordClickListener, PlayView.WordDataSource, GoalBar.ClickListener
 {
-	
+
 	public interface NumberOfClicksChangedListener
 	{
 		public void numberOfClicksChanged(int aNumberOfClicks);
 	}
 	///-----Member Variables-----
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
-	private static final String PAUSE_MENU_TAG = "PAUSE_MENU_TAG";
+	//private static final String PAUSE_MENU_TAG = "PAUSE_MENU_TAG";
 	/** Tag for logging */
 	private static final String TAG = "PlayScreenActivity";
 	/** Holds a reference to the play view */
 	private PlayView mPlayView;
 	private GoalBar mGoalBar;
-	
+
+	private PlayScreenActivity THIS = this;
+
 
 	private ArrayList<String> mWordPath = new ArrayList<String>();
 	private Level mSelectedLevel;
@@ -104,26 +102,34 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		try
 		{
 			fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
+		}
+		catch (Exception e)
+		{
+			Log.e(TAG, "Error getting from level image");
+		}
+		try
+		{
 			toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
 		}
 		catch (Exception e)
 		{
-			Log.e(TAG, "Error getting level images");
+			Log.e(TAG, "Error getting to level image");
 		}
 		this.mGoalBar.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
-
+		
+		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves);
 	}
-	
+
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
-		
+
 		this.mGoalBar.destroy();
 		this.mPlayView.destroy();
 	}
-	
-	
+
+
 	private void play()
 	{
 		if (this.mPauseStartTime != -1)
@@ -137,7 +143,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	private void pause()
 	{
 		this.mPauseStartTime = System.currentTimeMillis();
-		new PauseMenuDialogFragment().show(getFragmentManager(), PAUSE_MENU_TAG);
+		PauseMenuDialogFragment dialog = new PauseMenuDialogFragment(this);//.show(getFragmentManager(), PAUSE_MENU_TAG);
+		dialog.show();
 	}
 
 	///-----PlayView.WordDataSource methods-----
@@ -160,7 +167,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidClickWord(PlayView aPlayView, String aWord)
 	{
 		this.mWordPath.add(aWord);
-		this.mGoalBar.numberOfClicksChanged(this.mWordPath.size()-1);
+		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves - this.mWordPath.size()+1);
 		if (aWord.equalsIgnoreCase(this.mSelectedLevel.toWord))
 		{
 			String[] pathArray = new String[this.mWordPath.size()];
@@ -196,7 +203,20 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidGoBack(PlayView aPlayView)
 	{
 		this.mWordPath.remove(this.mWordPath.size() - 1);
-		this.mGoalBar.numberOfClicksChanged(this.mWordPath.size()-1);
+		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves - this.mWordPath.size()+1);
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if (this.mWordPath.size() > 1)
+		{
+			this.mPlayView.goBack();
+		}
+		else
+		{
+			super.onBackPressed();
+		}
 	}
 
 	///-----Goal Bar Click Listener-----
@@ -208,23 +228,22 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 
 	///-----Pause Menu Fragment Dialog-----
-	public class PauseMenuDialogFragment extends DialogFragment
+	public class PauseMenuDialogFragment extends Dialog
 	{
 		private PauseMenuDialogFragment PAUSE_THIS = this;
-
-		@SuppressLint("InflateParams") @Override
-		public Dialog onCreateDialog(Bundle savedInstanceState)
+		public PauseMenuDialogFragment (final Context context)
 		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			// Get the layout inflater
-			LayoutInflater inflater = getActivity().getLayoutInflater();
+			super(context, R.style.TransparentDialog);
 
-			// Inflate and set the layout for the dialog
-			View rootView = inflater.inflate(R.layout.dialog_play_pause_menu, null);
-			builder.setView(rootView);
+			// This is the layout XML file that describes your Dialog layout
+			this.setContentView(R.layout.dialog_play_pause_menu);
+			getWindow().setBackgroundDrawableResource(R.color.transparent);
 
-			ImageButton playButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_playButton);
-			playButton.setOnClickListener(new OnClickListener()
+			TextView title = (TextView) findViewById(R.id.playScreenActivity_pauseMenu_titleTextView);
+			title.setTypeface(MyApplication.MAIN_FONT);
+
+			ImageButton playButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_playButton);
+			playButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
@@ -234,52 +253,49 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				}
 			});
 
-			ImageButton resetButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_resetButton);
-			resetButton.setOnClickListener(new OnClickListener()
+			ImageButton resetButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_resetButton);
+			resetButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					Intent startLevelIntent = new Intent(PAUSE_THIS.getActivity(), StartLevelActivity.class);
+					Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
 					startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
 					startActivity(startLevelIntent);
 					PAUSE_THIS.dismiss();
 					finish();
 					overridePendingTransition(R.animator.anim_activity_right_in, R.animator.anim_activity_right_out);
-					
+
 				}
 			});
 
-			ImageButton settingsButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_settingsButton);
-			settingsButton.setOnClickListener(new OnClickListener()
+			ImageButton settingsButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_settingsButton);
+			settingsButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					Intent settingsIntent = new Intent(PAUSE_THIS.getActivity(), SettingsActivity.class);
+					Intent settingsIntent = new Intent(THIS, SettingsActivity.class);
 					startActivity(settingsIntent);
 					overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 				}
 			});
 
-			ImageButton mapButton = (ImageButton) rootView.findViewById(R.id.playScreenActivity_pauseMenu_mapButton);
-			mapButton.setOnClickListener(new OnClickListener()
+			ImageButton mapButton = (ImageButton) findViewById(R.id.playScreenActivity_pauseMenu_mapButton);
+			mapButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					PAUSE_THIS.getActivity().finish();
+					THIS.finish();
 				}
 			});
-
-			return builder.create();
 		}
-		
+
 		@Override
-		public void onDismiss(DialogInterface dialog)
+		public void onBackPressed()
 		{
-			super.onDismiss(dialog);
-			
+			super.onBackPressed();
 			play();
 		}
 	}

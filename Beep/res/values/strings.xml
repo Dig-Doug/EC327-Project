@@ -6,7 +6,7 @@
 
     <!-- Launch Activity -->
     <string name="title_activity_launch">LaunchActivity</string>
-    <string name="launchActivity_loadingText">Loading: </string>
+    <string name="launchActivity_loadingText">Loading&#8230;</string>
 
     <!-- Main Activity -->
     <string name="mainActivity_toSettingsButton">Settings</string>
@@ -63,6 +63,7 @@
 	<string name="title_activity_lose">LoseActivity</string>
 	<string name="loseActivity_title">MISSION:</string>
     <string name="loseActivity_failed">FAILED!</string>
+    <string name="loseActivity_hint">hint: </string>
 	
 	<!-- Sharing -->
 	<string name="share_emailDefaultText1">I went from </string>

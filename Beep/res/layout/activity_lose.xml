@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/starry_backround"
+    android:background="@drawable/starry_background"
     android:gravity="top" >
 
     <LinearLayout
@@ -10,6 +10,17 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/loseActivity_hintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="3"
+            android:minLines="1"
+            android:text="@string/loseActivity_hint"
+            android:textColor="@color/loseActivity_textColor"
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/loseActivity_restartLevelButton"

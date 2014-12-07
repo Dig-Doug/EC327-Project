@@ -15,14 +15,16 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.stars.StarManager;
 
-public class MapView extends View
+public class MapView extends View implements StarManager.ScreenSpaceCoverter
 {
 	///-----Interfaces-----
 	public interface NodeClickListener
@@ -78,6 +80,9 @@ public class MapView extends View
 	/** Hold the image to be drawn in the background */
 	private Bitmap[] mBackgroundImages; // This may need to be broken up into multiple images, in which case an array should be used
 
+	private Bitmap mParrallaxImage;
+	private float mParrallaxScale = 1.0f;
+
 	/** Holds the OFF node image */
 	private Bitmap mNodeImageOff;
 	/** Holds the ON node image */
@@ -103,6 +108,9 @@ public class MapView extends View
 	private static final float SCROLL_SCALAR = 2.0f;
 
 	private int mBackgroundTotalHeight = 0;
+	private boolean mBackgroundLoaded = false;
+	
+	private StarManager mStarManager;
 
 	///-----Constructors-----
 	public MapView(Context context, AttributeSet attrs)
@@ -112,31 +120,54 @@ public class MapView extends View
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MapView, 0, 0);
 		try
 		{
+			int imageArray = a.getResourceId(R.styleable.MapView_backgroundImage, -1);
+			if (imageArray != -1)
+			{
+				new LoadBackgroundImagesTask().execute(imageArray);
+			}
+			
 			float mapWidth = a.getFloat(R.styleable.MapView_mapWidthOnScreen, 1.0f);
 			this.MAP_ON_SCREEN_WIDTH = mapWidth;
 			int nodeOffImage = a.getResourceId(R.styleable.MapView_nodeOffImage, -1);
 			this.mNodeImageOff = BitmapFactory.decodeResource(getResources(), nodeOffImage, null);
 			int nodeOnImage = a.getResourceId(R.styleable.MapView_nodeOnImage, -1);
 			this.mNodeImageOn = BitmapFactory.decodeResource(getResources(), nodeOnImage, null);
+			int nodeOverlayStaticImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayStatic, -1);
+			if (nodeOverlayStaticImage != -1)
+				this.mSelectedNodeOverlayStatic = BitmapFactory.decodeResource(getResources(), nodeOverlayStaticImage, null);
+			int nodeOverlayAnimatingImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayAnimating, -1);
+			if (nodeOverlayAnimatingImage != -1)
+				this.mSelectedNodeOverlayAnimating = BitmapFactory.decodeResource(getResources(), nodeOverlayAnimatingImage, null);
+			this.mAnimationLength = a.getInteger(R.styleable.MapView_animationLength, 100);
+			this.mMaxNodeClickDistance = a.getFloat(R.styleable.MapView_nodeClickDistance, 0.05f);
+			this.mSelectedOverlayAnimationLength = a.getInteger(R.styleable.MapView_overlayAnimationLength, 1000);
 
-			int imageArray = a.getResourceId(R.styleable.MapView_backgroundImage, -1);
-			if (imageArray != -1)
+			int parrallaxImage = a.getResourceId(R.styleable.MapView_parrallaxImage, -1);
+			if (parrallaxImage != -1)
+				this.mParrallaxImage = BitmapFactory.decodeResource(getResources(), parrallaxImage, null);
+			
+			int starArray = a.getResourceId(R.styleable.MapView_starImages, -1);
+			if (starArray != -1)
 			{
-				TypedArray imgs = context.getResources().obtainTypedArray(imageArray);
-
+				TypedArray stars = getContext().getResources().obtainTypedArray(starArray);
 				try
 				{
-					this.mBackgroundImages = new Bitmap[imgs.length()];
-					for (int i = 0; i < imgs.length(); i++)
+					Bitmap[] starImages = new Bitmap[stars.length()];
+					for (int i = 0; i < stars.length(); i++)
 					{
-						int bitmapID = imgs.getResourceId(i, -1);
+						int bitmapID = stars.getResourceId(i, -1);
 						if (bitmapID != -1)
 						{
 							BitmapFactory.Options options = new BitmapFactory.Options();
-							this.mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
-							this.mBackgroundTotalHeight += this.mBackgroundImages[i].getHeight();
+							starImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
 						}
 					}
+					
+					mStarManager = new StarManager(THIS, false, 100, starImages, new PointF(0.0f, 0f), 
+							0.25f, 1.0f, 
+							-5, 5, 
+							0.01f, 0.99f, 
+							0.05f, 0.2f);
 				}
 				catch (Exception e)
 				{
@@ -144,16 +175,9 @@ public class MapView extends View
 				}
 				finally
 				{
-					imgs.recycle();
+					stars.recycle();
 				}
 			}
-			int nodeOverlayStaticImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayStatic, -1);
-			this.mSelectedNodeOverlayStatic = BitmapFactory.decodeResource(getResources(), nodeOverlayStaticImage, null);
-			int nodeOverlayAnimatingImage = a.getResourceId(R.styleable.MapView_nodeSelectedOverlayAnimating, -1);
-			this.mSelectedNodeOverlayAnimating = BitmapFactory.decodeResource(getResources(), nodeOverlayAnimatingImage, null);
-			this.mAnimationLength = a.getInteger(R.styleable.MapView_animationLength, 100);
-			this.mMaxNodeClickDistance = a.getFloat(R.styleable.MapView_nodeClickDistance, 0.05f);
-			this.mSelectedOverlayAnimationLength = a.getInteger(R.styleable.MapView_overlayAnimationLength, 1000);
 		}
 		catch (Exception e)
 		{
@@ -165,6 +189,46 @@ public class MapView extends View
 		}
 
 		this.init();		
+	}
+	
+	private class LoadBackgroundImagesTask extends AsyncTask<Integer, Void, Void>
+	{
+		protected Void doInBackground(Integer... ints)
+		{
+			int imageArray = ints[0];
+			TypedArray imgs = getContext().getResources().obtainTypedArray(imageArray);
+
+			try
+			{
+				mBackgroundImages = new Bitmap[imgs.length()];
+				for (int i = 0; i < imgs.length(); i++)
+				{
+					int bitmapID = imgs.getResourceId(i, -1);
+					if (bitmapID != -1)
+					{
+						BitmapFactory.Options options = new BitmapFactory.Options();
+						mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+						mBackgroundTotalHeight += mBackgroundImages[i].getHeight();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				imgs.recycle();
+			}
+			
+			return null;
+		}
+
+		protected void onPostExecute(Void result)
+		{
+			mBackgroundLoaded = true;
+			calculateBackground();
+		}
 	}
 
 	private void init()
@@ -191,17 +255,39 @@ public class MapView extends View
 		this.mNodeAnimator.setRepeatMode(ValueAnimator.REVERSE);
 		this.mNodeAnimator.start();
 	}
+	
+	@Override
+	public void onAttachedToWindow()
+	{
+		super.onAttachedToWindow();
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.start();
+		}
+		
+		if (this.mNodeAnimator != null)
+		{
+			this.mNodeAnimator.start();
+		}
+	}
 
 	@Override
 	public void onDetachedFromWindow()
 	{
 		super.onDetachedFromWindow();
-
-		//clean up the animator
-		this.mNodeAnimator.cancel();
-		this.mNodeAnimator = null;
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.pause();
+		}
+		
+		if (this.mNodeAnimator != null)
+		{
+			this.mNodeAnimator.end();
+		}
 	}
-	
+
 	public void destroy()
 	{
 		if (this.mNodeImageOff != null)
@@ -231,6 +317,23 @@ public class MapView extends View
 		{
 			this.mSelectedNodeOverlayAnimating.recycle();
 			this.mSelectedNodeOverlayAnimating = null;
+		}
+		if (this.mParrallaxImage != null)
+		{
+			this.mParrallaxImage.recycle();
+			this.mParrallaxImage = null;
+		}
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.destroy();
+		}
+		
+		if (this.mNodeAnimator != null)
+		{
+			//clean up the animator
+			this.mNodeAnimator.cancel();
+			this.mNodeAnimator = null;
 		}
 	}
 
@@ -525,7 +628,15 @@ public class MapView extends View
 
 		canvas.save();
 
+		this.drawParrallax(canvas);
+
 		canvas.scale(this.mScaleX, this.mScaleY);
+		
+		if (this.mStarManager != null)
+		{
+			this.mStarManager.draw(canvas);
+		}
+		
 		//draw background
 		this.drawBackground(canvas);
 		//draw all the nodes on top
@@ -533,10 +644,23 @@ public class MapView extends View
 		canvas.restore();
 	}
 
+	private void drawParrallax(Canvas canvas)
+	{
+		if (this.mParrallaxImage != null)
+		{
+			canvas.save();
+			canvas.scale(this.mParrallaxScale, this.mParrallaxScale);
+			float scaledY = (Math.abs(this.mOrigin.y)) * this.getHeight();
+			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY - this.getHeight(), null);
+			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY, null);
+			canvas.restore();
+		}
+	}
+
 	//draws the background of the map
 	private void drawBackground(Canvas canvas)
 	{
-		if (this.mBackgroundImages != null)
+		if (this.mBackgroundImages != null && mBackgroundLoaded)
 		{
 			for (int i = this.mBackgroundImages.length - 1; i >= 0; i--)
 			{
@@ -592,11 +716,14 @@ public class MapView extends View
 
 			PointF screenDrawCenter = this.convertToScreenSpace(this.mSelectedOverlayAnimationStartNode.getX() + deltaX, this.mSelectedOverlayAnimationStartNode.getY() + deltaY);
 			Matrix matrix = new Matrix();
+			//flips the picture if moving in other direction
+			/*
 			if (this.mSelectedOverlayAnimator != null && deltaX < 0)
 			{
 				matrix.setScale(-1,1);
 				matrix.postTranslate(2 * this.mOverlayHalfSizeX, 0);
 			}
+			*/
 			matrix.postTranslate(screenDrawCenter.x - this.mOverlayHalfSizeX, screenDrawCenter.y - this.mOverlayHalfSizeY);
 
 			canvas.drawBitmap(drawWith, matrix, null);
@@ -615,13 +742,6 @@ public class MapView extends View
 	{
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		if (this.mBackgroundImages != null && this.mBackgroundImages[0] != null)
-		{
-			this.mScaleX = this.MAP_ON_SCREEN_WIDTH * (this.getWidth() / (float)this.mBackgroundImages[0].getWidth());
-		}
-		this.mScaleY = this.mScaleX;
-		this.MAP_ON_SCREEN_HEIGHT = (this.getHeight() / (float)this.mBackgroundTotalHeight) / this.mScaleY;
-
 		if (this.mNodeImageOff != null)
 		{
 			this.mNodeHalfSizeX = (int)(this.mNodeImageOff.getWidth() / 2);
@@ -633,6 +753,25 @@ public class MapView extends View
 			this.mOverlayHalfSizeX = (int)(this.mSelectedNodeOverlayStatic.getWidth() / 2.0f);
 			this.mOverlayHalfSizeY = (int)(this.mSelectedNodeOverlayStatic.getHeight() / 2.0f);
 		}
+
+		if (this.mParrallaxImage != null)
+		{
+			float scaleX = (w / (float)this.mParrallaxImage.getWidth());
+			float scaleY = (h / (float)this.mParrallaxImage.getHeight());
+			this.mParrallaxScale = Math.max(scaleX, scaleY);
+		}
+		
+		this.calculateBackground();
+	}
+	
+	private void calculateBackground()
+	{
+		if (this.mBackgroundImages != null && this.mBackgroundImages[0] != null)
+		{
+			this.mScaleX = this.MAP_ON_SCREEN_WIDTH * (this.getWidth() / (float)this.mBackgroundImages[0].getWidth());
+		}
+		this.mScaleY = this.mScaleX;
+		this.MAP_ON_SCREEN_HEIGHT = (this.getHeight() / (float)this.mBackgroundTotalHeight) / this.mScaleY;
 
 		this.calculateOriginBounds();
 	}
@@ -808,6 +947,32 @@ public class MapView extends View
 		//reset variables here as needed
 		this.mScrolling = false;
 		this.mLastTouchPoint = new PointF(-1.0f, -1.0f);
+	}
+	
+	///-----Star Manager Methods-----
+	public boolean starManagerIsPointOnScreen(StarManager aManager, PointF aPoint)
+	{
+		boolean result = false;
+		if (Math.abs(aPoint.x - this.mOrigin.x) < this.MAP_ON_SCREEN_WIDTH * 1.5f)
+		{
+			//check if it's on screen in the Y direction
+			if (Math.abs(aPoint.y - this.mOrigin.y) < this.MAP_ON_SCREEN_HEIGHT * 1.5f)
+			{
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
+	public PointF starManagerConvertToScreenSpace(StarManager aManager, PointF aPoint)
+	{
+		return this.convertToScreenSpace(aPoint.x, aPoint.y);
+	}
+	
+	public void starManagerNeedsRedraw()
+	{
+		//do nothing
 	}
 
 }

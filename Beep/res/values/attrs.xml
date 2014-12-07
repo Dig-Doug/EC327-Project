@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="starImages" format="reference" />
     <attr name="backgroundImage" format="reference" />
     <attr name="textColor" format="reference" />
     <attr name="arrowImage" format="reference" />
@@ -30,6 +31,9 @@
         <attr name="nodeSelectedOverlayAnimating" format="reference" />
         <attr name="backgroundImage" />
         <attr name="overlayAnimationLength" format="integer" />
+        <attr name="parrallaxImage" format="reference" />
+        <attr name="parrallaxScalar" format="float" />
+        <attr name="starImages" />
     </declare-styleable>
     <declare-styleable name="PlayView">
         <attr name="backgroundImage" />
@@ -65,6 +69,8 @@
         <attr name="toWordPercentWidth" />
         <attr name="textColor" />
         <attr name="backgroundImage" />
+        <attr name="clickNumberPercentX" format="float"/>
+        <attr name="clickNumberPercentY" format="float"/>
     </declare-styleable>
     <declare-styleable name="WordDisplay">
         <attr name="arrowImage" />
@@ -85,6 +91,13 @@
         <attr name="toWordPercentWidth" />
         <attr name="textColor" />
         <attr name="backgroundImage" />
+    </declare-styleable>
+    
+    <declare-styleable name="StarryBackgroundView">
+        <attr name="backgroundImage" />
+        <attr name="foregroundImage" format="reference"/>
+        <attr name="starImages" />
+        <attr name="numberOfStars" format="integer" />
     </declare-styleable>
 
 </resources>
