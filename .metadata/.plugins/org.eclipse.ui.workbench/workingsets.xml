@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
+<<<<<<< Updated upstream
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417831290344_0" label="Window Working Set" name="Aggregate for window 1417831290342"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417832806438_1" label="Window Working Set" name="Aggregate for window 1417832806438"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417833396564_2" label="Window Working Set" name="Aggregate for window 1417833396564"/>
@@ -7,4 +8,7 @@
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417970863313_4" label="Window Working Set" name="Aggregate for window 1417970863313"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417971652580_5" label="Window Working Set" name="Aggregate for window 1417971652580"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417982106437_6" label="Window Working Set" name="Aggregate for window 1417982106437"/>
+=======
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1417982562345_0" label="Window Working Set" name="Aggregate for window 1417982562344"/>
+>>>>>>> Stashed changes
 </workingSetManager>

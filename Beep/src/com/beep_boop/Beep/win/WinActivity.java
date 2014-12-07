@@ -155,7 +155,7 @@ public class WinActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-		MyApplication.activityPaused(this);
+		//MyApplication.activityPaused(this);
 
 	}
 	@Override

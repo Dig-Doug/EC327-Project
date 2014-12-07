@@ -1,14 +1,20 @@
 package com.beep_boop.Beep.levelSelect;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.beep_boop.Beep.LaunchActivity;
+import com.beep_boop.Beep.MusicService;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.about.AboutActivity;
@@ -30,6 +36,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	private Activity THIS = this;
 	
 	
+	
 	///-----Activity Life Cycle-----
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -37,6 +44,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		
+		//MyApplication.activityStarted = true;
+		MyApplication.playSong();
 		//subscribe to level state updates
 		LevelManager.addLevelStateListener(this);
 		
@@ -45,7 +54,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		//setup the map view
 		this.setupMapView();
 		
-		MyApplication.activityStarted(this);
+		
 		//setup the settings button
 		ImageButton toSettingsButton = (ImageButton) findViewById(R.id.mapActivity_settingsButton);
 		toSettingsButton.setOnClickListener(new OnClickListener()
@@ -90,15 +99,19 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	@Override
 	protected void onStop(){
 		super.onStop();
-		MyApplication.activityPaused(this);
-		
+		MyApplication.pauseSong();
+	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		MyApplication.playSong();
 	}
 	
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-		MyApplication.mServ.resumeMusic();
-		
+		MyApplication.playSong();
 	}
 	
 	@Override
@@ -107,18 +120,11 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		super.onDestroy();
 		//unsubscribe to level state updates
 		LevelManager.removeLevelStateListener(this);
-		MyApplication.activityPaused((Activity)this);
-		//MyApplication.mServ.stopMusic();
-		MyApplication.doUnbindService();
-		
+		MyApplication.pauseSong();
 		this.mMapView.destroy();
 	}
 	
-	/*@Override
-	protected void onRestart(){
-		super.onRestart();
-		//MyApplication
-	}*/
+
 	///-----NodeClickListener methods-----
 	public boolean mapViewUserCanClickNode(MapView aMapView, MapNode aNode)
 	{

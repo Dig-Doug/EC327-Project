@@ -13,10 +13,26 @@ import android.os.IBinder;
 
 public class MyApplication extends Application
 {
+	public boolean pauseVar = false;
 	public static Activity activeActivity;
+	public static boolean activityStarted = false;
+	public interface FontChangeListener
+	{
+		public void fontDidChange();
+	}
+	
+    private static Context context;
+    
+    
+    public static Typeface MAIN_FONT, PLAY_FONT, SPECIALTY_FONT;
+    public static String MAIN_FONT_NAME, PLAY_FONT_NAME, SPECIALTY_FONT_NAME;
+    
+    private static ArrayList<FontChangeListener> fontChangeListeners = new ArrayList<FontChangeListener>();
+   
+    
 	private static boolean mIsBound = false;
 	public static MusicService mServ;
-	public static ServiceConnection Scon =new ServiceConnection(){
+	public static ServiceConnection Scon = new ServiceConnection(){
 
 		public void onServiceConnected(ComponentName name, IBinder
 	     binder) {
@@ -29,7 +45,7 @@ public class MyApplication extends Application
 		};
 		
 		void doBindService(){
-	 		bindService(new Intent(this,MusicService.class),
+	 		bindService(new Intent(context,MusicService.class),
 					Scon,Context.BIND_AUTO_CREATE);
 			mIsBound = true;
 		}
@@ -42,28 +58,19 @@ public class MyApplication extends Application
 	      		mIsBound = false;
 			}
 		}
-	public interface FontChangeListener
-	{
-		public void fontDidChange();
-	}
 	
-    private static Context context;
     
-    private static Activity currentActivity;
-    
-    public static Typeface MAIN_FONT, PLAY_FONT, SPECIALTY_FONT;
-    public static String MAIN_FONT_NAME, PLAY_FONT_NAME, SPECIALTY_FONT_NAME;
-    
-    private static ArrayList<FontChangeListener> fontChangeListeners = new ArrayList<FontChangeListener>();
-   
+    @Override
     public void onCreate()
     {
         super.onCreate();
         MyApplication.context = getApplicationContext();
-        doBindService();
-		Intent music = new Intent();
-		music.setClass(this,MusicService.class);
-		startService(music);
+        
+		//doBindService();
+		//Intent music = new Intent();
+		//music.setClass(context,MusicService.class);
+		//startService(music);
+		
         MyApplication.MAIN_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[0];
 		MyApplication.MAIN_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.MAIN_FONT_NAME);
 		MyApplication.PLAY_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[1];
@@ -71,10 +78,12 @@ public class MyApplication extends Application
 		MyApplication.SPECIALTY_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[2];
 		MyApplication.SPECIALTY_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.SPECIALTY_FONT_NAME);
     }
-    
+    @Override
     public void onTerminate(){
     	super.onTerminate();
-    	doUnbindService();
+    	
+    		//doUnbindService();
+    	
     }
     
     public static Context getAppContext() {
@@ -111,37 +120,65 @@ public class MyApplication extends Application
     		listener.fontDidChange();
     	}
     }
-    /*
-    public void onDestroy(){
-    	mServ.pauseMusic();
-    	
-    	doUnbindService();
-    	
-    	
-    }
     
-    public void onPause(){
-    	super.onPause();
-    	
-    	mServ.pauseMusic();
-    }
-*/
-    public static void activityStarted(Activity aActivity)
+    public static void pauseSong()
     {
-    	currentActivity = aActivity;
-    	
-    }
-    
-    public static void activityPaused(Activity aActivity)
-    {
-    	if(currentActivity == aActivity){
+    	//pauseVar = true;
+    	if (mServ != null)
+    	{
     		mServ.pauseMusic();
     	}
     }
     
-    public static void activityCreated(Activity aActivity){
-    	activeActivity = aActivity;
+    public static void stopSong(){
+    	doUnbindService();
     }
     
+
+    public static void playSong()
+    {
+    	if (mServ != null)
+    	{
+    		mServ.resumeMusic();
+    	}
+    }
+   /* 
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		if(!MyApplication.activityStarted){
+			doUnbindService();
+		}
+		
+		this.mStarBackground.destroy();
+		
+	}
+	
+	@Override
+	protected void onStop(){
+		super.onStop();
+		mServ.pauseMusic();
+		//doUnbindService();
+	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		if(!mIsBound){
+		doBindService();
+		Intent music = new Intent();
+		music.setClass(this,MusicService.class);
+		startService(music);
+		}
+	}
+	
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		mServ.resumeMusic();
+		
+	}
     
+    */
 }

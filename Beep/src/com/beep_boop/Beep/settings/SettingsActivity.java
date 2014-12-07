@@ -71,7 +71,7 @@ public class SettingsActivity extends Activity
 	@Override
 	protected void onStop(){
 		super.onStop();
-		MyApplication.activityPaused(this);
+		
 	}
 
 	@Override
