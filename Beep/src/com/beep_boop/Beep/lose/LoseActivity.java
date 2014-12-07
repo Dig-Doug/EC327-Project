@@ -2,7 +2,6 @@ package com.beep_boop.Beep.lose;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +34,7 @@ public class LoseActivity extends Activity
 		setContentView(R.layout.activity_lose);
 		
 
-		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.aboutActivity_background);
+		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.loseActivity_background);
 		
 		//MyApplication.activityStarted(this);
 
