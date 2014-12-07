@@ -51,26 +51,27 @@
         <attr name="swipeVelocityMin" format="float" />
     </declare-styleable>
     <declare-styleable name="GoalBar">
-        <attr name="arrowImage" />
         <attr name="fromImagePercentX" />
         <attr name="fromImagePercentY" />
         <attr name="toImagePercentX" />
         <attr name="toImagePercentY" />
-        <attr name="arrowImagePercentX" />
-        <attr name="arrowImagePercentY" />
         <attr name="fromWordPercentX" />
         <attr name="fromWordPercentY" />
         <attr name="toWordPercentX" />
         <attr name="toWordPercentY" />
         <attr name="fromImagePercentWidth" />
         <attr name="toImagePercentWidth" />
-        <attr name="arrowImagePercentWidth" />
         <attr name="fromWordPercentWidth" />
         <attr name="toWordPercentWidth" />
         <attr name="textColor" />
         <attr name="backgroundImage" />
         <attr name="clickNumberPercentX" format="float"/>
         <attr name="clickNumberPercentY" format="float"/>
+        <attr name="clickNumberPercentHeight" format="float"/>
+        <attr name="clickTitle" format="reference" />
+        <attr name="clickTitlePercentX" format="float"/>
+        <attr name="clickTitlePercentY" format="float"/>
+        <attr name="clickTitlePercentHeight" format="float"/>
     </declare-styleable>
     <declare-styleable name="WordDisplay">
         <attr name="arrowImage" />

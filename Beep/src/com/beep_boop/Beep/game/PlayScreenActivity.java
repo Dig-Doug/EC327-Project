@@ -47,6 +47,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	private ArrayList<String> mWordPath = new ArrayList<String>();
 	private Level mSelectedLevel;
 	private double mStartTime;
+	private boolean mPaused = false;
 	private double mPauseTimeTotal = 0;
 	private double mPauseStartTime = -1;
 
@@ -56,7 +57,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_screen);
-		MyApplication.activityCreated(this);
+		
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -87,13 +88,13 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	@Override
 	protected void onStop(){
 		super.onStop();
-		MyApplication.activityPaused(this);
+		
 	}
 	
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-		MyApplication.mServ.resumeMusic();
+	//	MyApplication.mServ.resumeMusic();
 	}
 	
 	private void initGoalBar()
@@ -132,6 +133,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	private void play()
 	{
+		this.mPaused = false;
 		if (this.mPauseStartTime != -1)
 		{
 			double pausedTime = System.currentTimeMillis() - this.mPauseStartTime;
@@ -142,9 +144,12 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	private void pause()
 	{
-		this.mPauseStartTime = System.currentTimeMillis();
-		PauseMenuDialogFragment dialog = new PauseMenuDialogFragment(this);//.show(getFragmentManager(), PAUSE_MENU_TAG);
-		dialog.show();
+		if (!this.mPaused)
+		{
+			this.mPauseStartTime = System.currentTimeMillis();
+			PauseMenuDialogFragment dialog = new PauseMenuDialogFragment(this);//.show(getFragmentManager(), PAUSE_MENU_TAG);
+			dialog.show();
+		}
 	}
 
 	///-----PlayView.WordDataSource methods-----

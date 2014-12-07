@@ -2,7 +2,6 @@ package com.beep_boop.Beep.lose;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,9 +33,12 @@ public class LoseActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lose);
 		
-		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.aboutActivity_background);
+
+		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.loseActivity_background);
 		
-		MyApplication.activityStarted(this);
+		//MyApplication.activityStarted(this);
+
+		
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -66,7 +68,7 @@ public class LoseActivity extends Activity
 	@Override
 	protected void onStop(){
 		super.onStop();
-		MyApplication.activityPaused(this);
+		
 	}
 	
 	private void setupButtons()

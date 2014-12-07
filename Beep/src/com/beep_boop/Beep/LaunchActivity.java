@@ -11,18 +11,21 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.beep_boop.Beep.game.PlayScreenParser;
 import com.beep_boop.Beep.game.WordHandler;
 import com.beep_boop.Beep.levelSelect.MapActivity;
 import com.beep_boop.Beep.levelSelect.MapHandler;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.stars.StarryBackgroundView;
-//import com.beep_boop.Beep.MyApplication.MusicService;
+//import com.beep_boop.Beep.MusicService;
 
 public class LaunchActivity extends Activity
 {
 	///-----Member Variables-----
 	/** Holds a reference to THIS for use in listeners */
+    //private static Context context;
+
 	private LaunchActivity THIS = this;
 	private ImageButton mStartButton;
 	private ProgressBar mLoadingSpinner;
@@ -30,6 +33,11 @@ public class LaunchActivity extends Activity
 	private boolean mLevelsLoaded = false, mWordsLoaded = false, mMapLoaded = false, mStarted = false;
 	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f;
 	private StarryBackgroundView mStarBackground;
+	
+	private boolean mStartedMap = false;
+	
+	//public static Activity activeActivity;
+
 	///-----Activity Life Cycle-----
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -38,6 +46,10 @@ public class LaunchActivity extends Activity
 		setContentView(R.layout.activity_launch);
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.launchActivity_background);
 		//grab the image views from XML
+		
+		
+		//MyApplication.startServ();
+		
 		this.mStartButton = (ImageButton) findViewById(R.id.launchActivity_startButton);
 		this.mStartButton.setEnabled(false);
 		this.mStartButton.setOnClickListener(new OnClickListener()
@@ -45,6 +57,7 @@ public class LaunchActivity extends Activity
 			@Override
 			public void onClick(View arg0)
 			{
+				
 				showLoading();
 			}
 		});
@@ -82,8 +95,40 @@ public class LaunchActivity extends Activity
 	protected void onDestroy()
 	{
 		super.onDestroy();
+
+		if (!this.mStartedMap)
+		{
+		//	MyApplication.pauseSong();
+		}
 		this.mStarBackground.destroy();
+		
 	}
+	
+	@Override
+	protected void onStop(){
+		super.onStop();
+		if (!this.mStartedMap)
+		{
+		//	MyApplication.pauseSong();
+		}
+
+	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		//MyApplication.playSong();
+
+	}
+	
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		//MyApplication.playSong();
+		
+		
+	}
+	
 	private void enableButtons()
 	{
 		this.mStartButton.setEnabled(true);
@@ -115,6 +160,7 @@ public class LaunchActivity extends Activity
 			//transition to map page
 			Intent toMap = new Intent(THIS, MapActivity.class);
 			startActivity(toMap);
+			this.mStartedMap = true;
 			overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 			//quit
 			finish();
