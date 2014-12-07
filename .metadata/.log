@@ -10062,3 +10062,6 @@ java.lang.OutOfMemoryError: Requested array size exceeds VM limit
 	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:569)
 	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:388)
 	at java.lang.Thread.run(Thread.java:745)
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-12-07 15:15:17.839
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/map_data_file.xml [Res F/Beep/res/raw, type RAW]
