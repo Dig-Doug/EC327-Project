@@ -3,6 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     tools:context="${relativePackage}.${activityClass}" >
 
     <com.beep_boop.Beep.stars.StarryBackgroundView
@@ -36,5 +37,14 @@
         android:textColor="@color/launchActivity_loadingTextColor"
         android:textSize="30sp" 
         android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_alignLeft="@+id/pathActivity_pathTextView"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/topbar_route" />
 
 </RelativeLayout>

@@ -23,41 +23,12 @@
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/button_back" />
 
-    <TextView
-        android:id="@+id/settingsActivity_musicBarTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/settingsActivity_musicBar"
-        android:layout_toLeftOf="@+id/settingsActivity_fontTitle"
-        android:text="@string/music"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <SeekBar
-        android:id="@+id/settingsActivity_musicBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="99dp" />
-
-    <TextView
-        android:id="@+id/settingsActivity_fontTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/settingsActivity_fontGroup"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="46dp"
-        android:layout_marginLeft="27dp"
-        android:text="@string/settingsActivity_fontTitle"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/launchActivity_loadingTextColor"
-        android:textColorHint="@color/launchActivity_loadingTextColor" />
-
     <RadioGroup
         android:id="@+id/settingsActivity_fontGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/settingsActivity_backButton"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="56dp"
         android:layout_toLeftOf="@+id/settingsActivity_backButton" >
 
         <RadioButton
@@ -81,5 +52,47 @@
             android:textColor="@color/launchActivity_loadingTextColor"
             android:textColorHint="@color/launchActivity_loadingTextColor" />
     </RadioGroup>
+
+    <SeekBar
+        android:id="@+id/settingsActivity_musicBar"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/settingsActivity_fontTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="16dp" />
+
+    <ImageView
+        android:id="@+id/settingsActivity_topbar"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/topbar_settings" />
+
+    <TextView
+        android:id="@+id/settingsActivity_musicBarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settingsActivity_musicBar"
+        android:layout_below="@+id/settingsActivity_topbar"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="fonts/Krungthep.ttf"
+        android:text="@string/music"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/settingsScreenActivity_textColor" />
+
+    <TextView
+        android:id="@+id/settingsActivity_fontTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settingsActivity_fontGroup"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="fonts/Krungthep.ttf"
+        android:text="@string/settingsActivity_fontTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textColorHint="@color/launchActivity_loadingTextColor" />
 
 </RelativeLayout>
