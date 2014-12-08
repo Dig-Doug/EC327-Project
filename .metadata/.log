@@ -10501,3 +10501,9 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of el
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:629)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:584)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1438)
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-12-07 21:32:07.424
+!MESSAGE Warning: Ignoring name conflict in resource file for name hello_world
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-12-07 21:32:46.244
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/map_data_file.xml [Res F/Beep/res/raw, type RAW]

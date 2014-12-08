@@ -32,6 +32,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	{
 		public boolean mapViewUserCanClickNode(MapView aMapView, MapNode aNode);
 		public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode);
+		public void mapViewUserDidClickEgg(MapView aMapView, EggNode aNode);
 	}
 
 	public interface NodeStatusDataSource

@@ -69,5 +69,6 @@
     <string name="share_emailDefaultText4"> moves and in only </string>
     <string name="share_emailDefaultText5"> secs. Can you?</string>
     <string name="title_activity_path">PathActivity</string>
+    <string name="title_activity_random">RandomActivity</string>
 
 </resources>
