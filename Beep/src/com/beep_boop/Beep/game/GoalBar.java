@@ -68,8 +68,8 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			this.mToWordPercentY = a.getFloat(R.styleable.GoalBar_toWordPercentY, 0.2740f);
 			this.mFromImagePercentWidth = a.getFloat(R.styleable.GoalBar_fromImagePercentWidth, 0.1642f);
 			this.mToImagePercentWidth = a.getFloat(R.styleable.GoalBar_toImagePercentWidth, 0.1642f);
-			this.mFromWordPercentWidth = a.getFloat(R.styleable.GoalBar_fromWordPercentWidth, 0.2000f);
-			this.mToWordPercentWidth = a.getFloat(R.styleable.GoalBar_toWordPercentWidth, 0.2000f);
+			this.mFromWordPercentWidth = a.getFloat(R.styleable.GoalBar_fromWordPercentWidth, 0.35f);
+			this.mToWordPercentWidth = a.getFloat(R.styleable.GoalBar_toWordPercentWidth, 0.35f);
 
 			this.mWordPaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
 			this.mClickTitlePaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));

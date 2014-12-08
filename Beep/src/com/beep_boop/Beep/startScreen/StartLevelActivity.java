@@ -16,6 +16,7 @@ import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.PlayScreenActivity;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class StartLevelActivity extends Activity
 {	
@@ -25,11 +26,16 @@ public class StartLevelActivity extends Activity
 	private StartLevelActivity THIS = this;
 	private WordDisplay mWordDisplay;
 	private Level mSelectedLevel;
+	
+	private StarryBackgroundView mStarBackground;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_level);
+		
+		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.startScreenActivity_background);
 		
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
@@ -122,5 +128,10 @@ public class StartLevelActivity extends Activity
 	{
 		super.onDestroy();
 		this.mWordDisplay.destroy();
+		
+		if (this.mStarBackground != null)
+		{
+			this.mStarBackground.destroy();
+		}
 	}
 }

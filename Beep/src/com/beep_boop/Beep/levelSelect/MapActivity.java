@@ -1,20 +1,15 @@
 package com.beep_boop.Beep.levelSelect;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beep_boop.Beep.LaunchActivity;
-import com.beep_boop.Beep.MusicService;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.about.AboutActivity;
@@ -35,7 +30,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	/** Reference to this */
 	private Activity THIS = this;
 	
-	
+	private TextView mLevelCount;
 	
 	///-----Activity Life Cycle-----
 	@Override
@@ -51,6 +46,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		
 		//get the map view from XML
 		mMapView = (MapView)findViewById(R.id.mapActivity_mapView);
+		mLevelCount = (TextView) findViewById(R.id.mapActivity_levelCount);
+		this.mLevelCount.setTypeface(MyApplication.MAIN_FONT);
 		//setup the map view
 		this.setupMapView();
 		
@@ -103,9 +100,18 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	}
 	
 	@Override
-	protected void onStart(){
+	protected void onStart()
+	{
 		super.onStart();
 		MyApplication.playSong();
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		
+		this.mLevelCount.setText(LevelManager.getTotalLevelsDone() + " / " + LevelManager.getTotalLevelsCount());
 	}
 	
 	@Override
