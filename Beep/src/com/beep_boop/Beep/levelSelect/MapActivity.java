@@ -1,20 +1,14 @@
 package com.beep_boop.Beep.levelSelect;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.beep_boop.Beep.LaunchActivity;
-import com.beep_boop.Beep.MusicService;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.about.AboutActivity;

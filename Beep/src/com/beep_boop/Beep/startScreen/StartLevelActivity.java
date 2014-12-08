@@ -26,6 +26,7 @@ public class StartLevelActivity extends Activity
 	private StartLevelActivity THIS = this;
 	private WordDisplay mWordDisplay;
 	private Level mSelectedLevel;
+	boolean activityStarted = false;
 	
 	private StarryBackgroundView mStarBackground;
 	
