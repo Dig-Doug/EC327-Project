@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.id"/>
+<fullyQualifiedTypeName name="android.graphics.Path"/>
+<fullyQualifiedTypeName name="android.graphics.Path.Direction"/>
+<fullyQualifiedTypeName name="android.graphics.Path.FillType"/>
+<fullyQualifiedTypeName name="android.util.LruCache"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.array"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
+</qualifiedTypeNameHistroy>

@@ -70,8 +70,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.beep_boop.Beep.random.RandomActivity"
+            android:name=".random.RandomActivity"
             android:label="@string/title_activity_random" >
+        </activity>
+        <activity
+            android:name="com.beep_boop.Beep.eggs.CreditsActivity"
+            android:label="@string/title_activity_credits" >
         </activity>
     </application>
 

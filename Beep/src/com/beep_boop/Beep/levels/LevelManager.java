@@ -320,7 +320,7 @@ public class LevelManager
 		for (String aLevel : this.mLevelData.keySet())
 		{
 			Level current = this.mLevelData.get(aLevel);
-			if (current.completed)
+			if (!current.easterEgg && current.completed)
 			{
 				count++;
 			}
@@ -331,6 +331,16 @@ public class LevelManager
 	
 	private int getTotalLevelsCountPrivate()
 	{
-		return this.mLevelData.keySet().size();
+		int count = 0;
+		for (String aLevel : this.mLevelData.keySet())
+		{
+			Level current = this.mLevelData.get(aLevel);
+			if (!current.easterEgg)
+			{
+				count++;
+			}
+		}
+		
+		return count;
 	}
 }

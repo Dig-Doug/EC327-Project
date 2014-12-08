@@ -35,6 +35,9 @@ public class MapNodeLoader {
 	private static final String TAG_NODE_LEVEL_KEY = "levelKey";
 	private static final String TAG_OFF_IMAGE = "offImage";
 	private static final String TAG_ON_IMAGE = "onImage";
+	
+	private static final String PACKAGE = "com.beep_boop.Beep";
+	private static final String TYPE = "drawable";
 
 	// /-----Constructors-----
 	// None
@@ -149,10 +152,18 @@ public class MapNodeLoader {
 			else if (name.equals(TAG_OFF_IMAGE))
 			{
 				offImageName = readString(aParser, TAG_OFF_IMAGE);
+				if (offImageName != null && offImageName.equals(""))
+				{
+					offImageName = null;
+				}
 			}
 			else if (name.equals(TAG_ON_IMAGE))
 			{
 				onImageName = readString(aParser, TAG_ON_IMAGE);
+				if (onImageName != null && onImageName.equals(""))
+				{
+					onImageName = null;
+				}
 			}
 		}
 		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_NODE);
@@ -162,7 +173,7 @@ public class MapNodeLoader {
 		if (offImageName != null)
 		{
 			Bitmap offImage = null;
-			int imageId = MyApplication.getAppContext().getResources().getIdentifier(offImageName, null, null);
+			int imageId = MyApplication.getAppContext().getResources().getIdentifier(offImageName, TYPE, PACKAGE);
 			if (imageId != -1)
 				offImage = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(), imageId, null);
 			result.offIcon = offImage;
@@ -170,7 +181,7 @@ public class MapNodeLoader {
 		if (onImageName != null)
 		{
 			Bitmap onImage = null;
-			int imageId = MyApplication.getAppContext().getResources().getIdentifier(onImageName, null, null);
+			int imageId = MyApplication.getAppContext().getResources().getIdentifier(onImageName, TYPE, PACKAGE);
 			if (imageId != -1)
 				onImage = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(), imageId, null);
 			result.onIcon = onImage;

@@ -13,10 +13,14 @@ import android.widget.Toast;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.about.AboutActivity;
+import com.beep_boop.Beep.eggs.CreditsActivity;
+import com.beep_boop.Beep.eggs.PopupMessage;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
 import com.beep_boop.Beep.levelSelect.MapView.NodeStatusDataSource;
+import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.levels.LevelManager.LevelStateListener;
+import com.beep_boop.Beep.random.RandomActivity;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
@@ -161,9 +165,34 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 
 	public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode)
 	{
-		Intent startLevelIntent = new Intent(this, StartLevelActivity.class);
-		startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, aNode.getLevelKey());
-		startActivity(startLevelIntent);
+		Level selectedLevel = LevelManager.getLevelForKey(aNode.getLevelKey());
+		if (!selectedLevel.easterEgg)
+		{
+			Intent startLevelIntent = new Intent(this, StartLevelActivity.class);
+			startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, aNode.getLevelKey());
+			startActivity(startLevelIntent);
+		}
+		else
+		{
+			if (selectedLevel.levelKey.equals("egg_credits"))
+			{
+				Intent toCredits = new Intent(THIS, CreditsActivity.class);
+				startActivity(toCredits);
+				activityStarted = true;
+				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
+			}
+			else if (selectedLevel.levelKey.equals("egg_random"))
+			{
+				Intent toRandom = new Intent(THIS, RandomActivity.class);
+				startActivity(toRandom);
+				activityStarted = true;
+			}
+			else
+			{
+				PopupMessage message = new PopupMessage(this, selectedLevel.fromWord, selectedLevel.hint);
+				message.show();
+			}
+		}
 		activityStarted = true;
 	}
 

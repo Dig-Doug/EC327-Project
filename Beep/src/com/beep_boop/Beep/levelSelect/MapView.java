@@ -729,14 +729,14 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 					if (i == this.mSelectedNode)
 					{
 						canvas.drawBitmap(offImage, screenDrawCenter.x - offOffsetX, screenDrawCenter.y - offOffsetY, this.mNodeOffPaint);
-						canvas.drawBitmap(onImage, screenDrawCenter.x - offOffsetY, screenDrawCenter.y - onOffsetY, this.mNodeOnPaint);
+						canvas.drawBitmap(onImage, screenDrawCenter.x - onOffsetX, screenDrawCenter.y - onOffsetY, this.mNodeOnPaint);
 					}
 					else
 					{
 						//get which bitmap to use for this node
 						boolean state = this.mNodeStates.get(i).booleanValue();
-						float offsetX = (state ? offOffsetX : onOffsetX);
-						float offsetY = (state ? offOffsetY : onOffsetY);
+						float offsetX = (state ? onOffsetX : offOffsetX);
+						float offsetY = (state ? onOffsetY : offOffsetY);
 						Bitmap useToDraw = (state ? onImage : offImage);
 						canvas.drawBitmap(useToDraw, screenDrawCenter.x - offsetX, screenDrawCenter.y - offsetY, null);
 					}

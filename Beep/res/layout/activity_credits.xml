@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal" >
+
+    <com.beep_boop.Beep.stars.StarryBackgroundView
+        android:id="@+id/creditsActivity_background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        custom:backgroundImage="@drawable/starry_background"
+        custom:starImages="@array/creditsStarImages" />
+
+    <ImageButton
+        android:id="@+id/creditsActivity_backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/button_back_red" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/topbar_about" />
+
+    <TextView
+        android:id="@+id/creditsActivity_creditsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageView1"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/launchActivity_loadingTextColor"
+        android:textSize="13sp" />
+
+</RelativeLayout>

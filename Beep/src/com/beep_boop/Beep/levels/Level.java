@@ -17,9 +17,10 @@ public class Level
 	public int maxMoves;
 	public String fromImage, toImage;
 	public String hint;
+	public boolean easterEgg;
 	
 	public Level(String aLevelKey, String aNextLevelKey, String aFromWord, String aToWord, String aFromImage, String aToImage,  int aMaxMoves,
-			ArrayList<String> aRequiredLevels, String aHint)
+			ArrayList<String> aRequiredLevels, String aHint, boolean aEgg)
 	{
 		this.levelKey = aLevelKey;
 		this.nextLevelKey = aNextLevelKey;
@@ -35,6 +36,7 @@ public class Level
 		this.numberOfSteps = Integer.MAX_VALUE;
 		
 		this.hint = aHint;
+		this.easterEgg = aEgg;
 	}
 	
 	public void writeToFile(FileOutputStream aOut)
