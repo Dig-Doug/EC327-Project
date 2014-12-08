@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="&apos;" key="selection"/>
+		<item value="credits" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="about"/>
 			<item value="findActivity"/>
 			<item value="&apos;"/>
 			<item value="+"/>
@@ -15,9 +16,9 @@
 			<item value=", a"/>
 			<item value="mScrollAnimator"/>
 			<item value="mStarAnimator"/>
-			<item value="mCurrentWordDrawPosition"/>
 		</list>
 		<list key="replacehistory">
+			<item value="credits"/>
 			<item value=""/>
 			<item value=", float a"/>
 			<item value="mStarAnimator"/>
@@ -25,12 +26,11 @@
 			<item value="loseActivity"/>
 			<item value="MyApplication.FONT"/>
 			<item value="R.styleable"/>
-			<item value="&quot; format=&quot;float&quot; /&gt;"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="265" key="DIALOG_WIDTH"/>
-		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
+		<item value="263" key="DIALOG_WIDTH"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="109" key="DIALOG_Y_ORIGIN"/>
 		<item value="994" key="DIALOG_X_ORIGIN"/>

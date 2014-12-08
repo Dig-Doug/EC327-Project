@@ -13,8 +13,8 @@
         custom:mapWidthOnScreen="1.0"
         custom:nodeOffImage="@drawable/map_node"
         custom:nodeOnImage="@drawable/map_node_blank"
-        custom:nodeSelectedOverlayStatic="@drawable/node_overlay"
-        custom:nodeSelectedOverlayAnimating="@drawable/node_overlay"
+        custom:nodeSelectedOverlayStatic="@drawable/map_spaceship"
+        custom:nodeSelectedOverlayAnimating="@drawable/map_spaceship"
         custom:parrallaxImage="@drawable/starry_background"
         custom:starImages="@array/starImages" />
 
