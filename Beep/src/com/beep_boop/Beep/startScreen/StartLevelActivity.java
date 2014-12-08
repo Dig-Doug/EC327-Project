@@ -50,6 +50,7 @@ public class StartLevelActivity extends Activity
 		else
 		{
 			Log.e(StartLevelActivity.TAG, "Error getting extras");
+			activityStarted = true;
 			finish();
 		}
 
@@ -94,6 +95,7 @@ public class StartLevelActivity extends Activity
 				playIntent.putExtra(PlayScreenActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
 				startActivity(playIntent);
 				overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
+				activityStarted = true;
 				finish();
 			}
 		});
@@ -115,13 +117,17 @@ public class StartLevelActivity extends Activity
 	@Override
 	protected void onRestart(){
 		super.onRestart();
+		activityStarted = false;
+		MyApplication.playSong();
 	//	MyApplication.mServ.resumeMusic();
 	}
 	
 	@Override
 	protected void onStop(){
 		super.onStop();
-		
+		if(!activityStarted){
+			MyApplication.pauseSong();
+		}
 	}
 	
 	@Override
