@@ -33,21 +33,21 @@
 
         <RadioButton
             android:id="@+id/settingsActivity_fontGroup_krungthep"
-            android:layout_width="wrap_content"
+            android:layout_width="174dp"
             android:layout_height="wrap_content"
             android:textColor="@color/launchActivity_loadingTextColor"
             android:textColorHint="@color/launchActivity_loadingTextColor" />
 
         <RadioButton
             android:id="@+id/settingsActivity_fontGroup_times"
-            android:layout_width="wrap_content"
+            android:layout_width="202dp"
             android:layout_height="wrap_content"
             android:textColor="@color/launchActivity_loadingTextColor"
             android:textColorHint="@color/launchActivity_loadingTextColor" />
 
         <RadioButton
             android:id="@+id/settingsActivity_fontGroup_nasa"
-            android:layout_width="wrap_content"
+            android:layout_width="211dp"
             android:layout_height="wrap_content"
             android:textColor="@color/launchActivity_loadingTextColor"
             android:textColorHint="@color/launchActivity_loadingTextColor" />
@@ -103,7 +103,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/settingsActivity_musicBar"
         android:layout_toLeftOf="@+id/settingsActivity_fontTitle"
-        android:text="Music On/Off"
-        android:onClick="musicOff" />
+        android:contentDescription="@string/content_description_place_holder"
+        android:onClick="musicOff"
+        android:text="@strings/settingsActivity_musicOnOff" />
 
 </RelativeLayout>
