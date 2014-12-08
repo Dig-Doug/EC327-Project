@@ -82,8 +82,12 @@ public class MyApplication extends Application
     @Override
     public void onTerminate(){
     	super.onTerminate();
+    	//Intent mStop = new Intent();
+    	//mStop.setClass(context, MusicService.class);
+    	stopService(new Intent(context,MusicService.class));
+    	//mServ.stopMusic();
     	doUnbindService();
-    	mServ.stopMusic();
+    	
     	
     }
     
@@ -132,8 +136,8 @@ public class MyApplication extends Application
     }
     
     public static void stopSong(){
+    	//mServ.stopMusic();
     	doUnbindService();
-    	mServ.stopMusic();
     }
     
 
