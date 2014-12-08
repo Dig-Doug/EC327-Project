@@ -60,7 +60,9 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/settingsActivity_fontTitle"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:max ="15"
+        android:progress="1" />
 
     <ImageView
         android:id="@+id/settingsActivity_topbar"
@@ -94,5 +96,14 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/launchActivity_loadingTextColor"
         android:textColorHint="@color/launchActivity_loadingTextColor" />
+
+    <Button
+        android:id="@+id/settingsActivity_musicOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settingsActivity_musicBar"
+        android:layout_toLeftOf="@+id/settingsActivity_fontTitle"
+        android:text="Music On/Off"
+        android:onClick="musicOff" />
 
 </RelativeLayout>

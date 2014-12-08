@@ -1,13 +1,17 @@
 package com.beep_boop.Beep.settings;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
@@ -15,8 +19,11 @@ import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class SettingsActivity extends Activity
 {
+	boolean isPlaying = true;
 	boolean activityStarted = false;
 	private StarryBackgroundView mStarBackground;
+	SeekBar volume;
+	AudioManager audio = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -69,8 +76,61 @@ public class SettingsActivity extends Activity
 				overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
 			}
 		});
+		
+		audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+		volume= (SeekBar)findViewById(R.id.settingsActivity_musicBar);
+        volume.setMax(audio
+
+                .getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+
+        volume.setProgress(audio
+
+                .getStreamVolume(AudioManager.STREAM_MUSIC));
+
+		volume.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+		    @Override
+		    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+		    audio.setStreamVolume(AudioManager.STREAM_MUSIC,
+
+		                progress, 0);
+		    }
+		    @Override
+		    public void onStartTrackingTouch(SeekBar seekBar) {
+		    }
+
+
+
+		    @Override
+		    public void onStopTrackingTouch(SeekBar seekBar) {
+		    }
+			
+			
+		});
+		
+		 findViewById(R.id.settingsActivity_musicOn).setOnClickListener(new View.OnClickListener(){
+		    	@Override
+		    	public void onClick(View view){
+		    		if(isPlaying){
+		    				isPlaying = false;
+		    				MyApplication.pauseSong();
+		    				MyApplication.musicOn = false;
+		    				
+		    				
+		    		}
+		    		else{
+		    			isPlaying = true;
+		    			MyApplication.musicOn = true;
+		    			MyApplication.playSong();
+		    		}
+		    	}
+
+		    	});
 	}
 
+
+	
 	@Override
 	protected void onStop(){
 		super.onStop();
