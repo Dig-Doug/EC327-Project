@@ -30,7 +30,7 @@ public class WordDisplay extends View
 	private float mFromImagePercentWidth, mToImagePercentWidth;
 	private float mArrowImagePercentWidth, mFromWordPercentWidth, mToWordPercentWidth;
 
-	private PointF mFromWordDraw, mToWordDraw;
+	private PointF mFromWordDraw, mToWordDraw, mFromImageFillInDraw, mToImageFillInDraw;
 
 	private Paint mTextPaint = new Paint(), mImageFillInPaint = new Paint();
 	private float mDefaultTextSize = 50f;
@@ -61,6 +61,7 @@ public class WordDisplay extends View
 			this.mFromWordPercentWidth = a.getFloat(R.styleable.WordDisplay_fromWordPercentWidth, 0.3055f);
 			this.mToWordPercentWidth = a.getFloat(R.styleable.WordDisplay_toWordPercentWidth, 0.3055f);
 			this.mTextPaint.setColor(a.getColor(R.styleable.WordDisplay_textColor, Color.WHITE));
+			this.mImageFillInPaint.setColor(a.getColor(R.styleable.WordDisplay_textColor, Color.WHITE));
 			int arrowImage = a.getResourceId(R.styleable.WordDisplay_arrowImage, -1);
 			if (arrowImage != -1)
 				this.mArrowImage = BitmapFactory.decodeResource(getResources(), arrowImage, null);
@@ -81,19 +82,9 @@ public class WordDisplay extends View
 		if (!this.isInEditMode())
 		{
 			this.mTextPaint.setTypeface(MyApplication.MAIN_FONT);
-			
+
 			this.mImageFillInPaint.setTypeface(MyApplication.MAIN_FONT);
-			this.mImageFillInPaint.setTextSize(100f);
-			
-			/*
-			float imageFillIng = this.mFromWordPercentWidth * this.getHeight();
-			Rect numberBounds = new Rect(0, 0, 1000000, 1000000);
-			while (numberBounds.height() > clickNumberMaxHeight)
-			{
-				this.mClickNumberPaint.getTextBounds("00", 0, 2, numberBounds);
-				this.mClickNumberPaint.setTextSize(this.mClickNumberPaint.getTextSize() - 1);
-			}
-			*/
+			this.mImageFillInPaint.setTextAlign(Paint.Align.CENTER);
 		}
 	}
 
@@ -152,14 +143,31 @@ public class WordDisplay extends View
 	{
 		if (this.mBackgroundImage != null)
 			canvas.drawBitmap(this.mBackgroundImage, this.mBackgroundImageMatrix, null);
+
 		if (this.mArrowImage != null)
 			canvas.drawBitmap(this.mArrowImage, this.mArrowImageMatrix, null);
+
 		if (this.mFromImage != null)
+		{
 			canvas.drawBitmap(this.mFromImage, this.mFromImageMatrix, null);
+		}
+		else
+		{
+			canvas.drawText(this.mFromWord, 0, 1, this.mFromImageFillInDraw.x, mFromImageFillInDraw.y, this.mImageFillInPaint);
+		}
+
 		if (this.mToImage != null)
+		{
 			canvas.drawBitmap(this.mToImage, this.mToImageMatrix, null);
+		}
+		else
+		{
+			canvas.drawText(this.mToWord, 0, 1, this.mToImageFillInDraw.x, mToImageFillInDraw.y, this.mImageFillInPaint);
+		}
+
 		if (this.mFromWord != null)
 			canvas.drawText(this.mFromWord, this.mFromWordDraw.x, this.mFromWordDraw.y, this.mTextPaint);
+
 		if (this.mToWord != null)
 			canvas.drawText(this.mToWord, this.mToWordDraw.x, this.mToWordDraw.y, this.mTextPaint);
 	}
@@ -184,6 +192,13 @@ public class WordDisplay extends View
 
 		if (!Float.isNaN(aspect) && !Float.isInfinite(aspect))
 		{
+			this.mImageFillInPaint.setTextSize(100f);
+			float imageFillInMaxWidth = this.mFromImagePercentWidth * this.getWidth();
+			while (this.mImageFillInPaint.measureText("X") > imageFillInMaxWidth)
+			{
+				this.mImageFillInPaint.setTextSize(this.mImageFillInPaint.getTextSize() - 1);
+			}
+
 
 			if (this.mBackgroundImage != null)
 			{
@@ -204,6 +219,14 @@ public class WordDisplay extends View
 				this.mFromImageMatrix.setScale(fromImageScaleX, fromImageScaleY);
 				this.mFromImageMatrix.postTranslate(fromImageX * this.getWidth(), fromImageY * this.getHeight());
 			}
+			else
+			{
+				float fromImageX = this.mFromImagePercentX;
+				float fromImageY = this.mFromImagePercentY;
+				Rect bounds = new Rect();
+				this.mImageFillInPaint.getTextBounds(this.mFromWord, 0, 1, bounds);
+				this.mFromImageFillInDraw = new PointF(fromImageX * this.getWidth(), fromImageY * this.getHeight());
+			}
 
 			if (this.mToImage != null)
 			{
@@ -215,6 +238,14 @@ public class WordDisplay extends View
 				float toImageScaleY = (this.getHeight() * this.mToImagePercentWidth / aspect) / this.mToImage.getHeight();
 				this.mToImageMatrix.setScale(toImageScaleX, toImageScaleY);
 				this.mToImageMatrix.postTranslate(toImageX * this.getWidth(), toImageY * this.getHeight());
+			}
+			else
+			{
+				float toImageX = this.mToImagePercentX;
+				float toImageY = this.mToImagePercentY;
+				Rect bounds = new Rect();
+				this.mImageFillInPaint.getTextBounds(this.mToWord, 0, 1, bounds);
+				this.mToImageFillInDraw = new PointF(toImageX * this.getWidth(), toImageY * this.getHeight());
 			}
 
 			if (this.mArrowImage != null)

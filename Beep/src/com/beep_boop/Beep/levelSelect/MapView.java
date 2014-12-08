@@ -677,9 +677,12 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		{
 			canvas.save();
 			canvas.scale(this.mParrallaxScale, this.mParrallaxScale);
-			float scaledY = (Math.abs(this.mOrigin.y)) * this.getHeight();
-			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY - this.getHeight(), null);
-			canvas.drawBitmap(this.mParrallaxImage, 0, scaledY, null);
+			float y = this.mOrigin.y - 1.0f;
+			while (y < 1.0f + this.mOrigin.y)
+			{
+				canvas.drawBitmap(this.mParrallaxImage, 0, y * this.getHeight(), null);
+				y += this.MAP_ON_SCREEN_HEIGHT;
+			}
 			canvas.restore();
 		}
 	}
@@ -954,18 +957,19 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	//find a node near the location. If there isn�t a node, returns null
 	private MapNode getNodeNearPoint(PointF aPoint)
 	{
-		MapNode result = null;
+		MapNode nearest = null;
+		double nearestDistance = Double.MAX_VALUE;
 		for (MapNode node : this.mNodes)
 		{
 			double distance = Math.sqrt(Math.pow(aPoint.x - node.getX(), 2) + Math.pow(aPoint.y- node.getY(), 2));
-			if (Math.abs(distance) <= this.mMaxNodeClickDistance)
+			if (Math.abs(distance) <= this.mMaxNodeClickDistance && nearestDistance > Math.abs(distance))
 			{
-				result = node;
-				break;
+				nearest = node;
+				nearestDistance = Math.abs(distance);
 			}
 		}
 
-		return result;
+		return nearest;
 	}
 
 	//resets all touch variables
