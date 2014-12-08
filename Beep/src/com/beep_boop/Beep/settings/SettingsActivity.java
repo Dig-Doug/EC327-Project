@@ -96,33 +96,6 @@ public class SettingsActivity extends Activity
 
 		                progress, 0);
 		    }
-		        //  Notify that the progress level has changed.
-
-		       // textView.setText(textView.getText()+"\n"+"SeekBar now at the value of:"+progress);
-/*
-		    findViewById(R.id.settingsActivity_musicOn).setOnClickListener(new View.OnClickListener(){
-		    	@Override
-		    	public void onClick(View view){
-		    		if(isPlaying){
-		    				isPlaying = false;
-		    				MyApplication.pauseSong();
-		    				MyApplication.musicOn = false;
-		    				
-		    				
-		    		}
-		    		else{
-		    			isPlaying = true;
-		    			MyApplication.musicOn = true;
-		    			MyApplication.playSong();
-		    		}
-		    	}
-
-		    	});
-
-		    }
-			*/
-
-
 		    @Override
 		    public void onStartTrackingTouch(SeekBar seekBar) {
 		    }
@@ -135,6 +108,7 @@ public class SettingsActivity extends Activity
 			
 			
 		});
+		
 		 findViewById(R.id.settingsActivity_musicOn).setOnClickListener(new View.OnClickListener(){
 		    	@Override
 		    	public void onClick(View view){
