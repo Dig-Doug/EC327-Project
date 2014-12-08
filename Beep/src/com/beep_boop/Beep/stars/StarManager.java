@@ -54,6 +54,11 @@ public class StarManager
 		this.mCreationPositionUpperBound = aPositionUpperBound;
 		this.mCreationVelocityLowerBound = aVelocityLowerBound;
 		this.mCreationVelocityUpperBound = aVelocityUpperBound;
+		
+		for (int i = 0; i < this.mStars.length; i++)
+		{
+			this.mStars[i] = this.createNewStar(null, true);
+		}
 	}
 
 	public void start()
@@ -107,7 +112,7 @@ public class StarManager
 		}
 	}
 
-	private Star createNewStar(Star oldStar)
+	private Star createNewStar(Star oldStar, boolean aRandX)
 	{
 		Star newStar = oldStar;
 		if (newStar == null)
@@ -122,6 +127,8 @@ public class StarManager
 		newStar.velocity.x = xVelocity * speed;
 		newStar.velocity.y = yVelocity * speed;
 
+		if (!aRandX)
+		{
 		if (xVelocity > 0.0f)
 		{
 			newStar.location.x = this.mBounds.left;
@@ -129,6 +136,11 @@ public class StarManager
 		else
 		{
 			newStar.location.x = this.mBounds.right * 0.99f;
+		}
+		}
+		else
+		{
+			newStar.location.x = this.mBounds.width() * (float)Math.random() + this.mBounds.left;
 		}
 		newStar.location.y = (float)(Math.random()) * (this.mCreationPositionUpperBound - this.mCreationPositionLowerBound) + this.mCreationPositionLowerBound;
 
@@ -154,12 +166,12 @@ public class StarManager
 				}
 				else
 				{
-					this.mStars[i] = createNewStar(this.mStars[i]);
+					this.mStars[i] = createNewStar(this.mStars[i], false);
 				}
 			}
 			else
 			{
-				this.mStars[i] = createNewStar(null);
+				this.mStars[i] = createNewStar(null, false);
 			}
 		}
 	}

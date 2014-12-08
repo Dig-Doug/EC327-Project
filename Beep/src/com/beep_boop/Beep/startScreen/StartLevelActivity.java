@@ -16,6 +16,7 @@ import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.game.PlayScreenActivity;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class StartLevelActivity extends Activity
 {	
@@ -25,13 +26,17 @@ public class StartLevelActivity extends Activity
 	private StartLevelActivity THIS = this;
 	private WordDisplay mWordDisplay;
 	private Level mSelectedLevel;
-	boolean activityStarted;
+	
+	private StarryBackgroundView mStarBackground;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_level);
-		MyApplication.playSong();
+		
+		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.startScreenActivity_background);
+		
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -87,7 +92,6 @@ public class StartLevelActivity extends Activity
 				Intent playIntent = new Intent(THIS, PlayScreenActivity.class);
 				playIntent.putExtra(PlayScreenActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
 				startActivity(playIntent);
-				activityStarted = true;
 				overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 				finish();
 			}
@@ -110,30 +114,25 @@ public class StartLevelActivity extends Activity
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-		MyApplication.playSong();
+	//	MyApplication.mServ.resumeMusic();
 	}
 	
 	@Override
 	protected void onStop(){
 		super.onStop();
-		if(!activityStarted){
-			MyApplication.pauseSong();
-		}
+		
 	}
 	
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
-		//if(!activityStarted){
-		//	MyApplication.pauseSong();
-		//}
 		this.mWordDisplay.destroy();
-	}
-	@Override
-	protected void onResume(){
-		super.onResume();
-		MyApplication.playSong();
+		
+		if (this.mStarBackground != null)
+		{
+			this.mStarBackground.destroy();
+		}
 	}
 	@Override
 	public void onBackPressed(){

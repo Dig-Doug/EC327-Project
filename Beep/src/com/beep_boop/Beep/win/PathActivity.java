@@ -73,7 +73,7 @@ public class PathActivity extends Activity
 				String strColor = String.format("#%06X", 0xFFFFFF & getResources().getColor(R.color.winActivity_successTextColor));
 				pathText += "<font color='";
 				pathText += strColor;
-				pathText += "'>" + pathElement +  "</font><br>";
+				pathText += "'>" + pathElement +  "</font>";
 			}
 			else
 			{

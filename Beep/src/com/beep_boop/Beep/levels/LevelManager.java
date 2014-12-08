@@ -84,6 +84,16 @@ public class LevelManager
 	{
 		return LevelManager.INSTANCE.getLevelForKeyPrivate(aLevelKey);
 	}
+	
+	public static int getTotalLevelsDone()
+	{
+		return LevelManager.INSTANCE.getTotalLevelsDonePrivate();
+	}
+	
+	public static int getTotalLevelsCount()
+	{
+		return LevelManager.INSTANCE.getTotalLevelsCountPrivate();
+	}
 
 	///-----Private Methods-----
 	private void loadPrivate(Context aContext)
@@ -304,4 +314,23 @@ public class LevelManager
 		return result;
 	}
 
+	private int getTotalLevelsDonePrivate()
+	{
+		int count = 0;
+		for (String aLevel : this.mLevelData.keySet())
+		{
+			Level current = this.mLevelData.get(aLevel);
+			if (current.completed)
+			{
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
+	private int getTotalLevelsCountPrivate()
+	{
+		return this.mLevelData.keySet().size();
+	}
 }
