@@ -33,10 +33,13 @@ public class MyApplication extends Application
    
     private static LruCache<String, Bitmap> bitmapCache;
     
+	Intent music = new Intent();
+	//music.setClass(context,MusicService.class);
+    
     
 	private static boolean mIsBound = false;
 	public static MusicService mServ;
-	public static ServiceConnection Scon = new ServiceConnection(){
+	public ServiceConnection Scon = new ServiceConnection(){
 
 		public void onServiceConnected(ComponentName name, IBinder
 	     binder) {
@@ -54,7 +57,7 @@ public class MyApplication extends Application
 			mIsBound = true;
 		}
 
-		public static void doUnbindService()
+		public void doUnbindService()
 		{
 			if(mIsBound)
 			{
@@ -72,7 +75,7 @@ public class MyApplication extends Application
         MyApplication.context = getApplicationContext();
         
 		doBindService();
-		Intent music = new Intent();
+		//Intent music = new Intent();
 		music.setClass(context,MusicService.class);
 		startService(music);
 		
@@ -117,13 +120,8 @@ public class MyApplication extends Application
     @Override
     public void onTerminate(){
     	super.onTerminate();
-    	//Intent mStop = new Intent();
-    	//mStop.setClass(context, MusicService.class);
-    	stopService(new Intent(context,MusicService.class));
-    	//mServ.stopMusic();
     	doUnbindService();
-    	
-    	
+    	stopService(music);
     }
     
     public static Context getAppContext() {
@@ -170,10 +168,6 @@ public class MyApplication extends Application
     	}
     }
     
-    public static void stopSong(){
-    	//mServ.stopMusic();
-    	doUnbindService();
-    }
     
 
     public static void playSong()
@@ -183,43 +177,5 @@ public class MyApplication extends Application
     		mServ.resumeMusic();
     	}
     }
-   /* 
-	@Override
-	protected void onDestroy()
-	{
-		super.onDestroy();
-		if(!MyApplication.activityStarted){
-			doUnbindService();
-		}
-		
-		this.mStarBackground.destroy();
-		
-	}
-	
-	@Override
-	protected void onStop(){
-		super.onStop();
-		mServ.pauseMusic();
-		//doUnbindService();
-	}
-	
-	@Override
-	protected void onStart(){
-		super.onStart();
-		if(!mIsBound){
-		doBindService();
-		Intent music = new Intent();
-		music.setClass(this,MusicService.class);
-		startService(music);
-		}
-	}
-	
-	@Override
-	protected void onRestart(){
-		super.onRestart();
-		mServ.resumeMusic();
-		
-	}
-    
-    */
+
 }

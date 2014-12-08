@@ -10507,3 +10507,35 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of el
 
 !ENTRY com.android.ide.eclipse.adt 1 0 2014-12-07 21:32:46.244
 !MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/map_data_file.xml [Res F/Beep/res/raw, type RAW]
+
+!ENTRY org.eclipse.jdt.core 4 4 2014-12-07 22:27:43.360
+!MESSAGE Background Indexer Crash Recovery
+!STACK 0
+java.lang.OutOfMemoryError: Requested array size exceeds VM limit
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:38)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:643)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:464)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:456)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:550)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:198)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:807)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:849)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:569)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:388)
+	at java.lang.Thread.run(Thread.java:745)
+
+!ENTRY org.eclipse.ui 2 2 2014-12-07 22:27:47.470
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+!SESSION 2014-12-07 22:27:49.298 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.8.0_25
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/yes/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/yes/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-12-07 22:27:53.682
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.net 1 0 2014-12-07 22:27:56.643
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
