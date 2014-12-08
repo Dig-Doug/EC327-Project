@@ -26,6 +26,7 @@ public class StartLevelActivity extends Activity
 	private StartLevelActivity THIS = this;
 	private WordDisplay mWordDisplay;
 	private Level mSelectedLevel;
+	boolean activityStarted = false;
 	
 	private StarryBackgroundView mStarBackground;
 	
@@ -104,7 +105,7 @@ public class StartLevelActivity extends Activity
 			public void onClick(View v)
 			{
 				Log.d(StartLevelActivity.TAG, "To map button clicked");
-
+				activityStarted = true;
 				finish();
 			}
 		});
@@ -133,5 +134,10 @@ public class StartLevelActivity extends Activity
 		{
 			this.mStarBackground.destroy();
 		}
+	}
+	@Override
+	public void onBackPressed(){
+		activityStarted = true;
+		finish();
 	}
 }

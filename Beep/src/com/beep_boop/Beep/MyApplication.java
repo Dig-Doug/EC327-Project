@@ -32,7 +32,7 @@ public class MyApplication extends Application
     
 	private static boolean mIsBound = false;
 	public static MusicService mServ;
-	public static ServiceConnection Scon = new ServiceConnection(){
+	public ServiceConnection Scon = new ServiceConnection(){
 
 		public void onServiceConnected(ComponentName name, IBinder
 	     binder) {
@@ -45,16 +45,17 @@ public class MyApplication extends Application
 		};
 		
 		void doBindService(){
-	 		bindService(new Intent(context,MusicService.class),
+	 		bindService(new Intent(this,MusicService.class),
 					Scon,Context.BIND_AUTO_CREATE);
 			mIsBound = true;
 		}
 
-		public static void doUnbindService()
+		public void doUnbindService()
 		{
 			if(mIsBound)
 			{
-				context.unbindService(Scon);
+				this.unbindService(Scon);
+				
 	      		mIsBound = false;
 			}
 		}
@@ -81,8 +82,8 @@ public class MyApplication extends Application
     @Override
     public void onTerminate(){
     	super.onTerminate();
-    	
-    		doUnbindService();
+    	doUnbindService();
+    	mServ.stopMusic();
     	
     }
     
@@ -130,10 +131,10 @@ public class MyApplication extends Application
     	}
     }
     
-    public static void stopSong(){
+    /*public static void stopSong(){
     	doUnbindService();
     }
-    
+    */
 
     public static void playSong()
     {

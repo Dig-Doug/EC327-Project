@@ -15,6 +15,7 @@ import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class SettingsActivity extends Activity
 {
+	boolean activityStarted = false;
 	private StarryBackgroundView mStarBackground;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -63,6 +64,7 @@ public class SettingsActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
+				activityStarted = true;
 				finish();
 				overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
 			}
@@ -72,9 +74,9 @@ public class SettingsActivity extends Activity
 	@Override
 	protected void onStop(){
 		super.onStop();
-		
-		MyApplication.pauseSong();
-
+		if(!activityStarted){
+			MyApplication.pauseSong();
+		}
 	}
 
 	@Override
@@ -94,5 +96,10 @@ public class SettingsActivity extends Activity
 	protected void onResume(){
 		super.onResume();
 		MyApplication.playSong();
+	}
+	@Override
+	public void onBackPressed(){
+		activityStarted = true;
+		finish();
 	}
 }
