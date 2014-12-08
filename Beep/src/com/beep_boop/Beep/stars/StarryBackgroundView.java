@@ -34,7 +34,18 @@ public class StarryBackgroundView extends View implements StarManager.ScreenSpac
 		{
 			int backgroundImage = a.getResourceId(R.styleable.StarryBackgroundView_backgroundImage, -1);
 			if (backgroundImage != -1)
-				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage, null);
+			{
+				Bitmap cached = MyApplication.getBitmapFromMemCache(backgroundImage + "");
+				if (cached != null)
+				{
+					this.mBackgroundImage = cached;
+				}
+				else
+				{
+					this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage, null);
+					MyApplication.addBitmapToMemoryCache(backgroundImage + "", this.mBackgroundImage);
+				}
+			}
 			
 			int foregroundImage = a.getResourceId(R.styleable.StarryBackgroundView_foregroundImage, -1);
 			if (foregroundImage != -1)
@@ -51,10 +62,16 @@ public class StarryBackgroundView extends View implements StarManager.ScreenSpac
 					for (int i = 0; i < stars.length(); i++)
 					{
 						int bitmapID = stars.getResourceId(i, -1);
-						if (bitmapID != -1)
+						Bitmap cached = MyApplication.getBitmapFromMemCache(bitmapID + "");
+						if (cached != null)
+						{
+							starImages[i] = cached;
+						}
+						else
 						{
 							BitmapFactory.Options options = new BitmapFactory.Options();
 							starImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+							MyApplication.addBitmapToMemoryCache(bitmapID + "", starImages[i]);
 						}
 					}
 
@@ -112,7 +129,7 @@ public class StarryBackgroundView extends View implements StarManager.ScreenSpac
 	{
 		if (this.mBackgroundImage != null)
 		{
-			this.mBackgroundImage.recycle();
+			//this.mBackgroundImage.recycle();
 			this.mBackgroundImage = null;
 		}
 		if (this.mForegroundImage != null)

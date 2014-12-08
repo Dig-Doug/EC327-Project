@@ -8,8 +8,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.IBinder;
+import android.util.LruCache;
 
 public class MyApplication extends Application
 {
@@ -29,6 +31,8 @@ public class MyApplication extends Application
     
     private static ArrayList<FontChangeListener> fontChangeListeners = new ArrayList<FontChangeListener>();
    
+    private static LruCache<String, Bitmap> bitmapCache;
+    
     
 	private static boolean mIsBound = false;
 	public static MusicService mServ;
@@ -78,7 +82,38 @@ public class MyApplication extends Application
 		MyApplication.PLAY_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.PLAY_FONT_NAME);
 		MyApplication.SPECIALTY_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[2];
 		MyApplication.SPECIALTY_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.SPECIALTY_FONT_NAME);
+		
+		setupBitmapCache();
     }
+    
+    private void setupBitmapCache()
+    {
+    	final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        // Use 1/8th of the available memory for this memory cache.
+        final int cacheSize = maxMemory / 4;
+
+        bitmapCache = new LruCache<String, Bitmap>(cacheSize)
+        		{
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                // The cache size will be measured in kilobytes rather than
+                // number of items.
+                return bitmap.getByteCount() / 1024;
+            }
+        };
+    }
+    
+    public static void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemCache(key) == null) {
+        	bitmapCache.put(key, bitmap);
+        }
+    }
+
+    public static Bitmap getBitmapFromMemCache(String key) {
+        return bitmapCache.get(key);
+    }
+    
     @Override
     public void onTerminate(){
     	super.onTerminate();

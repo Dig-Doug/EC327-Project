@@ -106,7 +106,7 @@ public class StarManager
 		{
 			if (this.mStarImages[i] != null)
 			{
-				this.mStarImages[i].recycle();
+				//this.mStarImages[i].recycle();
 				this.mStarImages[i] = null;
 			}
 		}
