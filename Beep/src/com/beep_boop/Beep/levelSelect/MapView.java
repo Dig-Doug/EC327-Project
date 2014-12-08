@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.stars.StarManager;
 
@@ -156,10 +157,16 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 					for (int i = 0; i < stars.length(); i++)
 					{
 						int bitmapID = stars.getResourceId(i, -1);
-						if (bitmapID != -1)
+						Bitmap cached = MyApplication.getBitmapFromMemCache(bitmapID + "");
+						if (cached != null)
+						{
+							starImages[i] = cached;
+						}
+						else
 						{
 							BitmapFactory.Options options = new BitmapFactory.Options();
 							starImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+							MyApplication.addBitmapToMemoryCache(bitmapID + "", starImages[i]);
 						}
 					}
 					
@@ -206,8 +213,17 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 					int bitmapID = imgs.getResourceId(i, -1);
 					if (bitmapID != -1)
 					{
-						BitmapFactory.Options options = new BitmapFactory.Options();
-						mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+						Bitmap cached = MyApplication.getBitmapFromMemCache(bitmapID + "");
+						if (cached != null)
+						{
+							mBackgroundImages[i] = cached;
+						}
+						else
+						{
+							BitmapFactory.Options options = new BitmapFactory.Options();
+							mBackgroundImages[i] = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+							MyApplication.addBitmapToMemoryCache(bitmapID + "", mBackgroundImages[i]);
+						}
 						mBackgroundTotalHeight += mBackgroundImages[i].getHeight();
 					}
 				}

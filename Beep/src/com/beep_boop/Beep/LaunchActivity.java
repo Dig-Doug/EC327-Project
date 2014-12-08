@@ -2,6 +2,9 @@ package com.beep_boop.Beep;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -24,18 +27,18 @@ public class LaunchActivity extends Activity
 {
 	///-----Member Variables-----
 	/** Holds a reference to THIS for use in listeners */
-    //private static Context context;
+	//private static Context context;
 
 	private LaunchActivity THIS = this;
 	private ImageButton mStartButton;
 	private ProgressBar mLoadingSpinner;
 	private TextView mLoadingText;
 	private boolean mLevelsLoaded = false, mWordsLoaded = false, mMapLoaded = false, mStarted = false;
-	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f;
+	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f, mMapPercent = 0.0f;
 	private StarryBackgroundView mStarBackground;
-	
+
 	private boolean mStartedMap = false;
-	
+
 	//public static Activity activeActivity;
 
 	///-----Activity Life Cycle-----
@@ -46,10 +49,10 @@ public class LaunchActivity extends Activity
 		setContentView(R.layout.activity_launch);
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.launchActivity_background);
 		//grab the image views from XML
-		
-		
+
+
 		//MyApplication.startServ();
-		
+
 		this.mStartButton = (ImageButton) findViewById(R.id.launchActivity_startButton);
 		this.mStartButton.setEnabled(false);
 		this.mStartButton.setOnClickListener(new OnClickListener()
@@ -57,7 +60,7 @@ public class LaunchActivity extends Activity
 			@Override
 			public void onClick(View arg0)
 			{
-				
+
 				showLoading();
 			}
 		});
@@ -101,9 +104,9 @@ public class LaunchActivity extends Activity
 			MyApplication.pauseSong();
 		}
 		this.mStarBackground.destroy();
-		
+
 	}
-	
+
 	@Override
 	protected void onStop(){
 		super.onStop();
@@ -113,22 +116,22 @@ public class LaunchActivity extends Activity
 		}
 
 	}
-	
+
 	@Override
 	protected void onStart(){
 		super.onStart();
 		MyApplication.playSong();
 
 	}
-	
+
 	@Override
 	protected void onRestart(){
 		super.onRestart();
 		MyApplication.playSong();
-		
-		
+
+
 	}
-	
+
 	private void enableButtons()
 	{
 		this.mStartButton.setEnabled(true);
@@ -149,7 +152,7 @@ public class LaunchActivity extends Activity
 	}
 	private void updateLoadingProgress()
 	{
-		int percent = (int)((this.mLevelsPercent + this.mWordsPercent) / 2 * 100);
+		int percent = (int)((this.mLevelsPercent + this.mWordsPercent + this.mMapPercent) / 3 * 100);
 		this.mLoadingText.setText(getString(R.string.launchActivity_loadingText) + " " + percent + "%");
 	}
 	private void checkDone()
@@ -213,6 +216,40 @@ public class LaunchActivity extends Activity
 		protected Void doInBackground(Context... contexts)
 		{
 			MapHandler.load(contexts[0]);
+
+			TypedArray imgs = contexts[0].getResources().obtainTypedArray(R.array.map_backgroundImages);
+			try
+			{
+				for (int i = 0; i < imgs.length(); i++)
+				{
+					int bitmapID = imgs.getResourceId(i, -1);
+					if (bitmapID != -1)
+					{
+						Bitmap cached = MyApplication.getBitmapFromMemCache(bitmapID + "");
+						if (cached != null)
+						{
+							//do nothing
+						}
+						else
+						{
+							BitmapFactory.Options options = new BitmapFactory.Options();
+							Bitmap loaded = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+							MyApplication.addBitmapToMemoryCache(bitmapID + "", loaded);
+							mMapPercent += (1.0f / imgs.length());
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+
+			}
+			finally
+			{
+				imgs.recycle();
+			}
+
+
 			return null;
 		}
 		protected void onProgressUpdate(String... words)
@@ -222,6 +259,7 @@ public class LaunchActivity extends Activity
 		protected void onPostExecute(Void result)
 		{
 			mMapLoaded = true;
+			mMapPercent = 1.0f;
 			checkDone();
 		}
 	}
