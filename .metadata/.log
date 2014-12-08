@@ -10854,3 +10854,28 @@ Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is ou
 
 !ENTRY org.eclipse.ui 2 2 2014-12-08 11:37:28.039
 !MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+!SESSION 2014-12-08 12:51:04.981 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.8.0_11
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/Doug/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-12-08 12:51:06.887
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.net 1 0 2014-12-08 12:51:10.529
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-12-08 12:51:36.446
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/level_data_file.xml [Res F/Beep/res/raw, type RAW]
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-12-08 12:54:26.237
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/map_data_file.xml [Res F/Beep/res/raw, type RAW]
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-12-08 12:55:57.023
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/level_data_file.xml [Res F/Beep/res/raw, type RAW]
+
+!ENTRY org.eclipse.ui 2 2 2014-12-08 12:57:39.243
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)

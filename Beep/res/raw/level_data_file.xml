@@ -26,5 +26,5 @@
 <level key="level_25"><isEgg>false</isEgg><from>Parrot</from><to>Mars</to><next>level_26</next><max>10</max><requires><req></req><req></req><req></req></requires><fromImage>level_icon_parrot.png</fromImage><toImage>level_icon_mars.png</toImage><hint>This one is also hard</hint></level>
 <level key="level_26"><isEgg>false</isEgg><from>Apple</from><to>Vikings</to><next></next><max>10</max><requires><req></req><req></req><req></req></requires><fromImage>level_icon_apple.png</fromImage><toImage>level_icon_viking.png</toImage><hint>this one again?</hint></level>
 <level key="egg_credits"><isEgg>true</isEgg><from></from><to></to><next></next><max></max><requires><req></req><req></req><req></req></requires><fromImage>level_icon_.png</fromImage><toImage>level_icon_.png</toImage><hint></hint></level>
-<level key="egg_dougs_favorite"><isEgg>true</isEgg><from>Doug's Favorite Moon</from><to></to><next></next><max></max><requires><req></req><req></req><req></req></requires><fromImage>level_icon_.png</fromImage><toImage>level_icon_.png</toImage><hint>Isn't this moon beautiful?</hint></level>
+<level key="egg_dougs_favorite"><isEgg>true</isEgg><from>Callisto</from><to></to><next></next><max></max><requires><req></req><req></req><req></req></requires><fromImage>level_icon_.png</fromImage><toImage>level_icon_.png</toImage><hint>Isn't it beautiful?</hint></level>
 </levels>
