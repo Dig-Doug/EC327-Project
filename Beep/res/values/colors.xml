@@ -13,7 +13,7 @@
     
     <color name = "winActivity_backgroundColor">#FF12233B</color>
     <color name = "winActivity_textColor">#FFFFFFFF</color>
-    <color name = "winActivity_successTextColor">#FCCA639</color>
+    <color name = "winActivity_successTextColor">#FFCCA639</color>
     
     <color name = "loseActivity_backgroundColor">#FF12233B</color>
     <color name = "loseActivity_textColor">#FFFFFFFF</color>

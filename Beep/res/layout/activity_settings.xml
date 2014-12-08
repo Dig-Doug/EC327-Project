@@ -105,6 +105,6 @@
         android:layout_toLeftOf="@+id/settingsActivity_fontTitle"
         android:contentDescription="@string/content_description_place_holder"
         android:onClick="musicOff"
-        android:text="@strings/settingsActivity_musicOnOff" />
+        android:text="@string/settingsActivity_musicOnOff"/>
 
 </RelativeLayout>
