@@ -98,6 +98,7 @@ public class LoseActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
+				activityStarted = true;
 				finish();
 			}
 		});
@@ -114,12 +115,19 @@ public class LoseActivity extends Activity
 	@Override
 	protected void onRestart(){
 		super.onRestart();
+		activityStarted = false;
 		MyApplication.playSong();
 	}
 	@Override
 	protected void onResume(){
 		super.onResume();
+		activityStarted = false;
 		MyApplication.playSong();
 	}
+	@Override
+	public void onBackPressed(){
+		activityStarted = true;
+		finish();
 	
+	}
 }

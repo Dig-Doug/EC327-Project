@@ -34,6 +34,8 @@ public class WinActivity extends Activity
 	
 	private StarryBackgroundView mStarBackground;
 
+	boolean activityStarted = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -75,6 +77,7 @@ public class WinActivity extends Activity
 		else
 		{
 			Log.e(WinActivity.TAG, "Error getting extras");
+			activityStarted = true;
 			finish();
 		}
 		
@@ -122,6 +125,7 @@ public class WinActivity extends Activity
 				pathIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, mCompletedLevel.levelKey);
 				pathIntent.putExtra(WinActivity.EXTRA_PATH, mPath);
 				startActivity(pathIntent);
+				activityStarted = true;
 				overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 				finish();
 			}
@@ -156,8 +160,9 @@ public class WinActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-		MyApplication.pauseSong();
-
+		if(!activityStarted){
+			MyApplication.pauseSong();
+		}
 	}
 	@Override
 	protected void onRestart(){
@@ -175,11 +180,17 @@ public class WinActivity extends Activity
 	protected void onDestroy()
 	{
 		super.onDestroy();
-		MyApplication.pauseSong();
+		//MyApplication.pauseSong();
 
 		if (this.mStarBackground != null)
 		{
 			this.mStarBackground.destroy();
 		}
+	}
+	@Override
+	public void onBackPressed(){
+		activityStarted = true;
+		finish();
+		
 	}
 }

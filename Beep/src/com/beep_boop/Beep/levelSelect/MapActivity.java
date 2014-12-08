@@ -102,25 +102,28 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	protected void onStop(){
 		super.onStop();
 		if(!activityStarted){
-		MyApplication.pauseSong();
+			MyApplication.pauseSong();
 		}
 	}
 	
 	@Override
 	protected void onStart(){
 		super.onStart();
+		activityStarted = false;
 		MyApplication.playSong();
 	}
 	
 	@Override
 	protected void onRestart(){
 		super.onRestart();
+		activityStarted = false;
 		MyApplication.playSong();
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
+		activityStarted = false;
 		MyApplication.playSong();
 	}
 	
@@ -130,9 +133,9 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		super.onDestroy();
 		//unsubscribe to level state updates
 		LevelManager.removeLevelStateListener(this);
-		if(!activityStarted){
+		//MyApplication.stopSong();
 		MyApplication.pauseSong();
-		}
+		
 		
 		this.mMapView.destroy();
 	}
@@ -159,7 +162,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		Intent startLevelIntent = new Intent(this, StartLevelActivity.class);
 		startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, aNode.getLevelKey());
 		startActivity(startLevelIntent);
-		this.activityStarted = true;
+		activityStarted = true;
 	}
 	
 	///-----NodeDataSource methods-----

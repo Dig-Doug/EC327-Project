@@ -98,6 +98,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	@Override
 	protected void onRestart(){
 		super.onRestart();
+		activityStarted = false;
 		MyApplication.playSong();
 
 	}
@@ -139,6 +140,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	@Override
 	protected void onResume(){
 		super.onResume();
+		activityStarted = false;
 		MyApplication.playSong();
 	}
 
@@ -234,6 +236,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		else
 		{
 			super.onBackPressed();
+			activityStarted = true;
 		}
 	}
 
@@ -307,6 +310,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				@Override
 				public void onClick(View v)
 				{
+					activityStarted = true;
 					THIS.finish();
 				}
 			});

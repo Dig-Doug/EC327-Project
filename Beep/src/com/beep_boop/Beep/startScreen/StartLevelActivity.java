@@ -100,7 +100,7 @@ public class StartLevelActivity extends Activity
 			public void onClick(View v)
 			{
 				Log.d(StartLevelActivity.TAG, "To map button clicked");
-
+				activityStarted = true;
 				finish();
 			}
 		});
@@ -134,5 +134,10 @@ public class StartLevelActivity extends Activity
 	protected void onResume(){
 		super.onResume();
 		MyApplication.playSong();
+	}
+	@Override
+	public void onBackPressed(){
+		activityStarted = true;
+		finish();
 	}
 }

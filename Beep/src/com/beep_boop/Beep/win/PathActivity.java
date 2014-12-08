@@ -22,7 +22,7 @@ public class PathActivity extends Activity
 	private StarryBackgroundView mStarBackground;
 	private String[] mPath;
 
-	//boolean activityStarted = false;
+	boolean activityStarted = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -37,6 +37,7 @@ public class PathActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
+				activityStarted = true;
 				finish();
 			}
 		});
@@ -57,6 +58,7 @@ public class PathActivity extends Activity
 		else
 		{
 			Log.e(PathActivity.TAG, "Error getting extras");
+			activityStarted = true;
 			finish();
 		}
 		
@@ -87,14 +89,15 @@ public class PathActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-		//if(!activityStarted){
+		if(!activityStarted){
 			MyApplication.pauseSong();
-		
+		}	
 	}
 	@Override
 	protected void onRestart()
 	{
 		super.onRestart();
+		activityStarted = false;
 		MyApplication.playSong();
 
 	}
@@ -102,6 +105,7 @@ public class PathActivity extends Activity
 	@Override
 	protected void onResume(){
 		super.onResume();
+		activityStarted = false;
 		MyApplication.playSong();
 	}
 
@@ -115,5 +119,11 @@ public class PathActivity extends Activity
 		{
 			this.mStarBackground.destroy();
 		}
+	}
+	@Override
+	public void onBackPressed(){
+		activityStarted = true;
+		finish();
+		
 	}
 }

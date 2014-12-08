@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="findActivity"/>
 			<item value="&apos;"/>
 			<item value="+"/>
 			<item value="+ "/>
@@ -15,7 +16,6 @@
 			<item value="mScrollAnimator"/>
 			<item value="mStarAnimator"/>
 			<item value="mCurrentWordDrawPosition"/>
-			<item value="mCurrentWordPosition"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
@@ -29,8 +29,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="263" key="DIALOG_WIDTH"/>
-		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+		<item value="265" key="DIALOG_WIDTH"/>
+		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="109" key="DIALOG_Y_ORIGIN"/>
 		<item value="994" key="DIALOG_X_ORIGIN"/>
