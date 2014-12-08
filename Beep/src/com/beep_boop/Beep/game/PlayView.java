@@ -124,6 +124,8 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			this.mCurrentWordTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mScrollBarPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarColor, Color.WHITE));
 			this.mSwipeVelocityMin = a.getFloat(R.styleable.PlayView_swipeVelocityMin, 0.5f);
+			
+			this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		}
 		catch (Exception e)
 		{

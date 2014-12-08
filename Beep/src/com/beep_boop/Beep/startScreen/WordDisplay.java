@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -31,7 +32,7 @@ public class WordDisplay extends View
 
 	private PointF mFromWordDraw, mToWordDraw;
 
-	private Paint mTextPaint = new Paint();
+	private Paint mTextPaint = new Paint(), mImageFillInPaint = new Paint();
 	private float mDefaultTextSize = 50f;
 
 	private Matrix mFromImageMatrix = new Matrix(), mToImageMatrix = new Matrix(), mArrowImageMatrix = new Matrix(), mBackgroundImageMatrix = new Matrix();;
@@ -80,6 +81,19 @@ public class WordDisplay extends View
 		if (!this.isInEditMode())
 		{
 			this.mTextPaint.setTypeface(MyApplication.MAIN_FONT);
+			
+			this.mImageFillInPaint.setTypeface(MyApplication.MAIN_FONT);
+			this.mImageFillInPaint.setTextSize(100f);
+			
+			/*
+			float imageFillIng = this.mFromWordPercentWidth * this.getHeight();
+			Rect numberBounds = new Rect(0, 0, 1000000, 1000000);
+			while (numberBounds.height() > clickNumberMaxHeight)
+			{
+				this.mClickNumberPaint.getTextBounds("00", 0, 2, numberBounds);
+				this.mClickNumberPaint.setTextSize(this.mClickNumberPaint.getTextSize() - 1);
+			}
+			*/
 		}
 	}
 
