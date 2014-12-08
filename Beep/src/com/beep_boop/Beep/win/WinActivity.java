@@ -14,6 +14,7 @@ import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.lose.LoseActivity;
 import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class WinActivity extends Activity
@@ -23,19 +24,23 @@ public class WinActivity extends Activity
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
 	public static final String EXTRA_PATH = "EXTRA_PATH";
 	public static final String EXTRA_TIME = "EXTRA_TIME";
+	public static final String EXTRA_FROM_WORD = "EXTRA_FROM_WORD";
+	public static final String EXTRA_TO_WORD = "EXTRA_TO_WORD";
 	/** Tag for logging */
 	private static final String TAG = "WinActivity";
 	//private WinActivity THIS = this;
 	private Level mCompletedLevel;
 	private String[] mPath;
+	private double mTime = 0;
+	private String mFromWord, mToWord;
 
 	private TextView mTimePlaceholderLabel;
 	private TextView mMovePlaceholderLabel;
-	
+
 	private StarryBackgroundView mStarBackground;
 
 	boolean activityStarted = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -46,32 +51,25 @@ public class WinActivity extends Activity
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.winActivity_background);
 
 		Bundle extras = this.getIntent().getExtras();
-		double time = 0;
 		//boolean personalBestTime = false, personalBestMoves = false;
 		if (extras != null)
 		{
+			if (extras.containsKey(WinActivity.EXTRA_TIME) && extras.containsKey(WinActivity.EXTRA_PATH))
+			{
+				this.mTime = extras.getDouble(WinActivity.EXTRA_TIME);
+				this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
+			}
+
 			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY))
 			{
 				String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);
 				this.mCompletedLevel = LevelManager.getLevelForKey(levelKey);
-
-				if (extras.containsKey(WinActivity.EXTRA_TIME) && extras.containsKey(WinActivity.EXTRA_PATH))
-				{
-					time = extras.getDouble(WinActivity.EXTRA_TIME);
-					this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
-
-					/*
-					if (time < this.mCompletedLevel.time)
-						personalBestTime = true;
-					if (this.mPath.length - 1 < this.mCompletedLevel.numberOfSteps)
-						personalBestMoves = true;
-					*/
-					LevelManager.setLevelComplete(levelKey, true, time, this.mPath.length - 1);
-				}
+				LevelManager.setLevelComplete(levelKey, true, this.mTime, this.mPath.length - 1);
 			}
 			else
 			{
-				Log.w(WinActivity.TAG, "Missing bundle item, level progress will not be stored");
+				this.mFromWord = extras.getString(LoseActivity.EXTRA_FROM_WORD);
+				this.mToWord = extras.getString(LoseActivity.EXTRA_TO_WORD);
 			}
 		}
 		else
@@ -80,18 +78,18 @@ public class WinActivity extends Activity
 			activityStarted = true;
 			finish();
 		}
-		
+
 		this.mTimePlaceholderLabel = (TextView) findViewById(R.id.winActivity_timeLabel);
-		this.mTimePlaceholderLabel.setText(getString(R.string.winActivity_timeLabel) + " " + (int)(time / 1000) + " " + getString(R.string.winActivity_timeSuffix));
+		this.mTimePlaceholderLabel.setText(getString(R.string.winActivity_timeLabel) + " " + (int)(this.mTime / 1000) + " " + getString(R.string.winActivity_timeSuffix));
 		this.mTimePlaceholderLabel.setTypeface(MyApplication.MAIN_FONT);
-		
+
 		this.mMovePlaceholderLabel = (TextView) findViewById(R.id.winActivity_moveLabel);
 		this.mMovePlaceholderLabel.setText(getString(R.string.winActivity_moveLabel) + " " + (this.mPath.length - 1) + " " + getString(R.string.winActivity_moveSuffix));
 		this.mMovePlaceholderLabel.setTypeface(MyApplication.MAIN_FONT);
-		
+
 		this.setupButtons();
 	}
-	
+
 	private void setupButtons()
 	{
 		/*
@@ -107,14 +105,14 @@ public class WinActivity extends Activity
 				finish();
 			}
 		});
-		
+
 		if (this.mCompletedLevel.nextLevelKey == null || !LevelManager.canPlayLevel(this.mCompletedLevel.nextLevelKey))
 		{
 			nextLevelButton.setAlpha(0.0f);
 			nextLevelButton.setEnabled(false);
 		}
-		*/
-		
+		 */
+
 		ImageButton mapButton = (ImageButton) findViewById(R.id.winActivity_mapButton);
 		mapButton.setOnClickListener(new OnClickListener()
 		{
@@ -122,7 +120,8 @@ public class WinActivity extends Activity
 			public void onClick(View v)
 			{
 				Intent pathIntent = new Intent(THIS, PathActivity.class);
-				pathIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, mCompletedLevel.levelKey);
+				if (mCompletedLevel != null)
+					pathIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, mCompletedLevel.levelKey);
 				pathIntent.putExtra(WinActivity.EXTRA_PATH, mPath);
 				startActivity(pathIntent);
 				activityStarted = true;
@@ -147,15 +146,15 @@ public class WinActivity extends Activity
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		Uri data = Uri.parse("mailto:?subject=" + "" + "&body=" + "" + "&to=" + "");  
 		intent.setData(data);  
-		String message = getString(R.string.share_emailDefaultText1) + this.mCompletedLevel.fromWord + 
-				getString(R.string.share_emailDefaultText2) + this.mCompletedLevel.toWord + 
-				getString(R.string.share_emailDefaultText3) + this.mCompletedLevel.numberOfSteps + 
-				getString(R.string.share_emailDefaultText4) + this.mCompletedLevel.time + 
+		String message = getString(R.string.share_emailDefaultText1) + this.mFromWord + 
+				getString(R.string.share_emailDefaultText2) + this.mToWord + 
+				getString(R.string.share_emailDefaultText3) + (this.mPath.length - 1) + 
+				getString(R.string.share_emailDefaultText4) + this.mTime + 
 				getString(R.string.share_emailDefaultText5);
 		intent.putExtra(Intent.EXTRA_TEXT, message);
 		startActivity(Intent.createChooser(intent, "Send Email"));
 	}
-	
+
 	@Override
 	protected void onStop()
 	{
@@ -191,6 +190,6 @@ public class WinActivity extends Activity
 	public void onBackPressed(){
 		activityStarted = true;
 		finish();
-		
+
 	}
 }

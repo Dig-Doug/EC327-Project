@@ -45,9 +45,13 @@ public class PathActivity extends Activity
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
-			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY) && extras.containsKey(WinActivity.EXTRA_PATH))
+			if (extras.containsKey(WinActivity.EXTRA_LEVEL_KEY))
 			{
-				//String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);
+				//String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);	
+			}
+			
+			if (extras.containsKey(WinActivity.EXTRA_PATH))
+			{
 				this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
 			}
 			else

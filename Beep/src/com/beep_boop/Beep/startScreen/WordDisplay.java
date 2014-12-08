@@ -225,7 +225,7 @@ public class WordDisplay extends View
 				float fromImageY = this.mFromImagePercentY;
 				Rect bounds = new Rect();
 				this.mImageFillInPaint.getTextBounds(this.mFromWord, 0, 1, bounds);
-				this.mFromImageFillInDraw = new PointF(fromImageX * this.getWidth(), fromImageY * this.getHeight());
+				this.mFromImageFillInDraw = new PointF(fromImageX * this.getWidth(), fromImageY * this.getHeight() - ((mImageFillInPaint.descent() + mImageFillInPaint.ascent()) / 2));
 			}
 
 			if (this.mToImage != null)
@@ -245,7 +245,7 @@ public class WordDisplay extends View
 				float toImageY = this.mToImagePercentY;
 				Rect bounds = new Rect();
 				this.mImageFillInPaint.getTextBounds(this.mToWord, 0, 1, bounds);
-				this.mToImageFillInDraw = new PointF(toImageX * this.getWidth(), toImageY * this.getHeight());
+				this.mToImageFillInDraw = new PointF(toImageX * this.getWidth(), toImageY * this.getHeight() - ((mImageFillInPaint.descent() + mImageFillInPaint.ascent()) / 2));
 			}
 
 			if (this.mArrowImage != null)

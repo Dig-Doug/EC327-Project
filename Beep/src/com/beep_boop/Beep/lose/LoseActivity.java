@@ -13,6 +13,7 @@ import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
+import com.beep_boop.Beep.random.RandomActivity;
 import com.beep_boop.Beep.stars.StarryBackgroundView;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
 
@@ -20,10 +21,13 @@ public class LoseActivity extends Activity
 {
 	///-----Member Variables-----
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
+	public static final String EXTRA_FROM_WORD = "EXTRA_FROM_WORD";
+	public static final String EXTRA_TO_WORD = "EXTRA_TO_WORD";
 	/** Tag for logging */
 	private static final String TAG = "LoseActivity";
 	private LoseActivity THIS = this;
 	private Level mLevel;
+	private String mFromWord, mToWord;
 	
 	private StarryBackgroundView mStarBackground;
 	
@@ -52,7 +56,8 @@ public class LoseActivity extends Activity
 			}
 			else
 			{
-				Log.w(LoseActivity.TAG, "Missing bundle item, level progress will not be stored");
+				this.mFromWord = extras.getString(LoseActivity.EXTRA_FROM_WORD);
+				this.mToWord = extras.getString(LoseActivity.EXTRA_TO_WORD);
 			}
 		}
 		else
@@ -64,7 +69,10 @@ public class LoseActivity extends Activity
 		this.setupButtons();
 		
 		TextView hintView = (TextView) findViewById(R.id.loseActivity_hintText);
-		hintView.setText(getString(R.string.loseActivity_hint) + " " + this.mLevel.hint);
+		if (this.mLevel != null)
+			hintView.setText(getString(R.string.loseActivity_hint) + " " + this.mLevel.hint);
+		else
+			hintView.setText(getString(R.string.loseActivity_hint) + " " + "This game is hard.");
 		hintView.setTypeface(MyApplication.MAIN_FONT);
 	}
 	
@@ -84,9 +92,19 @@ public class LoseActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
-				startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mLevel.levelKey);
-				startActivity(startLevelIntent);
+				if (mLevel != null)
+				{
+					Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
+					startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mLevel.levelKey);
+					startActivity(startLevelIntent);
+				}
+				else
+				{
+					Intent randomIntent = new Intent(THIS, RandomActivity.class);
+					randomIntent.putExtra(RandomActivity.EXTRA_FROM_WORD, mFromWord);
+					randomIntent.putExtra(RandomActivity.EXTRA_TO_WORD, mToWord);
+					startActivity(randomIntent);
+				}
 				activityStarted = true;
 				finish();
 			}

@@ -83,7 +83,7 @@ public class StartLevelActivity extends Activity
 			Log.e(TAG, "Error getting to level image");
 		}
 		this.mWordDisplay = (WordDisplay) findViewById(R.id.startScreenActivity_wordDisplay);
-		this.mWordDisplay.set(fromBit, fromBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
+		this.mWordDisplay.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
 
 		ImageButton playButton = (ImageButton) findViewById(R.id.startLevelActivity_startLevelButton);
 		playButton.setOnClickListener(new OnClickListener()

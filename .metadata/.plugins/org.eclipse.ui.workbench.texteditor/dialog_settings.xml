@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="credits" key="selection"/>
+		<item value="random" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="startLevel"/>
+			<item value="startScreen"/>
+			<item value="credits"/>
 			<item value="about"/>
 			<item value="findActivity"/>
 			<item value="&apos;"/>
 			<item value="+"/>
 			<item value="+ "/>
-			<item value=", a"/>
-			<item value="mScrollAnimator"/>
-			<item value="mStarAnimator"/>
 		</list>
 		<list key="replacehistory">
+			<item value="random"/>
 			<item value="credits"/>
 			<item value=""/>
 			<item value=", float a"/>
@@ -25,7 +26,6 @@
 			<item value="lose"/>
 			<item value="loseActivity"/>
 			<item value="MyApplication.FONT"/>
-			<item value="R.styleable"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

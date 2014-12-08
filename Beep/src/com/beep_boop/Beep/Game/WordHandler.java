@@ -51,6 +51,11 @@ public class WordHandler
 		return WordHandler.INSTANCE.getCountsForWordPrivate(aWord);
 	}
 
+	public static String randomWord()
+	{
+		return WordHandler.INSTANCE.randomWordPrivate();
+	}
+
 	///-----Private Methods-----
 	private void loadPrivate(Context aContext, PlayScreenParser.StatusUpdate aUpdate)
 	{
@@ -110,5 +115,12 @@ public class WordHandler
 		}
 
 		return result;
+	}
+
+	private String randomWordPrivate()
+	{
+		int randomIndex = (int)(Math.random() * this.mWordData.keySet().size());
+		Object key = this.mWordData.keySet().toArray()[randomIndex];
+		return (String)key;
 	}
 }

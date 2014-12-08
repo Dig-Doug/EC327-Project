@@ -1,6 +1,7 @@
 package com.beep_boop.Beep.game;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	}
 	///-----Member Variables-----
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
+	public static final String EXTRA_FROM_WORD = "EXTRA_FROM_WORD";
+	public static final String EXTRA_TO_WORD = "EXTRA_TO_WORD";
 	//private static final String PAUSE_MENU_TAG = "PAUSE_MENU_TAG";
 	/** Tag for logging */
 	private static final String TAG = "PlayScreenActivity";
@@ -46,6 +49,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	private ArrayList<String> mWordPath = new ArrayList<String>();
 	private Level mSelectedLevel;
+	private String mFromWord, mToWord;
 	private double mStartTime;
 	private boolean mPaused = false;
 	private double mPauseTimeTotal = 0;
@@ -67,7 +71,15 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			{
 				String levelKey = extras.getString(PlayScreenActivity.EXTRA_LEVEL_KEY);
 				this.mSelectedLevel = LevelManager.getLevelForKey(levelKey);
+				this.mFromWord = this.mSelectedLevel.fromWord;
+				this.mToWord = this.mSelectedLevel.toWord;
 				this.mMovesLeft = this.mSelectedLevel.maxMoves;
+			}
+			else
+			{
+				this.mFromWord = extras.getString(PlayScreenActivity.EXTRA_FROM_WORD);
+				this.mToWord = extras.getString(PlayScreenActivity.EXTRA_TO_WORD);
+				this.mMovesLeft = 10;
 			}
 		}
 		else
@@ -79,8 +91,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		this.mPlayView = (PlayView) findViewById(R.id.playScreenActivity_playView);	
 		this.mPlayView.setListener(this);
 		this.mPlayView.setDataSource(this);
-		this.mPlayView.setCurrentWord(this.mSelectedLevel.fromWord);
-		this.mWordPath.add(this.mSelectedLevel.fromWord);
+		this.mPlayView.setCurrentWord(this.mFromWord);
+		this.mWordPath.add(this.mFromWord);
 
 		this.mGoalBar = (GoalBar) findViewById(R.id.playScreenActivity_goalBar);
 		this.mGoalBar.setListener(this);
@@ -95,7 +107,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			MyApplication.pauseSong();
 		}
 	}
-	
+
 	@Override
 	protected void onRestart(){
 		super.onRestart();
@@ -103,28 +115,31 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		MyApplication.playSong();
 
 	}
-	
+
 	private void initGoalBar()
 	{
 		Bitmap fromBit = null, toBit = null;
-		try
+		if (this.mSelectedLevel != null)
 		{
-			fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
+			try
+			{
+				fromBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.fromImage));
+			}
+			catch (Exception e)
+			{
+				Log.e(TAG, "Error getting from level image");
+			}
+			try
+			{
+				toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
+			}
+			catch (Exception e)
+			{
+				Log.e(TAG, "Error getting to level image");
+			}
 		}
-		catch (Exception e)
-		{
-			Log.e(TAG, "Error getting from level image");
-		}
-		try
-		{
-			toBit = BitmapFactory.decodeStream(getAssets().open("level_images/" + this.mSelectedLevel.toImage));
-		}
-		catch (Exception e)
-		{
-			Log.e(TAG, "Error getting to level image");
-		}
-		this.mGoalBar.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
-		
+		this.mGoalBar.set(fromBit, toBit, this.mFromWord, this.mToWord);
+
 		this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
 	}
 
@@ -171,7 +186,11 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public List<String> playViewWordsForWord(PlayView aPlayView, String aWord)
 	{
 		List<String> sorted = new ArrayList<String>();
-		sorted.addAll(WordHandler.getLinksForWord(aWord));
+		Collection<String> links = WordHandler.getLinksForWord(aWord);
+		if (links != null)
+		{
+			sorted.addAll(links);
+		}
 		Collections.sort(sorted , String.CASE_INSENSITIVE_ORDER);
 		return sorted;
 	}
@@ -203,7 +222,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
 		this.checkDone(null);
 	}
-	
+
 	@Override
 	public void onBackPressed()
 	{
@@ -220,7 +239,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	private void checkDone(String aWord)
 	{
-		if (aWord != null && aWord.equalsIgnoreCase(this.mSelectedLevel.toWord))
+		if (aWord != null && aWord.equalsIgnoreCase(this.mToWord))
 		{
 			String[] pathArray = new String[this.mWordPath.size()];
 			for (int i = 0; i < pathArray.length; i++)
@@ -230,7 +249,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			}
 
 			Intent winIntent = new Intent(this, WinActivity.class);
-			winIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
+			if (this.mSelectedLevel != null)
+				winIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
 			winIntent.putExtra(WinActivity.EXTRA_TIME, System.currentTimeMillis() - this.mStartTime - this.mPauseTimeTotal);
 			winIntent.putExtra(WinActivity.EXTRA_PATH, pathArray);
 			startActivity(winIntent);
@@ -241,14 +261,20 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		else if (this.mMovesLeft <= 0)
 		{
 			Intent loseIntent = new Intent(this, LoseActivity.class);
-			loseIntent.putExtra(LoseActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
+			if (this.mSelectedLevel != null)
+				loseIntent.putExtra(LoseActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
+			else
+			{
+				loseIntent.putExtra(LoseActivity.EXTRA_FROM_WORD, this.mFromWord);
+				loseIntent.putExtra(LoseActivity.EXTRA_TO_WORD, this.mToWord);
+			}
 			startActivity(loseIntent);
 			activityStarted = true;
 			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 			finish();
 		}
 	}
-	
+
 	///-----Goal Bar Click Listener-----
 	@Override
 	public void goalBarUserDidClick(GoalBar aPlayView)

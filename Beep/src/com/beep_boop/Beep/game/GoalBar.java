@@ -59,9 +59,9 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		try
 		{
 			this.mFromImagePercentX = a.getFloat(R.styleable.GoalBar_fromImagePercentX, 0.2f);
-			this.mFromImagePercentY = a.getFloat(R.styleable.GoalBar_fromImagePercentY, 0.4000f);
+			this.mFromImagePercentY = a.getFloat(R.styleable.GoalBar_fromImagePercentY, 0.6000f);
 			this.mToImagePercentX = a.getFloat(R.styleable.GoalBar_toImagePercentX, 0.8f);
-			this.mToImagePercentY = a.getFloat(R.styleable.GoalBar_toImagePercentY, 0.4000f);
+			this.mToImagePercentY = a.getFloat(R.styleable.GoalBar_toImagePercentY, 0.6000f);
 			this.mFromWordPercentX = a.getFloat(R.styleable.GoalBar_fromWordPercentX, 0.2f);
 			this.mFromWordPercentY = a.getFloat(R.styleable.GoalBar_fromWordPercentY, 0.2740f);
 			this.mToWordPercentX = a.getFloat(R.styleable.GoalBar_toWordPercentX, 0.8f);
@@ -289,7 +289,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 		{
 			//from image
 			float fromImageX = this.mFromImagePercentX - this.mFromImagePercentWidth / 2;
-			float fromImageY = this.mFromImagePercentY - this.mFromImagePercentWidth / 2;		
+			float fromImageY = this.mFromImagePercentY - this.mFromImagePercentWidth / aspect / 2;		
 			float fromImageScaleX = (this.getWidth() * this.mFromImagePercentWidth) / this.mFromImage.getWidth();
 			float fromImageScaleY = (this.getHeight() * this.mFromImagePercentWidth / aspect) / this.mFromImage.getHeight();
 			this.mFromImageMatrix.setScale(fromImageScaleX, fromImageScaleY);
@@ -301,14 +301,14 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			float fromImageY = this.mFromImagePercentY;
 			Rect bounds = new Rect();
 			this.mImageFillInPaint.getTextBounds(this.mFromWord, 0, 1, bounds);
-			this.mFromImageFillInDraw = new PointF(fromImageX * this.getWidth(), fromImageY * this.getHeight());
+			this.mFromImageFillInDraw = new PointF(fromImageX * this.getWidth(), fromImageY * this.getHeight() - ((mImageFillInPaint.descent() + mImageFillInPaint.ascent()) / 2));
 		}
 
 		if (this.mToImage != null)
 		{
 			//to image
 			float toImageX = this.mToImagePercentX - this.mToImagePercentWidth / 2;
-			float toImageY = this.mToImagePercentY - this.mToImagePercentWidth / 2;
+			float toImageY = this.mToImagePercentY - this.mToImagePercentWidth / aspect / 2;
 			float toImageScaleX = (this.getWidth() * this.mToImagePercentWidth) / this.mToImage.getWidth();
 			float toImageScaleY = (this.getHeight() * this.mToImagePercentWidth / aspect) / this.mToImage.getHeight();
 			this.mToImageMatrix.setScale(toImageScaleX, toImageScaleY);
@@ -320,7 +320,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			float toImageY = this.mToImagePercentY;
 			Rect bounds = new Rect();
 			this.mImageFillInPaint.getTextBounds(this.mToWord, 0, 1, bounds);
-			this.mToImageFillInDraw = new PointF(toImageX * this.getWidth(), toImageY * this.getHeight());
+			this.mToImageFillInDraw = new PointF(toImageX * this.getWidth(), toImageY * this.getHeight() - ((mImageFillInPaint.descent() + mImageFillInPaint.ascent()) / 2));
 		}
 
 		if (this.mFromWord != null && this.mToWord != null)

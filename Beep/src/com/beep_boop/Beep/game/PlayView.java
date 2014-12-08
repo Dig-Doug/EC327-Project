@@ -402,7 +402,7 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			public void onAnimationEnd(Animator arg0)
 			{
 				setGlobalTextAlpha(1.0f);
-				mAnimationPercent = 0.0f;
+				mAnimationPercent = 0.8f;
 				mAnimationState = AnimationState.Displaying;
 				requestRedraw();
 			}
