@@ -35,7 +35,7 @@ public class MyApplication extends Application
     
 	Intent music = new Intent();
 	//music.setClass(context,MusicService.class);
-    
+    public static boolean musicOn = true;
     
 	private static boolean mIsBound = false;
 	public static MusicService mServ;
@@ -164,7 +164,9 @@ public class MyApplication extends Application
     	//pauseVar = true;
     	if (mServ != null)
     	{
-    		mServ.pauseMusic();
+    		if(musicOn){
+    			mServ.pauseMusic();
+    		}
     	}
     }
     
@@ -174,8 +176,13 @@ public class MyApplication extends Application
     {
     	if (mServ != null)
     	{
+    		if(musicOn){
     		mServ.resumeMusic();
+    		}
     	}
+    }
+    public static void turnOffMusic(){
+    	musicOn = false;
     }
 
 }

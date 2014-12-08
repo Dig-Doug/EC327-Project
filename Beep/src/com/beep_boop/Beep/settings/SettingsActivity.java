@@ -19,6 +19,7 @@ import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class SettingsActivity extends Activity
 {
+	boolean isPlaying = true;
 	boolean activityStarted = false;
 	private StarryBackgroundView mStarBackground;
 	SeekBar volume;
@@ -94,15 +95,32 @@ public class SettingsActivity extends Activity
 		    audio.setStreamVolume(AudioManager.STREAM_MUSIC,
 
 		                progress, 0);
-
+		    }
 		        //  Notify that the progress level has changed.
 
 		       // textView.setText(textView.getText()+"\n"+"SeekBar now at the value of:"+progress);
+/*
+		    findViewById(R.id.settingsActivity_musicOn).setOnClickListener(new View.OnClickListener(){
+		    	@Override
+		    	public void onClick(View view){
+		    		if(isPlaying){
+		    				isPlaying = false;
+		    				MyApplication.pauseSong();
+		    				MyApplication.musicOn = false;
+		    				
+		    				
+		    		}
+		    		else{
+		    			isPlaying = true;
+		    			MyApplication.musicOn = true;
+		    			MyApplication.playSong();
+		    		}
+		    	}
 
-
+		    	});
 
 		    }
-
+			*/
 
 
 		    @Override
@@ -117,7 +135,24 @@ public class SettingsActivity extends Activity
 			
 			
 		});
-		
+		 findViewById(R.id.settingsActivity_musicOn).setOnClickListener(new View.OnClickListener(){
+		    	@Override
+		    	public void onClick(View view){
+		    		if(isPlaying){
+		    				isPlaying = false;
+		    				MyApplication.pauseSong();
+		    				MyApplication.musicOn = false;
+		    				
+		    				
+		    		}
+		    		else{
+		    			isPlaying = true;
+		    			MyApplication.musicOn = true;
+		    			MyApplication.playSong();
+		    		}
+		    	}
+
+		    	});
 	}
 
 
