@@ -50,7 +50,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	private boolean mPaused = false;
 	private double mPauseTimeTotal = 0;
 	private double mPauseStartTime = -1;
-
+	private int mMovesLeft;
 	boolean activityStarted = false;
 	///-----Activity Life Cycle-----
 	@Override
@@ -67,6 +67,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			{
 				String levelKey = extras.getString(PlayScreenActivity.EXTRA_LEVEL_KEY);
 				this.mSelectedLevel = LevelManager.getLevelForKey(levelKey);
+				this.mMovesLeft = this.mSelectedLevel.maxMoves;
 			}
 		}
 		else
@@ -124,7 +125,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		}
 		this.mGoalBar.set(fromBit, toBit, this.mSelectedLevel.fromWord, this.mSelectedLevel.toWord);
 		
-		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves);
+		this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
 	}
 
 	@Override
@@ -185,8 +186,41 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidClickWord(PlayView aPlayView, String aWord)
 	{
 		this.mWordPath.add(aWord);
-		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves - this.mWordPath.size()+1);
-		if (aWord.equalsIgnoreCase(this.mSelectedLevel.toWord))
+		this.mMovesLeft--;
+		this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
+		this.checkDone(aWord);
+	}
+
+	public boolean playViewUserCanGoBack(PlayView aPlayView, String aCurrentWord)
+	{
+		return (this.mWordPath.size() > 1);
+	}
+
+	public void playViewUserDidGoBack(PlayView aPlayView)
+	{
+		this.mWordPath.add(this.mWordPath.get(this.mWordPath.size() - 2));
+		this.mMovesLeft--;
+		this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
+		this.checkDone(null);
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if (this.mWordPath.size() > 1)
+		{
+			this.mPlayView.goBack();
+		}
+		else
+		{
+			super.onBackPressed();
+			activityStarted = true;
+		}
+	}
+
+	private void checkDone(String aWord)
+	{
+		if (aWord != null && aWord.equalsIgnoreCase(this.mSelectedLevel.toWord))
 		{
 			String[] pathArray = new String[this.mWordPath.size()];
 			for (int i = 0; i < pathArray.length; i++)
@@ -204,7 +238,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 			finish();
 		}
-		else if (this.mWordPath.size() > this.mSelectedLevel.maxMoves)
+		else if (this.mMovesLeft <= 0)
 		{
 			Intent loseIntent = new Intent(this, LoseActivity.class);
 			loseIntent.putExtra(LoseActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
@@ -214,32 +248,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			finish();
 		}
 	}
-
-	public boolean playViewUserCanGoBack(PlayView aPlayView, String aCurrentWord)
-	{
-		return (this.mWordPath.size() > 1);
-	}
-
-	public void playViewUserDidGoBack(PlayView aPlayView)
-	{
-		this.mWordPath.remove(this.mWordPath.size() - 1);
-		this.mGoalBar.numberOfClicksChanged(this.mSelectedLevel.maxMoves - this.mWordPath.size()+1);
-	}
 	
-	@Override
-	public void onBackPressed()
-	{
-		if (this.mWordPath.size() > 1)
-		{
-			this.mPlayView.goBack();
-		}
-		else
-		{
-			super.onBackPressed();
-			activityStarted = true;
-		}
-	}
-
 	///-----Goal Bar Click Listener-----
 	@Override
 	public void goalBarUserDidClick(GoalBar aPlayView)
