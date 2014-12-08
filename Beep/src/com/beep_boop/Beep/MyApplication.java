@@ -121,14 +121,7 @@ public class MyApplication extends Application
     public void onTerminate(){
     	super.onTerminate();
     	doUnbindService();
-    
-    	//Intent mStop = new Intent();
-    	//mStop.setClass(context, MusicService.class);
     	stopService(music);
-    	//mServ.stopMusic();
-    	//doUnbindService();
-    	
-    	
     }
     
     public static Context getAppContext() {

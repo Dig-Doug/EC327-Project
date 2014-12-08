@@ -133,7 +133,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		//unsubscribe to level state updates
 		LevelManager.removeLevelStateListener(this);
 		MyApplication.pauseSong();
-		//MyApplication.stopSong();
+		MyApplication.mServ.stopMusic();
 
 
 		this.mMapView.destroy();
