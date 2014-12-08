@@ -25,4 +25,5 @@
 <node><locX>0.2777777778</locX><locY>0.572265625</locY><levelKey>level_24</levelKey></node>
 <node><locX>0.5027777778</locX><locY>0.6007254464</locY><levelKey>level_25</levelKey></node>
 <node><locX>0.5013888889</locX><locY>0.63671875</locY><levelKey>level_26</levelKey></node>
+<node><locX>0.5</locX><locY>0.95</locY><levelKey>egg_credits</levelKey><offImage>com.beep_boop.Beep:drawable/button_back_red</offImage><onImage>com.beep_boop.Beep:drawable/button_back_red</onImage></node>
 </nodes>

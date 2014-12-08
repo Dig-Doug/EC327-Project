@@ -1,5 +1,7 @@
 package com.beep_boop.Beep.levelSelect;
 
+import android.graphics.Bitmap;
+
 public class MapNode
 {
 	///-----Interfaces-----
@@ -7,11 +9,12 @@ public class MapNode
 	
 	///-----Members-----
 	/** Holds the X coordinate of the node in map space */
-	private float mX;
+	public float mX;
 	/** Holds the Y coordinate of the node in map space */
-	private float mY;
+	public float mY;
 	/** Holds the level key of the level this node represents */
-	private String mLevelKey;
+	public String mLevelKey;
+	public Bitmap offIcon, onIcon;
 	
 	///-----Constructors-----
 	/** Constructor for MapNode.

@@ -32,7 +32,6 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	{
 		public boolean mapViewUserCanClickNode(MapView aMapView, MapNode aNode);
 		public void mapViewUserDidClickNode(MapView aMapView, MapNode aNode);
-		public void mapViewUserDidClickEgg(MapView aMapView, EggNode aNode);
 	}
 
 	public interface NodeStatusDataSource
@@ -721,17 +720,25 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 					//draw it
 					PointF screenDrawCenter = this.convertToScreenSpace(node.getX(), node.getY());
 
+					Bitmap onImage = (node.onIcon == null ? this.mNodeImageOn : node.onIcon);
+					Bitmap offImage = (node.offIcon == null ? this.mNodeImageOff : node.offIcon);
+					float offOffsetX = (node.offIcon == null ? this.mNodeHalfSizeX : node.offIcon.getWidth()/2);
+					float offOffsetY = (node.offIcon == null ? this.mNodeHalfSizeY : node.offIcon.getHeight()/2);
+					float onOffsetX = (node.onIcon == null ? this.mNodeHalfSizeX : node.onIcon.getWidth()/2);
+					float onOffsetY = (node.onIcon == null ? this.mNodeHalfSizeY : node.onIcon.getHeight()/2);
 					if (i == this.mSelectedNode)
 					{
-						canvas.drawBitmap(this.mNodeImageOff, screenDrawCenter.x - this.mNodeHalfSizeX, screenDrawCenter.y - this.mNodeHalfSizeY, this.mNodeOffPaint);
-						canvas.drawBitmap(this.mNodeImageOn, screenDrawCenter.x - this.mNodeHalfSizeX, screenDrawCenter.y - this.mNodeHalfSizeY, this.mNodeOnPaint);
+						canvas.drawBitmap(offImage, screenDrawCenter.x - offOffsetX, screenDrawCenter.y - offOffsetY, this.mNodeOffPaint);
+						canvas.drawBitmap(onImage, screenDrawCenter.x - offOffsetY, screenDrawCenter.y - onOffsetY, this.mNodeOnPaint);
 					}
 					else
 					{
 						//get which bitmap to use for this node
 						boolean state = this.mNodeStates.get(i).booleanValue();
-						Bitmap useToDraw = (state ? this.mNodeImageOn : this.mNodeImageOff);
-						canvas.drawBitmap(useToDraw, screenDrawCenter.x - this.mNodeHalfSizeX, screenDrawCenter.y - this.mNodeHalfSizeY, null);
+						float offsetX = (state ? offOffsetX : onOffsetX);
+						float offsetY = (state ? offOffsetY : onOffsetY);
+						Bitmap useToDraw = (state ? onImage : offImage);
+						canvas.drawBitmap(useToDraw, screenDrawCenter.x - offsetX, screenDrawCenter.y - offsetY, null);
 					}
 				}
 			}

@@ -167,11 +167,6 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		activityStarted = true;
 	}
 
-	public void mapViewUserDidClickEgg(MapView aMapView, EggNode aNode)
-	{
-
-	}
-
 	///-----NodeDataSource methods-----
 	public boolean mapViewIsNodeDone(MapView aMapView, MapNode aNode)
 	{

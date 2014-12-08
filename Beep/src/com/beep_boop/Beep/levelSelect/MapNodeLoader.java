@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.util.Xml;
+
+import com.beep_boop.Beep.MyApplication;
 
 public class MapNodeLoader {
 	// /-----Interfaces-----
@@ -29,6 +33,8 @@ public class MapNodeLoader {
 	private static final String TAG_NODE_LOCATION_Y = "locY";
 	/** Tag for an individual nodes level KEY*/
 	private static final String TAG_NODE_LEVEL_KEY = "levelKey";
+	private static final String TAG_OFF_IMAGE = "offImage";
+	private static final String TAG_ON_IMAGE = "onImage";
 
 	// /-----Constructors-----
 	// None
@@ -100,11 +106,15 @@ public class MapNodeLoader {
 			if (aParser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
-			// Call the parseNode function to create a new MapNode from each
-			// segment of the data
-			MapNode mNode = parseNode(aParser);
-			// Add the newly created MapNode into our array of MapNodes
-			nodeList.add(mNode);
+
+			String name = aParser.getName();
+			if (name.equals(TAG_NODE))
+			{
+				// Call the parseNode function to create a new MapNode from each
+				// segment of the data
+				MapNode mNode = parseNode(aParser);
+				nodeList.add(mNode);
+			}
 		}
 		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_NODES_ARRAY);
 		return nodeList;
@@ -112,19 +122,61 @@ public class MapNodeLoader {
 
 	private static MapNode parseNode(XmlPullParser aParser) throws XmlPullParserException, IOException 
 	{
+		float xVal = 0f, yVal = 0f;
+		String levelKey = null, offImageName = null, onImageName = null;
 		//Parses the content of a "node"
 		aParser.require(XmlPullParser.START_TAG, NAMESPACE, TAG_NODE);
-		//Advance parser to the next tag
-		aParser.nextTag();
-		float xVal = readFloat(aParser, TAG_NODE_LOCATION_X);
-		aParser.nextTag();
-		float yVal = readFloat(aParser, TAG_NODE_LOCATION_Y);
-		aParser.nextTag();
-		String levelKey = readString(aParser, TAG_NODE_LEVEL_KEY);
-		aParser.nextTag();
+		while (aParser.next() != XmlPullParser.END_TAG)
+		{
+			//If we are in blank space, keep advancing the parser until we hit a start tag
+			if (aParser.getEventType() != XmlPullParser.START_TAG) {
+				continue;
+			}
+
+			String name = aParser.getName();
+			if (name.equals(TAG_NODE_LOCATION_X))
+			{
+				xVal = readFloat(aParser, TAG_NODE_LOCATION_X);
+			}
+			else if (name.equals(TAG_NODE_LOCATION_Y))
+			{
+				yVal = readFloat(aParser, TAG_NODE_LOCATION_Y);
+			}
+			else if (name.equals(TAG_NODE_LEVEL_KEY))
+			{
+				levelKey = readString(aParser, TAG_NODE_LEVEL_KEY);
+			}
+			else if (name.equals(TAG_OFF_IMAGE))
+			{
+				offImageName = readString(aParser, TAG_OFF_IMAGE);
+			}
+			else if (name.equals(TAG_ON_IMAGE))
+			{
+				onImageName = readString(aParser, TAG_ON_IMAGE);
+			}
+		}
 		aParser.require(XmlPullParser.END_TAG, NAMESPACE, TAG_NODE);
+
+		MapNode result = new MapNode(xVal, yVal, levelKey);
+
+		if (offImageName != null)
+		{
+			Bitmap offImage = null;
+			int imageId = MyApplication.getAppContext().getResources().getIdentifier(offImageName, null, null);
+			if (imageId != -1)
+				offImage = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(), imageId, null);
+			result.offIcon = offImage;
+		}
+		if (onImageName != null)
+		{
+			Bitmap onImage = null;
+			int imageId = MyApplication.getAppContext().getResources().getIdentifier(onImageName, null, null);
+			if (imageId != -1)
+				onImage = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(), imageId, null);
+			result.onIcon = onImage;
+		}
 		// Create and return a new MapNode created with the parsed data
-		return new MapNode(xVal, yVal, levelKey);
+		return result;
 	}
 
 	private static float readFloat(XmlPullParser aParser, String aInsideTag) throws XmlPullParserException, IOException
@@ -144,8 +196,7 @@ public class MapNodeLoader {
 		return floatVal;
 	}
 
-	private static String readString(XmlPullParser aParser, String aInsideTag)
-			throws XmlPullParserException, IOException
+	private static String readString(XmlPullParser aParser, String aInsideTag) throws XmlPullParserException, IOException
 	{
 		String stringRead = null;
 		//Parses the contents of a user defined tag
@@ -156,6 +207,7 @@ public class MapNodeLoader {
 			aParser.nextTag();
 			aParser.require(XmlPullParser.END_TAG, NAMESPACE, aInsideTag);
 		}
+		
 		return stringRead;
 	}
 
