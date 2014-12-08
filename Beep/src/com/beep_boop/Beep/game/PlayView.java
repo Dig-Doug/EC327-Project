@@ -16,6 +16,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -96,9 +97,10 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 	private float mSwipeVelocityMin;
 
 	//--Scroll Bar--
-	private Paint mScrollBarPaint = new Paint(), mScrollBarBackgroundPaint = new Paint();
+	private Paint mScrollBarPaint = new Paint();
 	private float mScrollBarPointRadius = 0.03f, mScrollBarPointOuterRadius = 0.05f, mScrollBarWidth = 0.02f;
-	private RectF mScrollBarOuterOval, mScrollBarInnerOval, mScrollBarPointOuterOval, mScrollBarPointInnerOval;
+	private RectF mScrollBarOuterOval, mScrollBarPointInnerOval;
+	private Path mScrollBarInnerOvalPath;
 
 	///-----Constructors-----
 	public PlayView(Context context, AttributeSet attrs)
@@ -121,7 +123,6 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mCurrentWordTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mScrollBarPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarColor, Color.WHITE));
-			this.mScrollBarBackgroundPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarBackgroundColor, Color.BLACK));
 			this.mSwipeVelocityMin = a.getFloat(R.styleable.PlayView_swipeVelocityMin, 0.5f);
 		}
 		catch (Exception e)
@@ -540,14 +541,18 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 
 	private void drawScroll(Canvas canvas)
 	{
+		
 		if (this.mScrollBarOuterOval != null)
+		{
+			canvas.save();
+			canvas.clipPath(this.mScrollBarInnerOvalPath);
 			canvas.drawOval(this.mScrollBarOuterOval, this.mScrollBarPaint);
-		if (this.mScrollBarInnerOval != null)
-			canvas.drawOval(this.mScrollBarInnerOval, this.mScrollBarBackgroundPaint);
-		if (this.mScrollBarPointOuterOval != null)
-			canvas.drawOval(this.mScrollBarPointOuterOval, this.mScrollBarBackgroundPaint);
+			canvas.restore();
+		}
 		if (this.mScrollBarPointInnerOval != null)
+		{
 			canvas.drawOval(this.mScrollBarPointInnerOval, this.mScrollBarPaint);
+		}
 	}
 	
 	private void calculateTextSize(Paint aPaint, String aWord, float aMaxWidth)
@@ -591,7 +596,7 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 				(0.5f - (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight(), 
 				this.getWidth() * (this.mRadius - mScrollBarPointOuterRadius), 
 				(0.5f + (this.mRadius - mScrollBarPointOuterRadius)) * this.getHeight());
-		this.mScrollBarInnerOval = new RectF(-this.getWidth() * ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),
+		RectF scrollBarInnerOval = new RectF(-this.getWidth() * ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),
 				(0.5f - (this.mRadius - mScrollBarPointOuterRadius) + this.mScrollBarWidth) * this.getHeight(), 
 				this.getWidth() *  ((this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth),  
 				(0.5f + (this.mRadius - mScrollBarPointOuterRadius) - this.mScrollBarWidth) * this.getHeight());
@@ -615,7 +620,7 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 
 		float pointX = (float)(Math.cos(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2));
 		float pointY = (float)(Math.sin(angle) * (this.mRadius - mScrollBarPointOuterRadius - this.mScrollBarWidth/2)) + 0.5f;
-		this.mScrollBarPointOuterOval = new RectF((pointX - this.mScrollBarPointOuterRadius) * this.getWidth(), 
+		RectF scrollBarPointOuterOval = new RectF((pointX - this.mScrollBarPointOuterRadius) * this.getWidth(), 
 				pointY * this.getHeight() - this.mScrollBarPointOuterRadius * this.getWidth(), 
 				(pointX + this.mScrollBarPointOuterRadius) * this.getWidth(), 
 				pointY * this.getHeight() + this.mScrollBarPointOuterRadius * this.getWidth());
@@ -623,6 +628,11 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 				pointY * this.getHeight() - this.mScrollBarPointRadius * this.getWidth(), 
 				(pointX + this.mScrollBarPointRadius) * this.getWidth(), 
 				pointY * this.getHeight() + this.mScrollBarPointRadius * this.getWidth());
+		
+		this.mScrollBarInnerOvalPath = new Path();
+		this.mScrollBarInnerOvalPath.addOval(scrollBarInnerOval, Path.Direction.CCW);
+		this.mScrollBarInnerOvalPath.addOval(scrollBarPointOuterOval, Path.Direction.CCW);
+		this.mScrollBarInnerOvalPath.setFillType(Path.FillType.INVERSE_WINDING);
 	}
 
 	private void calculateDrawPointsAndThetas()
