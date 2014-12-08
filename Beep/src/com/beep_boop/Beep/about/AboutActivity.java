@@ -19,7 +19,8 @@ public class AboutActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
-		
+		MyApplication.playSong();
+
 
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.aboutActivity_background);
 		
@@ -42,6 +43,7 @@ public class AboutActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
+		MyApplication.pauseSong();
 
 		
 
@@ -49,16 +51,22 @@ public class AboutActivity extends Activity
 	@Override
 	protected void onRestart(){
 		super.onRestart();
-
-		//.mServ.resumeMusic();
-		
+		MyApplication.playSong();		
 
 	}
 
+	@Override 
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
+	}
+	
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		//MyApplication.pauseSong();
+
 		if (this.mStarBackground != null)
 		{
 			this.mStarBackground.destroy();

@@ -66,10 +66,10 @@ public class MyApplication extends Application
         super.onCreate();
         MyApplication.context = getApplicationContext();
         
-		//doBindService();
-		//Intent music = new Intent();
-		//music.setClass(context,MusicService.class);
-		//startService(music);
+		doBindService();
+		Intent music = new Intent();
+		music.setClass(context,MusicService.class);
+		startService(music);
 		
         MyApplication.MAIN_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[0];
 		MyApplication.MAIN_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.MAIN_FONT_NAME);
@@ -82,7 +82,7 @@ public class MyApplication extends Application
     public void onTerminate(){
     	super.onTerminate();
     	
-    		//doUnbindService();
+    		doUnbindService();
     	
     }
     

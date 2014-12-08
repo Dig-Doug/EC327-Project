@@ -22,12 +22,13 @@ public class PathActivity extends Activity
 	private StarryBackgroundView mStarBackground;
 	private String[] mPath;
 
+	//boolean activityStarted = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_path);
-		//MyApplication.activityStarted(this);
+		MyApplication.playSong();
 
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.pathActivity_background);
 		ImageButton nextButton = (ImageButton) findViewById(R.id.pathActivity_nextButton);
@@ -86,20 +87,30 @@ public class PathActivity extends Activity
 	protected void onStop()
 	{
 		super.onStop();
-	//	MyApplication.activityPaused(this);
-
+		//if(!activityStarted){
+			MyApplication.pauseSong();
+		
 	}
 	@Override
 	protected void onRestart()
 	{
 		super.onRestart();
-		MyApplication.mServ.resumeMusic();
+		MyApplication.playSong();
+
+	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		MyApplication.playSong();
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		//MyApplication.pauseSong();
+
 		if (this.mStarBackground != null)
 		{
 			this.mStarBackground.destroy();
