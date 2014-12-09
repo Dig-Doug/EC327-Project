@@ -32,6 +32,7 @@
         <item>@drawable/ta_tim</item>
         <item>@drawable/ta_annie</item>
         <item>@drawable/ta_luke</item>
+        <item>@drawable/ta_carlos</item>
         <item>@drawable/prof_doug</item>
         <item>@drawable/prof_ernst</item>
     </array>
