@@ -74,5 +74,9 @@
     <string name="title_activity_random">RandomActivity</string>
     <string name="title_activity_credits">CreditsActivity</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
+    
+    <!-- Credits -->
+	<string name="credits_text">We would like to give a special thanks to all of those who made EC327 all it is, through all of the caves and coral reefs. \n \n Professor Densmore \n \n Ernst Oberortner \n \n Annie Lane \n \n Carlos Cheung \n \n Luke Sorenson \n \n Timothy Chong \n \n \n Until the next adventure!</string>
+    
 
 </resources>

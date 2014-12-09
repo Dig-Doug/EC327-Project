@@ -12860,3 +12860,15 @@ java.io.IOException: Network is down
 	at org.eclipse.tm.tcf.protocol.Protocol$3.run(Protocol.java:209)
 	at org.eclipse.tm.tcf.EventQueue.run(EventQueue.java:99)
 	at java.lang.Thread.run(Thread.java:745)
+
+!ENTRY org.eclipse.ui 2 2 2014-12-09 11:23:57.662
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+
+!ENTRY com.android.ide.eclipse.adt 2 0 2014-12-09 11:24:05.807
+!MESSAGE activity_credits.xml: Couldn't resolve resource @string/credits_text
+
+!ENTRY com.android.ide.eclipse.adt 2 0 2014-12-09 11:24:07.626
+!MESSAGE activity_credits.xml: Couldn't resolve resource @string/credits_text
+
+!ENTRY com.android.ide.eclipse.adt 2 0 2014-12-09 11:24:13.320
+!MESSAGE activity_credits.xml: Couldn't resolve resource @string/credits_text
