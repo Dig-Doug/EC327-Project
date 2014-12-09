@@ -23,6 +23,7 @@ import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.lose.LoseActivity;
+import com.beep_boop.Beep.random.RandomActivity;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
 import com.beep_boop.Beep.win.WinActivity;
@@ -67,7 +68,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 		this.mPlayView = (PlayView) findViewById(R.id.playScreenActivity_playView);	
 		this.mGoalBar = (GoalBar) findViewById(R.id.playScreenActivity_goalBar);
-		
+
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -84,7 +85,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				this.mFromWord = extras.getString(PlayScreenActivity.EXTRA_FROM_WORD);
 				this.mToWord = extras.getString(PlayScreenActivity.EXTRA_TO_WORD);
 				this.mMovesLeft = 10;
-				
+
 				this.mPlayView.setBackgroundImage(R.drawable.random_background);
 				this.mGoalBar.setBackgroundImage(R.drawable.goal_bar_background_red);
 			}
@@ -299,7 +300,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			// This is the layout XML file that describes your Dialog layout
 			this.setContentView(R.layout.dialog_play_pause_menu);
 			getWindow().setBackgroundDrawableResource(R.color.transparent);
-			
+
 			if (mSelectedLevel == null)
 			{
 				TableLayout background = (TableLayout) findViewById(R.id.playScreenActivity_pauseMenu_background);
@@ -326,9 +327,19 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				@Override
 				public void onClick(View v)
 				{
-					Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
-					startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
-					startActivity(startLevelIntent);
+					if (mSelectedLevel != null)
+					{
+						Intent startLevelIntent = new Intent(THIS, StartLevelActivity.class);
+						startLevelIntent.putExtra(StartLevelActivity.EXTRA_LEVEL_KEY, mSelectedLevel.levelKey);
+						startActivity(startLevelIntent);
+					}
+					else
+					{
+						Intent randomIntent = new Intent(THIS, RandomActivity.class);
+						randomIntent.putExtra(RandomActivity.EXTRA_FROM_WORD, mFromWord);
+						randomIntent.putExtra(RandomActivity.EXTRA_TO_WORD, mToWord);
+						startActivity(randomIntent);
+					}
 					activityStarted =true;
 					PAUSE_THIS.dismiss();
 					finish();
