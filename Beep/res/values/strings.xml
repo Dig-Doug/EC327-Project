@@ -39,6 +39,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="settingsActivity_fontTitle">Play Font</string>
     <string name="settingsActivity_musicOnOff">Music On/Off</string>
+    <string name="settingsActivity_musicVolumeTitle">Music Volume:</string>
 
     <!-- Play Screen Activity -->
     <string name="placeHolder">PlayScreen</string>

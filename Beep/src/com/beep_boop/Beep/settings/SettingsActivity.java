@@ -6,12 +6,15 @@ import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
@@ -19,7 +22,6 @@ import com.beep_boop.Beep.stars.StarryBackgroundView;
 
 public class SettingsActivity extends Activity
 {
-	boolean isPlaying = true;
 	boolean activityStarted = false;
 	private StarryBackgroundView mStarBackground;
 	SeekBar volume;
@@ -76,61 +78,59 @@ public class SettingsActivity extends Activity
 				overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
 			}
 		});
+
+		TextView volumeTitle = (TextView) findViewById(R.id.settingsActivity_musicBarTitle);
+		volumeTitle.setTypeface(MyApplication.MAIN_FONT);
 		
 		audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
 		volume= (SeekBar)findViewById(R.id.settingsActivity_musicBar);
-        volume.setMax(audio
+		volume.setEnabled(MyApplication.musicOn);
+		volume.setMax(audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		volume.setProgress(audio.getStreamVolume(AudioManager.STREAM_MUSIC));
+		volume.setOnSeekBarChangeListener(new OnSeekBarChangeListener()
+		{
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+			{
+				audio.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar)
+			{
+			}
 
-                .getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-
-        volume.setProgress(audio
-
-                .getStreamVolume(AudioManager.STREAM_MUSIC));
-
-		volume.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
-		    @Override
-		    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-		    audio.setStreamVolume(AudioManager.STREAM_MUSIC,
-
-		                progress, 0);
-		    }
-		    @Override
-		    public void onStartTrackingTouch(SeekBar seekBar) {
-		    }
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar)
+			{
+			}
 
 
-
-		    @Override
-		    public void onStopTrackingTouch(SeekBar seekBar) {
-		    }
-			
-			
 		});
-		
-		 findViewById(R.id.settingsActivity_musicOn).setOnClickListener(new View.OnClickListener(){
-		    	@Override
-		    	public void onClick(View view){
-		    		if(isPlaying){
-		    				isPlaying = false;
-		    				MyApplication.pauseSong();
-		    				MyApplication.musicOn = false;
-		    				
-		    				
-		    		}
-		    		else{
-		    			isPlaying = true;
-		    			MyApplication.musicOn = true;
-		    			MyApplication.playSong();
-		    		}
-		    	}
 
-		    	});
+		Switch musicOnOff = (Switch) findViewById(R.id.settingsActivity_musicOnOffSwitch);
+		musicOnOff.setChecked(MyApplication.musicOn);
+		musicOnOff.setTypeface(MyApplication.MAIN_FONT);
+		musicOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				if(!isChecked)
+				{
+					MyApplication.pauseSong();
+					MyApplication.musicOn = false;
+				}
+				else
+				{
+					MyApplication.musicOn = true;
+					MyApplication.playSong();
+				}
+				volume.setEnabled(MyApplication.musicOn);
+			}
+
+		});
 	}
 
-
-	
 	@Override
 	protected void onStop(){
 		super.onStop();
@@ -143,7 +143,7 @@ public class SettingsActivity extends Activity
 	protected void onDestroy()
 	{
 		super.onDestroy();
-		
+
 
 		this.mStarBackground.destroy();
 	}
