@@ -21,25 +21,23 @@ import com.beep_boop.Beep.levelSelect.MapActivity;
 import com.beep_boop.Beep.levelSelect.MapHandler;
 import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.stars.StarryBackgroundView;
+import com.beep_boop.Beep.tutorial.TutorialActivity;
 //import com.beep_boop.Beep.MusicService;
 
 public class LaunchActivity extends Activity
 {
 	///-----Member Variables-----
-	/** Holds a reference to THIS for use in listeners */
-	//private static Context context;
 
 	private LaunchActivity THIS = this;
-	private ImageButton mStartButton;
+	private ImageButton mStartButton, mTutorialButton;
 	private ProgressBar mLoadingSpinner;
 	private TextView mLoadingText;
 	private boolean mLevelsLoaded = false, mWordsLoaded = false, mMapLoaded = false, mStarted = false;
+	private static boolean loadingLevels = false, loadingWords = false, loadingMap = false;
 	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f, mMapPercent = 0.0f;
 	private StarryBackgroundView mStarBackground;
 
 	private boolean mStartedMap = false;
-
-	//public static Activity activeActivity;
 
 	///-----Activity Life Cycle-----
 	@Override
@@ -48,10 +46,6 @@ public class LaunchActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launch);
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.launchActivity_background);
-		//grab the image views from XML
-
-
-		//MyApplication.startServ();
 
 		this.mStartButton = (ImageButton) findViewById(R.id.launchActivity_startButton);
 		this.mStartButton.setEnabled(false);
@@ -64,6 +58,23 @@ public class LaunchActivity extends Activity
 				showLoading();
 			}
 		});
+
+		this.mTutorialButton = (ImageButton) findViewById(R.id.launchActivity_tutorialButton);
+		this.mTutorialButton.setEnabled(false);
+		this.mTutorialButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View arg0)
+			{
+				//transition to map page
+				Intent toTut = new Intent(THIS, TutorialActivity.class);
+				startActivity(toTut);
+				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
+			}
+		});
+
+
+
 		this.mLoadingSpinner = (ProgressBar) findViewById(R.id.launchActivity_loadingSpinner);
 		this.mLoadingText = (TextView) findViewById(R.id.launchActivity_loadingText);
 		this.hideLoading();
@@ -74,6 +85,7 @@ public class LaunchActivity extends Activity
 		Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.animator.anim_fadein);
 		//start the animation
 		this.mStartButton.startAnimation(fadeInAnimation);
+		this.mTutorialButton.startAnimation(fadeInAnimation);
 		//set the listener
 		fadeInAnimation.setAnimationListener(new Animation.AnimationListener()
 		{
@@ -135,11 +147,13 @@ public class LaunchActivity extends Activity
 	private void enableButtons()
 	{
 		this.mStartButton.setEnabled(true);
+		this.mTutorialButton.setEnabled(true);
 	}
 	private void showLoading()
 	{
 		this.mStarted = true;
 		this.mStartButton.setVisibility(View.GONE);
+		this.mTutorialButton.setVisibility(View.GONE);
 		this.mLoadingSpinner.setVisibility(View.VISIBLE);
 		this.mLoadingText.setVisibility(View.VISIBLE);
 		this.mLoadingText.setTypeface(MyApplication.MAIN_FONT);
@@ -173,7 +187,11 @@ public class LaunchActivity extends Activity
 	{
 		protected Void doInBackground(Context... contexts)
 		{
-			LevelManager.load(contexts[0]);
+			if (!loadingLevels)
+			{
+				loadingLevels = true;
+				LevelManager.load(contexts[0]);
+			}
 			return null;
 		}
 		protected void onProgressUpdate(Void... voids)
@@ -182,27 +200,28 @@ public class LaunchActivity extends Activity
 		}
 		protected void onPostExecute(Void result)
 		{
-			mLevelsLoaded = true;
-			mLevelsPercent = 1.0f;
-			checkDone();
+			if (LevelManager.getLoaded())
+			{
+				mLevelsLoaded = true;
+				mLevelsPercent = 1.0f;
+				checkDone();
+			}
 		}
 	}
 	private class LoadWordsTask extends AsyncTask<Context, String, Void> implements PlayScreenParser.StatusUpdate
 	{
 		protected Void doInBackground(Context... contexts)
 		{
-			WordHandler.load(contexts[0], this);
+			if (!loadingWords)
+			{
+				loadingLevels = true;
+				WordHandler.load(contexts[0], this);
+			}
 			return null;
 		}
 		protected void onProgressUpdate(String... words)
 		{
 			updateLoadingProgress();
-		}
-		protected void onPostExecute(Void result)
-		{
-			mWordsLoaded = true;
-			mWordsPercent = 1.0f;
-			checkDone();
 		}
 		@Override
 		public void parserStatusUpdate(int aIndex, String aWord)
@@ -210,46 +229,59 @@ public class LaunchActivity extends Activity
 			mWordsPercent = aIndex / 5845.0f;
 			publishProgress(aWord);
 		}
+		protected void onPostExecute(Void result)
+		{
+			if (WordHandler.getLoaded())
+			{
+				mWordsLoaded = true;
+				mWordsPercent = 1.0f;
+				checkDone();
+			}
+		}
 	}
 	private class LoadMapTask extends AsyncTask<Context, Void, Void>
 	{
 		protected Void doInBackground(Context... contexts)
 		{
-			MapHandler.load(contexts[0]);
-
-			TypedArray imgs = contexts[0].getResources().obtainTypedArray(R.array.map_backgroundImages);
-			try
+			if (!loadingMap)
 			{
-				for (int i = 0; i < imgs.length(); i++)
+				loadingMap = true;
+				TypedArray imgs = contexts[0].getResources().obtainTypedArray(R.array.map_backgroundImages);
+				try
 				{
-					int bitmapID = imgs.getResourceId(i, -1);
-					if (bitmapID != -1)
+					for (int i = 0; i < imgs.length(); i++)
 					{
-						Bitmap cached = MyApplication.getBitmapFromMemCache(bitmapID + "");
-						if (cached != null)
+						int bitmapID = imgs.getResourceId(i, -1);
+						if (bitmapID != -1)
 						{
-							//do nothing
-						}
-						else
-						{
-							BitmapFactory.Options options = new BitmapFactory.Options();
-							Bitmap loaded = BitmapFactory.decodeResource(getResources(), bitmapID, options);
-							MyApplication.addBitmapToMemoryCache(bitmapID + "", loaded);
-							mMapPercent += (1.0f / imgs.length());
-							publishProgress();
+							Bitmap cached = MyApplication.getBitmapFromMemCache(bitmapID + "");
+							if (cached != null)
+							{
+								//do nothing
+							}
+							else
+							{
+								BitmapFactory.Options options = new BitmapFactory.Options();
+								Bitmap loaded = BitmapFactory.decodeResource(getResources(), bitmapID, options);
+								MyApplication.addBitmapToMemoryCache(bitmapID + "", loaded);
+								mMapPercent += (1.0f / (imgs.length() + 1));
+								publishProgress();
+							}
 						}
 					}
 				}
-			}
-			catch (Exception e)
-			{
+				catch (Exception e)
+				{
 
+				}
+				finally
+				{
+					imgs.recycle();
+				}
+				
+				MapHandler.load(contexts[0]);
+				mMapPercent = 1.0f;
 			}
-			finally
-			{
-				imgs.recycle();
-			}
-
 
 			return null;
 		}
@@ -259,9 +291,12 @@ public class LaunchActivity extends Activity
 		}
 		protected void onPostExecute(Void result)
 		{
-			mMapLoaded = true;
-			mMapPercent = 1.0f;
-			checkDone();
+			if (MapHandler.getLoaded())
+			{
+				mMapLoaded = true;
+				mMapPercent = 1.0f;
+				checkDone();
+			}
 		}
 	}
 }

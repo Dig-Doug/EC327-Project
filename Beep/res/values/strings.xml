@@ -37,7 +37,7 @@
     <string name="sound">Sound</string>
     <string name="title_activity_play_screen">PlayScreenActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="settingsActivity_fontTitle">Play Font</string>
+    <string name="settingsActivity_fontTitle">Play Font:</string>
     <string name="settingsActivity_musicOnOff">Music On/Off</string>
     <string name="settingsActivity_musicVolumeTitle">Music Volume:</string>
 
@@ -73,5 +73,6 @@
     <string name="title_activity_path">PathActivity</string>
     <string name="title_activity_random">RandomActivity</string>
     <string name="title_activity_credits">CreditsActivity</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
 
 </resources>

@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <android.support.v4.view.ViewPager
+    android:id="@+id/tutorialActivity_pager"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" />
+
+    <ImageButton
+        android:id="@+id/tutorialActivity_backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:src="@drawable/button_back_red" />
+
+</RelativeLayout>

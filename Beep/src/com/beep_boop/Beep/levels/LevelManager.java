@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.levelSelect.MapHandler;
 
 public class LevelManager 
 {
@@ -24,7 +25,7 @@ public class LevelManager
 
 	///-----Static Variables-----
 	/** Holds if the singleton has been loaded */
-	private static boolean loaded = false;
+	private static boolean loaded = false, startedLoading = false;
 	/** Holds the log tag */
 	private static final String TAG = "LevelManager";
 	/** Holds the singleton instance of the class */
@@ -47,12 +48,18 @@ public class LevelManager
 	///-----Public Wrapper Methods-----
 	public static void load(Context aContext)
 	{
-		if (!LevelManager.loaded)
+		if (!LevelManager.loaded && !LevelManager.startedLoading)
 		{
+			LevelManager.startedLoading = true;
 			LevelManager.INSTANCE = new LevelManager();
 			LevelManager.INSTANCE.loadPrivate(aContext);
 			LevelManager.loaded = true;
 		}
+	}
+	
+	public static boolean getLoaded()
+	{
+		return LevelManager.loaded;
 	}
 
 	public static boolean getIsLevelComplete(String aLevelKey)

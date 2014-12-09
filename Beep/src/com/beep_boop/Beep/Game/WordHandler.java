@@ -10,12 +10,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.levels.LevelManager;
 
 public class WordHandler
 {
 	///-----Static Variables-----
 	/** Holds if the singleton has been loaded */
-	private static boolean loaded = false;
+	private static boolean loaded = false, startedLoading = false;
 	/** Holds the log tag */
 	private static final String TAG = "LevelManager";
 	/** Holds the singleton instance of the class */
@@ -33,12 +34,18 @@ public class WordHandler
 	///-----Public Wrapper Methods-----
 	public static void load(Context aContext, PlayScreenParser.StatusUpdate aUpdate)
 	{
-		if (!WordHandler.loaded)
+		if (!WordHandler.loaded && !WordHandler.startedLoading)
 		{
+			WordHandler.startedLoading = true;
 			WordHandler.INSTANCE = new WordHandler();
 			WordHandler.INSTANCE.loadPrivate(aContext, aUpdate);
 			WordHandler.loaded = true;
 		}
+	}
+	
+	public static boolean getLoaded()
+	{
+		return WordHandler.loaded;
 	}
 
 	public static Set<String> getLinksForWord(String aWord)

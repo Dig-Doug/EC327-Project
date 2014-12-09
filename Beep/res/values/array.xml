@@ -35,4 +35,10 @@
         <item>@drawable/star3</item>
     </array>
     
+     <array name="tutorialImages">
+        <item>@drawable/map_background_panel_1</item>
+        <item>@drawable/map_background_panel_2</item>
+        <item>@drawable/map_background_panel_3</item>
+    </array>
+    
 </resources>

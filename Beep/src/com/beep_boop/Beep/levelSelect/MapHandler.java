@@ -13,7 +13,7 @@ public class MapHandler
 {
 	///-----Static Variables-----
 	/** Holds if the singleton has been loaded */
-	private static boolean loaded = false;
+	private static boolean loaded = false, startedLoading = false;
 	/** Holds the log tag */
 	private static final String TAG = "MapHandler";
 	/** Holds the singleton instance of the class */
@@ -31,12 +31,18 @@ public class MapHandler
 	///-----Public Wrapper Methods-----
 	public static void load(Context aContext)
 	{
-		if (!MapHandler.loaded)
+		if (!MapHandler.loaded && !MapHandler.startedLoading)
 		{
+			MapHandler.startedLoading = true;
 			MapHandler.INSTANCE = new MapHandler();
 			MapHandler.INSTANCE.loadPrivate(aContext);
 			MapHandler.loaded = true;
 		}
+	}
+	
+	public static boolean getLoaded()
+	{
+		return MapHandler.loaded;
 	}
 
 	public static ArrayList<MapNode> getNodes()

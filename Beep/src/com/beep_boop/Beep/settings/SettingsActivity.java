@@ -33,6 +33,10 @@ public class SettingsActivity extends Activity
 		setContentView(R.layout.activity_settings);
 		MyApplication.playSong();
 		this.mStarBackground = (StarryBackgroundView) findViewById(R.id.settingsActivity_background);
+		
+		TextView fontTitle = (TextView) findViewById(R.id.settingsActivity_fontTitle);
+		fontTitle.setTypeface(MyApplication.MAIN_FONT);
+		
 		RadioGroup fontGroup = (RadioGroup) findViewById(R.id.settingsActivity_fontGroup);
 		//set the fonts of the radio buttons
 		int count = fontGroup.getChildCount();
@@ -158,8 +162,10 @@ public class SettingsActivity extends Activity
 		MyApplication.playSong();
 	}
 	@Override
-	public void onBackPressed(){
+	public void onBackPressed()
+	{
 		activityStarted = true;
 		finish();
+		overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
 	}
 }
