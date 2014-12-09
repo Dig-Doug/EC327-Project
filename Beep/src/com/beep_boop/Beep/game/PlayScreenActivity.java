@@ -223,8 +223,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidGoBack(PlayView aPlayView)
 	{
 		this.mWordPath.add(this.mWordPath.get(this.mWordPath.size() - 2));
-		this.mMovesLeft--;
-		this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
+		//this.mMovesLeft--;
+		//this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
 		this.checkDone(null);
 	}
 

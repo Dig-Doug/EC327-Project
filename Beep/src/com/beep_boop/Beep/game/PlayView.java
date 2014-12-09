@@ -898,8 +898,8 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 		if (this.mCurrentWord != null)
 		{
 			this.mCurrentWordTextPaint.getTextBounds(this.mCurrentWord, 0, this.mCurrentWord.length(), rect);
-			rect.set((int)this.mCurrentWordDrawPosition.x - rect.height()/2, (int)this.mCurrentWordDrawPosition.y - rect.width()/2, 
-					(int)this.mCurrentWordDrawPosition.x + rect.height()/2, (int)this.mCurrentWordDrawPosition.y + rect.width()/2);
+			rect.set((int)this.mCurrentWordDrawPosition.x - rect.height(), (int)this.mCurrentWordDrawPosition.y - rect.width()/2, 
+					(int)this.mCurrentWordDrawPosition.x + rect.height(), (int)this.mCurrentWordDrawPosition.y + rect.width()/2);
 			if (rect.contains(aPoint.x, aPoint.y))
 			{
 				word = this.mCurrentWord;
