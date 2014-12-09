@@ -20,7 +20,6 @@
         <item>@drawable/map_background_panel_4</item>
         <item>@drawable/map_background_panel_5</item>
         <item>@drawable/map_background_panel_6</item>
-        <item>@drawable/map_background_panel_7</item>
     </array>
     
     <array name="starImages">
@@ -30,9 +29,11 @@
     </array>
     
      <array name="creditsStarImages">
-        <item>@drawable/star1</item>
-        <item>@drawable/star2</item>
-        <item>@drawable/star3</item>
+        <item>@drawable/ta_tim</item>
+        <item>@drawable/ta_annie</item>
+        <item>@drawable/ta_luke</item>
+        <item>@drawable/prof_doug</item>
+        <item>@drawable/prof_ernst</item>
     </array>
     
 </resources>
