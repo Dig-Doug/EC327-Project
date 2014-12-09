@@ -49,6 +49,10 @@ public class PathActivity extends Activity
 			{
 				//String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);	
 			}
+			else
+			{
+				this.mStarBackground.setBackgroundImage(R.drawable.random_background);
+			}
 			
 			if (extras.containsKey(WinActivity.EXTRA_PATH))
 			{

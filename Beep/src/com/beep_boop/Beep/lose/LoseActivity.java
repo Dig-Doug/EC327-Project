@@ -58,6 +58,7 @@ public class LoseActivity extends Activity
 			{
 				this.mFromWord = extras.getString(LoseActivity.EXTRA_FROM_WORD);
 				this.mToWord = extras.getString(LoseActivity.EXTRA_TO_WORD);
+				this.mStarBackground.setBackgroundImage(R.drawable.random_background);
 			}
 		}
 		else

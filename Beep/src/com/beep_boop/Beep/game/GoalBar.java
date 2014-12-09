@@ -76,9 +76,9 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 			this.mClickTitlePaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
 			this.mClickNumberPaint.setColor(a.getColor(R.styleable.GoalBar_textColor, Color.WHITE));
 
-			int backImage = a.getResourceId(R.styleable.GoalBar_backgroundImage, -1);
-			if (backImage != -1)
-				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backImage, null);
+			int backgroundImage = a.getResourceId(R.styleable.GoalBar_backgroundImage, -1);
+			this.setBackgroundImage(backgroundImage);
+			
 			int stringID = a.getResourceId(R.styleable.GoalBar_clickTitle, -1);
 			if (stringID != -1)
 			{
@@ -136,7 +136,7 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	{
 		if (this.mBackgroundImage != null)
 		{
-			this.mBackgroundImage.recycle();
+			//this.mBackgroundImage.recycle();
 			this.mBackgroundImage = null;
 		}
 		if (this.mFromImage != null)
@@ -155,6 +155,23 @@ public class GoalBar extends View implements NumberOfClicksChangedListener
 	public void setListener(ClickListener aListener)
 	{
 		this.mListener = aListener;
+	}
+	
+	public void setBackgroundImage(int aResId)
+	{
+		if (aResId != -1)
+		{
+			Bitmap cached = MyApplication.getBitmapFromMemCache(aResId + "");
+			if (cached != null)
+			{
+				this.mBackgroundImage = cached;
+			}
+			else
+			{
+				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), aResId, null);
+				MyApplication.addBitmapToMemoryCache(aResId + "", this.mBackgroundImage);
+			}
+		}
 	}
 
 	///-----Functions-----

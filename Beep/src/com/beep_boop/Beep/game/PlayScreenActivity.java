@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.beep_boop.Beep.MyApplication;
@@ -64,6 +65,9 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		setContentView(R.layout.activity_play_screen);
 		MyApplication.playSong();
 
+		this.mPlayView = (PlayView) findViewById(R.id.playScreenActivity_playView);	
+		this.mGoalBar = (GoalBar) findViewById(R.id.playScreenActivity_goalBar);
+		
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
@@ -80,6 +84,9 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				this.mFromWord = extras.getString(PlayScreenActivity.EXTRA_FROM_WORD);
 				this.mToWord = extras.getString(PlayScreenActivity.EXTRA_TO_WORD);
 				this.mMovesLeft = 10;
+				
+				this.mPlayView.setBackgroundImage(R.drawable.random_background);
+				this.mGoalBar.setBackgroundImage(R.drawable.goal_bar_background_red);
 			}
 		}
 		else
@@ -88,13 +95,11 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			finish();
 		}
 
-		this.mPlayView = (PlayView) findViewById(R.id.playScreenActivity_playView);	
 		this.mPlayView.setListener(this);
 		this.mPlayView.setDataSource(this);
 		this.mPlayView.setCurrentWord(this.mFromWord);
 		this.mWordPath.add(this.mFromWord);
 
-		this.mGoalBar = (GoalBar) findViewById(R.id.playScreenActivity_goalBar);
 		this.mGoalBar.setListener(this);
 		this.initGoalBar();
 
@@ -294,6 +299,12 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 			// This is the layout XML file that describes your Dialog layout
 			this.setContentView(R.layout.dialog_play_pause_menu);
 			getWindow().setBackgroundDrawableResource(R.color.transparent);
+			
+			if (mSelectedLevel == null)
+			{
+				TableLayout background = (TableLayout) findViewById(R.id.playScreenActivity_pauseMenu_background);
+				background.setBackgroundResource(R.drawable.pause_menu_red);
+			}
 
 			TextView title = (TextView) findViewById(R.id.playScreenActivity_pauseMenu_titleTextView);
 			title.setTypeface(MyApplication.MAIN_FONT);

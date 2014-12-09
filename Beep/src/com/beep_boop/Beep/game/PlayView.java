@@ -118,8 +118,7 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			mAnimationInLength = a.getInt(R.styleable.PlayView_animationInLength, 250);
 			mAnimationOutLength = a.getInt(R.styleable.PlayView_animationOutLength, 500);
 			int backgroundImage = a.getResourceId(R.styleable.PlayView_backgroundImage, -1);
-			if (backgroundImage != -1)
-				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage, null);
+			this.setBackgroundImage(backgroundImage);
 			this.mTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mCurrentWordTextPaint.setColor(a.getColor(R.styleable.PlayView_textColor, Color.WHITE));
 			this.mScrollBarPaint.setColor(a.getColor(R.styleable.PlayView_scrollBarColor, Color.WHITE));
@@ -249,7 +248,7 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 	{
 		if (this.mBackgroundImage != null)
 		{
-			this.mBackgroundImage.recycle();
+			//this.mBackgroundImage.recycle();
 			this.mBackgroundImage = null;
 		}
 	}
@@ -258,6 +257,23 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 	{
 		this.mTextPaint.setTypeface(MyApplication.PLAY_FONT);
 		this.mCurrentWordTextPaint.setTypeface(MyApplication.SPECIALTY_FONT);
+	}
+	
+	public void setBackgroundImage(int aResId)
+	{
+		if (aResId != -1)
+		{
+			Bitmap cached = MyApplication.getBitmapFromMemCache(aResId + "");
+			if (cached != null)
+			{
+				this.mBackgroundImage = cached;
+			}
+			else
+			{
+				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), aResId, null);
+				MyApplication.addBitmapToMemoryCache(aResId + "", this.mBackgroundImage);
+			}
+		}
 	}
 
 	//sets the listener

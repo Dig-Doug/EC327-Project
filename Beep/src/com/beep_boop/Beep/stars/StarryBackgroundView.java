@@ -33,19 +33,7 @@ public class StarryBackgroundView extends View implements StarManager.ScreenSpac
 		try
 		{
 			int backgroundImage = a.getResourceId(R.styleable.StarryBackgroundView_backgroundImage, -1);
-			if (backgroundImage != -1)
-			{
-				Bitmap cached = MyApplication.getBitmapFromMemCache(backgroundImage + "");
-				if (cached != null)
-				{
-					this.mBackgroundImage = cached;
-				}
-				else
-				{
-					this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage, null);
-					MyApplication.addBitmapToMemoryCache(backgroundImage + "", this.mBackgroundImage);
-				}
-			}
+			this.setBackgroundImage(backgroundImage);
 			
 			int foregroundImage = a.getResourceId(R.styleable.StarryBackgroundView_foregroundImage, -1);
 			if (foregroundImage != -1)
@@ -140,6 +128,23 @@ public class StarryBackgroundView extends View implements StarManager.ScreenSpac
 		if (this.mStarManager != null)
 		{
 			this.mStarManager.destroy();
+		}
+	}
+	
+	public void setBackgroundImage(int aResId)
+	{
+		if (aResId != -1)
+		{
+			Bitmap cached = MyApplication.getBitmapFromMemCache(aResId + "");
+			if (cached != null)
+			{
+				this.mBackgroundImage = cached;
+			}
+			else
+			{
+				this.mBackgroundImage = BitmapFactory.decodeResource(getResources(), aResId, null);
+				MyApplication.addBitmapToMemoryCache(aResId + "", this.mBackgroundImage);
+			}
 		}
 	}
 
