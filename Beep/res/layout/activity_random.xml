@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        custom:backgroundImage="@drawable/starry_background"
+        custom:backgroundImage="@drawable/random_background"
         custom:starImages="@array/starImages" />
 
     <LinearLayout
@@ -45,7 +45,7 @@
             android:layout_weight="0.00"
             android:padding="10dp"
             custom:arrowImage="@drawable/start_arrow"
-            custom:backgroundImage="@drawable/background_start_screen_menu" />
+            custom:backgroundImage="@drawable/random_red_background" />
         
         <ImageButton
             android:id="@+id/randomActivity_randomButton"
@@ -55,7 +55,7 @@
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:padding="10dp"
-            android:src="@drawable/button_start" />
+            android:src="@drawable/random_reroll" />
 
         <ImageButton
             android:id="@+id/randomActivity_startButton"
@@ -65,7 +65,7 @@
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:padding="10dp"
-            android:src="@drawable/button_start" />
+            android:src="@drawable/random_start" />
 
         <ImageButton
             android:id="@+id/randomActivity_backToMapButton"
@@ -75,7 +75,7 @@
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:padding="10dp"
-            android:src="@drawable/button_back"/>
+            android:src="@drawable/random_back"/>
     </LinearLayout>
 
 </RelativeLayout>
