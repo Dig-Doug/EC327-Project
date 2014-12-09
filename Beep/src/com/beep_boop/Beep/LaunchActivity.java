@@ -211,7 +211,7 @@ public class LaunchActivity extends Activity
 			publishProgress(aWord);
 		}
 	}
-	private class LoadMapTask extends AsyncTask<Context, String, Void>
+	private class LoadMapTask extends AsyncTask<Context, Void, Void>
 	{
 		protected Void doInBackground(Context... contexts)
 		{
@@ -236,6 +236,7 @@ public class LaunchActivity extends Activity
 							Bitmap loaded = BitmapFactory.decodeResource(getResources(), bitmapID, options);
 							MyApplication.addBitmapToMemoryCache(bitmapID + "", loaded);
 							mMapPercent += (1.0f / imgs.length());
+							publishProgress();
 						}
 					}
 				}
@@ -252,7 +253,7 @@ public class LaunchActivity extends Activity
 
 			return null;
 		}
-		protected void onProgressUpdate(String... words)
+		protected void onProgressUpdate(Void... voids)
 		{
 			updateLoadingProgress();
 		}
