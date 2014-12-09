@@ -402,7 +402,7 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			public void onAnimationEnd(Animator arg0)
 			{
 				setGlobalTextAlpha(1.0f);
-				mAnimationPercent = 0.8f;
+				mAnimationPercent = 0.99f;
 				mAnimationState = AnimationState.Displaying;
 				requestRedraw();
 			}
@@ -657,8 +657,8 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			}
 			else if (this.mAnimationState == AnimationState.AnimatingIn)
 			{
-				fromPoint = this.mStartPoints[i];
-				fromTheta = this.mStartThetas[i];
+				fromPoint = this.mStartPoints[i+1];
+				fromTheta = this.mStartThetas[i+1];
 				toPoint = this.mCurrentWordPosition;
 				toTheta = this.mCurrentWordTheta;
 			}
@@ -666,8 +666,8 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 			{
 				fromPoint = this.mCurrentWordPosition;
 				fromTheta = this.mCurrentWordTheta;
-				toPoint = this.mStartPoints[i];
-				toTheta = this.mStartThetas[i];
+				toPoint = this.mStartPoints[i+1];
+				toTheta = this.mStartThetas[i+1];
 			}
 
 			//use linear interpolation to get the delta for the animation
