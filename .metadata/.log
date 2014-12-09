@@ -13139,6 +13139,7 @@ Binding(COMMAND+SHIFT+\,
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
 
+<<<<<<< Updated upstream
 !ENTRY org.eclipse.jdt.core 4 4 2014-12-09 15:02:02.961
 !MESSAGE Background Indexer Crash Recovery
 !STACK 0
@@ -13170,3 +13171,7 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.
 
 !ENTRY org.eclipse.core.net 1 0 2014-12-09 15:06:06.383
 !MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+=======
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-12-09 14:56:34.551
+!MESSAGE No valid Android XML Editor Delegate found for file /Beep/res/raw/map_data_file.xml [Res F/Beep/res/raw, type RAW]
+>>>>>>> Stashed changes

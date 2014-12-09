@@ -4,16 +4,11 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
-import android.os.IBinder;
 import android.util.LruCache;
 
 public class MyApplication extends Application
