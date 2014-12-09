@@ -39,9 +39,9 @@ public class MyApplication extends Application
 	//Intent mMusic;
     public static MediaPlayer mPlayer;
     private static int length = 0;
-	/*
+	
     public static boolean musicOn = true;
-    
+    /*
 	private static boolean mIsBound = false;
 	public static MusicService mServ;
 	public ServiceConnection Scon = new ServiceConnection(){
@@ -208,9 +208,10 @@ public class MyApplication extends Application
     {
 		if(mPlayer.isPlaying())
 		{
-			mPlayer.pause();
-			length=mPlayer.getCurrentPosition();
-
+			if(musicOn){
+				mPlayer.pause();
+				length=mPlayer.getCurrentPosition();
+			}
 		}
     	/*
     	//pauseVar = true;
@@ -232,10 +233,13 @@ public class MyApplication extends Application
     
     public static void playSong()
     {
+    	
 		if(mPlayer.isPlaying()==false)
 		{
-			mPlayer.seekTo(length);
-			mPlayer.start();
+			if(musicOn){
+				mPlayer.seekTo(length);
+				mPlayer.start();
+			}
 		}
     	/*
     	if (mServ != null)
