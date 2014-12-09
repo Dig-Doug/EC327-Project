@@ -347,7 +347,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		}
 		if (this.mParrallaxImage != null)
 		{
-			this.mParrallaxImage.recycle();
+			//this.mParrallaxImage.recycle();
 			this.mParrallaxImage = null;
 		}
 
