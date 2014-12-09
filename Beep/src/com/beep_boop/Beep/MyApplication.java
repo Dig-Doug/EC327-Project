@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnErrorListener;
 import android.os.IBinder;
 import android.util.LruCache;
 
@@ -33,19 +36,21 @@ public class MyApplication extends Application
    
     private static LruCache<String, Bitmap> bitmapCache;
     
-	Intent music = new Intent();
-	//music.setClass(context,MusicService.class);
+	//Intent mMusic;
+    public static MediaPlayer mPlayer;
+    private static int length = 0;
+	/*
     public static boolean musicOn = true;
     
 	private static boolean mIsBound = false;
 	public static MusicService mServ;
 	public ServiceConnection Scon = new ServiceConnection(){
-
+		@Override
 		public void onServiceConnected(ComponentName name, IBinder
 	     binder) {
 		mServ = ((MusicService.ServiceBinder) binder).getService();
 		}
-
+		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			mServ = null;
 		}
@@ -53,7 +58,7 @@ public class MyApplication extends Application
 		
 		void doBindService(){
 	 		bindService(new Intent(context,MusicService.class),
-					Scon,Context.BIND_AUTO_CREATE);
+					Scon,BIND_AUTO_CREATE);
 			mIsBound = true;
 		}
 
@@ -66,7 +71,7 @@ public class MyApplication extends Application
 	      		mIsBound = false;
 			}
 		}
-	
+	*/
     
     @Override
     public void onCreate()
@@ -74,11 +79,35 @@ public class MyApplication extends Application
         super.onCreate();
         MyApplication.context = getApplicationContext();
         
+        
+        mPlayer = MediaPlayer.create(this, R.raw.thememain);
+        //mPlayer.setOnErrorListener(this);
+        if(mPlayer!= null)
+        {
+        	mPlayer.setLooping(true);
+        	mPlayer.setVolume(100,100);
+        }
+        mPlayer.start();
+
+        mPlayer.setOnErrorListener(new OnErrorListener() {
+
+	  public boolean onError(MediaPlayer mp, int what, int
+          extra){
+
+			onError(mPlayer, what, extra);
+			return true;
+		}
+    	  });
+        
+        //mPlayer.start();
+
+        /*
 		doBindService();
-		//Intent music = new Intent();
+		Intent music = new Intent();
 		music.setClass(context,MusicService.class);
+		mMusic = music;
 		startService(music);
-		
+		*/
         MyApplication.MAIN_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[0];
 		MyApplication.MAIN_FONT = Typeface.createFromAsset(MyApplication.context.getAssets(), MyApplication.MAIN_FONT_NAME);
 		MyApplication.PLAY_FONT_NAME = MyApplication.context.getResources().getStringArray(R.array.fonts)[0];
@@ -120,8 +149,24 @@ public class MyApplication extends Application
     @Override
     public void onTerminate(){
     	super.onTerminate();
-    	doUnbindService();
-    	stopService(music);
+    	/*
+    	mServ.unbindService(Scon);
+    	stopService(mMusic);
+    	*/
+		if(mPlayer != null)
+		{
+		try{
+		 mPlayer.stop();
+		 mPlayer.release();
+			}finally {
+				mPlayer = null;
+			}
+		}
+    	//musicOn = false;
+    	//doUnbindService();
+		//Intent music = new Intent();
+		//music.setClass(context,MusicService.class);
+    	//stopService(mMusic);
     }
     
     public static Context getAppContext() {
@@ -161,6 +206,13 @@ public class MyApplication extends Application
     
     public static void pauseSong()
     {
+		if(mPlayer.isPlaying())
+		{
+			mPlayer.pause();
+			length=mPlayer.getCurrentPosition();
+
+		}
+    	/*
     	//pauseVar = true;
     	if (mServ != null)
     	{
@@ -168,21 +220,37 @@ public class MyApplication extends Application
     			mServ.pauseMusic();
     		}
     	}
+    	*/
     }
     
-    
+    public static void stopSong(){
+		mPlayer.stop();
+		mPlayer.release();
+		mPlayer = null;
+    }
 
+    
     public static void playSong()
     {
+		if(mPlayer.isPlaying()==false)
+		{
+			mPlayer.seekTo(length);
+			mPlayer.start();
+		}
+    	/*
     	if (mServ != null)
     	{
     		if(musicOn){
     		mServ.resumeMusic();
     		}
     	}
+    	*/
     }
     public static void turnOffMusic(){
-    	musicOn = false;
+    	
+    	
+    	
+    	//musicOn = false;
     }
 
 }

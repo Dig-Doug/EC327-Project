@@ -2,6 +2,11 @@ IMPORT_FILES_AND_FOLDERS_RELATIVE=true
 IMPORT_FILES_AND_FOLDERS_TYPE=23,1
 PROBLEMS_FILTERS_MIGRATE=true
 eclipse.preferences.version=1
+<<<<<<< Updated upstream
 platformState=1416945230610
 quickStart=true
+=======
+platformState=1418067111451
+quickStart=false
+>>>>>>> Stashed changes
 tipsAndTricks=true
