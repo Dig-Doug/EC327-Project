@@ -38,7 +38,7 @@
             android:layout_marginTop="10dp"
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
-            android:src="@drawable/button_start_blue" />
+            android:src="@drawable/button_tutorial" />
 
         <TextView
             android:id="@+id/launchActivity_loadingText"

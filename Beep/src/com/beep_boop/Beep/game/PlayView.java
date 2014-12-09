@@ -813,7 +813,7 @@ public class PlayView extends View implements MyApplication.FontChangeListener
 				float velocityY = (float)(this.mLastDeltaY / deltaTime) * mScrollVelocityScalar;
 				if (velocityX > this.mSwipeVelocityMin && velocityX > velocityY)
 				{
-					this.goBack();
+					//this.goBack();
 				}
 				else if (Math.abs(velocityY) > this.mScrollVelocityMinimum)
 				{
