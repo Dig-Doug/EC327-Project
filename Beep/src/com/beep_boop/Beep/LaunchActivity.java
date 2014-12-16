@@ -69,6 +69,7 @@ public class LaunchActivity extends Activity
 				//transition to map page
 				Intent toTut = new Intent(THIS, TutorialActivity.class);
 				startActivity(toTut);
+				mStartedMap = true;
 				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 			}
 		});

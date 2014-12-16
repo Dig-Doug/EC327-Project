@@ -16,6 +16,8 @@ import com.beep_boop.Beep.levels.LevelManager;
 import com.beep_boop.Beep.random.RandomActivity;
 import com.beep_boop.Beep.stars.StarryBackgroundView;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
+import com.beep_boop.Beep.statistics.StatisticsManager;
+import com.beep_boop.Beep.win.WinActivity;
 
 public class LoseActivity extends Activity
 {
@@ -23,11 +25,15 @@ public class LoseActivity extends Activity
 	public static final String EXTRA_LEVEL_KEY = "EXTRA_LEVEL_KEY";
 	public static final String EXTRA_FROM_WORD = "EXTRA_FROM_WORD";
 	public static final String EXTRA_TO_WORD = "EXTRA_TO_WORD";
+	public static final String EXTRA_PATH = "EXTRA_PATH";
+	public static final String EXTRA_TIME = "EXTRA_TIME";
 	/** Tag for logging */
 	private static final String TAG = "LoseActivity";
 	private LoseActivity THIS = this;
 	private Level mLevel;
 	private String mFromWord, mToWord;
+	private String[] mPath;
+	private double mTime = 0;
 	
 	private StarryBackgroundView mStarBackground;
 	
@@ -49,16 +55,24 @@ public class LoseActivity extends Activity
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
 		{
+			if (extras.containsKey(WinActivity.EXTRA_TIME) && extras.containsKey(WinActivity.EXTRA_PATH))
+			{
+				this.mTime = extras.getDouble(WinActivity.EXTRA_TIME);
+				this.mPath = extras.getStringArray(WinActivity.EXTRA_PATH);
+			}
+			
 			if (extras.containsKey(LoseActivity.EXTRA_LEVEL_KEY))
 			{
 				String levelKey = extras.getString(LoseActivity.EXTRA_LEVEL_KEY);
 				this.mLevel = LevelManager.getLevelForKey(levelKey);
+				StatisticsManager.recordLevelLost(this.mLevel, this.mPath, this.mTime);
 			}
 			else
 			{
 				this.mFromWord = extras.getString(LoseActivity.EXTRA_FROM_WORD);
 				this.mToWord = extras.getString(LoseActivity.EXTRA_TO_WORD);
 				this.mStarBackground.setBackgroundImage(R.drawable.random_background);
+				StatisticsManager.recordRandomLost(this.mFromWord, this.mToWord, this.mPath, this.mTime);
 			}
 		}
 		else

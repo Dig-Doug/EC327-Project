@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="random" key="selection"/>
+		<item value="Lose" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="Lose"/>
 			<item value="startLevel"/>
 			<item value="startScreen"/>
 			<item value="credits"/>
@@ -15,7 +16,6 @@
 			<item value="findActivity"/>
 			<item value="&apos;"/>
 			<item value="+"/>
-			<item value="+ "/>
 		</list>
 		<list key="replacehistory">
 			<item value="random"/>

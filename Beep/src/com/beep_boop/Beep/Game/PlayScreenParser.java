@@ -71,7 +71,7 @@ public class PlayScreenParser
 
 	private static Hashtable<String, Hashtable<String, Integer>> parseWords(XmlPullParser aParser, StatusUpdate aUpdate) throws XmlPullParserException, IOException
 	{
-		Hashtable<String, Hashtable<String, Integer>> wikiData = new Hashtable<String, Hashtable<String, Integer>>();
+		Hashtable<String, Hashtable<String, Integer>> wikiData = new Hashtable<String, Hashtable<String, Integer>>(5845, 1.0f);
 		
 		while (aParser.next() != XmlPullParser.END_TAG) 
 		{

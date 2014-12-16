@@ -11,8 +11,8 @@
         android:id="@+id/tutorialActivity_backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:background="@null"
         android:contentDescription="@string/content_description_place_holder"
         android:src="@drawable/button_back_red" />

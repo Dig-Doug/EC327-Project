@@ -50,6 +50,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 
 	private ArrayList<String> mWordPath = new ArrayList<String>();
+	private ArrayList<String> mWordStack = new ArrayList<String>();
 	private Level mSelectedLevel;
 	private String mFromWord, mToWord;
 	private double mStartTime;
@@ -203,7 +204,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	public String playViewPreviousWord(PlayView aPlayView)
 	{
-		return this.mWordPath.get(this.mWordPath.size() - 1);
+		return this.mWordStack.get(this.mWordStack.size() - 1);
 	}
 
 	///-----PlayView.WordClickListener methods-----
@@ -211,6 +212,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidClickWord(PlayView aPlayView, String aWord)
 	{
 		this.mWordPath.add(aWord);
+		this.mWordStack.add(aWord);
 		this.mMovesLeft--;
 		this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
 		this.checkDone(aWord);
@@ -224,6 +226,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	public void playViewUserDidGoBack(PlayView aPlayView)
 	{
 		this.mWordPath.add(this.mWordPath.get(this.mWordPath.size() - 2));
+		this.mWordStack.remove(this.mWordStack.size() - 1);
 		//this.mMovesLeft--;
 		//this.mGoalBar.numberOfClicksChanged(this.mMovesLeft);
 		this.checkDone(null);
@@ -253,10 +256,15 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				String word = this.mWordPath.get(i);
 				pathArray[i] = word;
 			}
-
+			
 			Intent winIntent = new Intent(this, WinActivity.class);
 			if (this.mSelectedLevel != null)
 				winIntent.putExtra(WinActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
+			else
+			{
+				winIntent.putExtra(WinActivity.EXTRA_FROM_WORD, this.mFromWord);
+				winIntent.putExtra(WinActivity.EXTRA_TO_WORD, this.mToWord);
+			}
 			winIntent.putExtra(WinActivity.EXTRA_TIME, System.currentTimeMillis() - this.mStartTime - this.mPauseTimeTotal);
 			winIntent.putExtra(WinActivity.EXTRA_PATH, pathArray);
 			startActivity(winIntent);
@@ -266,6 +274,13 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		}
 		else if (this.mMovesLeft <= 0)
 		{
+			String[] pathArray = new String[this.mWordPath.size()];
+			for (int i = 0; i < pathArray.length; i++)
+			{
+				String word = this.mWordPath.get(i);
+				pathArray[i] = word;
+			}
+			
 			Intent loseIntent = new Intent(this, LoseActivity.class);
 			if (this.mSelectedLevel != null)
 				loseIntent.putExtra(LoseActivity.EXTRA_LEVEL_KEY, this.mSelectedLevel.levelKey);
@@ -274,6 +289,8 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 				loseIntent.putExtra(LoseActivity.EXTRA_FROM_WORD, this.mFromWord);
 				loseIntent.putExtra(LoseActivity.EXTRA_TO_WORD, this.mToWord);
 			}
+			loseIntent.putExtra(LoseActivity.EXTRA_TIME, System.currentTimeMillis() - this.mStartTime - this.mPauseTimeTotal);
+			loseIntent.putExtra(LoseActivity.EXTRA_PATH, pathArray);
 			startActivity(loseIntent);
 			activityStarted = true;
 			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);

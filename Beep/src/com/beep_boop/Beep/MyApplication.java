@@ -2,6 +2,8 @@ package com.beep_boop.Beep;
 
 import java.util.ArrayList;
 
+import com.beep_boop.Beep.statistics.StatisticsManager;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -73,7 +75,6 @@ public class MyApplication extends Application
     {
         super.onCreate();
         MyApplication.context = getApplicationContext();
-        
         
         mPlayer = MediaPlayer.create(this, R.raw.thememain);
         //mPlayer.setOnErrorListener(this);

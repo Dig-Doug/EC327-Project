@@ -14,8 +14,8 @@ import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.levels.Level;
 import com.beep_boop.Beep.levels.LevelManager;
-import com.beep_boop.Beep.lose.LoseActivity;
 import com.beep_boop.Beep.stars.StarryBackgroundView;
+import com.beep_boop.Beep.statistics.StatisticsManager;
 
 public class WinActivity extends Activity
 {
@@ -65,12 +65,14 @@ public class WinActivity extends Activity
 				String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);
 				this.mCompletedLevel = LevelManager.getLevelForKey(levelKey);
 				LevelManager.setLevelComplete(levelKey, true, this.mTime, this.mPath.length - 1);
+				StatisticsManager.recordLevel(this.mCompletedLevel, this.mPath);
 			}
 			else
 			{
-				this.mFromWord = extras.getString(LoseActivity.EXTRA_FROM_WORD);
-				this.mToWord = extras.getString(LoseActivity.EXTRA_TO_WORD);
+				this.mFromWord = extras.getString(WinActivity.EXTRA_FROM_WORD);
+				this.mToWord = extras.getString(WinActivity.EXTRA_TO_WORD);
 				this.mStarBackground.setBackgroundImage(R.drawable.random_background);
+				StatisticsManager.recordRandom(this.mFromWord, this.mToWord, this.mPath, this.mTime);
 			}
 		}
 		else
