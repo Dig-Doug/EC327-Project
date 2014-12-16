@@ -18,5 +18,6 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.levels.Level"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.MyApplication"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.statistics.StatisticsManager"/>
 </qualifiedTypeNameHistroy>

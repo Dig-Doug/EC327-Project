@@ -14,9 +14,11 @@ import android.widget.ImageButton;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.statistics.StatisticsManager;
+import com.beep_boop.Beep.tutorial.TutorialImageFragment.ClickHandler;
 
-public class TutorialActivity extends FragmentActivity
+public class TutorialActivity extends FragmentActivity implements ClickHandler
 {
+	private TutorialActivity THIS = this;
 	private ViewPager mPager;
 	private PagerAdapter mPagerAdapter;
 	boolean activityStarted = false;
@@ -124,13 +126,28 @@ public class TutorialActivity extends FragmentActivity
 		@Override
 		public Fragment getItem(int position)
 		{
-			return new TutorialImageFragment(mScreenIds[position]);
+			return new TutorialImageFragment(mScreenIds[position], THIS);
 		}
 
 		@Override
 		public int getCount()
 		{
 			return mScreenIds.length;
+		}
+	}
+	
+	public void fragmentWasClicked()
+	{
+		if (mPager.getCurrentItem() == mScreenIds.length - 1)
+		{
+			activityStarted = true;
+			finish();
+			overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
+		}
+		else
+		{
+			// Otherwise, select the previous step.
+			mPager.setCurrentItem(mPager.getCurrentItem() + 1);
 		}
 	}
 }
