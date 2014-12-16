@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
+import com.beep_boop.Beep.statistics.StatisticsManager;
 
 public class TutorialActivity extends FragmentActivity
 {
@@ -26,6 +27,8 @@ public class TutorialActivity extends FragmentActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tutorial);
+		
+		StatisticsManager.recordData("TUTORIAL", null, null, null, -1, true);
 		
 		MyApplication.playSong();
 

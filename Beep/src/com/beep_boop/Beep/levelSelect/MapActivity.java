@@ -23,6 +23,7 @@ import com.beep_boop.Beep.levels.LevelManager.LevelStateListener;
 import com.beep_boop.Beep.random.RandomActivity;
 import com.beep_boop.Beep.settings.SettingsActivity;
 import com.beep_boop.Beep.startScreen.StartLevelActivity;
+import com.beep_boop.Beep.statistics.StatisticsManager;
 
 public class MapActivity extends Activity implements NodeClickListener, LevelStateListener, NodeStatusDataSource
 {
@@ -187,6 +188,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 			{
 				PopupMessage message = new PopupMessage(this, selectedLevel.fromWord, selectedLevel.hint);
 				message.show();
+				
+				StatisticsManager.recordData(selectedLevel.levelKey, null, null, null, -1, true);
 			}
 		}
 		activityStarted = true;

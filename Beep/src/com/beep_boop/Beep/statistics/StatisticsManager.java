@@ -81,14 +81,14 @@ public class StatisticsManager
 		recordData(RANDOM_KEY, aFromWord, aToWord, aPath, aTime, false);
 	}
 
-	private static void recordData(String aLevelKey, String aFromWord, String aToWord, String[] aPath, double aTime, boolean aWin)
+	public static void recordData(String aLevelKey, String aFromWord, String aToWord, String[] aPath, double aTime, boolean aWin)
 	{
 		ConnectivityManager connMgr = (ConnectivityManager)MyApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected())
 		{
 			new PostProgressTask().execute(getURLForParams(aLevelKey, aFromWord, aToWord, aPath, aTime, aWin));
-			
+
 			SharedPreferences settings = MyApplication.getAppContext().getSharedPreferences(PREFS_NAME, 0);
 			if (settings.contains(SAVED_LEVELS_KEY))
 			{
@@ -104,16 +104,16 @@ public class StatisticsManager
 			{
 				saved = settings.getStringSet(SAVED_LEVELS_KEY, null);
 			}
-			
+
 			if (saved == null)
 			{
 				saved = new HashSet<String>();
 			}
-			
+
 			String data = getURLForParams(aLevelKey, aFromWord, aToWord, aPath, aTime, aWin);
 			Log.v(TAG, "Saving level data: " + data);
 			saved.add(data);
-			
+
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putStringSet(SAVED_LEVELS_KEY, saved);
 			editor.commit();
@@ -125,20 +125,23 @@ public class StatisticsManager
 		String countryCode = MyApplication.getAppContext().getResources().getConfiguration().locale.getCountry();
 
 		String path = "";
-		for (String current : aPath)
+		if (aPath != null)
 		{
-			path += current + ",";
+			for (String current : aPath)
+			{
+				path += current + ",";
+			}
 		}
 
 		String result = LEVEL_URL + "?";
 		result += "&" + LEVEL_URL_USERNAME + "=" + USER_ID;
 		result += "&" + LEVEL_URL_COUNTRY + "=" + countryCode;
-		result += "&" + LEVEL_URL_LEVEL + "=" + aLevelKey.replaceAll(" ", "_");
-		result += "&" + LEVEL_URL_FROM + "=" + aFromWord.replaceAll(" ", "_");
-		result += "&" + LEVEL_URL_TO + "=" + aToWord.replaceAll(" ", "_");
+		result += "&" + LEVEL_URL_LEVEL + "=" + (aLevelKey == null ? "" : aLevelKey.replaceAll(" ", "_"));
+		result += "&" + LEVEL_URL_FROM + "=" + (aFromWord == null ? "" : aFromWord.replaceAll(" ", "_"));
+		result += "&" + LEVEL_URL_TO + "=" + (aToWord == null ? "" : aToWord.replaceAll(" ", "_"));
 		result += "&" + LEVEL_URL_STATE + "=" + (aWin ? "WIN" : "LOSE");
 		result += "&" + LEVEL_URL_TIME + "=" + aTime;
-		result += "&" + LEVEL_URL_PATH + "=" + path.replaceAll(" ", "_");
+		result += "&" + LEVEL_URL_PATH + "=" + (path == null ? "" : path.replaceAll(" ", "_"));
 
 		return result;
 	}
@@ -246,20 +249,24 @@ public class StatisticsManager
 				if (settings.contains(SAVED_LEVELS_KEY))
 				{
 					Set<String> saved = settings.getStringSet(SAVED_LEVELS_KEY, null);
-					for (String current : saved)
-					{
-						try
-						{
-							Log.d(TAG, "Posting progess: " + current);
 
-							connectToUrl(current);
-						}
-						catch (IOException e)
+					if (saved != null)
+					{
+						for (String current : saved)
 						{
-							//error
+							try
+							{
+								Log.d(TAG, "Posting progess: " + current);
+
+								connectToUrl(current);
+							}
+							catch (IOException e)
+							{
+								//error
+							}
 						}
 					}
-					
+
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putStringSet(SAVED_LEVELS_KEY, null);
 					editor.commit();
