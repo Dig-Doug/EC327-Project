@@ -101,6 +101,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 		this.mPlayView.setDataSource(this);
 		this.mPlayView.setCurrentWord(this.mFromWord);
 		this.mWordPath.add(this.mFromWord);
+		this.mWordStack.add(this.mFromWord);
 
 		this.mGoalBar.setListener(this);
 		this.initGoalBar();
@@ -220,7 +221,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 
 	public boolean playViewUserCanGoBack(PlayView aPlayView, String aCurrentWord)
 	{
-		return (this.mWordPath.size() > 1);
+		return (this.mWordStack.size() > 1);
 	}
 
 	public void playViewUserDidGoBack(PlayView aPlayView)
@@ -235,7 +236,7 @@ public class PlayScreenActivity extends Activity implements PlayView.WordClickLi
 	@Override
 	public void onBackPressed()
 	{
-		if (this.mWordPath.size() > 1)
+		if (this.mWordStack.size() > 1)
 		{
 			this.mPlayView.goBack();
 		}
