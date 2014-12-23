@@ -52,13 +52,16 @@ public class StatisticsManager
 		if (settings.contains(SAVED_USER_ID_KEY))
 		{
 			USER_ID = settings.getString(SAVED_USER_ID_KEY, null);
-			Log.v(TAG, "Has user id: " + USER_ID);
 		}
-		else
+		
+		if (USER_ID == null)
 		{
 			new GetUserIDTask().execute();
 		}
-
+		else
+		{
+			Log.v(TAG, "Has user id: " + USER_ID);
+		}
 	}
 
 	public static void recordLevel(Level aLevel, String[] aPath)

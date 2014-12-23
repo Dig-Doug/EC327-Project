@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
-import com.beep_boop.Beep.levelSelect.MapHandler;
 
 public class LevelManager 
 {

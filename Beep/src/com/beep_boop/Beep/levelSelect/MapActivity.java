@@ -1,6 +1,8 @@
 package com.beep_boop.Beep.levelSelect;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	private Activity THIS = this;
 
 	boolean activityStarted = false;
+	
+	boolean mPopupOpen = false;
 
 	///-----Activity Life Cycle-----
 	@Override
@@ -187,7 +191,17 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 			else
 			{
 				PopupMessage message = new PopupMessage(this, selectedLevel.fromWord, selectedLevel.hint);
+				message.setOnDismissListener(new OnDismissListener()
+				{
+					@Override
+					public void onDismiss(DialogInterface arg0)
+					{
+						mPopupOpen = false;
+					}
+				});
 				message.show();
+				
+				this.mPopupOpen = true;
 				
 				StatisticsManager.recordData(selectedLevel.levelKey, null, null, null, -1, true);
 			}

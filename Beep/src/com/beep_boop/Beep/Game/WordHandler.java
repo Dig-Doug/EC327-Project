@@ -10,7 +10,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.beep_boop.Beep.R;
-import com.beep_boop.Beep.levels.LevelManager;
 
 public class WordHandler
 {
