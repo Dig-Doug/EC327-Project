@@ -175,6 +175,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		}
 		else
 		{
+			/*
 			if (selectedLevel.levelKey.equals("egg_credits"))
 			{
 				Intent toCredits = new Intent(THIS, CreditsActivity.class);
@@ -182,7 +183,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 				activityStarted = true;
 				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
 			}
-			else if (selectedLevel.levelKey.equals("egg_random"))
+			else*/ if (selectedLevel.levelKey.equals("egg_random"))
 			{
 				Intent toRandom = new Intent(THIS, RandomActivity.class);
 				startActivity(toRandom);
