@@ -15,6 +15,6 @@
         android:layout_centerHorizontal="true"
         android:background="@null"
         android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/button_back_red" />
+        android:src="@drawable/button_tutorial_back" />
 
 </RelativeLayout>

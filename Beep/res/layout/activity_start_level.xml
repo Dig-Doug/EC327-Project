@@ -64,7 +64,7 @@
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:padding="10dp"
-            android:src="@drawable/button_start" />
+            android:src="@drawable/button_start_green" />
 
         <ImageButton
             android:id="@+id/startLevelActivity_backToMapButton"
@@ -74,7 +74,7 @@
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:padding="10dp"
-            android:src="@drawable/button_back"
+            android:src="@drawable/button_back_red"
             android:text="@string/startLevelActivityBackButton" />
     </LinearLayout>
 
