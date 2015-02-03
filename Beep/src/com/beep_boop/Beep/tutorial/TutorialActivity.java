@@ -66,7 +66,7 @@ public class TutorialActivity extends FragmentActivity implements ClickHandler
 			{
 				activityStarted = true;
 				finish();
-				overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
+				overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 			}
 		});
 	}
@@ -81,7 +81,7 @@ public class TutorialActivity extends FragmentActivity implements ClickHandler
 			super.onBackPressed();
 			activityStarted = true;
 			finish();
-			overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
+			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 		}
 		else
 		{
@@ -142,7 +142,7 @@ public class TutorialActivity extends FragmentActivity implements ClickHandler
 		{
 			activityStarted = true;
 			finish();
-			overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
+			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
 		}
 		else
 		{

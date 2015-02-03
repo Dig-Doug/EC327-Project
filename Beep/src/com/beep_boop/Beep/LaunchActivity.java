@@ -70,7 +70,7 @@ public class LaunchActivity extends Activity
 				Intent toTut = new Intent(THIS, TutorialActivity.class);
 				startActivity(toTut);
 				mStartedMap = true;
-				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
+				overridePendingTransition(R.animator.anim_activity_right_in, R.animator.anim_activity_right_out);
 			}
 		});
 
