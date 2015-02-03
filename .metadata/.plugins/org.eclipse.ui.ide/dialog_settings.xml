@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<list key="installedFeatures">
 		<item value="com.android.ide.eclipse.adt.package.feature:23.0.2.1259578"/>
-		<item value="com.objectaid.uml.cls:1.1.7"/>
+		<item value="com.objectaid.uml.cls:1.1.8"/>
 		<item value="org.eclipse.cdt.build.crossgcc:1.1.0.201302132326"/>
 		<item value="org.eclipse.cdt.bupc:1.0.3.201302132326"/>
 		<item value="org.eclipse.cdt.core.lrparser.feature:5.2.0.201302132326"/>
