@@ -1,7 +1,9 @@
 package com.beep_boop.Beep.win;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -93,6 +95,12 @@ public class WinActivity extends Activity
 		this.mMovePlaceholderLabel.setTypeface(MyApplication.MAIN_FONT);
 
 		this.setupButtons();
+
+
+		SharedPreferences sharedPref = getSharedPreferences("MAIN", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt(getString(R.string.prefs_levelsPlayedCount), sharedPref.getInt(getString(R.string.prefs_levelsPlayedCount), 0) + 1);
+		editor.commit();
 	}
 
 	private void setupButtons()

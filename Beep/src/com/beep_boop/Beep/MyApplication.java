@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -73,6 +74,18 @@ public class MyApplication extends Application
     {
         super.onCreate();
         MyApplication.context = getApplicationContext();
+        
+        SharedPreferences sharedPref = context.getSharedPreferences("MAIN", Context.MODE_PRIVATE);
+        if (sharedPref.getBoolean(MyApplication.context.getString(R.string.prefs_firstLaunch), false))
+        {
+        	SharedPreferences.Editor editor = sharedPref.edit();
+        	editor.putBoolean(context.getString(R.string.prefs_firstLaunch), true);
+        	editor.putBoolean(context.getString(R.string.prefs_hasRatedKey), false);
+        	editor.putInt(context.getString(R.string.prefs_levelsPlayedCount), 0);
+        	editor.commit();
+        }
+        
+        
         
         mPlayer = MediaPlayer.create(this, R.raw.thememain);
         //mPlayer.setOnErrorListener(this);

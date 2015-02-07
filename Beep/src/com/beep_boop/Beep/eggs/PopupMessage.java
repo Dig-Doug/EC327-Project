@@ -28,6 +28,9 @@ public class PopupMessage extends Dialog
 		TextView message = (TextView) findViewById(R.id.dialog_popUp_messageTextView);
 		message.setTypeface(MyApplication.MAIN_FONT);
 		message.setText(aMessage);
+		
+		ImageButton otherButton = (ImageButton) findViewById(R.id.dialog_popUp_otherButton);
+		otherButton.setVisibility(View.GONE);
 
 		ImageButton closeButton = (ImageButton) findViewById(R.id.dialog_popUp_backButton);
 		closeButton.setOnClickListener(new View.OnClickListener()

@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="android.graphics.Path.Direction"/>
 <fullyQualifiedTypeName name="android.graphics.Path.FillType"/>
 <fullyQualifiedTypeName name="android.util.LruCache"/>
-<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.game.WordHandler"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.random.RandomActivity"/>
 <fullyQualifiedTypeName name="com.beep_boop.Beep.R"/>
@@ -22,4 +21,5 @@
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.content.DialogInterface.OnDismissListener"/>
 <fullyQualifiedTypeName name="android.graphics.PointF"/>
+<fullyQualifiedTypeName name="com.beep_boop.Beep.R.string"/>
 </qualifiedTypeNameHistroy>

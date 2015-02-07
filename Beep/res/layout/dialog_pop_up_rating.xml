@@ -42,7 +42,7 @@
             android:contentDescription="@string/content_description_place_holder"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:src="@drawable/button_back" />
+            android:src="@drawable/button_yes" />
         
         <ImageButton
             android:id="@+id/dialog_popUp_backButton"
@@ -53,7 +53,7 @@
             android:contentDescription="@string/content_description_place_holder"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:src="@drawable/button_back" />
+            android:src="@drawable/button_later" />
     </TableLayout>
 
 </LinearLayout>

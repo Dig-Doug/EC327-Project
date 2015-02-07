@@ -1,9 +1,11 @@
 package com.beep_boop.Beep.levelSelect;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.beep_boop.Beep.LaunchActivity;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
 import com.beep_boop.Beep.eggs.PopupMessage;
+import com.beep_boop.Beep.eggs.RatingsPopupMessage;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
 import com.beep_boop.Beep.levelSelect.MapView.NodeStatusDataSource;
 import com.beep_boop.Beep.levels.Level;
@@ -39,7 +42,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 	private Activity THIS = this;
 
 	boolean activityStarted = false;
-	
+
 	boolean mPopupOpen = false;
 
 	///-----Activity Life Cycle-----
@@ -78,7 +81,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 				}
 			}
 		}
-		
+
 		//setup the settings button
 		ImageButton toSettingsButton = (ImageButton) findViewById(R.id.mapActivity_settingsButton);
 		toSettingsButton.setOnClickListener(new OnClickListener()
@@ -108,7 +111,7 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 				startActivity(toLaunch);
 				activityStarted = true;
 				overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
-				
+
 				//quit map
 				finish();
 			}
@@ -153,6 +156,8 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		activityStarted = false;
 		MyApplication.playSong();
 		this.mLevelCount.setText(LevelManager.getTotalLevelsDone() + " / " + LevelManager.getTotalLevelsCount());
+		
+		this.showRatingsPopUp();
 	}
 
 	@Override
@@ -166,6 +171,29 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 
 
 		this.mMapView.destroy();
+	}
+
+	private void showRatingsPopUp()
+	{
+		SharedPreferences sharedPref = getSharedPreferences("MAIN", Context.MODE_PRIVATE);
+		boolean hasRated = sharedPref.getBoolean(getString(R.string.prefs_hasRatedKey), false);
+		int levelsPlayed = sharedPref.getInt(getString(R.string.prefs_levelsPlayedCount), 0);
+		if (!hasRated && levelsPlayed % 5 == 4)
+		{
+
+			RatingsPopupMessage message = new RatingsPopupMessage(this);
+			message.setOnDismissListener(new OnDismissListener()
+			{
+				@Override
+				public void onDismiss(DialogInterface arg0)
+				{
+					mPopupOpen = false;
+				}
+			});
+			message.show();
+
+			this.mPopupOpen = true;
+		}
 	}
 
 	///-----NodeClickListener methods-----
@@ -221,9 +249,9 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 					}
 				});
 				message.show();
-				
+
 				this.mPopupOpen = true;
-				
+
 				StatisticsManager.recordData(selectedLevel.levelKey, null, null, null, -1, true);
 			}
 		}

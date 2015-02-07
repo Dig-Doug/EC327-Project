@@ -3,6 +3,11 @@
 
     <string name="app_name">Wikinaut</string>
     <string name="content_description_place_holder">content_description</string>
+    
+    <!-- Preferences -->
+    <string name="prefs_firstLaunch">firstLaunch</string>
+	<string name="prefs_hasRatedKey">hasRatedKey</string>
+	<string name="prefs_levelsPlayedCount">levelsPlayedCount</string>
 
     <!-- Launch Activity -->
     <string name="title_activity_launch">LaunchActivity</string>
@@ -22,7 +27,9 @@
     <!-- Map Activity -->
     <string name="title_activity_map">MapActivity</string>
     <string name="mapActivity_cannotClickNodeToastMessage">You can\'t play that level yet!</string>
-
+    <string name="mapActivity_ratingPopUpTitle">Rate us!</string>
+    <string name="mapActivity_ratingPopUpMessage">Giving us a good rating on Google Play helps us reach more people! Could you take a minute to rate us?</string>
+    
     <!-- Start Screen Activity -->
     <string name="title_activity_start_level">StartLevelActivity</string>
     <string name="startLevelActivityBackButton">back</string>
