@@ -70,7 +70,7 @@
     <string name="share_emailDefaultText2"> to </string>
     <string name="share_emailDefaultText3"> in </string>
     <string name="share_emailDefaultText4"> moves and in only </string>
-    <string name="share_emailDefaultText5"> secs. Can you?</string>
+    <string name="share_emailDefaultText5"> secs. Can you beat my score? \n \n Download Cosmo the Wikinaut on the Google Play Store! </string>
     <string name="title_activity_path">PathActivity</string>
     <string name="title_activity_random">RandomActivity</string>
     <string name="title_activity_credits">CreditsActivity</string>

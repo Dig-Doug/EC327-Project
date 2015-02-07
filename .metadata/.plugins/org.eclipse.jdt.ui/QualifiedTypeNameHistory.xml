@@ -21,4 +21,5 @@
 <fullyQualifiedTypeName name="com.beep_boop.Beep.statistics.StatisticsManager"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.content.DialogInterface.OnDismissListener"/>
+<fullyQualifiedTypeName name="android.graphics.PointF"/>
 </qualifiedTypeNameHistroy>

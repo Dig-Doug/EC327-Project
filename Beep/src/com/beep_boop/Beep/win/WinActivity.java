@@ -151,10 +151,10 @@ public class WinActivity extends Activity
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		Uri data = Uri.parse("mailto:?subject=" + "" + "&body=" + "" + "&to=" + "");  
 		intent.setData(data);  
-		String message = getString(R.string.share_emailDefaultText1) + this.mFromWord + 
-				getString(R.string.share_emailDefaultText2) + this.mToWord + 
-				getString(R.string.share_emailDefaultText3) + (this.mPath.length - 1) + 
-				getString(R.string.share_emailDefaultText4) + this.mTime + 
+		String message = getString(R.string.share_emailDefaultText1) + " " + this.mFromWord + " " +
+				getString(R.string.share_emailDefaultText2) + " " + this.mToWord + " " +
+				getString(R.string.share_emailDefaultText3) + " " + (this.mPath.length - 1) + " " + 
+				getString(R.string.share_emailDefaultText4) + " " + (this.mTime / 1000) + " " + 
 				getString(R.string.share_emailDefaultText5);
 		intent.putExtra(Intent.EXTRA_TEXT, message);
 		startActivity(Intent.createChooser(intent, "Send Email"));
