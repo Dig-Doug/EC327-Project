@@ -7,6 +7,7 @@
     <!-- Launch Activity -->
     <string name="title_activity_launch">LaunchActivity</string>
     <string name="launchActivity_loadingText">Loading&#8230;</string>
+    <string name="launchActivity_noRandomText">You can\'t play random mode yet! Beat all the levels first!</string>
 
     <!-- Main Activity -->
     <string name="mainActivity_toSettingsButton">Settings</string>

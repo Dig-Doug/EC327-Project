@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:custom="http://schemas.android.com/apk/res/com.beep_boop.Beep"  >
+    android:layout_height="fill_parent" >
 
     <com.beep_boop.Beep.levelSelect.MapView
         android:id="@+id/mapActivity_mapView"
@@ -9,12 +9,13 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         custom:animationLength="1000"
+        custom:overlayAnimationLength="5000"
         custom:backgroundImage="@array/map_backgroundImages"
         custom:mapWidthOnScreen="1.0"
         custom:nodeOffImage="@drawable/map_node"
         custom:nodeOnImage="@drawable/map_node_blank"
-        custom:nodeSelectedOverlayStatic="@drawable/map_spaceship"
         custom:nodeSelectedOverlayAnimating="@drawable/map_spaceship"
+        custom:nodeSelectedOverlayStatic="@drawable/map_spaceship"
         custom:parrallaxImage="@drawable/starry_background"
         custom:starImages="@array/starImages" />
 
@@ -22,23 +23,23 @@
         android:id="@+id/mapActivity_settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/settings_icon"
-        android:text=""
-        android:background="@null"
-        android:padding="10dp" />
-
-    <ImageButton
-        android:id="@+id/mapActivity_aboutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:contentDescription="@string/content_description_place_holder"
-        android:src="@drawable/info_icon"
-        android:text=""
         android:background="@null"
-        android:padding="10dp" />
+        android:contentDescription="@string/content_description_place_holder"
+        android:padding="10dp"
+        android:src="@drawable/settings_icon"
+        android:text="" />
+
+    <ImageButton
+        android:id="@+id/mapActivity_homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/content_description_place_holder"
+        android:padding="10dp"
+        android:src="@drawable/home_icon"
+        android:text="" />
 
     <TextView
         android:id="@+id/mapActivity_levelCount"

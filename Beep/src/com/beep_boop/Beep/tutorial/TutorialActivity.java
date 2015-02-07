@@ -142,7 +142,7 @@ public class TutorialActivity extends FragmentActivity implements ClickHandler
 		{
 			activityStarted = true;
 			finish();
-			overridePendingTransition(R.animator.anim_activity_left_in, R.animator.anim_activity_left_out);
+			overridePendingTransition(R.animator.anim_activity_right_in, R.animator.anim_activity_right_out);
 		}
 		else
 		{

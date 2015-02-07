@@ -12,10 +12,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beep_boop.Beep.LaunchActivity;
 import com.beep_boop.Beep.MyApplication;
 import com.beep_boop.Beep.R;
-import com.beep_boop.Beep.about.AboutActivity;
-import com.beep_boop.Beep.eggs.CreditsActivity;
 import com.beep_boop.Beep.eggs.PopupMessage;
 import com.beep_boop.Beep.levelSelect.MapView.NodeClickListener;
 import com.beep_boop.Beep.levelSelect.MapView.NodeStatusDataSource;
@@ -28,8 +27,9 @@ import com.beep_boop.Beep.startScreen.StartLevelActivity;
 import com.beep_boop.Beep.statistics.StatisticsManager;
 
 public class MapActivity extends Activity implements NodeClickListener, LevelStateListener, NodeStatusDataSource
-{
+{	
 	///-----Member Variables-----
+	public static final String EXTRA_GO_TO_LEVEL = "EXTRA_GO_TO_LEVEL";
 	/** Tag used in Log messages */
 	private static final String TAG = "MapActivity";
 	/** Holds a reference to the map view */
@@ -61,7 +61,24 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		//setup the map view
 		this.setupMapView();
 
-
+		Bundle extras = this.getIntent().getExtras();
+		if (extras != null)
+		{
+			if (extras.containsKey(MapActivity.EXTRA_GO_TO_LEVEL))
+			{
+				String levelKey = extras.getString(MapActivity.EXTRA_GO_TO_LEVEL);
+				MapNode nodeForKey = this.mMapView.getNodeWithKey(levelKey);
+				if (nodeForKey != null)
+				{
+					this.mMapView.setSelectedNode(nodeForKey, true, true);
+				}
+				else
+				{
+					Log.w(MapActivity.TAG, "Couldn't find map node for key: " + levelKey);
+				}
+			}
+		}
+		
 		//setup the settings button
 		ImageButton toSettingsButton = (ImageButton) findViewById(R.id.mapActivity_settingsButton);
 		toSettingsButton.setOnClickListener(new OnClickListener()
@@ -79,18 +96,21 @@ public class MapActivity extends Activity implements NodeClickListener, LevelSta
 		});
 
 		//setup the about button
-		ImageButton toAboutButton = (ImageButton) findViewById(R.id.mapActivity_aboutButton);
-		toAboutButton.setOnClickListener(new OnClickListener()
+		ImageButton toHomeButton = (ImageButton) findViewById(R.id.mapActivity_homeButton);
+		toHomeButton.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				Log.d(MapActivity.TAG, "To about button clicked");
+				Log.d(MapActivity.TAG, "To home button clicked");
 
-				Intent toAbout = new Intent(THIS, AboutActivity.class);
-				startActivity(toAbout);
+				Intent toLaunch = new Intent(THIS, LaunchActivity.class);
+				startActivity(toLaunch);
 				activityStarted = true;
-				overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
+				overridePendingTransition(R.animator.anim_activity_bottom_in, R.animator.anim_activity_bottom_out);
+				
+				//quit map
+				finish();
 			}
 		});
 	}

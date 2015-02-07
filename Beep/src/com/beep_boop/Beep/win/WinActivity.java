@@ -64,6 +64,8 @@ public class WinActivity extends Activity
 			{
 				String levelKey = extras.getString(WinActivity.EXTRA_LEVEL_KEY);
 				this.mCompletedLevel = LevelManager.getLevelForKey(levelKey);
+				this.mFromWord = this.mCompletedLevel.fromWord;
+				this.mToWord = this.mCompletedLevel.toWord;
 				LevelManager.setLevelComplete(levelKey, true, this.mTime, this.mPath.length - 1);
 				StatisticsManager.recordLevel(this.mCompletedLevel, this.mPath);
 			}

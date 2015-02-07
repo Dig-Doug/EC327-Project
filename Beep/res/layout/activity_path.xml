@@ -29,14 +29,15 @@
         android:id="@+id/pathActivity_pathTextView"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_above="@+id/pathActivity_nextButton"
+        android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:gravity="center"
         android:maxEms="20"
         android:scrollbars="vertical"
         android:text="@string/content_description_place_holder"
         android:textColor="@color/launchActivity_loadingTextColor"
-        android:textSize="30sp" 
-        android:gravity="center"/>
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/imageView1"

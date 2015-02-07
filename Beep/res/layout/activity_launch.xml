@@ -39,6 +39,16 @@
             android:background="@null"
             android:contentDescription="@string/content_description_place_holder"
             android:src="@drawable/button_tutorial" />
+        
+        <ImageButton
+            android:id="@+id/launchActivity_randomButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:contentDescription="@string/content_description_place_holder"
+            android:src="@drawable/button_random" />
 
         <TextView
             android:id="@+id/launchActivity_loadingText"

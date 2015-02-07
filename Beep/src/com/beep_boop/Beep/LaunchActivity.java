@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beep_boop.Beep.game.PlayScreenParser;
 import com.beep_boop.Beep.game.WordHandler;
@@ -29,15 +30,15 @@ public class LaunchActivity extends Activity
 	///-----Member Variables-----
 
 	private LaunchActivity THIS = this;
-	private ImageButton mStartButton, mTutorialButton;
+	private ImageButton mStartButton, mTutorialButton, mRandomButton;
 	private ProgressBar mLoadingSpinner;
 	private TextView mLoadingText;
 	private boolean mLevelsLoaded = false, mWordsLoaded = false, mMapLoaded = false, mStarted = false;
 	private static boolean loadingLevels = false, loadingWords = false, loadingMap = false;
 	private float mLevelsPercent = 0.0f, mWordsPercent = 0.0f, mMapPercent = 0.0f;
 	private StarryBackgroundView mStarBackground;
-
 	private boolean mStartedMap = false;
+	private boolean mShouldGoToRandom = false;
 
 	///-----Activity Life Cycle-----
 	@Override
@@ -74,11 +75,29 @@ public class LaunchActivity extends Activity
 			}
 		});
 
-
+		this.mRandomButton = (ImageButton) findViewById(R.id.launchActivity_randomButton);
+		this.mRandomButton.setEnabled(false);
+		this.mRandomButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View arg0)
+			{
+				if (LevelManager.canPlayLevel("egg_random"))
+				{
+					mShouldGoToRandom = true;
+					showLoading();
+				}
+				else
+				{
+					Toast.makeText(THIS, getString(R.string.launchActivity_noRandomText), Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 
 		this.mLoadingSpinner = (ProgressBar) findViewById(R.id.launchActivity_loadingSpinner);
 		this.mLoadingText = (TextView) findViewById(R.id.launchActivity_loadingText);
 		this.hideLoading();
+
 		new LoadLevelsTask().execute(this);
 		new LoadWordsTask().execute(this);
 		new LoadMapTask().execute(this);
@@ -87,6 +106,7 @@ public class LaunchActivity extends Activity
 		//start the animation
 		this.mStartButton.startAnimation(fadeInAnimation);
 		this.mTutorialButton.startAnimation(fadeInAnimation);
+		this.mRandomButton.startAnimation(fadeInAnimation);
 		//set the listener
 		fadeInAnimation.setAnimationListener(new Animation.AnimationListener()
 		{
@@ -149,12 +169,15 @@ public class LaunchActivity extends Activity
 	{
 		this.mStartButton.setEnabled(true);
 		this.mTutorialButton.setEnabled(true);
+		this.mRandomButton.setEnabled(true);
 	}
 	private void showLoading()
 	{
 		this.mStarted = true;
 		this.mStartButton.setVisibility(View.GONE);
 		this.mTutorialButton.setVisibility(View.GONE);
+		this.mRandomButton.setVisibility(View.GONE);
+
 		this.mLoadingSpinner.setVisibility(View.VISIBLE);
 		this.mLoadingText.setVisibility(View.VISIBLE);
 		this.mLoadingText.setTypeface(MyApplication.MAIN_FONT);
@@ -177,6 +200,12 @@ public class LaunchActivity extends Activity
 			this.hideLoading();
 			//transition to map page
 			Intent toMap = new Intent(THIS, MapActivity.class);
+
+			if (this.mShouldGoToRandom)
+			{
+				toMap.putExtra(MapActivity.EXTRA_GO_TO_LEVEL, "egg_random");
+			}
+
 			startActivity(toMap);
 			this.mStartedMap = true;
 			overridePendingTransition(R.animator.anim_activity_top_in, R.animator.anim_activity_top_out);
@@ -279,7 +308,7 @@ public class LaunchActivity extends Activity
 				{
 					imgs.recycle();
 				}
-				
+
 				MapHandler.load(contexts[0]);
 				mMapPercent = 1.0f;
 			}

@@ -58,7 +58,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	private int mSelectedNode = -1;
 
 	/** Holds the view origin in map space */
-	private PointF mOrigin = new PointF(0.0f, 0.0f);
+	private PointF mOriginCurrent = new PointF(0.0f, 0.0f), mOriginAnimStart = new PointF(0.0f, 0.0f), mOriginAnimEnd = new PointF(0.0f, 0.0f);
 
 	/** Holds the bounds the origin can take in map space */
 	private RectF mOriginBounds;
@@ -448,14 +448,39 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		}
 		return result;
 	}
+	
+	//gets the states for a node
+	public MapNode getNodeWithKey(String aLevelKey)
+	{
+		MapNode result = null;
+		//look for the node
+		for (int i = 0; i < this.mNodes.size(); i++)
+		{
+			MapNode node = this.mNodes.get(i);
+			//check if it's the right node
+			if (node.getLevelKey().equals(aLevelKey))
+			{
+				result = node;
+				//break
+				break;
+			}
+		}
+		
+		return result;
+	}
 
 	public void setSelectedNode(MapNode aNode, boolean aAnimated)
 	{
 		this.setSelectedNode(this.mNodes.indexOf(aNode), aAnimated, false);
 	}
+	
+	public void setSelectedNode(MapNode aNode, boolean aAnimated, boolean aShouldClick)
+	{
+		this.setSelectedNode(this.mNodes.indexOf(aNode), aAnimated, aShouldClick);
+	}
 
 	//sets the selected node
-	private void setSelectedNode(int aIndex, boolean aAnimated, boolean aShouldClick)
+	public void setSelectedNode(int aIndex, boolean aAnimated, boolean aShouldClick)
 	{
 		if (this.mSelectedNode != aIndex)
 		{
@@ -535,23 +560,23 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	private void boundOrigin()
 	{
 		//bound in the x direction
-		if (this.mOrigin.x < this.mOriginBounds.left)
+		if (this.mOriginCurrent.x < this.mOriginBounds.left)
 		{
-			this.mOrigin.x = this.mOriginBounds.left;
+			this.mOriginCurrent.x = this.mOriginBounds.left;
 		}
-		else if (this.mOrigin.x > this.mOriginBounds.right)
+		else if (this.mOriginCurrent.x > this.mOriginBounds.right)
 		{
-			this.mOrigin.x = this.mOriginBounds.right;
+			this.mOriginCurrent.x = this.mOriginBounds.right;
 		}
 
 		//bound in the y direction
-		if (this.mOrigin.y < this.mOriginBounds.bottom)
+		if (this.mOriginCurrent.y < this.mOriginBounds.bottom)
 		{
-			this.mOrigin.y = this.mOriginBounds.bottom;
+			this.mOriginCurrent.y = this.mOriginBounds.bottom;
 		}
-		else if (this.mOrigin.y > this.mOriginBounds.top)
+		else if (this.mOriginCurrent.y > this.mOriginBounds.top)
 		{
-			this.mOrigin.y = this.mOriginBounds.top;
+			this.mOriginCurrent.y = this.mOriginBounds.top;
 		}
 	}
 
@@ -559,7 +584,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	public void setOrigin(PointF aOrigin)
 	{
 		//set the origin
-		this.mOrigin = aOrigin;
+		this.mOriginCurrent = aOrigin;
 		//make sure the origin is within bounds
 		this.boundOrigin();
 		//redraw
@@ -576,6 +601,15 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		//set the origin
 		this.setOrigin(centered);
 	}
+	
+	//centers the view on the node
+	private void centerOnY(float aCenterY)
+	{
+		//calculate the origin to center on it
+		PointF centered = new PointF(this.mOriginCurrent.x, aCenterY - this.MAP_ON_SCREEN_HEIGHT/2);
+		//set the origin
+		this.setOrigin(centered);
+	}
 
 	private void startAnimationToNode(MapNode aToNode, boolean aShouldClick)
 	{
@@ -587,16 +621,25 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		{
 			// Create a new value animator that will use the range 0 to 1
 			this.mSelectedOverlayAnimator = ValueAnimator.ofFloat(0, 1);
-
+			
 			// It will take XXXms for the animator to go from 0 to 1
-			this.mSelectedOverlayAnimator.setDuration(this.mSelectedOverlayAnimationLength);
+			float distance = PointF.length(this.mSelectedOverlayAnimationToNode.getX() - this.mSelectedOverlayAnimationStartNode.getX(),
+					this.mSelectedOverlayAnimationToNode.getY() - this.mSelectedOverlayAnimationStartNode.getY());
+			this.mSelectedOverlayAnimator.setDuration((int)(this.mSelectedOverlayAnimationLength * Math.pow(distance, 2)));
 			// Callback that executes on animation steps. 
 			this.mSelectedOverlayAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 				@Override
 				public void onAnimationUpdate(ValueAnimator animation)
 				{
 					mSelectedOverlayAnimationPercent = ((Float) (animation.getAnimatedValue())).floatValue();
-					requestRedraw();
+					
+					//change the origin
+					float deltaY = (mSelectedOverlayAnimationToNode.getY() - mSelectedOverlayAnimationStartNode.getY()) * mSelectedOverlayAnimationPercent;
+					float centerOnY = mSelectedOverlayAnimationStartNode.getY() + deltaY;
+					centerOnY(centerOnY);
+					
+					//don't need this as it's done in the centerOnY
+					//requestRedraw();
 				}
 			});
 
@@ -677,8 +720,8 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		{
 			canvas.save();
 			canvas.scale(this.mParrallaxScale, this.mParrallaxScale);
-			float y = this.mOrigin.y - 1.0f;
-			while (y < 1.0f + this.mOrigin.y)
+			float y = this.mOriginCurrent.y - 1.0f;
+			while (y < 1.0f + this.mOriginCurrent.y)
 			{
 				canvas.drawBitmap(this.mParrallaxImage, 0, y * this.getHeight(), null);
 				y += this.MAP_ON_SCREEN_HEIGHT;
@@ -695,7 +738,7 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 			for (int i = this.mBackgroundImages.length - 1; i >= 0; i--)
 			{
 				float yVal = (1.0f / this.mBackgroundImages.length) * (i + 1);
-				if (Math.abs(yVal - this.mOrigin.y) < this.MAP_ON_SCREEN_HEIGHT * 2)
+				if (Math.abs(yVal - this.mOriginCurrent.y) < this.MAP_ON_SCREEN_HEIGHT * 2)
 				{
 					PointF screen = this.convertToScreenSpace(0.0f, yVal);
 					canvas.drawBitmap(this.mBackgroundImages[i], screen.x, screen.y, null);
@@ -712,10 +755,10 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 		{
 			MapNode node = this.mNodes.get(i);
 			//check if it's on screen in the X direction
-			if (Math.abs(node.getX() - this.mOrigin.x) < this.MAP_ON_SCREEN_WIDTH * 1.5f)
+			if (Math.abs(node.getX() - this.mOriginCurrent.x) < this.MAP_ON_SCREEN_WIDTH * 1.5f)
 			{
 				//check if it's on screen in the Y direction
-				if (Math.abs(node.getY() - this.mOrigin.y) < this.MAP_ON_SCREEN_HEIGHT * 1.5f)
+				if (Math.abs(node.getY() - this.mOriginCurrent.y) < this.MAP_ON_SCREEN_HEIGHT * 1.5f)
 				{
 					//draw it
 					PointF screenDrawCenter = this.convertToScreenSpace(node.getX(), node.getY());
@@ -885,8 +928,8 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	private void incrementOrigin(float aX, float aY)
 	{
 		//increment origin
-		this.mOrigin.x += aX;
-		this.mOrigin.y += aY;
+		this.mOriginCurrent.x += aX;
+		this.mOriginCurrent.y += aY;
 		//make sure the origin is within bounds
 		this.boundOrigin();
 		//redraw
@@ -949,15 +992,15 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	//converts a point in touch space to map space
 	private PointF convertToMapSpace(float aX, float aY)
 	{
-		float scaledX = (aX / this.getWidth()) * this.MAP_ON_SCREEN_WIDTH  + this.mOrigin.x;
-		float scaledY = (1.0f - (aY / this.getHeight())) * this.MAP_ON_SCREEN_HEIGHT + this.mOrigin.y;
+		float scaledX = (aX / this.getWidth()) * this.MAP_ON_SCREEN_WIDTH  + this.mOriginCurrent.x;
+		float scaledY = (1.0f - (aY / this.getHeight())) * this.MAP_ON_SCREEN_HEIGHT + this.mOriginCurrent.y;
 		return new PointF(scaledX, scaledY);
 	}
 
 	private PointF convertToScreenSpace(float aX, float aY)
 	{
-		float scaledX = (aX - this.mOrigin.x) * this.getWidth() / this.MAP_ON_SCREEN_WIDTH / this.mScaleX;
-		float scaledY = (this.MAP_ON_SCREEN_HEIGHT - aY + this.mOrigin.y) * this.getHeight() / this.MAP_ON_SCREEN_HEIGHT / this.mScaleY;
+		float scaledX = (aX - this.mOriginCurrent.x) * this.getWidth() / this.MAP_ON_SCREEN_WIDTH / this.mScaleX;
+		float scaledY = (this.MAP_ON_SCREEN_HEIGHT - aY + this.mOriginCurrent.y) * this.getHeight() / this.MAP_ON_SCREEN_HEIGHT / this.mScaleY;
 
 		return new PointF(scaledX, scaledY);
 	}
@@ -992,10 +1035,10 @@ public class MapView extends View implements StarManager.ScreenSpaceCoverter
 	public boolean starManagerIsPointOnScreen(StarManager aManager, PointF aPoint)
 	{
 		boolean result = false;
-		if (Math.abs(aPoint.x - this.mOrigin.x) < this.MAP_ON_SCREEN_WIDTH * 1.5f)
+		if (Math.abs(aPoint.x - this.mOriginCurrent.x) < this.MAP_ON_SCREEN_WIDTH * 1.5f)
 		{
 			//check if it's on screen in the Y direction
-			if (Math.abs(aPoint.y - this.mOrigin.y) < this.MAP_ON_SCREEN_HEIGHT * 1.5f)
+			if (Math.abs(aPoint.y - this.mOriginCurrent.y) < this.MAP_ON_SCREEN_HEIGHT * 1.5f)
 			{
 				result = true;
 			}
